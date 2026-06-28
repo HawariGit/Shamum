@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شاموم · SHAMUM — Maison d'Oud</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap');
+
+:root {
+  --sand-50:  #FBF6EA;
+  --sand-100: #F4EAD2;
+  --sand-200: #E9D8B4;
+  --sand-300: #DCC79A;
+  --gold-300: #D4BC86;
+  --gold-400: #C2A368;
+  --gold-500: #AE8B4F;
+  --gold-600: #8C6E3A;
+  --bronze:   #6E5328;
+  --oud-700:  #4A3520;
+  --oud-800:  #342517;
+  --oud-900:  #241810;
+  --ink:      #15100A;
+  --stone-500:#8B7E66;
+
+  --grad-gold:  linear-gradient(135deg,#D4BC86 0%,#AE8B4F 48%,#8C6E3A 100%);
+  --grad-resin: linear-gradient(180deg,#342517 0%,#241810 60%,#15100A 100%);
+
+  --font-d: 'Cormorant Garamond',Georgia,serif;
+  --font-s: 'Jost',system-ui,sans-serif;
+
+  --border-gold: rgba(174,139,79,0.55);
+  --border-dark: rgba(212,188,134,0.28);
+  --ease: cubic-bezier(0.22,0.61,0.36,1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--sand-50);color:var(--ink);font-family:var(--font-d);overflow-x:hidden;}
+
+/* ── ANNOUNCEMENT ── */
+.ann{background:var(--ink);color:var(--sand-100);text-align:center;padding:9px 20px;font-family:var(--font-s);font-size:11px;letter-spacing:2px;}
+.ann span{color:var(--gold-400);}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:200;background:rgba(251,246,234,0.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(110,83,40,0.18);padding:0 52px;display:flex;align-items:center;justify-content:space-between;height:70px;transition:box-shadow .3s;}
+.nav-brand{cursor:pointer;text-align:center;}
+.nav-brand-name{font-family:var(--font-d);font-size:26px;font-weight:600;letter-spacing:.14em;color:var(--ink);line-height:1;}
+.nav-brand-sub{font-family:var(--font-s);font-size:8px;letter-spacing:.4em;text-transform:uppercase;color:var(--stone-500);margin-top:2px;}
+.nav-links{display:flex;gap:28px;list-style:none;direction:ltr;}
+.nav-links a{font-family:var(--font-s);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--oud-700);opacity:.75;cursor:pointer;transition:opacity .25s;padding-bottom:2px;border-bottom:1px solid transparent;text-decoration:none;}
+.nav-links a:hover{opacity:1;border-color:var(--gold-500);}
+.nav-actions{display:flex;align-items:center;gap:8px;}
+.nav-icon{cursor:pointer;color:var(--oud-700);font-size:17px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;transition:color .25s;}
+.nav-icon:hover{color:var(--gold-500);}
+.nav-bag{font-family:var(--font-s);font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;background:var(--ink);color:var(--sand-100);border:none;padding:9px 20px;cursor:pointer;transition:background .3s;}
+.nav-bag:hover{background:var(--oud-800);}
+
+/* ── DIVIDER ── */
+.divider{display:flex;align-items:center;gap:10px;}
+.d-line{flex:1;height:1px;}
+.d-line.gold{background:var(--border-gold);}
+.d-line.dark{background:var(--border-dark);}
+.d-diamond{width:6px;height:6px;transform:rotate(45deg);flex-shrink:0;}
+.d-diamond.gold{background:var(--gold-500);}
+.d-diamond.dark{background:var(--gold-300);}
+
+/* ── HERO ── */
+.hero{position:relative;width:100%;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;}
+.hero-content{position:relative;z-index:10;text-align:center;padding:0 40px;max-width:740px;color:var(--sand-100);}
+.hero-eyebrow{font-family:var(--font-s);font-size:10px;font-weight:500;letter-spacing:.34em;text-transform:uppercase;color:var(--gold-300);margin-bottom:22px;display:block;}
+.hero-title{font-family:var(--font-d);font-size:76px;font-weight:500;line-height:1.04;letter-spacing:.01em;color:var(--sand-100);margin-bottom:24px;}
+.hero-title em{color:var(--gold-300);font-style:italic;}
+.hero-body{font-family:var(--font-s);font-size:15px;font-weight:300;line-height:1.75;color:rgba(244,234,210,.82);margin-bottom:36px;max-width:500px;margin-inline:auto;}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;direction:ltr;}
+.btn-gold{font-family:var(--font-s);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;background:var(--grad-gold);color:var(--ink);border:1px solid var(--gold-600);padding:14px 36px;cursor:pointer;transition:filter .3s;}
+.btn-gold:hover{filter:brightness(1.08);}
+.btn-outline{font-family:var(--font-s);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;background:transparent;color:var(--sand-100);border:1px solid var(--border-dark);padding:14px 36px;cursor:pointer;transition:all .3s;}
+.btn-outline:hover{background:rgba(212,188,134,.08);}
+.scroll-cue{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;}
+.scroll-cue span{font-family:var(--font-s);font-size:8px;letter-spacing:.3em;color:rgba(212,188,134,.6);text-transform:uppercase;}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--gold-400),transparent);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
+
+/* ── SECTIONS ── */
+.sec{padding:96px 52px;}
+.sec-canvas{background:var(--sand-50);}
+.sec-sand{background:var(--sand-200);}
+.sec-dark{background:var(--grad-resin);}
+.sec-head{text-align:center;margin-bottom:60px;}
+.eyebrow{font-family:var(--font-s);font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--bronze);display:block;margin-bottom:12px;}
+.eyebrow.on-dark{color:var(--gold-300);}
+.sec-title{font-family:var(--font-d);font-size:46px;font-weight:500;color:var(--ink);}
+.sec-title.on-dark{color:var(--sand-100);}
+.sec-title em{font-style:italic;color:var(--gold-500);}
+.sec-title.on-dark em{color:var(--gold-300);}
+.sec-sub{font-family:var(--font-s);font-size:14px;font-weight:300;color:var(--stone-500);margin-top:12px;line-height:1.7;}
+
+/* ── CATEGORIES ── */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;}
+.cat-card{position:relative;height:500px;overflow:hidden;cursor:pointer;}
+.cat-card svg{position:absolute;inset:0;width:100%;height:100%;}
+.cat-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(21,16,10,.92) 0%,rgba(21,16,10,.3) 55%,transparent 100%);opacity:.7;transition:opacity .4s var(--ease);}
+.cat-card:hover .cat-overlay{opacity:.95;}
+.cat-info{position:absolute;bottom:0;left:0;right:0;padding:28px 22px;transform:translateY(18px);transition:transform .4s var(--ease);}
+.cat-card:hover .cat-info{transform:translateY(0);}
+.cat-ar{font-family:var(--font-d);font-size:26px;color:var(--sand-100);direction:rtl;margin-bottom:3px;}
+.cat-en{font-family:var(--font-s);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-400);margin-bottom:8px;}
+.cat-count{font-family:var(--font-s);font-size:10px;color:rgba(212,188,134,.6);}
+.cat-link{display:inline-block;margin-top:12px;font-family:var(--font-s);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--sand-100);border-bottom:1px solid var(--gold-400);padding-bottom:2px;opacity:0;transition:opacity .3s .1s;text-decoration:none;}
+.cat-card:hover .cat-link{opacity:1;}
+
+/* ── PRODUCTS ── */
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.prod-card{background:#fff;border:1px solid rgba(110,83,40,.15);cursor:pointer;transition:box-shadow .3s,transform .3s;position:relative;overflow:hidden;}
+.prod-card:hover{box-shadow:0 12px 40px rgba(36,24,16,.12);transform:translateY(-3px);}
+.prod-badge{position:absolute;top:14px;left:14px;z-index:2;font-family:var(--font-s);font-size:8px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:5px 11px;border-radius:999px;}
+.prod-badge.new{background:transparent;color:var(--bronze);border:1px solid var(--border-gold);}
+.prod-badge.ltd{background:var(--ink);color:var(--sand-100);border:1px solid var(--ink);}
+.prod-img{width:100%;height:300px;position:relative;}
+.prod-img svg{width:100%;height:100%;display:block;}
+.prod-body{padding:24px;}
+.prod-cat{font-family:var(--font-s);font-size:9px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--bronze);margin-bottom:8px;}
+.prod-name{font-family:var(--font-d);font-size:24px;color:var(--ink);margin-bottom:3px;direction:rtl;}
+.prod-name-en{font-family:var(--font-s);font-size:12px;font-weight:300;color:var(--stone-500);margin-bottom:16px;direction:ltr;}
+.prod-foot{display:flex;justify-content:space-between;align-items:center;}
+.prod-price{font-family:var(--font-d);font-size:22px;color:var(--gold-600);}
+.prod-price sub{font-family:var(--font-s);font-size:10px;font-weight:300;color:var(--stone-500);}
+.btn-add{font-family:var(--font-s);font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;background:transparent;color:var(--gold-500);border:1px solid var(--border-gold);padding:8px 18px;cursor:pointer;transition:all .28s var(--ease);}
+.btn-add:hover{background:var(--ink);color:var(--sand-100);border-color:var(--ink);}
+
+/* ── ORIGIN ── */
+.origin-grid{display:grid;grid-template-columns:1fr 1fr;min-height:580px;}
+.origin-visual{overflow:hidden;}
+.origin-visual svg{width:100%;height:100%;display:block;}
+.origin-text{padding:80px 60px;display:flex;flex-direction:column;justify-content:center;background:var(--sand-50);}
+.origin-num{font-family:var(--font-d);font-size:96px;font-weight:500;color:rgba(174,139,79,.12);line-height:1;margin-bottom:-30px;}
+.origin-title{font-family:var(--font-d);font-size:40px;font-weight:500;color:var(--ink);margin-bottom:18px;line-height:1.2;}
+.origin-body{font-family:var(--font-s);font-size:14px;font-weight:300;line-height:1.9;color:var(--stone-500);}
+
+/* ── QUOTE ── */
+.quote-sec{padding:110px 52px;text-align:center;}
+blockquote{font-family:var(--font-d);font-size:38px;font-style:italic;font-weight:400;color:var(--sand-100);max-width:720px;margin:0 auto 16px;line-height:1.5;}
+.q-attr{font-family:var(--font-s);font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold-400);}
+
+/* ── TRUST ── */
+.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--sand-300);}
+.trust-item{background:var(--sand-50);padding:40px 24px;text-align:center;}
+.trust-icon{font-size:26px;margin-bottom:14px;display:block;}
+.trust-title{font-family:var(--font-d);font-size:20px;color:var(--ink);margin-bottom:5px;}
+.trust-sub{font-family:var(--font-s);font-size:10px;letter-spacing:.1em;color:var(--stone-500);}
+
+/* ── LOYALTY ── */
+.loyalty{background:var(--grad-gold);padding:76px 52px;display:flex;align-items:center;justify-content:space-between;gap:40px;}
+.loyalty-text h2{font-family:var(--font-d);font-size:38px;color:var(--ink);margin-bottom:10px;direction:rtl;}
+.loyalty-text p{font-family:var(--font-s);font-size:14px;font-weight:300;line-height:1.7;color:rgba(21,16,10,.75);direction:rtl;}
+.btn-dark{font-family:var(--font-s);font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;background:var(--ink);color:var(--sand-100);border:none;padding:14px 36px;cursor:pointer;white-space:nowrap;transition:background .3s;}
+.btn-dark:hover{background:var(--oud-800);}
+
+/* ── FOOTER ── */
+footer{background:var(--grad-resin);color:var(--sand-100);padding:72px 52px 36px;border-top:1px solid var(--border-dark);}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;margin-bottom:52px;}
+.footer-brand-name{font-family:var(--font-d);font-size:28px;font-weight:600;letter-spacing:.14em;color:var(--gold-300);margin-bottom:4px;display:block;}
+.footer-brand-sub{font-family:var(--font-s);font-size:8px;letter-spacing:.4em;color:rgba(212,188,134,.5);}
+.footer-desc{font-family:var(--font-s);font-size:13px;font-weight:300;line-height:1.8;color:rgba(212,188,134,.65);margin-top:16px;max-width:260px;direction:rtl;}
+.footer-col h4{font-family:var(--font-s);font-size:9px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-300);margin-bottom:18px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-col a{font-family:var(--font-s);font-size:13px;color:rgba(244,234,210,.7);cursor:pointer;transition:color .25s;direction:rtl;display:block;text-decoration:none;}
+.footer-col a:hover{color:var(--gold-300);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid var(--border-dark);font-family:var(--font-s);font-size:10px;letter-spacing:.1em;color:rgba(139,126,102,.8);}
+.pay{display:flex;gap:8px;}
+.pay span{background:rgba(212,188,134,.08);border:1px solid rgba(212,188,134,.18);padding:3px 10px;font-size:9px;color:rgba(212,188,134,.6);letter-spacing:.06em;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:0 24px;}
+  .nav-links{display:none;}
+  .hero-title{font-size:44px;}
+  .cat-grid{grid-template-columns:repeat(2,1fr);}
+  .prod-grid{grid-template-columns:1fr;}
+  .origin-grid{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .trust{grid-template-columns:repeat(2,1fr);}
+  .loyalty{flex-direction:column;text-align:center;}
+  .sec{padding:64px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="ann">
+  شحن مجاني داخل المملكة العربية السعودية &nbsp;·&nbsp;
+  <span>برنامج الولاء — اكسب نقاطك</span>
+  &nbsp;·&nbsp; Free Shipping in KSA
+</div>
+
+<!-- NAVBAR -->
+<nav id="nav">
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Collection</a></li>
+    <li><a href="#">Our Oud</a></li>
+    <li><a href="#">The House</a></li>
+  </ul>
+
+  <div class="nav-brand">
+    <div class="nav-brand-name">SHAMUM</div>
+    <div class="nav-brand-sub">Maison d'Oud</div>
+  </div>
+
+  <div class="nav-actions">
+    <div class="nav-icon" title="Search">&#x2315;</div>
+    <div class="nav-icon" title="Wishlist">&#9825;</div>
+    <button class="nav-bag">Bag (0)</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero">
+  <svg class="hero-bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="skyR" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#1A2E10"/>
+        <stop offset="45%" stop-color="#0F1C08"/>
+        <stop offset="100%" stop-color="#050300"/>
+      </linearGradient>
+      <radialGradient id="sunR" cx="65%" cy="14%" r="32%">
+        <stop offset="0%" stop-color="#FFE070" stop-opacity=".28"/>
+        <stop offset="100%" stop-color="#241810" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="overlayR" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="60%" stop-color="#15100A" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#15100A" stop-opacity="1"/>
+      </linearGradient>
+      <linearGradient id="centerFade" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#15100A" stop-opacity=".7"/>
+        <stop offset="30%" stop-color="#15100A" stop-opacity=".55"/>
+        <stop offset="55%" stop-color="#15100A" stop-opacity=".1"/>
+        <stop offset="100%" stop-color="#15100A" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <rect width="1440" height="900" fill="url(#skyR)"/>
+    <rect width="1440" height="900" fill="url(#sunR)"/>
+    <circle cx="930" cy="85" r="38" fill="#FFD060" opacity=".14"/>
+    <!-- Canopy layers -->
+    <ellipse cx="720" cy="185" rx="380" ry="190" fill="#0C1A06" opacity=".9"/>
+    <ellipse cx="720" cy="155" rx="320" ry="160" fill="#142808" opacity=".88"/>
+    <ellipse cx="740" cy="130" rx="270" ry="138" fill="#1A3410" opacity=".85"/>
+    <ellipse cx="760" cy="108" rx="230" ry="115" fill="#224818" opacity=".82"/>
+    <circle cx="640" cy="108" r="85" fill="#1A3810"/>
+    <circle cx="580" cy="145" r="65" fill="#142E0C"/>
+    <circle cx="760" cy="88" r="80" fill="#244A18"/>
+    <circle cx="850" cy="76" r="72" fill="#2E5820"/>
+    <circle cx="930" cy="90" r="62" fill="#3A6428"/>
+    <circle cx="990" cy="115" r="52" fill="#324C1E"/>
+    <circle cx="510" cy="178" r="50" fill="#102008"/>
+    <circle cx="1040" cy="152" r="44" fill="#1A3410"/>
+    <ellipse cx="890" cy="80" rx="130" ry="70" fill="#4A7C28" opacity=".6"/>
+    <ellipse cx="940" cy="66" rx="90" ry="50" fill="#5A9030" opacity=".55"/>
+    <!-- Sun rays -->
+    <line x1="930" y1="35" x2="800" y2="320" stroke="#FFE070" stroke-width="1.5" opacity=".07"/>
+    <line x1="930" y1="25" x2="840" y2="380" stroke="#FFE070" stroke-width="1" opacity=".05"/>
+    <!-- Trunk -->
+    <path d="M688 285 Q694 440 698 580 Q700 700 702 900 L802 900 Q804 700 806 580 Q810 440 816 285 Z" fill="#3D2410"/>
+    <path d="M702 285 Q705 440 707 580 Q708 700 709 900 L718 900 Q719 700 720 580 Q721 440 718 285 Z" fill="#5A3418" opacity=".4"/>
+    <path d="M695 320 Q693 440 697 570" stroke="#2A1808" stroke-width="3" fill="none" opacity=".5"/>
+    <path d="M808 320 Q810 440 806 570" stroke="#2A1808" stroke-width="3" fill="none" opacity=".5"/>
+    <ellipse cx="704" cy="400" rx="14" ry="26" fill="#140804" opacity=".7" transform="rotate(-8 704 400)"/>
+    <ellipse cx="798" cy="368" rx="11" ry="20" fill="#140804" opacity=".6" transform="rotate(12 798 368)"/>
+    <!-- Branches -->
+    <path d="M694 312 Q630 288 565 265 Q526 248 490 242" stroke="#3D2410" stroke-width="22" fill="none" stroke-linecap="round"/>
+    <path d="M490 242 Q458 232 422 218" stroke="#3D2410" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <path d="M810 312 Q875 288 942 265 Q980 248 1018 242" stroke="#3D2410" stroke-width="20" fill="none" stroke-linecap="round"/>
+    <circle cx="418" cy="212" r="40" fill="#142E0C"/>
+    <circle cx="1060" cy="235" r="36" fill="#142E0C"/>
+    <!-- Overlays -->
+    <rect width="1440" height="900" fill="url(#centerFade)"/>
+    <rect width="1440" height="900" fill="url(#overlayR)"/>
+    <!-- Dust particles -->
+    <circle cx="600" cy="310" r="1.5" fill="#AE8B4F" opacity=".5"/>
+    <circle cx="740" cy="265" r="1" fill="#D4BC86" opacity=".4"/>
+    <circle cx="860" cy="330" r="1.3" fill="#AE8B4F" opacity=".35"/>
+  </svg>
+
+  <div class="hero-content">
+    <span class="hero-eyebrow">The House of Oud · Riyadh, est. 1979</span>
+    <div class="divider" style="margin:0 auto 28px;width:120px;">
+      <div class="d-line dark"></div>
+      <div class="d-diamond dark"></div>
+      <div class="d-line dark"></div>
+    </div>
+    <h1 class="hero-title">
+      We do not chase<br>the season.<br>
+      <em>We wait for the wood.</em>
+    </h1>
+    <p class="hero-body">
+      Rare agarwood, aged in cedar and distilled by hand.<br>
+      A maison built on patience.
+    </p>
+    <div class="hero-ctas">
+      <button class="btn-gold">Discover the Collection</button>
+      <button class="btn-outline">Our Signature</button>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CATEGORY GRID
+══════════════════════════════════════ -->
+<div class="cat-grid">
+
+  <!-- 1: Sprays -->
+  <div class="cat-card">
+    <svg viewBox="0 0 320 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <rect width="320" height="500" fill="#1A2E0C"/>
+      <ellipse cx="160" cy="100" rx="155" ry="130" fill="#234018" opacity=".9"/>
+      <circle cx="120" cy="90" r="80" fill="#1A3410"/>
+      <circle cx="200" cy="82" r="90" fill="#264A18"/>
+      <ellipse cx="160" cy="70" rx="70" ry="55" fill="#3A6028" opacity=".7"/>
+      <rect x="136" y="210" width="48" height="190" rx="7" fill="#0F0A04"/>
+      <rect x="136" y="210" width="48" height="190" rx="7" fill="none" stroke="rgba(174,139,79,.4)" stroke-width="1.5"/>
+      <rect x="140" y="250" width="40" height="148" rx="5" fill="#2A1408" opacity=".7"/>
+      <rect x="142" y="185" width="36" height="28" rx="4" fill="#AE8B4F"/>
+      <rect x="146" y="174" width="28" height="12" rx="3" fill="#D4BC86"/>
+      <rect x="174" y="168" width="18" height="5" rx="2" fill="#8C6E3A"/>
+      <path d="M192 168 L205 158 L207 166 Z" fill="#6E5328"/>
+      <circle cx="212" cy="154" r="2.5" fill="rgba(174,139,79,.35)"/>
+      <circle cx="220" cy="148" r="1.8" fill="rgba(174,139,79,.25)"/>
+      <rect x="142" y="262" width="36" height="58" fill="rgba(174,139,79,.08)" stroke="rgba(174,139,79,.35)" stroke-width=".8"/>
+      <text x="160" y="280" text-anchor="middle" font-family="serif" font-size="8" fill="#D4BC86" letter-spacing="1.5">SHAMUM</text>
+      <text x="160" y="296" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">Spray</text>
+    </svg>
+    <div class="cat-overlay"></div>
+    <div class="cat-info">
+      <div class="cat-ar">البخاخات</div>
+      <div class="cat-en">Sprays Collection</div>
+      <div class="cat-count">+24 منتج</div>
+      <a class="cat-link" href="#">Shop →</a>
+    </div>
+  </div>
+
+  <!-- 2: Limited Edition -->
+  <div class="cat-card">
+    <svg viewBox="0 0 320 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="limBg" cx="50%" cy="38%" r="58%">
+          <stop offset="0%" stop-color="#3D2010"/>
+          <stop offset="100%" stop-color="#0A0502"/>
+        </radialGradient>
+      </defs>
+      <rect width="320" height="500" fill="url(#limBg)"/>
+      <path d="M160 35 L148 58 L135 44 L132 63 L160 72 L188 63 L185 44 L172 58 Z" fill="none" stroke="#C2A368" stroke-width="1.5" opacity=".65"/>
+      <circle cx="160" cy="32" r="5" fill="#AE8B4F" opacity=".6"/>
+      <path d="M136 285 Q134 225 140 198 Q147 178 160 172 Q173 178 180 198 Q186 225 184 285 Q184 342 160 348 Q136 342 136 285 Z" fill="#100808"/>
+      <path d="M136 285 Q134 225 140 198 Q147 178 160 172 Q173 178 180 198 Q186 225 184 285 Q184 342 160 348 Q136 342 136 285 Z" fill="none" stroke="rgba(194,163,104,.5)" stroke-width="1.5"/>
+      <path d="M137 220 Q134 270 136 285 Q136 342 160 348 Q184 342 184 285 Q186 270 183 220 Z" fill="#2C1208" opacity=".55"/>
+      <ellipse cx="160" cy="169" rx="15" ry="7" fill="#AE8B4F"/>
+      <rect x="148" y="152" width="24" height="18" rx="4" fill="#8C6E3A"/>
+      <ellipse cx="160" cy="151" rx="12" ry="6" fill="#C2A368"/>
+      <circle cx="160" cy="144" r="8" fill="#D4BC86"/>
+      <rect x="142" y="234" width="36" height="72" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.4)" stroke-width=".8"/>
+      <text x="160" y="253" text-anchor="middle" font-family="serif" font-size="7.5" fill="#C2A368" letter-spacing="1.5">SHAMUM</text>
+      <text x="160" y="270" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">Limited</text>
+      <text x="160" y="286" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">Edition</text>
+      <circle cx="115" cy="200" r="1.5" fill="#AE8B4F" opacity=".4"/>
+      <circle cx="205" cy="185" r="1" fill="#AE8B4F" opacity=".35"/>
+    </svg>
+    <div class="cat-overlay"></div>
+    <div class="cat-info">
+      <div class="cat-ar">إصدار محدود</div>
+      <div class="cat-en">Limited Edition</div>
+      <div class="cat-count">كميات نادرة</div>
+      <a class="cat-link" href="#">Shop →</a>
+    </div>
+  </div>
+
+  <!-- 3: Oud Oils -->
+  <div class="cat-card">
+    <svg viewBox="0 0 320 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="oilBg" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stop-color="#2C1A06"/>
+          <stop offset="100%" stop-color="#080401"/>
+        </radialGradient>
+      </defs>
+      <rect width="320" height="500" fill="url(#oilBg)"/>
+      <rect x="142" y="200" width="36" height="175" rx="12" fill="#120A02"/>
+      <rect x="142" y="200" width="36" height="175" rx="12" fill="none" stroke="rgba(194,163,104,.45)" stroke-width="1.5"/>
+      <rect x="144" y="235" width="32" height="138" rx="9" fill="#2C1408" opacity=".8"/>
+      <rect x="144" y="305" width="32" height="68" rx="7" fill="#1E0C04" opacity=".6"/>
+      <ellipse cx="160" cy="198" rx="16" ry="9" fill="#AE8B4F"/>
+      <circle cx="160" cy="193" r="11" fill="#C2A368"/>
+      <circle cx="156" cy="190" r="4" fill="#D4BC86" opacity=".6"/>
+      <rect x="148" y="158" width="24" height="36" rx="4" fill="#6E5328"/>
+      <rect x="150" y="150" width="20" height="10" rx="3" fill="#AE8B4F"/>
+      <rect x="145" y="242" width="30" height="72" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.38)" stroke-width=".7"/>
+      <text x="160" y="260" text-anchor="middle" font-family="serif" font-size="6.5" fill="#C2A368" letter-spacing="1">SHAMUM</text>
+      <text x="160" y="275" text-anchor="middle" font-family="serif" font-size="8" fill="#F4EAD2" font-style="italic">دهن</text>
+      <text x="160" y="290" text-anchor="middle" font-family="serif" font-size="8" fill="#F4EAD2" font-style="italic">العود</text>
+      <ellipse cx="160" cy="310" rx="85" ry="100" fill="#8B5A00" opacity=".07"/>
+    </svg>
+    <div class="cat-overlay"></div>
+    <div class="cat-info">
+      <div class="cat-ar">أدهان العود</div>
+      <div class="cat-en">Oud Oils</div>
+      <div class="cat-count">+18 منتج</div>
+      <a class="cat-link" href="#">Shop →</a>
+    </div>
+  </div>
+
+  <!-- 4: Oud Wood -->
+  <div class="cat-card">
+    <svg viewBox="0 0 320 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="wdBg" cx="50%" cy="55%" r="52%">
+          <stop offset="0%" stop-color="#241408"/>
+          <stop offset="100%" stop-color="#040200"/>
+        </radialGradient>
+      </defs>
+      <rect width="320" height="500" fill="url(#wdBg)"/>
+      <rect x="48" y="248" width="224" height="44" rx="7" fill="#160804" transform="rotate(-5 48 248)"/>
+      <rect x="44" y="290" width="232" height="48" rx="7" fill="#1E0C06" transform="rotate(3 44 290)"/>
+      <rect x="52" y="336" width="216" height="44" rx="7" fill="#160804" transform="rotate(-2 52 336)"/>
+      <rect x="40" y="378" width="240" height="42" rx="7" fill="#241008" transform="rotate(4 40 378)"/>
+      <ellipse cx="160" cy="268" rx="95" ry="10" fill="#AE8B4F" opacity=".14"/>
+      <ellipse cx="158" cy="312" rx="88" ry="8" fill="#AE8B4F" opacity=".12"/>
+      <ellipse cx="162" cy="354" rx="90" ry="8" fill="#AE8B4F" opacity=".1"/>
+      <path d="M56 255 Q106 252 156 257 Q200 260 242 253" stroke="#080300" stroke-width="1.5" fill="none" opacity=".6"/>
+      <path d="M50 298 Q100 293 150 298 Q198 302 240 296" stroke="#080300" stroke-width="1.5" fill="none" opacity=".5"/>
+      <path d="M148 185 Q154 165 148 148 Q142 131 150 112 Q158 93 154 74" stroke="rgba(174,139,79,.15)" stroke-width="2" fill="none"/>
+      <path d="M160 188 Q168 168 162 148 Q156 128 164 108 Q172 88 168 65" stroke="rgba(174,139,79,.1)" stroke-width="1.5" fill="none"/>
+      <path d="M172 186 Q178 165 172 144 Q166 122 175 100 Q184 80 180 58" stroke="rgba(174,139,79,.08)" stroke-width="1" fill="none"/>
+    </svg>
+    <div class="cat-overlay"></div>
+    <div class="cat-info">
+      <div class="cat-ar">أخشاب العود</div>
+      <div class="cat-en">Oud Wood</div>
+      <div class="cat-count">+12 منتج</div>
+      <a class="cat-link" href="#">Shop →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     FEATURED PRODUCTS
+══════════════════════════════════════ -->
+<section class="sec sec-sand">
+  <div class="sec-head">
+    <span class="eyebrow">The Collection · الأكثر مبيعاً</span>
+    <h2 class="sec-title">Signature <em>Fragrances</em></h2>
+    <p class="sec-sub">Six compositions, each built on agarwood of a single provenance.</p>
+    <div class="divider" style="width:120px;margin:20px auto 0;">
+      <div class="d-line gold"></div>
+      <div class="d-diamond gold"></div>
+      <div class="d-line gold"></div>
+    </div>
+  </div>
+
+  <div class="prod-grid">
+
+    <!-- Product 1 -->
+    <div class="prod-card">
+      <span class="prod-badge new">New</span>
+      <div class="prod-img">
+        <svg viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg">
+          <rect width="380" height="300" fill="#F0E8D8"/>
+          <radialGradient id="pg1" cx="50%" cy="48%" r="44%"><stop offset="0%" stop-color="#C8AE78" stop-opacity=".35"/><stop offset="100%" stop-color="#F0E8D8" stop-opacity="0"/></radialGradient>
+          <rect width="380" height="300" fill="url(#pg1)"/>
+          <path d="M165 52 L165 34 Q165 22 180 22 L200 22 Q215 22 215 34 L215 52 Q228 62 228 82 L228 248 Q228 264 208 264 L172 264 Q152 264 152 248 L152 82 Q152 62 165 52 Z" fill="#1A0C04" opacity=".92"/>
+          <path d="M165 52 L165 34 Q165 22 180 22 L200 22 Q215 22 215 34 L215 52 Q228 62 228 82 L228 248 Q228 264 208 264 L172 264 Q152 264 152 248 L152 82 Q152 62 165 52 Z" fill="none" stroke="rgba(174,139,79,.45)" stroke-width="1.5"/>
+          <path d="M154 120 L154 248 Q154 262 172 262 L208 262 Q226 262 226 248 L226 120 Z" fill="#2C1408" opacity=".55"/>
+          <rect x="168" y="8" width="44" height="15" rx="3" fill="#AE8B4F"/>
+          <rect x="170" y="2" width="40" height="8" rx="2" fill="#C2A368"/>
+          <rect x="162" y="145" width="56" height="70" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.38)" stroke-width=".8"/>
+          <text x="190" y="165" text-anchor="middle" font-family="serif" font-size="8" fill="#AE8B4F" letter-spacing="1.5">SHAMUM</text>
+          <text x="190" y="182" text-anchor="middle" font-family="serif" font-size="10" fill="#F4EAD2" font-style="italic">نور العود</text>
+          <text x="190" y="198" text-anchor="middle" font-family="sans-serif" font-size="6" fill="#8B7E66" letter-spacing="1.5">EAU DE PARFUM</text>
+          <path d="M165 68 L165 260" stroke="rgba(174,139,79,.1)" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="prod-body">
+        <div class="prod-cat">Spray · بخاخ</div>
+        <div class="prod-name">نور العود</div>
+        <div class="prod-name-en">Nour Al Oud</div>
+        <div class="prod-foot">
+          <div class="prod-price">٣٨٠ <sub>ر.س</sub></div>
+          <button class="btn-add" onclick="var b=this;b.textContent='✓ Added';b.style.background='var(--ink)';b.style.color='var(--sand-100)';setTimeout(function(){b.textContent='Add to Bag';b.style.background='';b.style.color=''},2000)">Add to Bag</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="prod-card">
+      <span class="prod-badge ltd">Limited</span>
+      <div class="prod-img">
+        <svg viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg">
+          <rect width="380" height="300" fill="#EDE0C8"/>
+          <radialGradient id="pg2" cx="50%" cy="40%" r="44%"><stop offset="0%" stop-color="#B89050" stop-opacity=".3"/><stop offset="100%" stop-color="#EDE0C8" stop-opacity="0"/></radialGradient>
+          <rect width="380" height="300" fill="url(#pg2)"/>
+          <path d="M156 275 L154 132 Q154 108 168 98 L178 74 L182 74 L192 98 Q206 108 206 132 L204 275 Z" fill="#100806"/>
+          <path d="M156 275 L154 132 Q154 108 168 98 L178 74 L182 74 L192 98 Q206 108 206 132 L204 275 Z" fill="none" stroke="rgba(174,139,79,.48)" stroke-width="1.5"/>
+          <path d="M156 275 L154 168 L206 168 L204 275 Z" fill="#2C1208" opacity=".5"/>
+          <ellipse cx="180" cy="71" rx="16" ry="7" fill="#8C6E3A"/>
+          <rect x="164" y="54" width="32" height="18" rx="5" fill="#6E5328"/>
+          <ellipse cx="180" cy="52" rx="14" ry="6" fill="#AE8B4F"/>
+          <circle cx="180" cy="45" r="9" fill="#C2A368"/>
+          <rect x="160" y="152" width="40" height="70" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.35)" stroke-width=".8"/>
+          <text x="180" y="170" text-anchor="middle" font-family="serif" font-size="7.5" fill="#AE8B4F" letter-spacing="1.5">SHAMUM</text>
+          <text x="180" y="188" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">Royal</text>
+          <text x="180" y="205" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">Amber</text>
+        </svg>
+      </div>
+      <div class="prod-body">
+        <div class="prod-cat">Limited Edition · إصدار محدود</div>
+        <div class="prod-name">رويال أمبر</div>
+        <div class="prod-name-en">Royal Amber</div>
+        <div class="prod-foot">
+          <div class="prod-price">٨٩٠ <sub>ر.س</sub></div>
+          <button class="btn-add" onclick="var b=this;b.textContent='✓ Added';b.style.background='var(--ink)';b.style.color='var(--sand-100)';setTimeout(function(){b.textContent='Add to Bag';b.style.background='';b.style.color=''},2000)">Add to Bag</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="prod-card">
+      <div class="prod-img">
+        <svg viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg">
+          <rect width="380" height="300" fill="#F2E8D4"/>
+          <radialGradient id="pg3" cx="50%" cy="50%" r="40%"><stop offset="0%" stop-color="#AE8B4F" stop-opacity=".18"/><stop offset="100%" stop-color="#F2E8D4" stop-opacity="0"/></radialGradient>
+          <rect width="380" height="300" fill="url(#pg3)"/>
+          <rect x="162" y="92" width="56" height="165" rx="14" fill="#120A02"/>
+          <rect x="162" y="92" width="56" height="165" rx="14" fill="none" stroke="rgba(174,139,79,.42)" stroke-width="1.5"/>
+          <rect x="164" y="122" width="52" height="133" rx="11" fill="#2A1008" opacity=".7"/>
+          <rect x="164" y="192" width="52" height="63" rx="9" fill="#1A0A04" opacity=".5"/>
+          <ellipse cx="190" cy="90" rx="20" ry="11" fill="#8C6E3A"/>
+          <circle cx="190" cy="85" r="13" fill="#AE8B4F"/>
+          <circle cx="186" cy="82" r="5" fill="#C2A368" opacity=".6"/>
+          <rect x="172" y="55" width="36" height="36" rx="5" fill="#6E5328"/>
+          <rect x="175" y="47" width="30" height="10" rx="3" fill="#AE8B4F"/>
+          <rect x="165" y="130" width="50" height="68" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.38)" stroke-width=".7"/>
+          <text x="190" y="149" text-anchor="middle" font-family="serif" font-size="6.5" fill="#AE8B4F" letter-spacing="1">SHAMUM</text>
+          <text x="190" y="165" text-anchor="middle" font-family="serif" font-size="8" fill="#F4EAD2" font-style="italic">دهن</text>
+          <text x="190" y="180" text-anchor="middle" font-family="serif" font-size="7.5" fill="#F4EAD2" font-style="italic">الكمبودي</text>
+        </svg>
+      </div>
+      <div class="prod-body">
+        <div class="prod-cat">Oud Oil · دهن عود</div>
+        <div class="prod-name">دهن الكمبودي</div>
+        <div class="prod-name-en">Cambodian Dahn</div>
+        <div class="prod-foot">
+          <div class="prod-price">٦٢٠ <sub>ر.س</sub></div>
+          <button class="btn-add" onclick="var b=this;b.textContent='✓ Added';b.style.background='var(--ink)';b.style.color='var(--sand-100)';setTimeout(function(){b.textContent='Add to Bag';b.style.background='';b.style.color=''},2000)">Add to Bag</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="text-align:center;margin-top:50px;">
+    <button class="btn-gold">View All · جميع المنتجات</button>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     ORIGIN NARRATIVE
+══════════════════════════════════════ -->
+<section style="background:var(--sand-50);overflow:hidden;">
+  <div class="origin-grid">
+
+    <div class="origin-visual">
+      <svg viewBox="0 0 560 580" xmlns="http://www.w3.org/2000/svg">
+        <rect width="560" height="580" fill="#1A0E06"/>
+        <radialGradient id="stGlow" cx="35%" cy="50%" r="55%">
+          <stop offset="0%" stop-color="#3D2010"/>
+          <stop offset="100%" stop-color="#0A0602"/>
+        </radialGradient>
+        <rect width="560" height="580" fill="url(#stGlow)"/>
+        <!-- Trunk -->
+        <path d="M228 0 Q233 100 236 290 Q238 430 240 580 L318 580 Q320 430 322 290 Q325 100 330 0 Z" fill="#4A3018"/>
+        <path d="M240 0 Q243 100 245 290 Q246 430 247 580 L258 580 Q259 430 260 290 Q261 100 258 0 Z" fill="#6A4222" opacity=".4"/>
+        <path d="M236 50 Q234 200 238 340 Q240 460 236 580" stroke="#2C1408" stroke-width="3" fill="none" opacity=".5"/>
+        <path d="M320 50 Q322 200 318 340 Q316 460 320 580" stroke="#2C1408" stroke-width="3" fill="none" opacity=".5"/>
+        <!-- Resin -->
+        <ellipse cx="244" cy="225" rx="16" ry="30" fill="#100602" opacity=".75"/>
+        <ellipse cx="310" cy="190" rx="12" ry="24" fill="#100602" opacity=".65"/>
+        <!-- Worker 1 -->
+        <g transform="translate(82,280)">
+          <rect x="-18" y="18" width="36" height="65" rx="5" fill="#4A3020"/>
+          <circle cx="0" cy="8" r="18" fill="#C09060"/>
+          <ellipse cx="0" cy="2" rx="20" ry="11" fill="#8B6914"/>
+          <path d="M-20 4 Q0 -10 20 4" fill="#7A5C10"/>
+          <line x1="-18" y1="38" x2="-52" y2="58" stroke="#C09060" stroke-width="7" stroke-linecap="round"/>
+          <line x1="18" y1="38" x2="48" y2="52" stroke="#C09060" stroke-width="7" stroke-linecap="round"/>
+          <rect x="44" y="45" width="6" height="24" rx="2" fill="#5A3A18"/>
+          <path d="M47 45 L58 38 L60 52 Z" fill="#8A8A8A"/>
+          <rect x="-16" y="80" width="14" height="36" rx="4" fill="#3A2818"/>
+          <rect x="2" y="80" width="14" height="36" rx="4" fill="#3A2818"/>
+        </g>
+        <!-- Worker 2 -->
+        <g transform="translate(428,258)">
+          <rect x="-16" y="18" width="32" height="60" rx="5" fill="#5A3828"/>
+          <circle cx="0" cy="8" r="16" fill="#B08050"/>
+          <ellipse cx="0" cy="2" rx="18" ry="10" fill="#6B4C10"/>
+          <path d="M-18 4 Q0 -9 18 4" fill="#5A3C0C"/>
+          <line x1="-16" y1="36" x2="-42" y2="52" stroke="#B08050" stroke-width="7" stroke-linecap="round"/>
+          <line x1="16" y1="36" x2="40" y2="50" stroke="#B08050" stroke-width="7" stroke-linecap="round"/>
+          <rect x="34" y="43" width="5" height="26" rx="1" fill="#6B4C10"/>
+          <rect x="32" y="44" width="9" height="3" rx="1" fill="#AE8B4F"/>
+          <rect x="32" y="54" width="9" height="2" rx="1" fill="#AE8B4F"/>
+          <rect x="32" y="62" width="9" height="2" rx="1" fill="#AE8B4F"/>
+          <rect x="-14" y="76" width="12" height="32" rx="4" fill="#3A2818"/>
+          <rect x="2" y="76" width="12" height="32" rx="4" fill="#3A2818"/>
+        </g>
+        <!-- Top foliage -->
+        <ellipse cx="272" cy="22" rx="200" ry="75" fill="#1E3C10" opacity=".7"/>
+        <ellipse cx="272" cy="8" rx="145" ry="52" fill="#2A5018" opacity=".65"/>
+        <!-- Glow -->
+        <ellipse cx="272" cy="240" rx="130" ry="180" fill="#8B5A00" opacity=".07"/>
+        <!-- Ground -->
+        <ellipse cx="272" cy="558" rx="145" ry="14" fill="#2C1810" opacity=".6"/>
+      </svg>
+    </div>
+
+    <div class="origin-text">
+      <div class="origin-num">01</div>
+      <span class="eyebrow" style="margin-bottom:10px;">From Tree to Bottle</span>
+      <h2 class="origin-title">
+        By hand<br>and by <em style="font-style:italic;color:var(--gold-500);">patience.</em>
+      </h2>
+      <p class="origin-body" style="margin-bottom:20px;">
+        A century-old Aquilaria stands in mist-soft light, its heartwood quietly forming resin over decades. Our artisans read the trunk the way a physician reads a patient — by sight, scent, and touch.
+      </p>
+      <div class="divider" style="width:100px;margin-bottom:20px;">
+        <div class="d-line gold"></div>
+        <div class="d-diamond gold"></div>
+        <div class="d-line gold"></div>
+      </div>
+      <p class="origin-body">
+        Only 1 in 10 Aquilaria trees naturally produces the resinous heartwood we call Oud. We wait for the right tree. We wait for the right moment.
+      </p>
+      <div style="margin-top:36px;direction:ltr;">
+        <button class="btn-gold">The House →</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     QUOTE
+══════════════════════════════════════ -->
+<section class="sec sec-dark quote-sec">
+  <div class="divider" style="width:100px;margin:0 auto 40px;">
+    <div class="d-line dark"></div>
+    <div class="d-diamond dark"></div>
+    <div class="d-line dark"></div>
+  </div>
+  <blockquote>
+    العطر ذاكرة لا تُنسى —<br>وشاموم يكتب ذاكرتك.
+  </blockquote>
+  <div class="divider" style="width:100px;margin:30px auto;">
+    <div class="d-line dark"></div>
+    <div class="d-diamond dark"></div>
+    <div class="d-line dark"></div>
+  </div>
+  <p class="q-attr">Maison SHAMUM · شاموم · Riyadh</p>
+</section>
+
+<!-- ══════════════════════════════════════
+     TRUST BADGES
+══════════════════════════════════════ -->
+<div class="trust">
+  <div class="trust-item">
+    <span class="trust-icon">◈</span>
+    <div class="trust-title">شحن مجاني</div>
+    <div class="trust-sub">Free Shipping · KSA</div>
+  </div>
+  <div class="trust-item">
+    <span class="trust-icon">◇</span>
+    <div class="trust-title">عود طبيعي ١٠٠٪</div>
+    <div class="trust-sub">100% Natural Agarwood</div>
+  </div>
+  <div class="trust-item">
+    <span class="trust-icon">↩</span>
+    <div class="trust-title">إرجاع مجاني</div>
+    <div class="trust-sub">14-Day Returns</div>
+  </div>
+  <div class="trust-item">
+    <span class="trust-icon">✦</span>
+    <div class="trust-title">برنامج الولاء</div>
+    <div class="trust-sub">Earn Rewards</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     LOYALTY BANNER
+══════════════════════════════════════ -->
+<div class="loyalty">
+  <div class="loyalty-text">
+    <h2>انضم لعائلة شاموم</h2>
+    <p>اكسب نقاط مع كل عملية شراء، واستمتع بعروض حصرية تليق بك.</p>
+  </div>
+  <button class="btn-dark">Join the House · سجّل الآن</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <span class="footer-brand-name">SHAMUM</span>
+      <div class="footer-brand-sub">Maison d'Oud</div>
+      <p class="footer-desc">
+        A house of oud. Distilled with patience from the heartwood of the Aquilaria, aged in cedar, bottled by hand.
+      </p>
+      <div style="display:flex;gap:14px;margin-top:22px;">
+        <a href="https://www.instagram.com/shamum" style="cursor:pointer;color:var(--gold-400);font-size:17px;text-decoration:none;">📸</a>
+        <span style="cursor:pointer;color:var(--gold-400);font-size:17px;">📞</span>
+        <span style="cursor:pointer;color:var(--gold-400);font-size:17px;">✉</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Maison</h4>
+      <ul>
+        <li><a href="#">The House</a></li>
+        <li><a href="#">Our Oud</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Stores</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">All Fragrances</a></li>
+        <li><a href="#">Oud Oils</a></li>
+        <li><a href="#">Oud Wood</a></li>
+        <li><a href="#">Limited Edition</a></li>
+        <li><a href="#">Gifting</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Care</h4>
+      <ul>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Authenticity</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 SHAMUM · شاموم &nbsp;·&nbsp; الرقم الضريبي: 1100190829 &nbsp;·&nbsp; Riyadh</span>
+    <div class="pay">
+      <span>Apple Pay</span>
+      <span>Visa</span>
+      <span>Mastercard</span>
+      <span>Amex</span>
+      <span>مدى</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', function() {
+    document.getElementById('nav').style.boxShadow =
+      window.scrollY > 60 ? '0 4px 28px rgba(36,24,16,.12)' : 'none';
+  });
+</script>
+
+</body>
+</html>

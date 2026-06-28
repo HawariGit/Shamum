@@ -10,7 +10,7 @@
 :root {
   --sand-50:#FBF6EA; --sand-100:#F4EAD2; --sand-200:#E9D8B4; --sand-300:#DCC79A;
   --gold-300:#D4BC86; --gold-400:#C2A368; --gold-500:#AE8B4F; --gold-600:#8C6E3A;
-  --bronze:#6E5328; --oud-700:#4A3520; --oud-800:#342517; --oud-900:#241810; --ink:#15100A;
+  --bronze:#6E5328; --oud-800:#342517; --oud-900:#241810; --ink:#15100A;
   --stone:#8B7E66;
   --grad-gold:linear-gradient(135deg,#D4BC86 0%,#AE8B4F 48%,#8C6E3A 100%);
   --grad-resin:linear-gradient(180deg,#342517 0%,#241810 60%,#15100A 100%);
@@ -18,146 +18,191 @@
   --font-s:'Jost',system-ui,sans-serif;
   --border-gold:rgba(174,139,79,.55);
   --border-dark:rgba(212,188,134,.28);
-  --ease:cubic-bezier(.22,.61,.36,1);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--sand-50);color:var(--ink);font-family:var(--font-d);overflow-x:hidden;}
+body{background:var(--ink);color:var(--sand-100);font-family:var(--font-d);overflow-x:hidden;}
 
-.ann{background:var(--ink);color:var(--sand-100);text-align:center;padding:9px 20px;font-family:var(--font-s);font-size:11px;letter-spacing:2px;}
+/* ── ANN ── */
+.ann{background:var(--ink);border-bottom:1px solid rgba(212,188,134,.12);color:var(--sand-100);text-align:center;padding:9px 20px;font-family:var(--font-s);font-size:11px;letter-spacing:2px;position:relative;z-index:300;}
 .ann b{color:var(--gold-400);font-weight:400;}
 
-nav{position:sticky;top:0;z-index:200;background:rgba(21,16,10,.55);backdrop-filter:blur(14px);border-bottom:1px solid var(--border-dark);padding:0 48px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:66px;transition:background .4s,border-color .4s;}
-nav.light{background:rgba(251,246,234,.92);border-color:rgba(110,83,40,.18);}
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 48px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:62px;transition:background .5s,border-color .5s;}
+nav.opaque{background:rgba(251,246,234,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(110,83,40,.18);}
 .nav-links{display:flex;gap:28px;}
-.nav-links a{font-family:var(--font-s);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,234,210,.75);cursor:pointer;padding-bottom:2px;border-bottom:1px solid transparent;transition:all .25s;text-decoration:none;}
-nav.light .nav-links a{color:var(--oud-700);}
-.nav-links a:hover{color:var(--gold-400);border-color:var(--gold-400);}
+.nav-links a{font-family:var(--font-s);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,234,210,.75);cursor:pointer;text-decoration:none;transition:color .3s;padding-bottom:2px;border-bottom:1px solid transparent;}
+nav.opaque .nav-links a{color:var(--oud-800);}
+.nav-links a:hover{color:var(--gold-400);}
 .nav-brand{text-align:center;cursor:pointer;}
-.nav-brand-name{font-family:var(--font-d);font-size:26px;font-weight:600;letter-spacing:.14em;color:var(--sand-100);line-height:1;transition:color .4s;}
-nav.light .nav-brand-name{color:var(--ink);}
-.nav-brand-sub{font-family:var(--font-s);font-size:8px;letter-spacing:.42em;text-transform:uppercase;color:rgba(212,188,134,.5);margin-top:2px;transition:color .4s;}
-nav.light .nav-brand-sub{color:var(--stone);}
-.nav-right{display:flex;gap:8px;justify-content:flex-end;align-items:center;}
-.nav-shop{font-family:var(--font-s);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,234,210,.75);cursor:pointer;margin-right:14px;padding-bottom:2px;border-bottom:1px solid transparent;transition:all .25s;}
-nav.light .nav-shop{color:var(--oud-700);}
-.nav-icon{width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:rgba(244,234,210,.7);cursor:pointer;font-size:15px;transition:color .25s;}
-nav.light .nav-icon{color:var(--oud-700);}
-.nav-icon:hover,.nav-shop:hover{color:var(--gold-500)!important;}
+.nav-brand-name{font-family:var(--font-d);font-size:24px;font-weight:600;letter-spacing:.14em;color:var(--sand-100);transition:color .5s;}
+nav.opaque .nav-brand-name{color:var(--ink);}
+.nav-brand-sub{font-family:var(--font-s);font-size:8px;letter-spacing:.4em;text-transform:uppercase;color:rgba(212,188,134,.5);margin-top:1px;transition:color .5s;}
+nav.opaque .nav-brand-sub{color:var(--stone);}
+.nav-right{display:flex;gap:6px;justify-content:flex-end;align-items:center;}
+.nav-shop{font-family:var(--font-s);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,234,210,.75);cursor:pointer;margin-right:14px;transition:color .3s;}
+nav.opaque .nav-shop{color:var(--oud-800);}
+.nav-icon{width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:rgba(244,234,210,.7);cursor:pointer;font-size:15px;transition:color .3s;border-radius:50%;}
+nav.opaque .nav-icon{color:var(--oud-800);}
 
-.divider{display:flex;align-items:center;gap:10px;}
-.d-line{flex:1;height:1px;background:var(--border-dark);}
-.d-diamond{width:6px;height:6px;transform:rotate(45deg);flex-shrink:0;background:var(--gold-300);}
-.d-line.gold{background:var(--border-gold);}
-.d-diamond.gold{background:var(--gold-500);}
+/* ══════════════════════════
+   SCROLL ANIMATION STAGE
+══════════════════════════ */
+#scroll-container{position:relative;height:700vh;}
+#sticky-scene{
+  position:sticky;top:0;height:100vh;
+  overflow:hidden;background:#080503;
+}
 
-.panel{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 24px;color:var(--sand-100);overflow:hidden;}
-.panel-art{position:absolute;inset:0;width:100%;height:100%;}
-.panel-veil{position:absolute;inset:0;pointer-events:none;}
-.panel-content{position:relative;z-index:10;max-width:640px;opacity:0;transform:translateY(28px);transition:opacity 900ms var(--ease),transform 900ms var(--ease);}
-.panel-content.visible{opacity:1;transform:translateY(0);}
-.panel-section{font-family:var(--font-s);font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold-300);margin-bottom:18px;}
-.panel-kicker{font-family:var(--font-s);font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:rgba(212,188,134,.75);margin-bottom:14px;}
-.panel-title{font-family:var(--font-d);font-size:64px;font-weight:500;line-height:1.04;letter-spacing:.01em;}
-.panel-title em{color:var(--gold-300);font-style:italic;}
-.panel-body{font-family:var(--font-s);font-size:15px;font-weight:300;line-height:1.8;color:rgba(244,234,210,.82);margin-top:22px;}
-.panel-sep{height:1px;background:var(--border-dark);max-width:100px;margin:0 auto;opacity:.45;}
+/* SVG scene */
+#scene-svg{position:absolute;inset:0;width:100%;height:100%;}
 
-.scroll-cue{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;z-index:10;}
-.scroll-cue span{font-family:var(--font-s);font-size:8px;letter-spacing:.3em;color:rgba(212,188,134,.55);text-transform:uppercase;}
-.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--gold-400),transparent);animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:.2}50%{opacity:1}}
+/* Text overlays */
+#stage-text{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  pointer-events:none;text-align:center;padding:0 24px;
+}
+.stage-label{
+  position:absolute;
+  font-family:var(--font-s);font-size:11px;font-weight:500;
+  letter-spacing:.42em;text-transform:uppercase;color:var(--gold-300);
+  opacity:0;transition:none;top:18%;
+}
+.stage-headline{
+  position:absolute;
+  font-family:var(--font-d);font-size:clamp(44px,6vw,84px);font-weight:500;
+  line-height:1.04;color:var(--sand-100);
+  max-width:800px;text-align:center;
+  opacity:0;transition:none;
+}
+.stage-headline em{font-style:italic;color:var(--gold-300);}
+.stage-sub{
+  position:absolute;
+  font-family:var(--font-s);font-size:15px;font-weight:300;
+  line-height:1.8;color:rgba(244,234,210,.78);
+  max-width:520px;text-align:center;
+  opacity:0;transition:none;top:58%;
+}
+#stage-cta{
+  position:absolute;bottom:12%;
+  display:flex;gap:14px;opacity:0;pointer-events:none;
+}
+#stage-cta.show{pointer-events:auto;}
 
-.grades{display:flex;justify-content:center;gap:14px;margin:32px 0;}
-.grade-card{display:flex;flex-direction:column;align-items:center;gap:8px;}
-.grade-swatch{width:50px;height:68px;border-radius:2px;border:1px solid var(--border-dark);background:linear-gradient(180deg,#4A3520,#15100A);display:flex;align-items:flex-end;justify-content:center;padding-bottom:5px;}
-.grade-num{font-family:var(--font-d);font-style:italic;font-size:20px;color:var(--gold-300);}
-.grade-label{font-family:var(--font-s);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(212,188,134,.6);}
+/* Scroll cue */
+#scroll-cue{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  font-family:var(--font-s);font-size:8px;letter-spacing:.3em;
+  color:rgba(212,188,134,.5);text-transform:uppercase;
+  transition:opacity .5s;
+}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold-400),transparent);animation:sp 2s ease-in-out infinite;}
+@keyframes sp{0%,100%{opacity:.15}50%{opacity:.8}}
 
+/* Pile labels */
+.pile-label{
+  position:absolute;bottom:10%;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  opacity:0;transition:none;
+}
+.pile-grade{font-family:var(--font-d);font-style:italic;font-size:28px;color:var(--gold-300);}
+.pile-name{font-family:var(--font-s);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(212,188,134,.6);}
+
+/* buttons */
 .btn-gold{font-family:var(--font-s);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;background:var(--grad-gold);color:var(--ink);border:1px solid var(--gold-600);padding:14px 36px;cursor:pointer;transition:filter .3s;}
 .btn-gold:hover{filter:brightness(1.08);}
 .btn-outline-dark{font-family:var(--font-s);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;background:transparent;color:var(--sand-100);border:1px solid var(--border-dark);padding:14px 36px;cursor:pointer;transition:all .3s;}
 .btn-outline-dark:hover{background:rgba(212,188,134,.08);}
 
-.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;}
-.cat-card{position:relative;height:500px;overflow:hidden;cursor:pointer;}
-.cat-card svg{position:absolute;inset:0;width:100%;height:100%;}
-.cat-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(21,16,10,.93) 0%,rgba(21,16,10,.28) 55%,transparent 100%);opacity:.7;transition:opacity .4s var(--ease);}
-.cat-card:hover .cat-overlay{opacity:.97;}
-.cat-info{position:absolute;bottom:0;left:0;right:0;padding:28px 22px;transform:translateY(18px);transition:transform .4s var(--ease);}
-.cat-card:hover .cat-info{transform:translateY(0);}
-.cat-ar{font-family:var(--font-d);font-size:26px;color:var(--sand-100);margin-bottom:3px;}
-.cat-en{font-family:var(--font-s);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-400);margin-bottom:8px;}
-.cat-count{font-family:var(--font-s);font-size:10px;color:rgba(212,188,134,.55);}
-.cat-link{display:inline-block;margin-top:12px;font-family:var(--font-s);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--sand-100);border-bottom:1px solid var(--gold-400);padding-bottom:2px;opacity:0;transition:opacity .3s .1s;text-decoration:none;}
-.cat-card:hover .cat-link{opacity:1;}
+/* ── POST-SCROLL CONTENT ── */
+.site-content{background:var(--sand-50);color:var(--ink);}
 
-.sec{padding:96px 52px;}
+.divider{display:flex;align-items:center;gap:10px;}
+.d-line{flex:1;height:1px;background:var(--border-dark);}
+.d-diamond{width:6px;height:6px;transform:rotate(45deg);flex-shrink:0;background:var(--gold-300);}
+.d-line.g{background:var(--border-gold);}
+.d-diamond.g{background:var(--gold-500);}
+
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;}
+.cat-card{position:relative;height:480px;overflow:hidden;cursor:pointer;}
+.cat-card svg{position:absolute;inset:0;width:100%;height:100%;}
+.cat-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(21,16,10,.93) 0%,rgba(21,16,10,.25) 55%,transparent 100%);opacity:.65;transition:opacity .4s;}
+.cat-card:hover .cat-ov{opacity:.96;}
+.cat-info{position:absolute;bottom:0;left:0;right:0;padding:26px 22px;transform:translateY(16px);transition:transform .4s;}
+.cat-card:hover .cat-info{transform:translateY(0);}
+.cat-ar{font-family:var(--font-d);font-size:25px;color:var(--sand-100);margin-bottom:3px;}
+.cat-en{font-family:var(--font-s);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-400);margin-bottom:7px;}
+.cat-ct{font-family:var(--font-s);font-size:10px;color:rgba(212,188,134,.5);}
+.cat-lk{display:inline-block;margin-top:10px;font-family:var(--font-s);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand-100);border-bottom:1px solid var(--gold-400);padding-bottom:2px;opacity:0;transition:opacity .3s .1s;text-decoration:none;}
+.cat-card:hover .cat-lk{opacity:1;}
+
+.sec{padding:88px 52px;}
 .sec-sand{background:var(--sand-200);}
 .sec-dark{background:var(--grad-resin);}
-.sec-head{text-align:center;margin-bottom:60px;}
 .eyebrow{font-family:var(--font-s);font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--bronze);display:block;margin-bottom:12px;}
 .sec-title{font-family:var(--font-d);font-size:44px;font-weight:500;color:var(--ink);}
 .sec-title em{font-style:italic;color:var(--gold-500);}
-.sec-sub{font-family:var(--font-s);font-size:14px;font-weight:300;color:var(--stone);margin-top:12px;line-height:1.7;}
-.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.sec-sub{font-family:var(--font-s);font-size:14px;font-weight:300;color:var(--stone);margin-top:10px;line-height:1.7;}
+.sec-head{text-align:center;margin-bottom:56px;}
+
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
 .prod-card{background:#fff;border:1px solid rgba(110,83,40,.14);cursor:pointer;transition:box-shadow .3s,transform .3s;position:relative;}
 .prod-card:hover{box-shadow:0 12px 40px rgba(36,24,16,.12);transform:translateY(-3px);}
 .prod-badge{position:absolute;top:14px;left:14px;z-index:2;font-family:var(--font-s);font-size:8px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:5px 11px;border-radius:999px;}
 .prod-badge.new{background:transparent;color:var(--bronze);border:1px solid var(--border-gold);}
 .prod-badge.ltd{background:var(--ink);color:var(--sand-100);}
-.prod-img{width:100%;height:300px;}
+.prod-img{width:100%;height:290px;}
 .prod-img svg{width:100%;height:100%;display:block;}
-.prod-body{padding:24px;}
+.prod-body{padding:22px;}
 .prod-arabic{font-family:var(--font-d);font-size:15px;color:var(--stone);margin-bottom:3px;direction:rtl;}
-.prod-name{font-family:var(--font-d);font-size:24px;color:var(--ink);margin-bottom:4px;}
-.prod-notes{font-family:var(--font-s);font-size:11px;font-weight:300;letter-spacing:.06em;color:var(--stone);margin-bottom:16px;}
+.prod-name{font-family:var(--font-d);font-size:23px;color:var(--ink);margin-bottom:4px;}
+.prod-notes{font-family:var(--font-s);font-size:11px;font-weight:300;letter-spacing:.06em;color:var(--stone);margin-bottom:14px;}
 .prod-foot{display:flex;justify-content:space-between;align-items:center;}
-.prod-price{font-family:var(--font-d);font-size:22px;color:var(--gold-600);}
-.btn-add{font-family:var(--font-s);font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;background:transparent;color:var(--gold-500);border:1px solid var(--border-gold);padding:8px 18px;cursor:pointer;transition:all .28s var(--ease);}
+.prod-price{font-family:var(--font-d);font-size:21px;color:var(--gold-600);}
+.btn-add{font-family:var(--font-s);font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;background:transparent;color:var(--gold-500);border:1px solid var(--border-gold);padding:8px 18px;cursor:pointer;transition:all .28s;}
 .btn-add:hover{background:var(--ink);color:var(--sand-100);border-color:var(--ink);}
-.view-all-wrap{text-align:center;margin-top:48px;}
 
-.quote-sec{padding:110px 52px;text-align:center;}
-blockquote{font-family:var(--font-d);font-size:38px;font-style:italic;color:var(--sand-100);max-width:720px;margin:0 auto 16px;line-height:1.5;}
+.quote-sec{padding:100px 52px;text-align:center;}
+blockquote{font-family:var(--font-d);font-size:36px;font-style:italic;color:var(--sand-100);max-width:700px;margin:0 auto 16px;line-height:1.5;}
 .q-attr{font-family:var(--font-s);font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold-400);}
 
 .trust{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--sand-300);}
-.trust-item{background:var(--sand-50);padding:40px 24px;text-align:center;}
-.trust-icon{font-size:24px;margin-bottom:14px;display:block;color:var(--gold-500);}
-.trust-title{font-family:var(--font-d);font-size:20px;color:var(--ink);margin-bottom:5px;}
+.trust-item{background:var(--sand-50);padding:36px 22px;text-align:center;}
+.trust-icon{font-size:22px;margin-bottom:12px;display:block;color:var(--gold-500);}
+.trust-title{font-family:var(--font-d);font-size:19px;color:var(--ink);margin-bottom:4px;}
 .trust-sub{font-family:var(--font-s);font-size:10px;letter-spacing:.1em;color:var(--stone);}
 
-.loyalty{background:var(--grad-gold);padding:76px 52px;display:flex;align-items:center;justify-content:space-between;gap:40px;}
-.loyalty h2{font-family:var(--font-d);font-size:36px;color:var(--ink);margin-bottom:10px;}
-.loyalty p{font-family:var(--font-s);font-size:14px;font-weight:300;line-height:1.7;color:rgba(21,16,10,.75);}
+.loyalty{background:var(--grad-gold);padding:70px 52px;display:flex;align-items:center;justify-content:space-between;gap:40px;}
+.loyalty h2{font-family:var(--font-d);font-size:34px;color:var(--ink);margin-bottom:8px;}
+.loyalty p{font-family:var(--font-s);font-size:14px;font-weight:300;line-height:1.7;color:rgba(21,16,10,.74);}
 .btn-dark{font-family:var(--font-s);font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;background:var(--ink);color:var(--sand-100);border:none;padding:14px 36px;cursor:pointer;white-space:nowrap;transition:background .3s;}
 .btn-dark:hover{background:var(--oud-800);}
 
-footer{background:var(--grad-resin);color:var(--sand-100);padding:72px 52px 36px;border-top:1px solid var(--border-dark);}
-.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:52px;}
-.footer-brand-name{font-family:var(--font-d);font-size:28px;font-weight:600;letter-spacing:.14em;color:var(--gold-300);display:block;margin-bottom:3px;}
-.footer-brand-sub{font-family:var(--font-s);font-size:8px;letter-spacing:.4em;color:rgba(212,188,134,.45);}
-.footer-desc{font-family:var(--font-s);font-size:13px;font-weight:300;line-height:1.8;color:rgba(212,188,134,.65);margin-top:16px;max-width:260px;}
-.footer-email-input{width:100%;margin-top:20px;background:rgba(212,188,134,.08);border:1px solid var(--border-dark);padding:10px 14px;font-family:var(--font-s);font-size:12px;color:var(--sand-100);outline:none;}
-.footer-email-input::placeholder{color:rgba(212,188,134,.38);}
-.footer-col h4{font-family:var(--font-s);font-size:9px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-300);margin-bottom:18px;}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+footer{background:var(--grad-resin);padding:70px 52px 34px;border-top:1px solid var(--border-dark);}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:44px;margin-bottom:48px;}
+.footer-brand-name{font-family:var(--font-d);font-size:26px;font-weight:600;letter-spacing:.14em;color:var(--gold-300);display:block;margin-bottom:3px;}
+.footer-brand-sub{font-family:var(--font-s);font-size:8px;letter-spacing:.4em;color:rgba(212,188,134,.44);}
+.footer-desc{font-family:var(--font-s);font-size:13px;font-weight:300;line-height:1.8;color:rgba(212,188,134,.64);margin-top:14px;max-width:255px;}
+.footer-email-input{width:100%;margin-top:18px;background:rgba(212,188,134,.08);border:1px solid var(--border-dark);padding:10px 14px;font-family:var(--font-s);font-size:12px;color:var(--sand-100);outline:none;}
+.footer-email-input::placeholder{color:rgba(212,188,134,.36);}
+.footer-col h4{font-family:var(--font-s);font-size:9px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-300);margin-bottom:16px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
 .footer-col a{font-family:var(--font-s);font-size:13px;color:rgba(244,234,210,.7);cursor:pointer;transition:color .25s;text-decoration:none;}
 .footer-col a:hover{color:var(--gold-300);}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid var(--border-dark);font-family:var(--font-s);font-size:10px;letter-spacing:.1em;color:rgba(139,126,102,.8);}
-.pay{display:flex;gap:8px;}
-.pay span{background:rgba(212,188,134,.08);border:1px solid rgba(212,188,134,.16);padding:3px 10px;font-size:9px;color:rgba(212,188,134,.55);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;border-top:1px solid var(--border-dark);font-family:var(--font-s);font-size:10px;letter-spacing:.1em;color:rgba(139,126,102,.78);}
+.pay{display:flex;gap:7px;}
+.pay span{background:rgba(212,188,134,.07);border:1px solid rgba(212,188,134,.15);padding:3px 9px;font-size:9px;color:rgba(212,188,134,.5);}
 
 @media(max-width:900px){
   nav{padding:0 20px;} .nav-links{display:none;}
-  .panel-title{font-size:40px;}
   .cat-grid{grid-template-columns:repeat(2,1fr);}
   .prod-grid{grid-template-columns:1fr;}
   .footer-top{grid-template-columns:1fr 1fr;}
   .trust{grid-template-columns:repeat(2,1fr);}
   .loyalty{flex-direction:column;text-align:center;}
-  .sec{padding:64px 24px;}
+  .sec{padding:60px 22px;}
 }
 </style>
 </head>
@@ -181,311 +226,704 @@ footer{background:var(--grad-resin);color:var(--sand-100);padding:72px 52px 36px
   </div>
 </nav>
 
-<!-- PANEL 1: THE CANOPY -->
-<div class="panel">
-  <svg class="panel-art" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="p1sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1A2E10"/><stop offset="50%" stop-color="#0F1C08"/><stop offset="100%" stop-color="#050300"/></linearGradient>
-      <radialGradient id="p1sun" cx="65%" cy="13%" r="30%"><stop offset="0%" stop-color="#FFE070" stop-opacity=".32"/><stop offset="100%" stop-color="#0F1C08" stop-opacity="0"/></radialGradient>
-      <linearGradient id="p1bot" x1="0" y1="0" x2="0" y2="1"><stop offset="65%" stop-color="#050300" stop-opacity="0"/><stop offset="100%" stop-color="#050300"/></linearGradient>
-      <linearGradient id="p1veil" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#050300" stop-opacity=".6"/><stop offset="38%" stop-color="#050300" stop-opacity=".4"/><stop offset="62%" stop-color="#050300" stop-opacity=".1"/><stop offset="100%" stop-color="#050300" stop-opacity="0"/></linearGradient>
-    </defs>
-    <rect width="1440" height="900" fill="url(#p1sky)"/>
-    <rect width="1440" height="900" fill="url(#p1sun)"/>
-    <circle cx="935" cy="82" r="38" fill="#FFD060" opacity=".14"/>
-    <ellipse cx="720" cy="190" rx="390" ry="195" fill="#0C1A06" opacity=".92"/>
-    <ellipse cx="720" cy="158" rx="330" ry="165" fill="#142808" opacity=".9"/>
-    <ellipse cx="740" cy="130" rx="280" ry="142" fill="#1A3410" opacity=".88"/>
-    <ellipse cx="760" cy="106" rx="240" ry="118" fill="#224818" opacity=".85"/>
-    <circle cx="635" cy="105" r="88" fill="#1A3810"/>
-    <circle cx="572" cy="148" r="68" fill="#142E0C"/>
-    <circle cx="758" cy="85" r="82" fill="#244A18"/>
-    <circle cx="852" cy="73" r="76" fill="#2E5820"/>
-    <circle cx="935" cy="88" r="64" fill="#386424"/>
-    <circle cx="998" cy="114" r="54" fill="#304C1E"/>
-    <circle cx="506" cy="182" r="52" fill="#102008"/>
-    <circle cx="1048" cy="150" r="46" fill="#1A3410"/>
-    <ellipse cx="895" cy="77" rx="138" ry="72" fill="#4A7C28" opacity=".62"/>
-    <ellipse cx="948" cy="63" rx="96" ry="52" fill="#5A9030" opacity=".58"/>
-    <ellipse cx="980" cy="55" rx="62" ry="36" fill="#6EAA38" opacity=".5"/>
-    <line x1="935" y1="32" x2="800" y2="320" stroke="#FFE070" stroke-width="1.5" opacity=".08"/>
-    <line x1="935" y1="22" x2="845" y2="380" stroke="#FFE070" stroke-width="1" opacity=".05"/>
-    <path d="M690 290 Q696 440 700 580 Q703 700 705 900 L805 900 Q807 700 810 580 Q814 440 820 290 Z" fill="#3D2410"/>
-    <path d="M704 290 Q707 440 709 580 Q710 700 712 900 L722 900 Q723 700 724 580 Q725 440 722 290 Z" fill="#5A3418" opacity=".42"/>
-    <path d="M697 330 Q695 445 699 575" stroke="#2A1808" stroke-width="3" fill="none" opacity=".5"/>
-    <path d="M812 330 Q814 445 810 575" stroke="#2A1808" stroke-width="3" fill="none" opacity=".5"/>
-    <ellipse cx="706" cy="402" rx="14" ry="26" fill="#140804" opacity=".7" transform="rotate(-8 706 402)"/>
-    <ellipse cx="800" cy="372" rx="11" ry="20" fill="#140804" opacity=".6" transform="rotate(12 800 372)"/>
-    <path d="M696 316 Q630 290 562 265 Q522 248 486 242" stroke="#3D2410" stroke-width="22" fill="none" stroke-linecap="round"/>
-    <path d="M486 242 Q454 232 418 218" stroke="#3D2410" stroke-width="12" fill="none" stroke-linecap="round"/>
-    <path d="M814 316 Q878 290 948 265 Q986 248 1022 242" stroke="#3D2410" stroke-width="20" fill="none" stroke-linecap="round"/>
-    <circle cx="414" cy="212" r="42" fill="#142E0C"/>
-    <circle cx="1066" cy="234" r="38" fill="#142E0C"/>
-    <circle cx="598" cy="318" r="1.5" fill="#AE8B4F" opacity=".5"/>
-    <circle cx="742" cy="268" r="1.2" fill="#D4BC86" opacity=".4"/>
-    <circle cx="864" cy="335" r="1" fill="#AE8B4F" opacity=".35"/>
-    <rect width="1440" height="900" fill="url(#p1bot)"/>
-    <rect width="1440" height="900" fill="url(#p1veil)"/>
-  </svg>
-  <div class="panel-veil" style="background:rgba(5,3,0,.25);"></div>
-  <div class="panel-content" data-reveal>
-    <div class="panel-section">Section I</div>
-    <div class="divider" style="width:90px;margin:0 auto 20px;"><div class="d-line"></div><div class="d-diamond"></div><div class="d-line"></div></div>
-    <div class="panel-kicker">The Canopy</div>
-    <h2 class="panel-title">From a tree that<br><em>keeps its own time</em></h2>
-    <p class="panel-body">High in the mist, an ancient Aquilaria stands in soft cinematic light — its dense canopy decades in the making, its heartwood quietly preparing to form resin.</p>
-    <div style="display:flex;gap:14px;justify-content:center;margin-top:32px;">
-      <button class="btn-gold">Discover the Collection</button>
-      <button class="btn-outline-dark">Our Story</button>
-    </div>
-  </div>
-  <div class="scroll-cue"><span>Scroll</span><div class="scroll-line"></div></div>
-</div>
+<!-- ══════════════════════════════════════
+     SCROLL-DRIVEN ANIMATION STAGE
+══════════════════════════════════════ -->
+<div id="scroll-container">
+  <div id="sticky-scene">
 
-<div class="panel-sep"></div>
+    <!-- SCENE SVG -->
+    <svg id="scene-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Sky gradients -->
+        <linearGradient id="sky-dark" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0A1206"/><stop offset="100%" stop-color="#050300"/>
+        </linearGradient>
+        <linearGradient id="sky-dusk" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1A2E10"/><stop offset="60%" stop-color="#0F1C08"/><stop offset="100%" stop-color="#050300"/>
+        </linearGradient>
+        <radialGradient id="sun-glow" cx="65%" cy="12%" r="28%">
+          <stop offset="0%" stop-color="#FFE070" stop-opacity=".35"/><stop offset="100%" stop-color="#0F1C08" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Resin glow -->
+        <radialGradient id="resin-glow" cx="50%" cy="70%" r="40%">
+          <stop offset="0%" stop-color="#8B5A00" stop-opacity=".25"/><stop offset="100%" stop-color="#050300" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Clip for ground -->
+        <clipPath id="above-ground"><rect x="0" y="0" width="1440" height="832"/></clipPath>
+        <!-- Ground gradient -->
+        <linearGradient id="ground-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2C1808"/><stop offset="100%" stop-color="#1A0C04"/>
+        </linearGradient>
+        <!-- Filter: blur for depth -->
+        <filter id="blur-sm"><feGaussianBlur stdDeviation="1.5"/></filter>
+        <filter id="blur-md"><feGaussianBlur stdDeviation="3"/></filter>
+      </defs>
 
-<!-- PANEL 2: THE HARVEST -->
-<div class="panel">
-  <svg class="panel-art" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <radialGradient id="p2g" cx="38%" cy="50%" r="52%"><stop offset="0%" stop-color="#3D2010"/><stop offset="100%" stop-color="#080402"/></radialGradient>
-      <linearGradient id="p2veil" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#080402" stop-opacity=".38"/><stop offset="35%" stop-color="#080402" stop-opacity=".5"/><stop offset="50%" stop-color="#080402" stop-opacity=".42"/><stop offset="65%" stop-color="#080402" stop-opacity=".5"/><stop offset="100%" stop-color="#080402" stop-opacity=".38"/></linearGradient>
-    </defs>
-    <rect width="1440" height="900" fill="#0A0602"/>
-    <rect width="1440" height="900" fill="url(#p2g)"/>
-    <path d="M640 0 Q648 150 652 450 Q655 650 658 900 L782 900 Q785 650 788 450 Q792 150 800 0 Z" fill="#4A3018"/>
-    <path d="M658 0 Q662 150 665 450 Q667 650 669 900 L682 900 Q683 650 685 450 Q687 150 684 0 Z" fill="#6A4222" opacity=".38"/>
-    <path d="M652 60 Q650 220 654 420 Q656 580 652 900" stroke="#2C1408" stroke-width="3.5" fill="none" opacity=".5"/>
-    <path d="M780 60 Q782 220 778 420 Q776 580 780 900" stroke="#2C1408" stroke-width="3.5" fill="none" opacity=".5"/>
-    <ellipse cx="664" cy="240" rx="18" ry="34" fill="#100602" opacity=".78" transform="rotate(-6 664 240)"/>
-    <ellipse cx="768" cy="200" rx="14" ry="26" fill="#100602" opacity=".68" transform="rotate(10 768 200)"/>
-    <ellipse cx="658" cy="420" rx="13" ry="24" fill="#0A0300" opacity=".7"/>
-    <path d="M660 230 Q657 260 661 292" stroke="#0A0300" stroke-width="2.5" fill="none" opacity=".5"/>
-    <ellipse cx="714" cy="300" rx="140" ry="200" fill="#8B5A00" opacity=".09"/>
-    <ellipse cx="714" cy="25" rx="220" ry="80" fill="#1A3410" opacity=".65"/>
-    <ellipse cx="714" cy="8" rx="160" ry="55" fill="#244818" opacity=".6"/>
-    <!-- Worker 1 -->
-    <g transform="translate(340,320)">
-      <rect x="-20" y="20" width="40" height="70" rx="5" fill="#4A3020"/>
-      <circle cx="0" cy="8" r="20" fill="#C09060"/>
-      <ellipse cx="0" cy="2" rx="22" ry="12" fill="#8B6914"/>
-      <path d="M-22 4 Q0 -12 22 4" fill="#7A5C10"/>
-      <line x1="-20" y1="40" x2="-58" y2="62" stroke="#C09060" stroke-width="8" stroke-linecap="round"/>
-      <line x1="20" y1="40" x2="54" y2="56" stroke="#C09060" stroke-width="8" stroke-linecap="round"/>
-      <rect x="50" y="48" width="7" height="28" rx="2" fill="#5A3A18"/>
-      <path d="M53 48 L66 40 L68 56 Z" fill="#8A8080"/>
-      <rect x="-18" y="86" width="15" height="38" rx="4" fill="#3A2818"/>
-      <rect x="3" y="86" width="15" height="38" rx="4" fill="#3A2818"/>
-    </g>
-    <!-- Worker 2 -->
-    <g transform="translate(1060,295)">
-      <rect x="-18" y="20" width="36" height="65" rx="5" fill="#5A3828"/>
-      <circle cx="0" cy="8" r="18" fill="#B08050"/>
-      <ellipse cx="0" cy="2" rx="20" ry="11" fill="#6B4C10"/>
-      <path d="M-20 4 Q0 -10 20 4" fill="#5A3C0C"/>
-      <line x1="-18" y1="38" x2="-48" y2="56" stroke="#B08050" stroke-width="8" stroke-linecap="round"/>
-      <line x1="18" y1="38" x2="44" y2="54" stroke="#B08050" stroke-width="8" stroke-linecap="round"/>
-      <rect x="38" y="46" width="6" height="28" rx="1" fill="#6B4C10"/>
-      <rect x="36" y="46" width="10" height="3" rx="1" fill="#AE8B4F"/>
-      <rect x="36" y="58" width="10" height="2" rx="1" fill="#AE8B4F"/>
-      <rect x="36" y="66" width="10" height="2" rx="1" fill="#AE8B4F"/>
-      <rect x="-16" y="82" width="13" height="34" rx="4" fill="#3A2818"/>
-      <rect x="3" y="82" width="13" height="34" rx="4" fill="#3A2818"/>
-    </g>
-    <line x1="610" y1="0" x2="610" y2="200" stroke="#6B4C20" stroke-width="3.5" opacity=".45"/>
-    <line x1="622" y1="0" x2="622" y2="200" stroke="#6B4C20" stroke-width="3.5" opacity=".45"/>
-    <line x1="610" y1="45" x2="622" y2="45" stroke="#6B4C20" stroke-width="2.5" opacity=".4"/>
-    <line x1="610" y1="88" x2="622" y2="88" stroke="#6B4C20" stroke-width="2.5" opacity=".4"/>
-    <line x1="610" y1="132" x2="622" y2="132" stroke="#6B4C20" stroke-width="2.5" opacity=".4"/>
-    <line x1="610" y1="175" x2="622" y2="175" stroke="#6B4C20" stroke-width="2.5" opacity=".4"/>
-    <ellipse cx="714" cy="865" rx="200" ry="16" fill="#2C1810" opacity=".6"/>
-    <rect width="1440" height="900" fill="url(#p2veil)"/>
-  </svg>
-  <div class="panel-veil" style="background:rgba(8,4,2,.2);"></div>
-  <div class="panel-content" data-reveal>
-    <div class="panel-section">Section II</div>
-    <div class="divider" style="width:90px;margin:0 auto 20px;"><div class="d-line"></div><div class="d-diamond"></div><div class="d-line"></div></div>
-    <div class="panel-kicker">The Harvest</div>
-    <h2 class="panel-title">Read the trunk.<br>Draw the resin.</h2>
-    <p class="panel-body">By hand and by patience, artisans cut into the dark, aromatic core — taking only the wood the tree has darkened. Side-light catches the glistening resin. The focus is the craft, never the volume.</p>
-  </div>
-</div>
+      <!-- SKY BACKGROUND -->
+      <rect id="sky-rect" width="1440" height="900" fill="url(#sky-dark)"/>
+      <rect id="sun-glow-rect" width="1440" height="900" fill="url(#sun-glow)" opacity="0"/>
+      <!-- Sun -->
+      <circle id="sun-circle" cx="936" cy="82" r="36" fill="#FFD060" opacity="0"/>
 
-<div class="panel-sep"></div>
+      <!-- GROUND -->
+      <rect id="ground" x="0" y="832" width="1440" height="68" fill="url(#ground-grad)" opacity="0"/>
+      <ellipse id="ground-shadow" cx="720" cy="836" rx="320" ry="12" fill="#0A0400" opacity="0"/>
 
-<!-- PANEL 3: THE RAW OUD -->
-<div class="panel">
-  <svg class="panel-art" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <radialGradient id="p3g" cx="50%" cy="60%" r="55%"><stop offset="0%" stop-color="#2C1A08"/><stop offset="100%" stop-color="#040200"/></radialGradient>
-      <linearGradient id="p3top" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#040200" stop-opacity=".72"/><stop offset="35%" stop-color="#040200" stop-opacity=".28"/><stop offset="55%" stop-color="#040200" stop-opacity="0"/></linearGradient>
-    </defs>
-    <rect width="1440" height="900" fill="#040200"/>
-    <rect width="1440" height="900" fill="url(#p3g)"/>
-    <!-- Five wood piles -->
-    <g transform="translate(170,530)"><rect x="-90" y="-40" width="180" height="48" rx="8" fill="#140806" transform="rotate(-5 -90 -40)"/><rect x="-95" y="6" width="190" height="52" rx="8" fill="#1C0A06" transform="rotate(3 -95 6)"/><rect x="-88" y="54" width="176" height="46" rx="8" fill="#140806" transform="rotate(-2 -88 54)"/><ellipse cx="0" cy="10" rx="80" ry="10" fill="#AE8B4F" opacity=".13"/><ellipse cx="0" cy="58" rx="75" ry="8" fill="#AE8B4F" opacity=".1"/></g>
-    <g transform="translate(456,515)"><rect x="-88" y="-38" width="176" height="46" rx="8" fill="#1A0C06" transform="rotate(4 -88 -38)"/><rect x="-92" y="5" width="184" height="50" rx="8" fill="#120806" transform="rotate(-3 -92 5)"/><rect x="-86" y="52" width="172" height="44" rx="8" fill="#1C0E08" transform="rotate(2 -86 52)"/><ellipse cx="0" cy="8" rx="78" ry="9" fill="#C2A368" opacity=".15"/></g>
-    <g transform="translate(720,498)"><rect x="-100" y="-55" width="200" height="50" rx="8" fill="#0A0402" transform="rotate(-4 -100 -55)"/><rect x="-105" y="-7" width="210" height="56" rx="8" fill="#120602" transform="rotate(3 -105 -7)"/><rect x="-98" y="46" width="196" height="52" rx="8" fill="#0A0402" transform="rotate(-2 -98 46)"/><rect x="-102" y="96" width="204" height="48" rx="8" fill="#100604" transform="rotate(4 -102 96)"/><ellipse cx="0" cy="-28" rx="90" ry="12" fill="#AE8B4F" opacity=".2"/><ellipse cx="0" cy="22" rx="95" ry="10" fill="#AE8B4F" opacity=".17"/><ellipse cx="0" cy="70" rx="88" ry="9" fill="#C2A368" opacity=".14"/><path d="M-95 -48 Q-45 -52 5 -46 Q52 -42 95 -50" stroke="#C2A368" stroke-width="1.5" fill="none" opacity=".3"/></g>
-    <g transform="translate(984,515)"><rect x="-88" y="-38" width="176" height="46" rx="8" fill="#160A06" transform="rotate(-5 -88 -38)"/><rect x="-92" y="5" width="184" height="50" rx="8" fill="#1A0C04" transform="rotate(4 -92 5)"/><rect x="-86" y="52" width="172" height="44" rx="8" fill="#140A06" transform="rotate(-2 -86 52)"/><ellipse cx="0" cy="8" rx="76" ry="9" fill="#AE8B4F" opacity=".13"/></g>
-    <g transform="translate(1265,530)"><rect x="-85" y="-36" width="170" height="44" rx="8" fill="#1E1008" transform="rotate(6 -85 -36)"/><rect x="-90" y="5" width="180" height="48" rx="8" fill="#180C06" transform="rotate(-4 -90 5)"/><rect x="-84" y="50" width="168" height="42" rx="8" fill="#1A0E08" transform="rotate(2 -84 50)"/><ellipse cx="0" cy="8" rx="72" ry="8" fill="#C2A368" opacity=".12"/></g>
-    <!-- Smoke -->
-    <path d="M680 200 Q688 170 680 145 Q672 120 682 92 Q692 66 686 38" stroke="rgba(174,139,79,.14)" stroke-width="2.5" fill="none"/>
-    <path d="M720 195 Q730 165 722 140 Q714 114 724 86 Q734 60 728 32" stroke="rgba(174,139,79,.1)" stroke-width="2" fill="none"/>
-    <path d="M760 198 Q768 168 760 142 Q752 116 763 88 Q774 62 768 35" stroke="rgba(174,139,79,.08)" stroke-width="1.5" fill="none"/>
-    <ellipse cx="720" cy="540" rx="500" ry="120" fill="#8B5A00" opacity=".1"/>
-    <rect width="1440" height="900" fill="url(#p3top)"/>
-  </svg>
-  <div class="panel-veil" style="background:rgba(4,2,0,.28);"></div>
-  <div class="panel-content" data-reveal>
-    <div class="panel-section">Section III</div>
-    <div class="divider" style="width:90px;margin:0 auto 20px;"><div class="d-line"></div><div class="d-diamond"></div><div class="d-line"></div></div>
-    <div class="panel-kicker">The Raw Oud</div>
-    <h2 class="panel-title">Five grades<br>of agarwood</h2>
-    <p class="panel-body">At the base, the trunk gives way to oily, resin-saturated chunks of precious agarwood — sorted into five elegant grades, the soul of every SHAMUM scent.</p>
-    <div class="grades">
-      <div class="grade-card"><div class="grade-swatch"><span class="grade-num">I</span></div><span class="grade-label">Kinam</span></div>
-      <div class="grade-card"><div class="grade-swatch"><span class="grade-num">II</span></div><span class="grade-label">Royal</span></div>
-      <div class="grade-card"><div class="grade-swatch"><span class="grade-num">III</span></div><span class="grade-label">Super</span></div>
-      <div class="grade-card"><div class="grade-swatch"><span class="grade-num">IV</span></div><span class="grade-label">Double</span></div>
-      <div class="grade-card"><div class="grade-swatch"><span class="grade-num">V</span></div><span class="grade-label">Standard</span></div>
-    </div>
-    <button class="btn-gold">Discover the Collection</button>
-  </div>
-</div>
+      <!-- BACKGROUND FOREST (far, blurred) -->
+      <g id="bg-forest" opacity="0" filter="url(#blur-md)">
+        <ellipse cx="280" cy="500" rx="200" ry="350" fill="#0A1A06"/>
+        <ellipse cx="200" cy="480" rx="150" ry="300" fill="#0C1E08"/>
+        <ellipse cx="1160" cy="510" rx="190" ry="340" fill="#0A1A06"/>
+        <ellipse cx="1240" cy="490" rx="140" ry="290" fill="#0C1E08"/>
+        <ellipse cx="380" cy="600" rx="100" ry="200" fill="#081206"/>
+        <ellipse cx="1060" cy="580" rx="110" ry="220" fill="#081206"/>
+      </g>
 
-<!-- CATEGORY GRID -->
-<div class="cat-grid">
-  <div class="cat-card">
-    <svg viewBox="0 0 320 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="320" height="500" fill="#1A2E0C"/><ellipse cx="160" cy="105" rx="158" ry="135" fill="#234018" opacity=".9"/><circle cx="118" cy="92" r="84" fill="#1A3410"/><circle cx="202" cy="84" r="94" fill="#264A18"/><ellipse cx="160" cy="72" rx="72" ry="58" fill="#3A6028" opacity=".7"/><rect x="136" y="210" width="48" height="192" rx="7" fill="#0F0A04"/><rect x="136" y="210" width="48" height="192" rx="7" fill="none" stroke="rgba(174,139,79,.4)" stroke-width="1.5"/><rect x="140" y="252" width="40" height="148" rx="5" fill="#2A1408" opacity=".7"/><rect x="142" y="184" width="36" height="29" rx="4" fill="#AE8B4F"/><rect x="146" y="173" width="28" height="13" rx="3" fill="#D4BC86"/><rect x="174" y="167" width="20" height="5" rx="2" fill="#8C6E3A"/><path d="M194 167 L208 157 L210 166 Z" fill="#6E5328"/><rect x="142" y="262" width="36" height="60" fill="rgba(174,139,79,.08)" stroke="rgba(174,139,79,.35)" stroke-width=".8"/><text x="160" y="281" text-anchor="middle" font-family="serif" font-size="8" fill="#D4BC86" letter-spacing="1.5">SHAMUM</text><text x="160" y="298" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">Spray</text></svg>
-    <div class="cat-overlay"></div>
-    <div class="cat-info"><div class="cat-ar">البخاخات</div><div class="cat-en">Sprays Collection</div><div class="cat-count">+24 منتج</div><a class="cat-link" href="#">Shop &#8594;</a></div>
-  </div>
-  <div class="cat-card">
-    <svg viewBox="0 0 320 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="limBg" cx="50%" cy="38%" r="58%"><stop offset="0%" stop-color="#3D2010"/><stop offset="100%" stop-color="#0A0502"/></radialGradient></defs><rect width="320" height="500" fill="url(#limBg)"/><path d="M160 35 L148 58 L135 44 L132 63 L160 72 L188 63 L185 44 L172 58 Z" fill="none" stroke="#C2A368" stroke-width="1.5" opacity=".65"/><circle cx="160" cy="32" r="5" fill="#AE8B4F" opacity=".6"/><path d="M136 285 Q134 225 140 198 Q147 178 160 172 Q173 178 180 198 Q186 225 184 285 Q184 342 160 348 Q136 342 136 285 Z" fill="#100808"/><path d="M136 285 Q134 225 140 198 Q147 178 160 172 Q173 178 180 198 Q186 225 184 285 Q184 342 160 348 Q136 342 136 285 Z" fill="none" stroke="rgba(194,163,104,.5)" stroke-width="1.5"/><path d="M137 220 Q134 270 136 285 Q136 342 160 348 Q184 342 184 285 Q186 270 183 220 Z" fill="#2C1208" opacity=".55"/><ellipse cx="160" cy="169" rx="15" ry="7" fill="#AE8B4F"/><rect x="148" y="152" width="24" height="18" rx="4" fill="#8C6E3A"/><ellipse cx="160" cy="151" rx="12" ry="6" fill="#C2A368"/><circle cx="160" cy="144" r="8" fill="#D4BC86"/><rect x="142" y="234" width="36" height="74" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.4)" stroke-width=".8"/><text x="160" y="253" text-anchor="middle" font-family="serif" font-size="7.5" fill="#C2A368" letter-spacing="1.5">SHAMUM</text><text x="160" y="270" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">Limited</text><text x="160" y="287" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">Edition</text></svg>
-    <div class="cat-overlay"></div>
-    <div class="cat-info"><div class="cat-ar">إصدار محدود</div><div class="cat-en">Limited Edition</div><div class="cat-count">كميات نادرة</div><a class="cat-link" href="#">Shop &#8594;</a></div>
-  </div>
-  <div class="cat-card">
-    <svg viewBox="0 0 320 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="oilBg2" cx="50%" cy="42%" r="55%"><stop offset="0%" stop-color="#2C1A06"/><stop offset="100%" stop-color="#080401"/></radialGradient></defs><rect width="320" height="500" fill="url(#oilBg2)"/><rect x="142" y="200" width="36" height="175" rx="12" fill="#120A02"/><rect x="142" y="200" width="36" height="175" rx="12" fill="none" stroke="rgba(194,163,104,.45)" stroke-width="1.5"/><rect x="144" y="235" width="32" height="138" rx="9" fill="#2C1408" opacity=".8"/><rect x="144" y="305" width="32" height="68" rx="7" fill="#1E0C04" opacity=".6"/><ellipse cx="160" cy="198" rx="16" ry="9" fill="#AE8B4F"/><circle cx="160" cy="193" r="11" fill="#C2A368"/><circle cx="156" cy="190" r="4" fill="#D4BC86" opacity=".6"/><rect x="148" y="158" width="24" height="36" rx="4" fill="#6E5328"/><rect x="150" y="150" width="20" height="10" rx="3" fill="#AE8B4F"/><rect x="145" y="242" width="30" height="72" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.38)" stroke-width=".7"/><text x="160" y="260" text-anchor="middle" font-family="serif" font-size="6.5" fill="#C2A368" letter-spacing="1">SHAMUM</text><text x="160" y="275" text-anchor="middle" font-family="serif" font-size="8" fill="#F4EAD2" font-style="italic">&#1583;&#1607;&#1606;</text><text x="160" y="290" text-anchor="middle" font-family="serif" font-size="8" fill="#F4EAD2" font-style="italic">&#1575;&#1604;&#1593;&#1608;&#1583;</text></svg>
-    <div class="cat-overlay"></div>
-    <div class="cat-info"><div class="cat-ar">أدهان العود</div><div class="cat-en">Oud Oils</div><div class="cat-count">+18 منتج</div><a class="cat-link" href="#">Shop &#8594;</a></div>
-  </div>
-  <div class="cat-card">
-    <svg viewBox="0 0 320 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="wdBg2" cx="50%" cy="55%" r="52%"><stop offset="0%" stop-color="#241408"/><stop offset="100%" stop-color="#040200"/></radialGradient></defs><rect width="320" height="500" fill="url(#wdBg2)"/><rect x="48" y="248" width="224" height="44" rx="7" fill="#160804" transform="rotate(-5 48 248)"/><rect x="44" y="290" width="232" height="48" rx="7" fill="#1E0C06" transform="rotate(3 44 290)"/><rect x="52" y="336" width="216" height="44" rx="7" fill="#160804" transform="rotate(-2 52 336)"/><rect x="40" y="378" width="240" height="42" rx="7" fill="#241008" transform="rotate(4 40 378)"/><ellipse cx="160" cy="268" rx="95" ry="10" fill="#AE8B4F" opacity=".14"/><ellipse cx="158" cy="312" rx="88" ry="8" fill="#AE8B4F" opacity=".12"/><ellipse cx="162" cy="354" rx="90" ry="8" fill="#AE8B4F" opacity=".1"/><path d="M148 185 Q154 165 148 148 Q142 131 150 112 Q158 93 154 74" stroke="rgba(174,139,79,.15)" stroke-width="2" fill="none"/><path d="M160 188 Q168 168 162 148 Q156 128 164 108 Q172 88 168 65" stroke="rgba(174,139,79,.1)" stroke-width="1.5" fill="none"/></svg>
-    <div class="cat-overlay"></div>
-    <div class="cat-info"><div class="cat-ar">أخشاب العود</div><div class="cat-en">Oud Wood</div><div class="cat-count">+12 منتج</div><a class="cat-link" href="#">Shop &#8594;</a></div>
-  </div>
-</div>
+      <!-- LIGHT RAYS -->
+      <g id="light-rays" opacity="0">
+        <line x1="936" y1="30" x2="720" y2="900" stroke="#FFE070" stroke-width="1.5" opacity=".06"/>
+        <line x1="936" y1="20" x2="760" y2="900" stroke="#FFE070" stroke-width="1" opacity=".04"/>
+        <line x1="936" y1="15" x2="680" y2="900" stroke="#FFE070" stroke-width="1" opacity=".035"/>
+        <line x1="936" y1="25" x2="800" y2="900" stroke="#FFE070" stroke-width="1.2" opacity=".05"/>
+      </g>
 
-<!-- FEATURED PRODUCTS -->
-<section class="sec sec-sand">
-  <div class="sec-head">
-    <span class="eyebrow">The Collection · الأكثر مبيعاً</span>
-    <h2 class="sec-title">Signature <em>Fragrances</em></h2>
-    <p class="sec-sub">Six compositions, each built on agarwood of a single provenance.</p>
-    <div class="divider" style="width:100px;margin:20px auto 0;"><div class="d-line gold"></div><div class="d-diamond gold"></div><div class="d-line gold"></div></div>
-  </div>
-  <div class="prod-grid">
-    <div class="prod-card">
-      <div class="prod-badge new">New</div>
-      <div class="prod-img"><svg viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg"><rect width="380" height="300" fill="#F0E8D8"/><radialGradient id="pg1b" cx="50%" cy="48%" r="44%"><stop offset="0%" stop-color="#C8AE78" stop-opacity=".35"/><stop offset="100%" stop-color="#F0E8D8" stop-opacity="0"/></radialGradient><rect width="380" height="300" fill="url(#pg1b)"/><path d="M165 52 L165 34 Q165 22 180 22 L200 22 Q215 22 215 34 L215 52 Q228 62 228 82 L228 248 Q228 264 208 264 L172 264 Q152 264 152 248 L152 82 Q152 62 165 52 Z" fill="#1A0C04" opacity=".92"/><path d="M165 52 L165 34 Q165 22 180 22 L200 22 Q215 22 215 34 L215 52 Q228 62 228 82 L228 248 Q228 264 208 264 L172 264 Q152 264 152 248 L152 82 Q152 62 165 52 Z" fill="none" stroke="rgba(174,139,79,.45)" stroke-width="1.5"/><path d="M154 120 L154 248 Q154 262 172 262 L208 262 Q226 262 226 248 L226 120 Z" fill="#2C1408" opacity=".55"/><rect x="168" y="8" width="44" height="15" rx="3" fill="#AE8B4F"/><rect x="170" y="2" width="40" height="8" rx="2" fill="#C2A368"/><rect x="162" y="145" width="56" height="70" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.38)" stroke-width=".8"/><text x="190" y="165" text-anchor="middle" font-family="serif" font-size="8" fill="#AE8B4F" letter-spacing="1.5">SHAMUM</text><text x="190" y="182" text-anchor="middle" font-family="serif" font-size="10" fill="#F4EAD2" font-style="italic">&#1604;&#1610;&#1604; &#1593;&#1608;&#1583;</text><text x="190" y="198" text-anchor="middle" font-family="sans-serif" font-size="6" fill="#8B7E66" letter-spacing="1.5">EAU DE PARFUM</text></svg></div>
-      <div class="prod-body">
-        <div class="prod-arabic">ليل عود</div>
-        <div class="prod-name">Layl Oud</div>
-        <div class="prod-notes">Oud · Amber · Saffron · EDP 50ml</div>
-        <div class="prod-foot"><div class="prod-price">&#163;185</div><button class="btn-add" onclick="var b=this;b.textContent='&#10003; Added';b.style.background='var(--ink)';b.style.color='var(--sand-100)';setTimeout(function(){b.textContent='Add to Bag';b.style.background='';b.style.color=''},2000)">Add to Bag</button></div>
+      <!-- ═══ TREE GROUP ═══ -->
+      <!-- transform-origin at trunk base: (720, 832) -->
+      <g id="tree-group" style="transform-origin:720px 832px;">
+
+        <!-- CANOPY -->
+        <g id="canopy" opacity="0">
+          <!-- Deep background layers -->
+          <ellipse cx="720" cy="240" rx="360" ry="210" fill="#0C1A06"/>
+          <ellipse cx="720" cy="200" rx="310" ry="175" fill="#142808"/>
+          <ellipse cx="720" cy="168" rx="265" ry="148" fill="#1A3410"/>
+          <ellipse cx="740" cy="140" rx="228" ry="126" fill="#1E3C12"/>
+          <!-- Leaf clusters -->
+          <circle cx="618" cy="130" r="95" fill="#1A3810"/>
+          <circle cx="548" cy="175" r="72" fill="#142E0C"/>
+          <circle cx="720" cy="100" r="88" fill="#244A18"/>
+          <circle cx="826" cy="88" r="82" fill="#2E5820"/>
+          <circle cx="910" cy="100" r="68" fill="#386424"/>
+          <circle cx="984" cy="128" r="56" fill="#2C4E1A"/>
+          <circle cx="490" cy="210" r="56" fill="#102008"/>
+          <circle cx="1048" cy="165" r="50" fill="#182E0C"/>
+          <!-- Sunlit patches -->
+          <ellipse cx="872" cy="85" rx="130" ry="68" fill="#4A7C28" opacity=".65"/>
+          <ellipse cx="930" cy="68" rx="88" ry="48" fill="#5A9030" opacity=".6"/>
+          <ellipse cx="968" cy="58" rx="56" ry="32" fill="#6EAA38" opacity=".52"/>
+          <!-- Atmospheric depth dots -->
+          <circle cx="598" cy="320" r="1.5" fill="#AE8B4F" opacity=".45"/>
+          <circle cx="742" cy="270" r="1.2" fill="#D4BC86" opacity=".38"/>
+          <circle cx="862" cy="335" r="1" fill="#AE8B4F" opacity=".32"/>
+        </g>
+
+        <!-- BRANCHES -->
+        <g id="branches" opacity="0">
+          <path d="M698 380 Q628 352 558 325 Q516 308 478 300" stroke="#3D2410" stroke-width="24" fill="none" stroke-linecap="round"/>
+          <path d="M478 300 Q445 290 408 275" stroke="#3D2410" stroke-width="13" fill="none" stroke-linecap="round"/>
+          <path d="M742 380 Q812 352 882 325 Q924 308 962 300" stroke="#3D2410" stroke-width="22" fill="none" stroke-linecap="round"/>
+          <path d="M962 300 Q996 290 1032 275" stroke="#3D2410" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <!-- Branch foliage -->
+          <circle cx="404" cy="268" r="44" fill="#142E0C"/>
+          <circle cx="370" cy="252" r="30" fill="#1A3810"/>
+          <circle cx="1036" cy="268" r="40" fill="#142E0C"/>
+          <circle cx="1072" cy="252" r="28" fill="#1A3810"/>
+        </g>
+
+        <!-- TRUNK -->
+        <g id="trunk" opacity="0">
+          <!-- Shadow left -->
+          <path d="M682 832 Q676 650 678 450 Q680 300 682 380 L694 380 Q692 300 694 450 Q694 650 694 832 Z" fill="#1A0A04" opacity=".5"/>
+          <!-- Main trunk body -->
+          <path d="M694 832 L694 380 Q698 360 720 355 Q742 360 746 380 L746 832 Z" fill="#4A3018"/>
+          <!-- Trunk right shadow -->
+          <path d="M746 832 L746 380 L758 380 Q760 300 758 450 Q756 650 758 832 Z" fill="#1A0A04" opacity=".45"/>
+          <!-- Bark texture lines -->
+          <path d="M700 420 Q698 560 702 700 Q703 780 700 832" stroke="#2C1408" stroke-width="2.5" fill="none" opacity=".55"/>
+          <path d="M712 395 Q710 540 714 680 Q715 760 712 832" stroke="#2C1408" stroke-width="2" fill="none" opacity=".4"/>
+          <path d="M730 395 Q732 540 728 680 Q727 760 730 832" stroke="#2C1408" stroke-width="2" fill="none" opacity=".4"/>
+          <path d="M742 420 Q744 560 740 700 Q739 780 742 832" stroke="#2C1408" stroke-width="2" fill="none" opacity=".5"/>
+          <!-- Resin patches (dark infected areas) -->
+          <ellipse cx="704" cy="460" rx="9" ry="20" fill="#100602" opacity=".8" transform="rotate(-6 704 460)"/>
+          <ellipse cx="738" cy="430" rx="7" ry="16" fill="#100602" opacity=".7" transform="rotate(10 738 430)"/>
+          <ellipse cx="708" cy="580" rx="8" ry="18" fill="#0A0300" opacity=".75"/>
+          <ellipse cx="734" cy="560" rx="6" ry="14" fill="#0A0300" opacity=".65"/>
+          <!-- Resin drips -->
+          <path d="M703 450 Q700 475 704 500" stroke="#0A0300" stroke-width="2" fill="none" opacity=".5"/>
+          <path d="M737 420 Q740 445 736 468" stroke="#0A0300" stroke-width="1.8" fill="none" opacity=".45"/>
+          <!-- Trunk highlight center -->
+          <path d="M720 380 L720 832" stroke="rgba(90,52,24,.6)" stroke-width="4" opacity=".35"/>
+        </g>
+
+        <!-- CUT MARK on trunk (grows as chop progresses) -->
+        <g id="cut-mark" opacity="0">
+          <path id="cut-path" d="M694 620 L720 610 L746 620" stroke="#AE8B4F" stroke-width="2.5" fill="none" opacity=".8"/>
+          <!-- Wood chips flying (small) -->
+          <g id="chips">
+            <rect x="710" y="580" width="8" height="3" rx="1" fill="#5A3418" opacity=".7" transform="rotate(25 710 580)"/>
+            <rect x="695" y="600" width="6" height="2" rx="1" fill="#4A2810" opacity=".65" transform="rotate(-15 695 600)"/>
+            <rect x="748" y="595" width="7" height="2.5" rx="1" fill="#5A3418" opacity=".6" transform="rotate(40 748 595)"/>
+            <rect x="758" y="610" width="5" height="2" rx="1" fill="#3A2010" opacity=".55" transform="rotate(-30 758 610)"/>
+            <rect x="682" y="590" width="6" height="2" rx="1" fill="#4A2810" opacity=".6" transform="rotate(20 682 590)"/>
+          </g>
+        </g>
+
+      </g><!-- /tree-group -->
+
+      <!-- RESIN GLOW (appears when tree falls) -->
+      <rect id="resin-glow-rect" width="1440" height="900" fill="url(#resin-glow)" opacity="0"/>
+
+      <!-- ═══ WORKERS ═══ -->
+      <!-- Worker LEFT (starts off-screen left, walks to x≈540) -->
+      <g id="worker-left" opacity="0" style="transform:translateX(-320px);">
+        <!-- Body -->
+        <rect x="520" y="732" width="42" height="78" rx="6" fill="#4A3020"/>
+        <!-- Head -->
+        <circle cx="541" cy="718" r="22" fill="#C09060"/>
+        <!-- Headwrap -->
+        <ellipse cx="541" cy="711" rx="24" ry="13" fill="#8B6914"/>
+        <path d="M517 713 Q541 698 565 713" fill="#7A5C10"/>
+        <!-- Left arm (raised for chop) -->
+        <g id="wl-arm" style="transform-origin:520px 748px;">
+          <line x1="520" y1="748" x2="482" y2="788" stroke="#C09060" stroke-width="9" stroke-linecap="round"/>
+          <!-- Axe -->
+          <rect x="460" y="785" width="9" height="32" rx="3" fill="#6B4C20"/>
+          <path d="M462 785 L445 774 L442 793 Z" fill="#9A9090"/>
+          <path d="M462 785 L448 790 L449 803 L464 800 Z" fill="#8A8080"/>
+        </g>
+        <!-- Right arm -->
+        <line x1="562" y1="748" x2="596" y2="772" stroke="#C09060" stroke-width="9" stroke-linecap="round"/>
+        <!-- Legs -->
+        <rect x="524" y="808" width="16" height="44" rx="5" fill="#3A2818"/>
+        <rect x="544" y="808" width="16" height="44" rx="5" fill="#3A2818"/>
+      </g>
+
+      <!-- Worker RIGHT (starts off-screen right, walks to x≈900, mirrored) -->
+      <g id="worker-right" opacity="0" style="transform:translateX(320px);">
+        <!-- Body -->
+        <rect x="878" y="732" width="42" height="78" rx="6" fill="#5A3828"/>
+        <!-- Head -->
+        <circle cx="899" cy="718" r="22" fill="#B08050"/>
+        <!-- Headwrap -->
+        <ellipse cx="899" cy="711" rx="24" ry="13" fill="#6B4C10"/>
+        <path d="M875 713 Q899 698 923 713" fill="#5A3C0C"/>
+        <!-- Right arm (raised for chop) -->
+        <g id="wr-arm" style="transform-origin:920px 748px;">
+          <line x1="920" y1="748" x2="958" y2="788" stroke="#B08050" stroke-width="9" stroke-linecap="round"/>
+          <!-- Axe -->
+          <rect x="971" y="785" width="9" height="32" rx="3" fill="#6B4C20"/>
+          <path d="M978 785 L995 774 L998 793 Z" fill="#9A9090"/>
+          <path d="M978 785 L992 790 L991 803 L976 800 Z" fill="#8A8080"/>
+        </g>
+        <!-- Left arm -->
+        <line x1="878" y1="748" x2="844" y2="772" stroke="#B08050" stroke-width="9" stroke-linecap="round"/>
+        <!-- Legs -->
+        <rect x="880" y="808" width="16" height="44" rx="5" fill="#3A2818"/>
+        <rect x="900" y="808" width="16" height="44" rx="5" fill="#3A2818"/>
+      </g>
+
+      <!-- ═══ OUD PIECES (rain down after tree falls) ═══ -->
+      <g id="oud-pieces">
+        <!-- 30 pieces: 6 per column, will be positioned via JS -->
+      </g>
+
+      <!-- ═══ PILE BASES (5 columns, visible when pieces land) ═══ -->
+      <g id="pile-bases" opacity="0">
+        <!-- Pile 1: Kinam (x=180) -->
+        <ellipse cx="180" cy="840" rx="78" ry="14" fill="#1A0A04" opacity=".7"/>
+        <!-- Pile 2: Royal (x=432) -->
+        <ellipse cx="432" cy="840" rx="78" ry="14" fill="#1A0A04" opacity=".7"/>
+        <!-- Pile 3: Super (x=720) -->
+        <ellipse cx="720" cy="840" rx="78" ry="14" fill="#1A0A04" opacity=".7"/>
+        <!-- Pile 4: Double (x=1008) -->
+        <ellipse cx="1008" cy="840" rx="78" ry="14" fill="#1A0A04" opacity=".7"/>
+        <!-- Pile 5: Standard (x=1260) -->
+        <ellipse cx="1260" cy="840" rx="78" ry="14" fill="#1A0A04" opacity=".7"/>
+      </g>
+
+      <!-- Bottom vignette -->
+      <linearGradient id="bot-vig" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="80%" stop-color="#050300" stop-opacity="0"/><stop offset="100%" stop-color="#050300"/>
+      </linearGradient>
+      <rect width="1440" height="900" fill="url(#bot-vig)"/>
+    </svg>
+
+    <!-- TEXT OVERLAYS -->
+    <div id="stage-text">
+      <!-- Phase 1: Opening -->
+      <div class="stage-label" id="t-label-1">The House of Oud · Riyadh, est. 1979</div>
+      <div class="stage-headline" id="t-headline-1">We do not chase<br>the season.<br><em>We wait for the wood.</em></div>
+
+      <!-- Phase 2: Tree revealed -->
+      <div class="stage-label" id="t-label-2">Section I · The Canopy</div>
+      <div class="stage-headline" id="t-headline-2">From a tree that<br><em>keeps its own time</em></div>
+
+      <!-- Phase 3: Workers arrive -->
+      <div class="stage-label" id="t-label-3">Section II · The Harvest</div>
+      <div class="stage-headline" id="t-headline-3">Read the trunk.<br>Draw the resin.</div>
+      <div class="stage-sub" id="t-sub-3">By hand and by patience, artisans cut into the dark, aromatic core — taking only the wood the tree has darkened.</div>
+
+      <!-- Phase 4: Tree falls -->
+      <div class="stage-headline" id="t-headline-4"><em>The wood falls.</em></div>
+
+      <!-- Phase 5: Pieces rain -->
+      <div class="stage-label" id="t-label-5">Section III · The Raw Oud</div>
+      <div class="stage-headline" id="t-headline-5">Five grades<br>of agarwood</div>
+      <div class="stage-sub" id="t-sub-5">At the base, the trunk gives way to oily, resin-saturated agarwood — sorted into five elegant grades, the soul of every SHAMUM scent.</div>
+
+      <!-- CTA -->
+      <div id="stage-cta">
+        <button class="btn-gold" onclick="document.querySelector('.site-content').scrollIntoView({behavior:'smooth'})">Discover the Collection</button>
+        <button class="btn-outline-dark">Our Story</button>
       </div>
     </div>
-    <div class="prod-card">
-      <div class="prod-img"><svg viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg"><rect width="380" height="300" fill="#EDE0C8"/><radialGradient id="pg2b" cx="50%" cy="40%" r="44%"><stop offset="0%" stop-color="#B89050" stop-opacity=".3"/><stop offset="100%" stop-color="#EDE0C8" stop-opacity="0"/></radialGradient><rect width="380" height="300" fill="url(#pg2b)"/><path d="M156 275 L154 132 Q154 108 168 98 L178 74 L182 74 L192 98 Q206 108 206 132 L204 275 Z" fill="#100806"/><path d="M156 275 L154 132 Q154 108 168 98 L178 74 L182 74 L192 98 Q206 108 206 132 L204 275 Z" fill="none" stroke="rgba(174,139,79,.48)" stroke-width="1.5"/><path d="M156 275 L154 168 L206 168 L204 275 Z" fill="#2C1208" opacity=".5"/><ellipse cx="180" cy="71" rx="16" ry="7" fill="#8C6E3A"/><rect x="164" y="54" width="32" height="18" rx="5" fill="#6E5328"/><ellipse cx="180" cy="52" rx="14" ry="6" fill="#AE8B4F"/><circle cx="180" cy="45" r="9" fill="#C2A368"/><rect x="160" y="152" width="40" height="70" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.35)" stroke-width=".8"/><text x="180" y="170" text-anchor="middle" font-family="serif" font-size="7.5" fill="#AE8B4F" letter-spacing="1.5">SHAMUM</text><text x="180" y="188" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">&#1608;&#1585;&#1583; &#1581;&#1580;&#1575;&#1586;&#1610;</text></svg></div>
-      <div class="prod-body">
-        <div class="prod-arabic">ورد حجازي</div>
-        <div class="prod-name">Hijazi Rose</div>
-        <div class="prod-notes">Taif Rose · Oud · Musk · EDP 50ml</div>
-        <div class="prod-foot"><div class="prod-price">&#163;210</div><button class="btn-add" onclick="var b=this;b.textContent='&#10003; Added';b.style.background='var(--ink)';b.style.color='var(--sand-100)';setTimeout(function(){b.textContent='Add to Bag';b.style.background='';b.style.color=''},2000)">Add to Bag</button></div>
+
+    <!-- PILE LABELS (HTML, positioned over SVG columns) -->
+    <div class="pile-label" id="pile-1" style="left:calc(12.5% - 48px)">
+      <div class="pile-grade">I</div>
+      <div class="pile-name">Kinam</div>
+    </div>
+    <div class="pile-label" id="pile-2" style="left:calc(30% - 48px)">
+      <div class="pile-grade">II</div>
+      <div class="pile-name">Royal</div>
+    </div>
+    <div class="pile-label" id="pile-3" style="left:calc(50% - 48px)">
+      <div class="pile-grade">III</div>
+      <div class="pile-name">Super</div>
+    </div>
+    <div class="pile-label" id="pile-4" style="left:calc(70% - 48px)">
+      <div class="pile-grade">IV</div>
+      <div class="pile-name">Double</div>
+    </div>
+    <div class="pile-label" id="pile-5" style="left:calc(87.5% - 48px)">
+      <div class="pile-grade">V</div>
+      <div class="pile-name">Standard</div>
+    </div>
+
+    <!-- SCROLL CUE -->
+    <div id="scroll-cue">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+
+  </div><!-- /sticky-scene -->
+</div><!-- /scroll-container -->
+
+<!-- ══════════════════════════════════════
+     SITE CONTENT (after animation)
+══════════════════════════════════════ -->
+<div class="site-content">
+
+  <!-- CATEGORY GRID -->
+  <div class="cat-grid">
+    <div class="cat-card">
+      <svg viewBox="0 0 320 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="320" height="480" fill="#1A2E0C"/><ellipse cx="160" cy="95" rx="155" ry="130" fill="#234018" opacity=".9"/><circle cx="118" cy="84" r="80" fill="#1A3410"/><circle cx="202" cy="76" r="88" fill="#264A18"/><ellipse cx="160" cy="64" rx="68" ry="52" fill="#3A6028" opacity=".7"/><rect x="136" y="200" width="48" height="185" rx="7" fill="#0F0A04"/><rect x="136" y="200" width="48" height="185" rx="7" fill="none" stroke="rgba(174,139,79,.4)" stroke-width="1.5"/><rect x="140" y="240" width="40" height="143" rx="5" fill="#2A1408" opacity=".7"/><rect x="142" y="175" width="36" height="28" rx="4" fill="#AE8B4F"/><rect x="146" y="164" width="28" height="13" rx="3" fill="#D4BC86"/><rect x="174" y="158" width="20" height="5" rx="2" fill="#8C6E3A"/><path d="M194 158 L207 149 L209 158 Z" fill="#6E5328"/><rect x="142" y="252" width="36" height="58" fill="rgba(174,139,79,.08)" stroke="rgba(174,139,79,.35)" stroke-width=".8"/><text x="160" y="270" text-anchor="middle" font-family="serif" font-size="8" fill="#D4BC86" letter-spacing="1.5">SHAMUM</text><text x="160" y="286" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">Spray</text></svg>
+      <div class="cat-ov"></div>
+      <div class="cat-info"><div class="cat-ar">البخاخات</div><div class="cat-en">Sprays Collection</div><div class="cat-ct">+24 منتج</div><a class="cat-lk" href="#">Shop &#8594;</a></div>
+    </div>
+    <div class="cat-card">
+      <svg viewBox="0 0 320 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="lB" cx="50%" cy="38%" r="58%"><stop offset="0%" stop-color="#3D2010"/><stop offset="100%" stop-color="#0A0502"/></radialGradient></defs><rect width="320" height="480" fill="url(#lB)"/><path d="M160 35 L148 58 L135 44 L132 63 L160 72 L188 63 L185 44 L172 58 Z" fill="none" stroke="#C2A368" stroke-width="1.5" opacity=".65"/><circle cx="160" cy="32" r="5" fill="#AE8B4F" opacity=".6"/><path d="M136 275 Q134 218 140 192 Q147 172 160 166 Q173 172 180 192 Q186 218 184 275 Q184 330 160 336 Q136 330 136 275 Z" fill="#100808"/><path d="M136 275 Q134 218 140 192 Q147 172 160 166 Q173 172 180 192 Q186 218 184 275 Q184 330 160 336 Q136 330 136 275 Z" fill="none" stroke="rgba(194,163,104,.5)" stroke-width="1.5"/><path d="M137 214 Q134 264 136 275 Q136 330 160 336 Q184 330 184 275 Q186 264 183 214 Z" fill="#2C1208" opacity=".55"/><ellipse cx="160" cy="163" rx="15" ry="7" fill="#AE8B4F"/><rect x="148" y="146" width="24" height="18" rx="4" fill="#8C6E3A"/><ellipse cx="160" cy="145" rx="12" ry="6" fill="#C2A368"/><circle cx="160" cy="138" r="8" fill="#D4BC86"/><rect x="142" y="228" width="36" height="70" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.4)" stroke-width=".8"/><text x="160" y="246" text-anchor="middle" font-family="serif" font-size="7.5" fill="#C2A368" letter-spacing="1.5">SHAMUM</text><text x="160" y="263" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">Limited</text><text x="160" y="280" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">Edition</text></svg>
+      <div class="cat-ov"></div>
+      <div class="cat-info"><div class="cat-ar">إصدار محدود</div><div class="cat-en">Limited Edition</div><div class="cat-ct">كميات نادرة</div><a class="cat-lk" href="#">Shop &#8594;</a></div>
+    </div>
+    <div class="cat-card">
+      <svg viewBox="0 0 320 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="oB" cx="50%" cy="42%" r="55%"><stop offset="0%" stop-color="#2C1A06"/><stop offset="100%" stop-color="#080401"/></radialGradient></defs><rect width="320" height="480" fill="url(#oB)"/><rect x="142" y="192" width="36" height="168" rx="12" fill="#120A02"/><rect x="142" y="192" width="36" height="168" rx="12" fill="none" stroke="rgba(194,163,104,.45)" stroke-width="1.5"/><rect x="144" y="226" width="32" height="132" rx="9" fill="#2C1408" opacity=".8"/><ellipse cx="160" cy="190" rx="16" ry="9" fill="#AE8B4F"/><circle cx="160" cy="185" r="11" fill="#C2A368"/><circle cx="156" cy="182" r="4" fill="#D4BC86" opacity=".6"/><rect x="148" y="150" width="24" height="36" rx="4" fill="#6E5328"/><rect x="150" y="142" width="20" height="10" rx="3" fill="#AE8B4F"/><rect x="145" y="234" width="30" height="68" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.38)" stroke-width=".7"/><text x="160" y="252" text-anchor="middle" font-family="serif" font-size="6.5" fill="#C2A368" letter-spacing="1">SHAMUM</text><text x="160" y="267" text-anchor="middle" font-family="serif" font-size="8" fill="#F4EAD2" font-style="italic">دهن العود</text></svg>
+      <div class="cat-ov"></div>
+      <div class="cat-info"><div class="cat-ar">أدهان العود</div><div class="cat-en">Oud Oils</div><div class="cat-ct">+18 منتج</div><a class="cat-lk" href="#">Shop &#8594;</a></div>
+    </div>
+    <div class="cat-card">
+      <svg viewBox="0 0 320 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="wB" cx="50%" cy="55%" r="52%"><stop offset="0%" stop-color="#241408"/><stop offset="100%" stop-color="#040200"/></radialGradient></defs><rect width="320" height="480" fill="url(#wB)"/><rect x="48" y="235" width="224" height="42" rx="7" fill="#160804" transform="rotate(-5 48 235)"/><rect x="44" y="275" width="232" height="46" rx="7" fill="#1E0C06" transform="rotate(3 44 275)"/><rect x="52" y="318" width="216" height="42" rx="7" fill="#160804" transform="rotate(-2 52 318)"/><rect x="40" y="358" width="240" height="40" rx="7" fill="#241008" transform="rotate(4 40 358)"/><ellipse cx="160" cy="253" rx="90" ry="9" fill="#AE8B4F" opacity=".14"/><ellipse cx="158" cy="296" rx="84" ry="7" fill="#AE8B4F" opacity=".12"/><path d="M148 175 Q154 155 148 138 Q142 121 150 102 Q158 83 154 64" stroke="rgba(174,139,79,.15)" stroke-width="2" fill="none"/><path d="M170 178 Q178 158 172 138 Q166 118 174 98 Q182 78 178 55" stroke="rgba(174,139,79,.08)" stroke-width="1.5" fill="none"/></svg>
+      <div class="cat-ov"></div>
+      <div class="cat-info"><div class="cat-ar">أخشاب العود</div><div class="cat-en">Oud Wood</div><div class="cat-ct">+12 منتج</div><a class="cat-lk" href="#">Shop &#8594;</a></div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section class="sec sec-sand">
+    <div class="sec-head">
+      <span class="eyebrow">The Collection · الأكثر مبيعاً</span>
+      <h2 class="sec-title">Signature <em>Fragrances</em></h2>
+      <p class="sec-sub">Six compositions, each built on agarwood of a single provenance.</p>
+      <div class="divider" style="width:100px;margin:18px auto 0;"><div class="d-line g"></div><div class="d-diamond g"></div><div class="d-line g"></div></div>
+    </div>
+    <div class="prod-grid">
+      <div class="prod-card">
+        <div class="prod-badge new">New</div>
+        <div class="prod-img"><svg viewBox="0 0 380 290" xmlns="http://www.w3.org/2000/svg"><rect width="380" height="290" fill="#F0E8D8"/><radialGradient id="p1c" cx="50%" cy="48%" r="44%"><stop offset="0%" stop-color="#C8AE78" stop-opacity=".35"/><stop offset="100%" stop-color="#F0E8D8" stop-opacity="0"/></radialGradient><rect width="380" height="290" fill="url(#p1c)"/><path d="M165 50 L165 33 Q165 21 180 21 L200 21 Q215 21 215 33 L215 50 Q228 60 228 80 L228 242 Q228 258 208 258 L172 258 Q152 258 152 242 L152 80 Q152 60 165 50 Z" fill="#1A0C04" opacity=".92"/><path d="M165 50 L165 33 Q165 21 180 21 L200 21 Q215 21 215 33 L215 50 Q228 60 228 80 L228 242 Q228 258 208 258 L172 258 Q152 258 152 242 L152 80 Q152 60 165 50 Z" fill="none" stroke="rgba(174,139,79,.45)" stroke-width="1.5"/><path d="M154 116 L154 242 Q154 256 172 256 L208 256 Q226 256 226 242 L226 116 Z" fill="#2C1408" opacity=".55"/><rect x="168" y="7" width="44" height="15" rx="3" fill="#AE8B4F"/><rect x="170" y="1" width="40" height="8" rx="2" fill="#C2A368"/><rect x="162" y="140" width="56" height="68" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.38)" stroke-width=".8"/><text x="190" y="160" text-anchor="middle" font-family="serif" font-size="8" fill="#AE8B4F" letter-spacing="1.5">SHAMUM</text><text x="190" y="177" text-anchor="middle" font-family="serif" font-size="10" fill="#F4EAD2" font-style="italic">ليل عود</text><text x="190" y="193" text-anchor="middle" font-family="sans-serif" font-size="6" fill="#8B7E66" letter-spacing="1.5">EAU DE PARFUM</text></svg></div>
+        <div class="prod-body">
+          <div class="prod-arabic">ليل عود</div>
+          <div class="prod-name">Layl Oud</div>
+          <div class="prod-notes">Oud · Amber · Saffron · EDP 50ml</div>
+          <div class="prod-foot"><div class="prod-price">&#163;185</div><button class="btn-add" onclick="var b=this;b.textContent='&#10003; Added';b.style.background='var(--ink)';b.style.color='var(--sand-100)';setTimeout(function(){b.textContent='Add to Bag';b.style.background='';b.style.color=''},2000)">Add to Bag</button></div>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-img"><svg viewBox="0 0 380 290" xmlns="http://www.w3.org/2000/svg"><rect width="380" height="290" fill="#EDE0C8"/><radialGradient id="p2c" cx="50%" cy="40%" r="44%"><stop offset="0%" stop-color="#B89050" stop-opacity=".3"/><stop offset="100%" stop-color="#EDE0C8" stop-opacity="0"/></radialGradient><rect width="380" height="290" fill="url(#p2c)"/><path d="M156 265 L154 126 Q154 103 168 93 L178 70 L182 70 L192 93 Q206 103 206 126 L204 265 Z" fill="#100806"/><path d="M156 265 L154 126 Q154 103 168 93 L178 70 L182 70 L192 93 Q206 103 206 126 L204 265 Z" fill="none" stroke="rgba(174,139,79,.48)" stroke-width="1.5"/><path d="M156 265 L154 162 L206 162 L204 265 Z" fill="#2C1208" opacity=".5"/><ellipse cx="180" cy="67" rx="16" ry="7" fill="#8C6E3A"/><rect x="164" y="50" width="32" height="18" rx="5" fill="#6E5328"/><ellipse cx="180" cy="48" rx="14" ry="6" fill="#AE8B4F"/><circle cx="180" cy="41" r="9" fill="#C2A368"/><rect x="160" y="146" width="40" height="68" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.35)" stroke-width=".8"/><text x="180" y="165" text-anchor="middle" font-family="serif" font-size="7.5" fill="#AE8B4F" letter-spacing="1.5">SHAMUM</text><text x="180" y="182" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">ورد حجازي</text></svg></div>
+        <div class="prod-body">
+          <div class="prod-arabic">ورد حجازي</div>
+          <div class="prod-name">Hijazi Rose</div>
+          <div class="prod-notes">Taif Rose · Oud · Musk · EDP 50ml</div>
+          <div class="prod-foot"><div class="prod-price">&#163;210</div><button class="btn-add" onclick="var b=this;b.textContent='&#10003; Added';b.style.background='var(--ink)';b.style.color='var(--sand-100)';setTimeout(function(){b.textContent='Add to Bag';b.style.background='';b.style.color=''},2000)">Add to Bag</button></div>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badge ltd">Limited</div>
+        <div class="prod-img"><svg viewBox="0 0 380 290" xmlns="http://www.w3.org/2000/svg"><rect width="380" height="290" fill="#F2E8D4"/><radialGradient id="p3c" cx="50%" cy="50%" r="40%"><stop offset="0%" stop-color="#AE8B4F" stop-opacity=".18"/><stop offset="100%" stop-color="#F2E8D4" stop-opacity="0"/></radialGradient><rect width="380" height="290" fill="url(#p3c)"/><rect x="162" y="88" width="56" height="158" rx="14" fill="#120A02"/><rect x="162" y="88" width="56" height="158" rx="14" fill="none" stroke="rgba(174,139,79,.42)" stroke-width="1.5"/><rect x="164" y="118" width="52" height="126" rx="11" fill="#2A1008" opacity=".7"/><ellipse cx="190" cy="86" rx="20" ry="11" fill="#8C6E3A"/><circle cx="190" cy="81" r="13" fill="#AE8B4F"/><circle cx="186" cy="78" r="5" fill="#C2A368" opacity=".6"/><rect x="172" y="51" width="36" height="34" rx="5" fill="#6E5328"/><rect x="175" y="43" width="30" height="10" rx="3" fill="#AE8B4F"/><rect x="165" y="126" width="50" height="65" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.38)" stroke-width=".7"/><text x="190" y="145" text-anchor="middle" font-family="serif" font-size="6.5" fill="#AE8B4F" letter-spacing="1">SHAMUM</text><text x="190" y="161" text-anchor="middle" font-family="serif" font-size="8" fill="#F4EAD2" font-style="italic">مخلط Royale</text></svg></div>
+        <div class="prod-body">
+          <div class="prod-arabic">مخلط</div>
+          <div class="prod-name">Mukhallat Royale</div>
+          <div class="prod-notes">Sandalwood · Resin · Spice · EDP 50ml</div>
+          <div class="prod-foot"><div class="prod-price">&#163;165</div><button class="btn-add" onclick="var b=this;b.textContent='&#10003; Added';b.style.background='var(--ink)';b.style.color='var(--sand-100)';setTimeout(function(){b.textContent='Add to Bag';b.style.background='';b.style.color=''},2000)">Add to Bag</button></div>
+        </div>
       </div>
     </div>
-    <div class="prod-card">
-      <div class="prod-badge ltd">Limited</div>
-      <div class="prod-img"><svg viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg"><rect width="380" height="300" fill="#F2E8D4"/><radialGradient id="pg3b" cx="50%" cy="50%" r="40%"><stop offset="0%" stop-color="#AE8B4F" stop-opacity=".18"/><stop offset="100%" stop-color="#F2E8D4" stop-opacity="0"/></radialGradient><rect width="380" height="300" fill="url(#pg3b)"/><rect x="162" y="92" width="56" height="165" rx="14" fill="#120A02"/><rect x="162" y="92" width="56" height="165" rx="14" fill="none" stroke="rgba(174,139,79,.42)" stroke-width="1.5"/><rect x="164" y="122" width="52" height="133" rx="11" fill="#2A1008" opacity=".7"/><ellipse cx="190" cy="90" rx="20" ry="11" fill="#8C6E3A"/><circle cx="190" cy="85" r="13" fill="#AE8B4F"/><circle cx="186" cy="82" r="5" fill="#C2A368" opacity=".6"/><rect x="172" y="55" width="36" height="36" rx="5" fill="#6E5328"/><rect x="175" y="47" width="30" height="10" rx="3" fill="#AE8B4F"/><rect x="165" y="130" width="50" height="68" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.38)" stroke-width=".7"/><text x="190" y="149" text-anchor="middle" font-family="serif" font-size="6.5" fill="#AE8B4F" letter-spacing="1">SHAMUM</text><text x="190" y="165" text-anchor="middle" font-family="serif" font-size="8" fill="#F4EAD2" font-style="italic">&#1605;&#1582;&#1604;&#1591;</text><text x="190" y="180" text-anchor="middle" font-family="serif" font-size="7" fill="#F4EAD2" font-style="italic">Royale</text></svg></div>
-      <div class="prod-body">
-        <div class="prod-arabic">مخلط</div>
-        <div class="prod-name">Mukhallat Royale</div>
-        <div class="prod-notes">Sandalwood · Resin · Spice · EDP 50ml</div>
-        <div class="prod-foot"><div class="prod-price">&#163;165</div><button class="btn-add" onclick="var b=this;b.textContent='&#10003; Added';b.style.background='var(--ink)';b.style.color='var(--sand-100)';setTimeout(function(){b.textContent='Add to Bag';b.style.background='';b.style.color=''},2000)">Add to Bag</button></div>
+    <div style="text-align:center;margin-top:44px;"><button class="btn-gold">View All · جميع المنتجات</button></div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="sec sec-dark quote-sec">
+    <div class="divider" style="width:90px;margin:0 auto 36px;"><div class="d-line"></div><div class="d-diamond"></div><div class="d-line"></div></div>
+    <blockquote>العطر ذاكرة لا تُنسى —<br>وشاموم يكتب ذاكرتك.</blockquote>
+    <div class="divider" style="width:90px;margin:28px auto;"><div class="d-line"></div><div class="d-diamond"></div><div class="d-line"></div></div>
+    <p class="q-attr">Maison SHAMUM · شاموم · Riyadh</p>
+  </section>
+
+  <!-- TRUST -->
+  <div class="trust">
+    <div class="trust-item"><span class="trust-icon">&#9672;</span><div class="trust-title">شحن مجاني</div><div class="trust-sub">Free Shipping · KSA</div></div>
+    <div class="trust-item"><span class="trust-icon">&#9671;</span><div class="trust-title">عود طبيعي ١٠٠٪</div><div class="trust-sub">100% Natural Agarwood</div></div>
+    <div class="trust-item"><span class="trust-icon">&#8617;</span><div class="trust-title">إرجاع مجاني</div><div class="trust-sub">14-Day Returns</div></div>
+    <div class="trust-item"><span class="trust-icon">&#10022;</span><div class="trust-title">برنامج الولاء</div><div class="trust-sub">Earn Rewards</div></div>
+  </div>
+
+  <!-- LOYALTY -->
+  <div class="loyalty">
+    <div><h2>انضم لعائلة شاموم</h2><p>اكسب نقاط مع كل عملية شراء، واستمتع بعروض حصرية تليق بك.</p></div>
+    <button class="btn-dark">Join the House · سجّل الآن</button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <span class="footer-brand-name">SHAMUM</span>
+        <div class="footer-brand-sub">Maison d'Oud</div>
+        <p class="footer-desc">A house of oud. Distilled with patience from the heartwood of the Aquilaria, aged in cedar, bottled by hand.</p>
+        <input class="footer-email-input" type="email" placeholder="Join the House — your email"/>
+      </div>
+      <div class="footer-col"><h4>Maison</h4><ul><li><a href="#">The House</a></li><li><a href="#">Our Oud</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Stores</a></li></ul></div>
+      <div class="footer-col"><h4>Shop</h4><ul><li><a href="#">All Fragrances</a></li><li><a href="#">Oud</a></li><li><a href="#">Rose &amp; Oud</a></li><li><a href="#">Mukhallat</a></li><li><a href="#">Gifting</a></li></ul></div>
+      <div class="footer-col"><h4>Care</h4><ul><li><a href="#">Contact</a></li><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li><li><a href="#">Authenticity</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&#169; 2026 SHAMUM · شاموم &nbsp;·&nbsp; الرقم الضريبي: 1100190829</span>
+      <div style="display:flex;align-items:center;gap:18px;">
+        <span>Riyadh · Dubai · London</span>
+        <div class="pay"><span>Apple Pay</span><span>Visa</span><span>Mastercard</span><span>Amex</span><span>مدى</span></div>
       </div>
     </div>
-  </div>
-  <div class="view-all-wrap"><button class="btn-gold">View All · جميع المنتجات</button></div>
-</section>
+  </footer>
 
-<!-- QUOTE -->
-<section class="sec sec-dark quote-sec">
-  <div class="divider" style="width:100px;margin:0 auto 40px;"><div class="d-line"></div><div class="d-diamond"></div><div class="d-line"></div></div>
-  <blockquote>العطر ذاكرة لا تُنسى —<br>وشاموم يكتب ذاكرتك.</blockquote>
-  <div class="divider" style="width:100px;margin:30px auto;"><div class="d-line"></div><div class="d-diamond"></div><div class="d-line"></div></div>
-  <p class="q-attr">Maison SHAMUM · شاموم · Riyadh</p>
-</section>
-
-<!-- TRUST -->
-<div class="trust">
-  <div class="trust-item"><span class="trust-icon">&#9672;</span><div class="trust-title">شحن مجاني</div><div class="trust-sub">Free Shipping · KSA</div></div>
-  <div class="trust-item"><span class="trust-icon">&#9671;</span><div class="trust-title">عود طبيعي ١٠٠٪</div><div class="trust-sub">100% Natural Agarwood</div></div>
-  <div class="trust-item"><span class="trust-icon">&#8617;</span><div class="trust-title">إرجاع مجاني</div><div class="trust-sub">14-Day Returns</div></div>
-  <div class="trust-item"><span class="trust-icon">&#10022;</span><div class="trust-title">برنامج الولاء</div><div class="trust-sub">Earn Rewards</div></div>
-</div>
-
-<!-- LOYALTY -->
-<div class="loyalty">
-  <div>
-    <h2>انضم لعائلة شاموم</h2>
-    <p>اكسب نقاط مع كل عملية شراء، واستمتع بعروض حصرية تليق بك.</p>
-  </div>
-  <button class="btn-dark">Join the House · سجّل الآن</button>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-top">
-    <div>
-      <span class="footer-brand-name">SHAMUM</span>
-      <div class="footer-brand-sub">Maison d'Oud</div>
-      <p class="footer-desc">A house of oud. Distilled with patience from the heartwood of the Aquilaria, aged in cedar, bottled by hand.</p>
-      <input class="footer-email-input" type="email" placeholder="Join the House — your email"/>
-    </div>
-    <div class="footer-col"><h4>Maison</h4><ul><li><a href="#">The House</a></li><li><a href="#">Our Oud</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Stores</a></li></ul></div>
-    <div class="footer-col"><h4>Shop</h4><ul><li><a href="#">All Fragrances</a></li><li><a href="#">Oud</a></li><li><a href="#">Rose &amp; Oud</a></li><li><a href="#">Mukhallat</a></li><li><a href="#">Gifting</a></li></ul></div>
-    <div class="footer-col"><h4>Care</h4><ul><li><a href="#">Contact</a></li><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li><li><a href="#">Authenticity</a></li></ul></div>
-  </div>
-  <div class="footer-bottom">
-    <span>&#169; 2026 SHAMUM · شاموم &nbsp;·&nbsp; الرقم الضريبي: 1100190829</span>
-    <div style="display:flex;align-items:center;gap:20px;">
-      <span>Riyadh · Dubai · London</span>
-      <div class="pay"><span>Apple Pay</span><span>Visa</span><span>Mastercard</span><span>Amex</span><span>مدى</span></div>
-    </div>
-  </div>
-</footer>
+</div><!-- /site-content -->
 
 <script>
-  // Scroll-reveal
-  var reveals = document.querySelectorAll('[data-reveal]');
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
+/* ══════════════════════════════════════════
+   SCROLL-DRIVEN ANIMATION ENGINE
+   Total scroll height: 700vh
+   Progress: 0 → 1 mapped to animation stages
+══════════════════════════════════════════ */
+
+// ── Helpers ──
+function lerp(a, b, t){ return a + (b - a) * t; }
+function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+function phase(p, s, e){ return clamp((p - s) / (e - s), 0, 1); }
+function easeOut(t){ return 1 - Math.pow(1 - t, 3); }
+function easeIn(t){ return t * t * t; }
+function easeInOut(t){ return t < .5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; }
+function set(el, v){ if(el) el.style.opacity = v; }
+
+// ── Element refs ──
+var nav          = document.getElementById('nav');
+var skyRect      = document.getElementById('sky-rect');
+var sunGlowRect  = document.getElementById('sun-glow-rect');
+var sunCircle    = document.getElementById('sun-circle');
+var bgForest     = document.getElementById('bg-forest');
+var lightRays    = document.getElementById('light-rays');
+var ground       = document.getElementById('ground');
+var groundShadow = document.getElementById('ground-shadow');
+var treeGroup    = document.getElementById('tree-group');
+var canopy       = document.getElementById('canopy');
+var branches     = document.getElementById('branches');
+var trunk        = document.getElementById('trunk');
+var cutMark      = document.getElementById('cut-mark');
+var chips        = document.getElementById('chips');
+var workerLeft   = document.getElementById('worker-left');
+var workerRight  = document.getElementById('worker-right');
+var wlArm        = document.getElementById('wl-arm');
+var wrArm        = document.getElementById('wr-arm');
+var oudPieces    = document.getElementById('oud-pieces');
+var pileBases    = document.getElementById('pile-bases');
+var resinGlow    = document.getElementById('resin-glow-rect');
+var scrollCue    = document.getElementById('scroll-cue');
+var stageCta     = document.getElementById('stage-cta');
+var pileEls      = [1,2,3,4,5].map(function(i){ return document.getElementById('pile-'+i); });
+
+// Text elements
+var texts = {
+  l1: document.getElementById('t-label-1'),
+  h1: document.getElementById('t-headline-1'),
+  l2: document.getElementById('t-label-2'),
+  h2: document.getElementById('t-headline-2'),
+  l3: document.getElementById('t-label-3'),
+  h3: document.getElementById('t-headline-3'),
+  s3: document.getElementById('t-sub-3'),
+  h4: document.getElementById('t-headline-4'),
+  l5: document.getElementById('t-label-5'),
+  h5: document.getElementById('t-headline-5'),
+  s5: document.getElementById('t-sub-5')
+};
+
+// ── Generate oud pieces ──
+// 30 pieces: 6 per column
+// Columns at SVG x: 180, 432, 720, 1008, 1260
+var colX = [180, 432, 720, 1008, 1260];
+var pieceColors = ['#0A0402','#120602','#160806','#0E0502','#1A0A04','#140804'];
+var allPieces = [];
+
+colX.forEach(function(cx, ci){
+  for(var i = 0; i < 6; i++){
+    var el = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    var w = 22 + Math.random() * 28;
+    var h = 10 + Math.random() * 8;
+    var rot = (Math.random() - .5) * 40;
+    el.setAttribute('width', w);
+    el.setAttribute('height', h);
+    el.setAttribute('rx', 3);
+    el.setAttribute('fill', pieceColors[Math.floor(Math.random()*pieceColors.length)]);
+    el.setAttribute('opacity', 0);
+    // Gold sheen on some pieces
+    if(Math.random() > .55){
+      el.style.filter = 'drop-shadow(0 0 3px rgba(174,139,79,.35))';
+    }
+    oudPieces.appendChild(el);
+    allPieces.push({
+      el: el,
+      col: ci,
+      // source: near base of tree (720, 700-800) with spread
+      sx: 720 + (Math.random() - .5) * 60,
+      sy: 700 + Math.random() * 80,
+      // target: in column, stacked
+      tx: cx + (Math.random() - .5) * 50,
+      ty: 770 - i * (h + 4),
+      rot: rot,
+      // delay: each column has slight offset, each piece within column also offset
+      delay: ci * 0.025 + i * 0.018 + Math.random() * 0.015,
+      w: w, h: h
     });
-  },{threshold:0.18});
-  reveals.forEach(function(el){
-    var r=el.getBoundingClientRect();
-    if(r.top < window.innerHeight*0.9) el.classList.add('visible');
-    else io.observe(el);
+  }
+});
+
+// ── Chop bounce state ──
+var chopBounce = 0;
+var lastProgress = 0;
+
+// ── Main update ──
+function update(){
+  var container = document.getElementById('scroll-container');
+  var scrollTop = window.scrollY - container.offsetTop;
+  var maxScroll = container.offsetHeight - window.innerHeight;
+  var p = clamp(scrollTop / maxScroll, 0, 1);
+  lastProgress = p;
+
+  // ── NAV ──
+  nav.classList.toggle('opaque', p > .92);
+
+  // ── SCROLL CUE ──
+  scrollCue.style.opacity = p < .04 ? 1 : Math.max(0, 1 - (p - .04) / .04);
+
+  // ── PHASE 1 (0 → 0.14): Opening — dark, text fades in ──
+  var p1 = phase(p, 0, .14);
+  var p1out = phase(p, .14, .22);
+  var o1 = easeOut(p1) * (1 - easeIn(p1out));
+  texts.l1.style.opacity = o1;
+  texts.h1.style.opacity = o1;
+  texts.l1.style.transform = 'translateY(' + lerp(20, 0, easeOut(p1)) + 'px)';
+  texts.h1.style.transform = 'translateY(' + lerp(30, 0, easeOut(p1)) + 'px)';
+
+  // ── PHASE 2 (0.10 → 0.30): Sky lights up, tree emerges ──
+  var skyP = phase(p, .10, .28);
+  // Swap sky gradient darkness
+  sunGlowRect.style.opacity = easeOut(skyP) * .85;
+  sunCircle.style.opacity   = easeOut(skyP) * .18;
+  bgForest.style.opacity    = easeOut(skyP) * .85;
+  lightRays.style.opacity   = easeOut(phase(p, .15, .30));
+  ground.style.opacity      = easeOut(phase(p, .12, .25));
+  groundShadow.style.opacity= easeOut(phase(p, .12, .25)) * .65;
+
+  // Tree rises from ground (translateY from +60 to 0)
+  var treeRise = easeOut(phase(p, .08, .26));
+  canopy.style.opacity  = easeOut(phase(p, .12, .28));
+  branches.style.opacity= easeOut(phase(p, .14, .30));
+  trunk.style.opacity   = easeOut(phase(p, .08, .22));
+
+  // Phase 2 text
+  var p2in  = phase(p, .22, .32);
+  var p2out = phase(p, .38, .46);
+  var o2 = easeOut(p2in) * (1 - easeIn(p2out));
+  texts.l2.style.opacity = o2;
+  texts.h2.style.opacity = o2;
+  texts.l2.style.transform = 'translateY(' + lerp(18, 0, easeOut(p2in)) + 'px)';
+  texts.h2.style.transform = 'translateY(' + lerp(24, 0, easeOut(p2in)) + 'px)';
+
+  // ── PHASE 3 (0.34 → 0.56): Workers walk in, chopping ──
+  var workerP = phase(p, .34, .50);
+  workerLeft.style.opacity  = easeOut(workerP);
+  workerRight.style.opacity = easeOut(workerP);
+  // Walk in: translate from ±320 to 0
+  var walkX = lerp(320, 0, easeOut(workerP));
+  workerLeft.style.transform  = 'translateX(-' + walkX + 'px)';
+  workerRight.style.transform = 'translateX(' + walkX + 'px)';
+
+  // Chopping arm animation (oscillates during 0.44 - 0.62)
+  var chopP = phase(p, .44, .64);
+  if(chopP > 0 && chopP < 1){
+    var swing = Math.sin(chopP * Math.PI * 14) * 32 * Math.min(1, chopP * 4);
+    wlArm.style.transform = 'rotate(' + (-swing) + 'deg)';
+    wrArm.style.transform = 'rotate(' + swing + 'deg)';
+    // Show cut mark
+    cutMark.style.opacity = Math.min(1, chopP * 3);
+    chips.style.opacity   = Math.min(1, chopP * 4) * Math.abs(Math.sin(chopP * Math.PI * 14));
+    // Tree shakes slightly
+    var shake = Math.sin(chopP * Math.PI * 16) * 4 * Math.min(1, chopP * 3);
+    if(chopP < .85){
+      treeGroup.style.transform = 'translateX(' + shake + 'px)';
+    }
+  } else {
+    wlArm.style.transform = '';
+    wrArm.style.transform = '';
+    if(chopP >= 1){ cutMark.style.opacity = 0; chips.style.opacity = 0; }
+  }
+
+  // Phase 3 text
+  var p3in  = phase(p, .42, .52);
+  var p3out = phase(p, .60, .66);
+  var o3 = easeOut(p3in) * (1 - easeIn(p3out));
+  texts.l3.style.opacity = o3;
+  texts.h3.style.opacity = o3;
+  texts.s3.style.opacity = o3 * .88;
+  texts.l3.style.transform = 'translateY(' + lerp(16, 0, easeOut(p3in)) + 'px)';
+  texts.h3.style.transform = 'translateY(' + lerp(22, 0, easeOut(p3in)) + 'px)';
+  texts.s3.style.transform = 'translateY(' + lerp(18, 0, easeOut(p3in)) + 'px)';
+
+  // ── PHASE 4 (0.62 → 0.74): Tree falls ──
+  var fallP = easeIn(phase(p, .62, .74));
+  var fallAngle = fallP * -88;
+  // Workers step back as tree falls
+  var stepBack = phase(p, .60, .68);
+  workerLeft.style.transform  = 'translateX(-' + lerp(0, 120, easeOut(stepBack)) + 'px)';
+  workerRight.style.transform = 'translateX(' + lerp(0, 120, easeOut(stepBack)) + 'px)';
+
+  if(fallP > 0){
+    // Combine shake + fall
+    treeGroup.style.transform = 'rotate(' + fallAngle + 'deg)';
+  }
+
+  // Fade out canopy as tree falls
+  canopy.style.opacity  = Math.max(0, 1 - fallP * 1.4);
+  branches.style.opacity= Math.max(0, 1 - fallP * 1.8);
+  workerLeft.style.opacity  = Math.max(0, 1 - easeIn(phase(p, .68, .76)));
+  workerRight.style.opacity = Math.max(0, 1 - easeIn(phase(p, .68, .76)));
+
+  // Phase 4 text
+  var p4in  = phase(p, .63, .70);
+  var p4out = phase(p, .72, .78);
+  var o4 = easeOut(p4in) * (1 - easeIn(p4out));
+  texts.h4.style.opacity = o4;
+  texts.h4.style.transform = 'translateY(' + lerp(20, 0, easeOut(p4in)) + 'px)';
+
+  // Resin glow rises
+  resinGlow.style.opacity = fallP * .8;
+  ground.style.opacity = Math.min(1, easeOut(phase(p, .12, .25)) + fallP * .3);
+
+  // ── PHASE 5 (0.73 → 1.0): Oud pieces rain into 5 piles ──
+  var rainStart = .73;
+  var rainEnd   = .92;
+
+  // Fade out trunk as pieces take over
+  trunk.style.opacity = Math.max(0, 1 - easeIn(phase(p, .74, .82)));
+
+  // Animate each piece
+  allPieces.forEach(function(piece){
+    var pieceStart = rainStart + piece.delay;
+    var pieceEnd   = Math.min(rainEnd, pieceStart + .14);
+    var pp = easeOut(phase(p, pieceStart, pieceEnd));
+
+    if(pp <= 0){
+      piece.el.setAttribute('opacity', 0);
+      return;
+    }
+
+    // Parabolic arc: y has gravity effect
+    var cx = lerp(piece.sx, piece.tx, pp);
+    var cy = lerp(piece.sy, piece.ty, pp);
+    // Add arc: rises then falls (gravity)
+    var arc = -60 * pp * (1 - pp);
+    cy += arc;
+
+    piece.el.setAttribute('x', cx - piece.w/2);
+    piece.el.setAttribute('y', cy - piece.h/2);
+    piece.el.setAttribute('opacity', Math.min(1, pp * 3));
+    piece.el.setAttribute('transform',
+      'rotate(' + (piece.rot * (1 - pp*.6)) + ' ' + cx + ' ' + cy + ')');
   });
 
-  // Nav light/dark
-  var nav=document.getElementById('nav');
-  window.addEventListener('scroll',function(){
-    if(window.scrollY > window.innerHeight*2.8) nav.classList.add('light');
-    else nav.classList.remove('light');
+  // Pile bases appear
+  pileBases.style.opacity = easeOut(phase(p, .82, .90));
+
+  // Phase 5 text
+  var p5in  = phase(p, .80, .88);
+  var p5out = phase(p, .96, 1.0);
+  var o5 = easeOut(p5in) * (1 - easeIn(p5out));
+  texts.l5.style.opacity = o5;
+  texts.h5.style.opacity = o5;
+  texts.s5.style.opacity = o5 * .84;
+  texts.l5.style.transform = 'translateY(' + lerp(16, 0, easeOut(p5in)) + 'px)';
+  texts.h5.style.transform = 'translateY(' + lerp(22, 0, easeOut(p5in)) + 'px)';
+  texts.s5.style.transform = 'translateY(' + lerp(18, 0, easeOut(p5in)) + 'px)';
+
+  // Pile labels appear staggered
+  pileEls.forEach(function(el, i){
+    if(!el) return;
+    var lp = easeOut(phase(p, .84 + i*.025, .92 + i*.025));
+    el.style.opacity = lp;
+    el.style.transform = 'translateY(' + lerp(20, 0, lp) + 'px)';
   });
+
+  // CTA
+  var ctaP = easeOut(phase(p, .92, .98));
+  stageCta.style.opacity = ctaP;
+  if(ctaP > .05){ stageCta.classList.add('show'); } else { stageCta.classList.remove('show'); }
+}
+
+// ── RAF-throttled scroll handler ──
+var rafPending = false;
+window.addEventListener('scroll', function(){
+  if(!rafPending){
+    rafPending = true;
+    requestAnimationFrame(function(){
+      update();
+      rafPending = false;
+    });
+  }
+}, { passive: true });
+
+// Initial call
+update();
+
+// Account for nav + ann bar height in scroll start
+// The sticky scene should start from top of scroll container, not top of page
+document.getElementById('scroll-container').style.paddingTop = '0';
 </script>
 </body>
 </html>

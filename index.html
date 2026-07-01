@@ -1,1023 +1,1468 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHAMUM — Maison d'Oud | شاموم</title>
+<title>SHAMUM · Maison d'Oud — شاموم · ماسون عود</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap');
-
 :root {
-  --sand-50:#FBF6EA; --sand-100:#F4EAD2; --sand-200:#E9D8B4; --sand-300:#DCC79A;
-  --gold-300:#D4BC86; --gold-400:#C2A368; --gold-500:#AE8B4F; --gold-600:#8C6E3A;
-  --bronze:#6E5328; --oud-800:#342517; --oud-900:#241810; --ink:#15100A;
-  --stone:#8B7E66;
-  --grad-gold:linear-gradient(135deg,#D4BC86 0%,#AE8B4F 48%,#8C6E3A 100%);
-  --grad-resin:linear-gradient(180deg,#342517 0%,#241810 60%,#15100A 100%);
-  --font-d:'Cormorant Garamond',Georgia,serif;
-  --font-s:'Jost',system-ui,sans-serif;
-  --border-gold:rgba(174,139,79,.55);
-  --border-dark:rgba(212,188,134,.28);
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--ink);color:var(--sand-100);font-family:var(--font-d);overflow-x:hidden;}
-
-/* ── ANN ── */
-.ann{background:var(--ink);border-bottom:1px solid rgba(212,188,134,.12);color:var(--sand-100);text-align:center;padding:9px 20px;font-family:var(--font-s);font-size:11px;letter-spacing:2px;position:relative;z-index:300;}
-.ann b{color:var(--gold-400);font-weight:400;}
-
-/* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 48px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:62px;transition:background .5s,border-color .5s;}
-nav.opaque{background:rgba(251,246,234,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(110,83,40,.18);}
-.nav-links{display:flex;gap:28px;}
-.nav-links a{font-family:var(--font-s);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,234,210,.75);cursor:pointer;text-decoration:none;transition:color .3s;padding-bottom:2px;border-bottom:1px solid transparent;}
-nav.opaque .nav-links a{color:var(--oud-800);}
-.nav-links a:hover{color:var(--gold-400);}
-.nav-brand{text-align:center;cursor:pointer;}
-.nav-brand-name{font-family:var(--font-d);font-size:24px;font-weight:600;letter-spacing:.14em;color:var(--sand-100);transition:color .5s;}
-nav.opaque .nav-brand-name{color:var(--ink);}
-.nav-brand-sub{font-family:var(--font-s);font-size:8px;letter-spacing:.4em;text-transform:uppercase;color:rgba(212,188,134,.5);margin-top:1px;transition:color .5s;}
-nav.opaque .nav-brand-sub{color:var(--stone);}
-.nav-right{display:flex;gap:6px;justify-content:flex-end;align-items:center;}
-.nav-shop{font-family:var(--font-s);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,234,210,.75);cursor:pointer;margin-right:14px;transition:color .3s;}
-nav.opaque .nav-shop{color:var(--oud-800);}
-.nav-icon{width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:rgba(244,234,210,.7);cursor:pointer;font-size:15px;transition:color .3s;border-radius:50%;}
-nav.opaque .nav-icon{color:var(--oud-800);}
-
-/* ══════════════════════════
-   SCROLL ANIMATION STAGE
-══════════════════════════ */
-#scroll-container{position:relative;height:700vh;}
-#sticky-scene{
-  position:sticky;top:0;height:100vh;
-  overflow:hidden;background:#080503;
-  will-change:transform;
+  --ink: #15100A;
+  --oud-900: #241810;
+  --oud-800: #342517;
+  --bronze: #6E5328;
+  --gold-600: #8C6E3A;
+  --gold-500: #AE8B4F;
+  --gold-400: #C2A368;
+  --gold-300: #D4BC86;
+  --sand-100: #F4EAD2;
+  --sand-50: #FBF6EA;
 }
 
-/* SVG scene */
-#scene-svg{position:absolute;inset:0;width:100%;height:100%;}
-
-/* Text overlays */
-#stage-text{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  pointer-events:none;text-align:center;padding:0 24px;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: auto; }
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--ink);
+  color: var(--sand-50);
+  cursor: none;
+  overflow-x: hidden;
 }
-.stage-label{
-  position:absolute;
-  font-family:var(--font-s);font-size:11px;font-weight:500;
-  letter-spacing:.42em;text-transform:uppercase;color:var(--gold-300);
-  opacity:0;transition:none;top:18%;will-change:transform,opacity,filter;
+
+/* ─── CURSOR ─── */
+#cursor-dot {
+  position: fixed; width: 8px; height: 8px;
+  background: var(--gold-400); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-4px,-4px);
+  transition: opacity 0.2s;
+  mix-blend-mode: difference;
+  will-change: transform;
 }
-.stage-headline{
-  position:absolute;
-  font-family:var(--font-d);font-size:clamp(44px,6vw,84px);font-weight:500;
-  line-height:1.04;color:var(--sand-100);
-  max-width:800px;text-align:center;
-  opacity:0;transition:none;will-change:transform,opacity,filter;
+#cursor-ring {
+  position: fixed; width: 40px; height: 40px;
+  border: 1px solid var(--gold-400); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-20px,-20px);
+  transition: width 0.35s cubic-bezier(0.16,1,0.3,1),
+              height 0.35s cubic-bezier(0.16,1,0.3,1),
+              background 0.3s, border-color 0.3s, opacity 0.2s;
+  display: flex; align-items: center; justify-content: center;
+  will-change: transform;
 }
-.stage-headline em{font-style:italic;color:var(--gold-300);}
-.stage-sub{
-  position:absolute;
-  font-family:var(--font-s);font-size:15px;font-weight:300;
-  line-height:1.8;color:rgba(244,234,210,.78);
-  max-width:520px;text-align:center;
-  opacity:0;transition:none;top:58%;will-change:transform,opacity,filter;
+#cursor-ring.hover-link {
+  width: 80px; height: 80px;
+  background: rgba(194,163,104,0.15);
+  border-color: var(--gold-300);
 }
-#stage-cta{
-  position:absolute;bottom:12%;
-  display:flex;gap:14px;opacity:0;pointer-events:none;
+#cursor-dot.hidden { opacity: 0; }
+#cursor-ring.hover-image {
+  width: 120px; height: 120px;
+  border-color: var(--gold-300);
+  background: rgba(194,163,104,0.06);
 }
-#stage-cta.show{pointer-events:auto;}
-
-/* Scroll cue */
-#scroll-cue{
-  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  font-family:var(--font-s);font-size:8px;letter-spacing:.3em;
-  color:rgba(212,188,134,.5);text-transform:uppercase;
-  transition:opacity .5s;
+#cursor-ring .ring-label {
+  font-family: 'Jost', sans-serif; font-size: 9px;
+  letter-spacing: 0.18em; color: var(--gold-300);
+  opacity: 0; transition: opacity 0.2s; text-transform: uppercase;
 }
-.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold-400),transparent);animation:sp 2s ease-in-out infinite;}
-@keyframes sp{0%,100%{opacity:.15}50%{opacity:.8}}
-
-/* Word-split spans for staggered reveals */
-.word{display:inline-block;will-change:transform,opacity,filter;}
-/* Dust canvas overlay */
-#dust{position:absolute;inset:0;pointer-events:none;z-index:4;width:100%;height:100%;}
-
-/* Pile labels */
-.pile-label{
-  position:absolute;bottom:10%;
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  opacity:0;transition:none;
+#cursor-ring.hover-image .ring-label { opacity: 1; }
+@media (max-width: 768px) {
+  #cursor-dot, #cursor-ring { display: none; }
+  body { cursor: auto; }
 }
-.pile-grade{font-family:var(--font-d);font-style:italic;font-size:28px;color:var(--gold-300);}
-.pile-name{font-family:var(--font-s);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(212,188,134,.6);}
 
-/* buttons */
-.btn-gold{font-family:var(--font-s);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;background:var(--grad-gold);color:var(--ink);border:1px solid var(--gold-600);padding:14px 36px;cursor:pointer;transition:filter .3s;}
-.btn-gold:hover{filter:brightness(1.08);}
-.btn-outline-dark{font-family:var(--font-s);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;background:transparent;color:var(--sand-100);border:1px solid var(--border-dark);padding:14px 36px;cursor:pointer;transition:all .3s;}
-.btn-outline-dark:hover{background:rgba(212,188,134,.08);}
+/* ─── NAV ─── */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 0 48px; height: 72px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.5s cubic-bezier(0.16,1,0.3,1),
+              backdrop-filter 0.5s, border-color 0.5s;
+  border-bottom: 1px solid transparent;
+}
+#nav.scrolled {
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-color: rgba(0,0,0,0.06);
+}
+#nav.scrolled .nav-link { color: var(--ink); }
+#nav.scrolled .nav-brand-name { color: var(--ink); }
+#nav.scrolled .nav-icon { color: var(--ink); }
+#nav.scrolled .nav-shop-text { color: var(--ink); }
 
-/* ── POST-SCROLL CONTENT ── */
-.site-content{background:var(--sand-50);color:var(--ink);}
+#scroll-bar {
+  position: absolute; bottom: -1px; left: 0;
+  height: 1px; width: 100%;
+  background: var(--gold-400);
+  transform: scaleX(0); transform-origin: left;
+}
 
-.divider{display:flex;align-items:center;gap:10px;}
-.d-line{flex:1;height:1px;background:var(--border-dark);}
-.d-diamond{width:6px;height:6px;transform:rotate(45deg);flex-shrink:0;background:var(--gold-300);}
-.d-line.g{background:var(--border-gold);}
-.d-diamond.g{background:var(--gold-500);}
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-link {
+  font-family: 'Jost', sans-serif; font-size: 11px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--sand-100); text-decoration: none; font-weight: 400;
+  transition: color 0.3s;
+}
+.nav-link:hover { color: var(--gold-400); }
 
-.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;}
-.cat-card{position:relative;height:480px;overflow:hidden;cursor:pointer;}
-.cat-card svg{position:absolute;inset:0;width:100%;height:100%;}
-.cat-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(21,16,10,.93) 0%,rgba(21,16,10,.25) 55%,transparent 100%);opacity:.65;transition:opacity .4s;}
-.cat-card:hover .cat-ov{opacity:.96;}
-.cat-info{position:absolute;bottom:0;left:0;right:0;padding:26px 22px;transform:translateY(16px);transition:transform .4s;}
-.cat-card:hover .cat-info{transform:translateY(0);}
-.cat-ar{font-family:var(--font-d);font-size:25px;color:var(--sand-100);margin-bottom:3px;}
-.cat-en{font-family:var(--font-s);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-400);margin-bottom:7px;}
-.cat-ct{font-family:var(--font-s);font-size:10px;color:rgba(212,188,134,.5);}
-.cat-lk{display:inline-block;margin-top:10px;font-family:var(--font-s);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand-100);border-bottom:1px solid var(--gold-400);padding-bottom:2px;opacity:0;transition:opacity .3s .1s;text-decoration:none;}
-.cat-card:hover .cat-lk{opacity:1;}
+.nav-brand {
+  text-align: center; position: absolute;
+  left: 50%; transform: translateX(-50%);
+}
+.nav-brand-name {
+  font-family: 'Cormorant Garamond', serif; font-size: 26px;
+  font-weight: 500; color: var(--sand-50); letter-spacing: 0.15em;
+  display: block; line-height: 1; transition: color 0.5s;
+}
+.nav-brand-sub {
+  font-family: 'Jost', sans-serif; font-size: 8px;
+  letter-spacing: 0.25em; color: var(--gold-400);
+  text-transform: uppercase; display: block; margin-top: 2px;
+}
 
-.sec{padding:88px 52px;}
-.sec-sand{background:var(--sand-200);}
-.sec-dark{background:var(--grad-resin);}
-.eyebrow{font-family:var(--font-s);font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--bronze);display:block;margin-bottom:12px;}
-.sec-title{font-family:var(--font-d);font-size:44px;font-weight:500;color:var(--ink);}
-.sec-title em{font-style:italic;color:var(--gold-500);}
-.sec-sub{font-family:var(--font-s);font-size:14px;font-weight:300;color:var(--stone);margin-top:10px;line-height:1.7;}
-.sec-head{text-align:center;margin-bottom:56px;}
+.nav-actions { display: flex; align-items: center; gap: 22px; }
+.nav-shop-text {
+  font-family: 'Jost', sans-serif; font-size: 11px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--sand-100); cursor: none; transition: color 0.3s;
+}
+.nav-shop-text:hover { color: var(--gold-400); }
+.nav-icon {
+  color: var(--sand-100); cursor: none; transition: color 0.3s;
+  width: 18px; height: 18px;
+}
+.nav-icon:hover { color: var(--gold-400); }
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  #nav { padding: 0 24px; }
+}
 
-.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
-.prod-card{background:#fff;border:1px solid rgba(110,83,40,.14);cursor:pointer;transition:box-shadow .3s,transform .3s;position:relative;}
-.prod-card:hover{box-shadow:0 12px 40px rgba(36,24,16,.12);transform:translateY(-3px);}
-.prod-badge{position:absolute;top:14px;left:14px;z-index:2;font-family:var(--font-s);font-size:8px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:5px 11px;border-radius:999px;}
-.prod-badge.new{background:transparent;color:var(--bronze);border:1px solid var(--border-gold);}
-.prod-badge.ltd{background:var(--ink);color:var(--sand-100);}
-.prod-img{width:100%;height:290px;}
-.prod-img svg{width:100%;height:100%;display:block;}
-.prod-body{padding:22px;}
-.prod-arabic{font-family:var(--font-d);font-size:15px;color:var(--stone);margin-bottom:3px;direction:rtl;}
-.prod-name{font-family:var(--font-d);font-size:23px;color:var(--ink);margin-bottom:4px;}
-.prod-notes{font-family:var(--font-s);font-size:11px;font-weight:300;letter-spacing:.06em;color:var(--stone);margin-bottom:14px;}
-.prod-foot{display:flex;justify-content:space-between;align-items:center;}
-.prod-price{font-family:var(--font-d);font-size:21px;color:var(--gold-600);}
-.btn-add{font-family:var(--font-s);font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;background:transparent;color:var(--gold-500);border:1px solid var(--border-gold);padding:8px 18px;cursor:pointer;transition:all .28s;}
-.btn-add:hover{background:var(--ink);color:var(--sand-100);border-color:var(--ink);}
+/* ─── HERO ─── */
+#hero-spacer { height: 700vh; }
+#hero-sticky {
+  position: sticky; top: 0; height: 100vh; width: 100%;
+  overflow: hidden; background: #080503;
+}
+#hero-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+#hero-svg-scene { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
 
-.quote-sec{padding:100px 52px;text-align:center;}
-blockquote{font-family:var(--font-d);font-size:36px;font-style:italic;color:var(--sand-100);max-width:700px;margin:0 auto 16px;line-height:1.5;}
-.q-attr{font-family:var(--font-s);font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold-400);}
+.hero-text-layer {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 0 24px;
+  pointer-events: none; z-index: 10;
+}
+#hero-line1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 7.5vw, 108px);
+  font-weight: 300; color: var(--sand-50);
+  line-height: 1.05; letter-spacing: -0.01em;
+}
+#hero-line2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 7.5vw, 108px);
+  font-weight: 300; color: var(--gold-300);
+  line-height: 1.05; letter-spacing: -0.01em;
+  margin-top: 8px; font-style: italic;
+}
+.word {
+  display: inline-block; opacity: 0;
+  filter: blur(14px);
+  transform: translateY(14px) scale(0.97);
+  transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1),
+              filter 0.75s cubic-bezier(0.16,1,0.3,1),
+              transform 0.75s cubic-bezier(0.16,1,0.3,1);
+  margin-right: 0.28em;
+}
+.word.visible { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
 
-.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--sand-300);}
-.trust-item{background:var(--sand-50);padding:36px 22px;text-align:center;}
-.trust-icon{font-size:22px;margin-bottom:12px;display:block;color:var(--gold-500);}
-.trust-title{font-family:var(--font-d);font-size:19px;color:var(--ink);margin-bottom:4px;}
-.trust-sub{font-family:var(--font-s);font-size:10px;letter-spacing:.1em;color:var(--stone);}
+#pile-labels {
+  position: absolute; bottom: 12%; left: 0; right: 0;
+  display: flex; justify-content: center;
+  gap: clamp(18px, 3.5vw, 56px);
+  pointer-events: none; z-index: 12; opacity: 0;
+}
+.pile-label {
+  text-align: center; font-family: 'Jost', sans-serif;
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold-300); display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+}
+.pile-label span {
+  color: var(--sand-50); font-family: 'Cormorant Garamond', serif;
+  font-size: 15px; font-style: italic;
+}
 
-.loyalty{background:var(--grad-gold);padding:70px 52px;display:flex;align-items:center;justify-content:space-between;gap:40px;}
-.loyalty h2{font-family:var(--font-d);font-size:34px;color:var(--ink);margin-bottom:8px;}
-.loyalty p{font-family:var(--font-s);font-size:14px;font-weight:300;line-height:1.7;color:rgba(21,16,10,.74);}
-.btn-dark{font-family:var(--font-s);font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;background:var(--ink);color:var(--sand-100);border:none;padding:14px 36px;cursor:pointer;white-space:nowrap;transition:background .3s;}
-.btn-dark:hover{background:var(--oud-800);}
+/* ─── BRAND STATEMENT ─── */
+#brand-statement {
+  position: relative; min-height: 100vh;
+  background: var(--oud-900);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.brand-grain {
+  position: absolute; inset: 0; pointer-events: none; z-index: 1; opacity: 0.04;
+}
+.brand-text-wrap {
+  position: relative; z-index: 2; text-align: center;
+  padding: 80px 48px; will-change: transform;
+}
+.brand-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 6vw, 90px);
+  font-weight: 300; color: var(--sand-50);
+  letter-spacing: -0.02em; line-height: 1.08;
+}
+.brand-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(24px, 3.2vw, 52px);
+  font-style: italic; color: var(--gold-400);
+  margin-top: 20px; letter-spacing: 0.01em;
+}
+.gold-divider {
+  width: 1px; height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--gold-400), transparent);
+  margin: 40px auto;
+}
 
-footer{background:var(--grad-resin);padding:70px 52px 34px;border-top:1px solid var(--border-dark);}
-.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:44px;margin-bottom:48px;}
-.footer-brand-name{font-family:var(--font-d);font-size:26px;font-weight:600;letter-spacing:.14em;color:var(--gold-300);display:block;margin-bottom:3px;}
-.footer-brand-sub{font-family:var(--font-s);font-size:8px;letter-spacing:.4em;color:rgba(212,188,134,.44);}
-.footer-desc{font-family:var(--font-s);font-size:13px;font-weight:300;line-height:1.8;color:rgba(212,188,134,.64);margin-top:14px;max-width:255px;}
-.footer-email-input{width:100%;margin-top:18px;background:rgba(212,188,134,.08);border:1px solid var(--border-dark);padding:10px 14px;font-family:var(--font-s);font-size:12px;color:var(--sand-100);outline:none;}
-.footer-email-input::placeholder{color:rgba(212,188,134,.36);}
-.footer-col h4{font-family:var(--font-s);font-size:9px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-300);margin-bottom:16px;}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
-.footer-col a{font-family:var(--font-s);font-size:13px;color:rgba(244,234,210,.7);cursor:pointer;transition:color .25s;text-decoration:none;}
-.footer-col a:hover{color:var(--gold-300);}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;border-top:1px solid var(--border-dark);font-family:var(--font-s);font-size:10px;letter-spacing:.1em;color:rgba(139,126,102,.78);}
-.pay{display:flex;gap:7px;}
-.pay span{background:rgba(212,188,134,.07);border:1px solid rgba(212,188,134,.15);padding:3px 9px;font-size:9px;color:rgba(212,188,134,.5);}
+/* ─── REVEAL SYSTEM ─── */
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+              transform 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+.reveal-scale {
+  opacity: 0; transform: scale(0.95); filter: blur(4px);
+  transition: opacity 1s cubic-bezier(0.16,1,0.3,1),
+              transform 1s cubic-bezier(0.16,1,0.3,1),
+              filter 1s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-scale.visible { opacity: 1; transform: scale(1); filter: blur(0); }
 
-@media(max-width:900px){
-  nav{padding:0 20px;} .nav-links{display:none;}
-  .cat-grid{grid-template-columns:repeat(2,1fr);}
-  .prod-grid{grid-template-columns:1fr;}
-  .footer-top{grid-template-columns:1fr 1fr;}
-  .trust{grid-template-columns:repeat(2,1fr);}
-  .loyalty{flex-direction:column;text-align:center;}
-  .sec{padding:60px 22px;}
+/* ─── CATEGORIES ─── */
+#categories {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  height: 100vh; min-height: 560px;
+}
+@media (max-width: 900px) {
+  #categories { grid-template-columns: repeat(2,1fr); height: auto; min-height: unset; }
+}
+@media (max-width: 480px) {
+  #categories { grid-template-columns: 1fr; }
+}
+.cat-card {
+  position: relative; overflow: hidden; cursor: none;
+  border-right: 1px solid rgba(174,139,79,0.1);
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1),
+              transform 0.85s cubic-bezier(0.16,1,0.3,1);
+}
+.cat-card:last-child { border-right: none; }
+.cat-card.visible { opacity: 1; transform: translateY(0); }
+.cat-card:nth-child(1) { transition-delay: 0s; }
+.cat-card:nth-child(2) { transition-delay: 0.1s; }
+.cat-card:nth-child(3) { transition-delay: 0.2s; }
+.cat-card:nth-child(4) { transition-delay: 0.3s; }
+
+.cat-bg {
+  position: absolute; inset: 0;
+  transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.cat-card:hover .cat-bg { transform: scale(1.04); }
+.cat-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(8,5,3,0.88) 0%, rgba(8,5,3,0.28) 60%, transparent 100%);
+  transition: background 0.4s;
+}
+.cat-card:hover .cat-overlay {
+  background: linear-gradient(to top, rgba(8,5,3,0.95) 0%, rgba(8,5,3,0.5) 60%, rgba(8,5,3,0.18) 100%);
+}
+.cat-svg {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -56%);
+  width: 55%; max-width: 160px; opacity: 0.72;
+  transition: opacity 0.4s, transform 0.55s cubic-bezier(0.16,1,0.3,1);
+}
+.cat-card:hover .cat-svg { opacity: 0.35; transform: translate(-50%, -61%); }
+.cat-content {
+  position: absolute; bottom: 0; left: 0; right: 0; padding: 32px 28px;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.cat-card:hover .cat-content { transform: translateY(-10px); }
+.cat-arabic {
+  font-family: 'Cormorant Garamond', serif; font-size: 13px;
+  color: var(--gold-400); letter-spacing: 0.08em;
+  display: block; margin-bottom: 6px; direction: rtl;
+}
+.cat-english {
+  font-family: 'Cormorant Garamond', serif; font-size: 25px;
+  font-weight: 400; color: var(--sand-50); display: block; line-height: 1.2;
+}
+.cat-count {
+  font-family: 'Jost', sans-serif; font-size: 10px;
+  letter-spacing: 0.2em; color: var(--gold-400);
+  display: block; margin-top: 4px; text-transform: uppercase;
+}
+.cat-explore {
+  display: block; font-family: 'Jost', sans-serif; font-size: 11px;
+  letter-spacing: 0.15em; color: var(--gold-300); text-transform: uppercase;
+  margin-top: 12px; opacity: 0; transform: translateY(8px);
+  transition: opacity 0.3s 0.05s, transform 0.4s cubic-bezier(0.16,1,0.3,1) 0.05s;
+}
+.cat-card:hover .cat-explore { opacity: 1; transform: translateY(0); }
+
+/* ─── PRODUCTS ─── */
+#products { background: var(--sand-50); padding: 120px 48px; }
+#products-header { text-align: center; margin-bottom: 80px; }
+.section-eyebrow {
+  font-family: 'Jost', sans-serif; font-size: 10px;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold-500); display: block; margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 4vw, 58px);
+  font-weight: 300; color: var(--ink); letter-spacing: -0.01em; line-height: 1.1;
+}
+.products-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 32px; max-width: 1200px; margin: 0 auto;
+}
+@media (max-width: 900px) { .products-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) {
+  .products-grid { grid-template-columns: 1fr; }
+  #products { padding: 80px 24px; }
+}
+.product-card {
+  background: #fff; border-radius: 2px; overflow: hidden;
+  position: relative; cursor: none;
+  box-shadow: 0 2px 20px rgba(21,16,10,0.06);
+  opacity: 0; transform: translateY(60px);
+  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+              transform 0.9s cubic-bezier(0.16,1,0.3,1),
+              box-shadow 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.product-card.visible { opacity: 1; transform: translateY(0); }
+.product-card.visible:hover { transform: translateY(-8px); box-shadow: 0 22px 60px rgba(21,16,10,0.16); }
+.product-card:nth-child(1) { transition-delay: 0s; }
+.product-card:nth-child(2) { transition-delay: 0.15s; }
+.product-card:nth-child(3) { transition-delay: 0.3s; }
+
+.product-badge {
+  position: absolute; top: 20px; left: 20px; z-index: 2;
+  font-family: 'Jost', sans-serif; font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 5px 10px;
+}
+.product-badge.new { background: var(--gold-500); color: #fff; }
+.product-badge.limited { background: var(--bronze); color: var(--sand-100); }
+
+.product-image-wrap {
+  height: 420px; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(155deg, #f9f5ed 0%, #ede5d3 100%); overflow: hidden;
+}
+.product-image-wrap svg {
+  height: 340px; width: auto;
+  transition: transform 0.65s cubic-bezier(0.16,1,0.3,1);
+}
+.product-card:hover .product-image-wrap svg { transform: translateY(-7px) scale(1.02); }
+.product-info { padding: 28px 28px 32px; }
+.product-name {
+  font-family: 'Cormorant Garamond', serif; font-size: 24px;
+  font-weight: 400; color: var(--ink); display: block; line-height: 1.2;
+}
+.product-arabic {
+  font-family: 'Cormorant Garamond', serif; font-size: 13px;
+  color: var(--bronze); display: block; margin-top: 2px; direction: rtl;
+}
+.product-price {
+  font-family: 'Jost', sans-serif; font-size: 16px;
+  color: var(--gold-600); display: block; margin-top: 12px; letter-spacing: 0.05em;
+}
+.add-to-bag {
+  margin-top: 20px; width: 100%; padding: 14px 24px;
+  background: var(--ink); color: var(--gold-300); border: none;
+  font-family: 'Jost', sans-serif; font-size: 10px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  cursor: none; position: relative; overflow: hidden;
+  transition: background 0.4s, color 0.4s, transform 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.add-to-bag:hover { background: var(--oud-800); }
+.add-to-bag.added { background: var(--gold-500); color: #fff; }
+.add-to-bag .ripple {
+  position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.22);
+  transform: scale(0); animation: rippleAnim 0.65s linear;
+  pointer-events: none;
+}
+@keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+
+/* ─── QUOTE ─── */
+#quote-section {
+  background: var(--ink); min-height: 60vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 100px 48px; position: relative; overflow: hidden;
+}
+.quote-grain { position: absolute; inset: 0; pointer-events: none; z-index: 1; opacity: 0.05; }
+.quote-inner { position: relative; z-index: 2; max-width: 900px; }
+.diamond-divider {
+  width: 10px; height: 10px; background: var(--gold-400);
+  transform: rotate(45deg); margin: 0 auto 40px;
+}
+.quote-arabic {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(22px, 3.2vw, 44px);
+  font-style: italic; font-weight: 300; color: var(--sand-50);
+  line-height: 1.55; direction: rtl; letter-spacing: 0.01em;
+}
+.quote-en {
+  font-family: 'Jost', sans-serif; font-size: 11px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold-400); margin-top: 28px; display: block;
+}
+
+/* ─── TRUST ─── */
+#trust {
+  background: var(--oud-900); padding: 100px 48px;
+  border-top: 1px solid rgba(174,139,79,0.1);
+  border-bottom: 1px solid rgba(174,139,79,0.1);
+}
+.trust-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 48px; max-width: 1100px; margin: 0 auto; text-align: center;
+}
+@media (max-width: 700px) {
+  .trust-grid { grid-template-columns: repeat(2,1fr); gap: 36px; }
+  #trust { padding: 80px 24px; }
+}
+.trust-number {
+  font-family: 'Cormorant Garamond', serif; font-size: 58px;
+  font-weight: 300; color: var(--gold-400); line-height: 1; display: block;
+}
+.trust-unit { font-size: 20px; color: var(--gold-400); vertical-align: middle; }
+.trust-label {
+  font-family: 'Jost', sans-serif; font-size: 11px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--sand-100); margin-top: 10px; display: block;
+}
+.trust-arabic {
+  font-family: 'Cormorant Garamond', serif; font-size: 16px;
+  color: var(--gold-500); direction: rtl; display: block; margin-top: 4px;
+}
+
+/* ─── LOYALTY ─── */
+#loyalty {
+  background: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-300) 50%, var(--gold-400) 100%);
+  padding: 90px 48px; text-align: center;
+}
+.loyalty-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4vw, 54px);
+  font-weight: 400; color: var(--ink); direction: rtl; letter-spacing: -0.01em;
+}
+.loyalty-sub {
+  font-family: 'Jost', sans-serif; font-size: 12px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--oud-800); margin-top: 12px; display: block;
+}
+.loyalty-btn {
+  display: inline-block; margin-top: 36px; padding: 16px 52px;
+  background: var(--ink); color: var(--gold-300); border: none;
+  font-family: 'Jost', sans-serif; font-size: 11px;
+  letter-spacing: 0.25em; text-transform: uppercase; cursor: none;
+  position: relative; overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
+              box-shadow 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.loyalty-btn:hover { box-shadow: 0 14px 44px rgba(21,16,10,0.35); }
+
+/* ─── FOOTER ─── */
+#footer {
+  background: linear-gradient(160deg, #0D0804 0%, var(--oud-900) 50%, #0D0804 100%);
+  padding: 90px 48px 40px; border-top: 1px solid rgba(174,139,79,0.15);
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 60px; max-width: 1200px; margin: 0 auto 70px;
+}
+@media (max-width: 900px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  #footer { padding: 60px 24px 32px; }
+}
+@media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr; } }
+.footer-brand-name {
+  font-family: 'Cormorant Garamond', serif; font-size: 28px;
+  font-weight: 500; color: var(--sand-50); letter-spacing: 0.15em;
+  display: block; margin-bottom: 14px;
+}
+.footer-desc {
+  font-family: 'Jost', sans-serif; font-size: 12px;
+  line-height: 1.8; color: rgba(244,234,210,0.5); margin-bottom: 24px;
+}
+.footer-email-form { display: flex; border-bottom: 1px solid rgba(174,139,79,0.35); }
+.footer-email-input {
+  flex: 1; background: none; border: none;
+  color: var(--sand-100); font-family: 'Jost', sans-serif;
+  font-size: 12px; padding: 10px 0; outline: none; letter-spacing: 0.04em;
+}
+.footer-email-input::placeholder { color: rgba(244,234,210,0.32); }
+.footer-email-submit {
+  background: none; border: none; color: var(--gold-400);
+  font-family: 'Jost', sans-serif; font-size: 10px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  cursor: pointer; transition: color 0.3s;
+}
+.footer-email-submit:hover { color: var(--gold-300); }
+.footer-col-title {
+  font-family: 'Jost', sans-serif; font-size: 10px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold-400); display: block; margin-bottom: 22px;
+}
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 12px; }
+.footer-links a {
+  font-family: 'Jost', sans-serif; font-size: 13px;
+  color: rgba(244,234,210,0.52); text-decoration: none;
+  letter-spacing: 0.03em; transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--gold-300); }
+.footer-bottom {
+  border-top: 1px solid rgba(174,139,79,0.1); padding-top: 28px;
+  display: flex; justify-content: space-between; align-items: center;
+  max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 16px;
+}
+.footer-copy {
+  font-family: 'Jost', sans-serif; font-size: 11px;
+  color: rgba(244,234,210,0.3); letter-spacing: 0.05em;
+}
+.footer-cities {
+  font-family: 'Cormorant Garamond', serif; font-size: 13px;
+  color: var(--gold-500); letter-spacing: 0.15em; font-style: italic;
+}
+.footer-payments { display: flex; gap: 10px; align-items: center; }
+.payment-icon {
+  width: 34px; height: 22px; background: rgba(255,255,255,0.07);
+  border-radius: 3px; border: 1px solid rgba(255,255,255,0.05);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Jost', sans-serif; font-size: 7px;
+  color: rgba(244,234,210,0.42); letter-spacing: 0.04em;
 }
 </style>
 </head>
 <body>
 
-<div class="ann">شحن مجاني داخل المملكة العربية السعودية &nbsp;·&nbsp; <b>برنامج الولاء — اكسب نقاطك</b> &nbsp;·&nbsp; Free Shipping in KSA</div>
+<!-- CURSOR -->
+<div id="cursor-ring"><span class="ring-label">VIEW</span></div>
+<div id="cursor-dot"></div>
 
+<!-- NAV -->
 <nav id="nav">
-  <div class="nav-links">
-    <a href="#">Home</a><a href="#">Collection</a><a href="#">Our Oud</a><a href="#">The House</a>
-  </div>
+  <ul class="nav-links">
+    <li><a href="#" class="nav-link">Home</a></li>
+    <li><a href="#categories" class="nav-link">Collection</a></li>
+    <li><a href="#brand-statement" class="nav-link">Our Oud</a></li>
+    <li><a href="#footer" class="nav-link">The House</a></li>
+  </ul>
   <div class="nav-brand">
-    <div class="nav-brand-name">SHAMUM</div>
-    <div class="nav-brand-sub">Maison d'Oud</div>
+    <span class="nav-brand-name">SHAMUM</span>
+    <span class="nav-brand-sub">Maison d'Oud</span>
   </div>
-  <div class="nav-right">
-    <span class="nav-shop">Shop</span>
-    <div class="nav-icon">&#x2315;</div>
-    <div class="nav-icon">&#9825;</div>
-    <div class="nav-icon">&#8861;</div>
+  <div class="nav-actions">
+    <span class="nav-shop-text">Shop</span>
+    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </svg>
+    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 0 1-8 0"/>
+    </svg>
   </div>
+  <div id="scroll-bar"></div>
 </nav>
 
-<!-- ══════════════════════════════════════
-     SCROLL-DRIVEN ANIMATION STAGE
-══════════════════════════════════════ -->
-<div id="scroll-container">
-  <div id="sticky-scene">
+<!-- ═══ HERO ═══ -->
+<div id="hero-spacer">
+  <div id="hero-sticky">
+    <canvas id="hero-canvas"></canvas>
 
-    <!-- SCENE SVG -->
-    <svg id="scene-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <svg id="hero-svg-scene" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- Sky gradients -->
-        <linearGradient id="sky-dark" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#0A1206"/><stop offset="100%" stop-color="#050300"/>
+        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#070402"/>
+          <stop offset="55%" stop-color="#130E07"/>
+          <stop offset="100%" stop-color="#1A1108"/>
         </linearGradient>
-        <linearGradient id="sky-dusk" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#1A2E10"/><stop offset="60%" stop-color="#0F1C08"/><stop offset="100%" stop-color="#050300"/>
-        </linearGradient>
-        <radialGradient id="sun-glow" cx="65%" cy="12%" r="28%">
-          <stop offset="0%" stop-color="#FFE070" stop-opacity=".35"/><stop offset="100%" stop-color="#0F1C08" stop-opacity="0"/>
+        <radialGradient id="sunGlow" cx="50%" cy="38%" r="32%">
+          <stop offset="0%" stop-color="#C2A368" stop-opacity="0.24"/>
+          <stop offset="70%" stop-color="#8C6E3A" stop-opacity="0.06"/>
+          <stop offset="100%" stop-color="#080503" stop-opacity="0"/>
         </radialGradient>
-        <!-- Resin glow -->
-        <radialGradient id="resin-glow" cx="50%" cy="70%" r="40%">
-          <stop offset="0%" stop-color="#8B5A00" stop-opacity=".25"/><stop offset="100%" stop-color="#050300" stop-opacity="0"/>
-        </radialGradient>
-        <!-- Clip for ground -->
-        <clipPath id="above-ground"><rect x="0" y="0" width="1440" height="832"/></clipPath>
-        <!-- Ground gradient -->
-        <linearGradient id="ground-grad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#2C1808"/><stop offset="100%" stop-color="#1A0C04"/>
+        <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1C1209"/>
+          <stop offset="100%" stop-color="#0A0704"/>
         </linearGradient>
-        <!-- Filter: blur for depth -->
-        <filter id="blur-sm"><feGaussianBlur stdDeviation="1.5"/></filter>
-        <filter id="blur-md"><feGaussianBlur stdDeviation="3"/></filter>
+        <linearGradient id="trunkGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#281805"/>
+          <stop offset="40%" stop-color="#3C230E"/>
+          <stop offset="100%" stop-color="#221407"/>
+        </linearGradient>
+        <linearGradient id="rayGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#C2A368" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#C2A368" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="forestBlur"><feGaussianBlur stdDeviation="18"/></filter>
+        <filter id="motionBlur" x="-10%" y="-10%" width="120%" height="120%">
+          <feGaussianBlur stdDeviation="2 6"/>
+        </filter>
+        <filter id="workerShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#060402" flood-opacity="0.8"/>
+        </filter>
       </defs>
 
-      <!-- SKY BACKGROUND -->
-      <rect id="sky-rect" width="1440" height="900" fill="url(#sky-dark)"/>
-      <rect id="sun-glow-rect" width="1440" height="900" fill="url(#sun-glow)" opacity="0"/>
+      <!-- Sky -->
+      <rect id="scene-sky" width="1440" height="900" fill="url(#skyGrad)" opacity="0"/>
       <!-- Sun -->
-      <circle id="sun-circle" cx="936" cy="82" r="36" fill="#FFD060" opacity="0"/>
+      <ellipse id="scene-sun" cx="720" cy="340" rx="440" ry="290" fill="url(#sunGlow)" opacity="0"/>
+      <!-- Rays -->
+      <g id="scene-rays" opacity="0">
+        <polygon points="720,230 658,900 782,900" fill="url(#rayGrad)" opacity="0.55"/>
+        <polygon points="720,230 595,900 670,900" fill="url(#rayGrad)" opacity="0.3"/>
+        <polygon points="720,230 770,900 848,900" fill="url(#rayGrad)" opacity="0.3"/>
+        <polygon points="720,230 520,900 582,900" fill="url(#rayGrad)" opacity="0.14"/>
+        <polygon points="720,230 858,900 930,900" fill="url(#rayGrad)" opacity="0.14"/>
+      </g>
+      <!-- Forest -->
+      <g id="scene-forest" opacity="0" filter="url(#forestBlur)">
+        <ellipse cx="200"  cy="700" rx="180" ry="250" fill="#0C1A08"/>
+        <ellipse cx="380"  cy="680" rx="130" ry="200" fill="#0E1F09"/>
+        <ellipse cx="1060" cy="700" rx="160" ry="240" fill="#0C1A08"/>
+        <ellipse cx="1260" cy="680" rx="140" ry="210" fill="#0E1F09"/>
+        <ellipse cx="100"  cy="720" rx="100" ry="180" fill="#091508"/>
+        <ellipse cx="1340" cy="720" rx="110" ry="190" fill="#091508"/>
+        <ellipse cx="500"  cy="710" rx="90"  ry="160" fill="#0B1807"/>
+        <ellipse cx="940"  cy="710" rx="95"  ry="170" fill="#0B1807"/>
+      </g>
+      <!-- Ground -->
+      <rect id="scene-ground" x="0" y="800" width="1440" height="100" fill="url(#groundGrad)" opacity="0"/>
 
-      <!-- GROUND -->
-      <rect id="ground" x="0" y="832" width="1440" height="68" fill="url(#ground-grad)" opacity="0"/>
-      <ellipse id="ground-shadow" cx="720" cy="836" rx="320" ry="12" fill="#0A0400" opacity="0"/>
-
-      <!-- BACKGROUND FOREST (far, blurred) -->
-      <g id="bg-forest" opacity="0" filter="url(#blur-md)">
-        <ellipse cx="280" cy="500" rx="200" ry="350" fill="#0A1A06"/>
-        <ellipse cx="200" cy="480" rx="150" ry="300" fill="#0C1E08"/>
-        <ellipse cx="1160" cy="510" rx="190" ry="340" fill="#0A1A06"/>
-        <ellipse cx="1240" cy="490" rx="140" ry="290" fill="#0C1E08"/>
-        <ellipse cx="380" cy="600" rx="100" ry="200" fill="#081206"/>
-        <ellipse cx="1060" cy="580" rx="110" ry="220" fill="#081206"/>
+      <!-- Pile bases -->
+      <g id="scene-piles" opacity="0">
+        <ellipse cx="480" cy="840" rx="55" ry="16" fill="#1A1008" opacity="0.9"/>
+        <ellipse cx="580" cy="840" rx="55" ry="16" fill="#1A1008" opacity="0.9"/>
+        <ellipse cx="720" cy="840" rx="62" ry="16" fill="#1A1008" opacity="0.9"/>
+        <ellipse cx="860" cy="840" rx="55" ry="16" fill="#1A1008" opacity="0.9"/>
+        <ellipse cx="960" cy="840" rx="55" ry="16" fill="#1A1008" opacity="0.9"/>
       </g>
 
-      <!-- LIGHT RAYS -->
-      <g id="light-rays" opacity="0">
-        <line x1="936" y1="30" x2="720" y2="900" stroke="#FFE070" stroke-width="1.5" opacity=".06"/>
-        <line x1="936" y1="20" x2="760" y2="900" stroke="#FFE070" stroke-width="1" opacity=".04"/>
-        <line x1="936" y1="15" x2="680" y2="900" stroke="#FFE070" stroke-width="1" opacity=".035"/>
-        <line x1="936" y1="25" x2="800" y2="900" stroke="#FFE070" stroke-width="1.2" opacity=".05"/>
+      <!-- OUD PIECES -->
+      <g id="oud-pieces"></g>
+
+      <!-- TREE GROUP -->
+      <g id="tree-group">
+        <rect id="tree-trunk" x="693" y="558" width="54" height="264" rx="4" fill="url(#trunkGrad)" opacity="0"/>
+        <line id="tree-cut" x1="678" y1="638" x2="762" y2="658" stroke="#C2A368" stroke-width="2" stroke-dasharray="5,3" opacity="0"/>
+        <!-- Branches L -->
+        <line id="branch-l1" x1="720" y1="598" x2="558" y2="498" stroke="#271604" stroke-width="15" stroke-linecap="round" opacity="0"/>
+        <line id="branch-l2" x1="558" y1="498" x2="474" y2="428" stroke="#271604" stroke-width="9"  stroke-linecap="round" opacity="0"/>
+        <line id="branch-l3" x1="720" y1="578" x2="618" y2="508" stroke="#271604" stroke-width="10" stroke-linecap="round" opacity="0"/>
+        <!-- Branches R -->
+        <line id="branch-r1" x1="720" y1="598" x2="882" y2="498" stroke="#271604" stroke-width="15" stroke-linecap="round" opacity="0"/>
+        <line id="branch-r2" x1="882" y1="498" x2="962" y2="428" stroke="#271604" stroke-width="9"  stroke-linecap="round" opacity="0"/>
+        <line id="branch-r3" x1="720" y1="578" x2="822" y2="508" stroke="#271604" stroke-width="10" stroke-linecap="round" opacity="0"/>
+        <!-- Canopy -->
+        <ellipse id="canopy-4" cx="720" cy="480" rx="244" ry="132" fill="#0D1E0A" opacity="0"/>
+        <ellipse id="canopy-3" cx="700" cy="428" rx="194" ry="112" fill="#112410" opacity="0"/>
+        <ellipse id="canopy-2" cx="730" cy="378" rx="158" ry="96"  fill="#142A12" opacity="0"/>
+        <ellipse id="canopy-1" cx="720" cy="338" rx="122" ry="80"  fill="#193014" opacity="0"/>
+        <ellipse id="canopy-0" cx="718" cy="292" rx="76"  ry="56"  fill="#1C3416" opacity="0"/>
       </g>
 
-      <!-- ═══ TREE GROUP ═══ -->
-      <!-- transform-origin at trunk base: (720, 832) -->
-      <g id="tree-group" style="transform-origin:720px 832px;">
-
-        <!-- CANOPY -->
-        <g id="canopy" opacity="0">
-          <!-- Deep background layers -->
-          <ellipse cx="720" cy="240" rx="360" ry="210" fill="#0C1A06"/>
-          <ellipse cx="720" cy="200" rx="310" ry="175" fill="#142808"/>
-          <ellipse cx="720" cy="168" rx="265" ry="148" fill="#1A3410"/>
-          <ellipse cx="740" cy="140" rx="228" ry="126" fill="#1E3C12"/>
-          <!-- Leaf clusters -->
-          <circle cx="618" cy="130" r="95" fill="#1A3810"/>
-          <circle cx="548" cy="175" r="72" fill="#142E0C"/>
-          <circle cx="720" cy="100" r="88" fill="#244A18"/>
-          <circle cx="826" cy="88" r="82" fill="#2E5820"/>
-          <circle cx="910" cy="100" r="68" fill="#386424"/>
-          <circle cx="984" cy="128" r="56" fill="#2C4E1A"/>
-          <circle cx="490" cy="210" r="56" fill="#102008"/>
-          <circle cx="1048" cy="165" r="50" fill="#182E0C"/>
-          <!-- Sunlit patches -->
-          <ellipse cx="872" cy="85" rx="130" ry="68" fill="#4A7C28" opacity=".65"/>
-          <ellipse cx="930" cy="68" rx="88" ry="48" fill="#5A9030" opacity=".6"/>
-          <ellipse cx="968" cy="58" rx="56" ry="32" fill="#6EAA38" opacity=".52"/>
-          <!-- Atmospheric depth dots -->
-          <circle cx="598" cy="320" r="1.5" fill="#AE8B4F" opacity=".45"/>
-          <circle cx="742" cy="270" r="1.2" fill="#D4BC86" opacity=".38"/>
-          <circle cx="862" cy="335" r="1" fill="#AE8B4F" opacity=".32"/>
-        </g>
-
-        <!-- BRANCHES -->
-        <g id="branches" opacity="0">
-          <path d="M698 380 Q628 352 558 325 Q516 308 478 300" stroke="#3D2410" stroke-width="24" fill="none" stroke-linecap="round"/>
-          <path d="M478 300 Q445 290 408 275" stroke="#3D2410" stroke-width="13" fill="none" stroke-linecap="round"/>
-          <path d="M742 380 Q812 352 882 325 Q924 308 962 300" stroke="#3D2410" stroke-width="22" fill="none" stroke-linecap="round"/>
-          <path d="M962 300 Q996 290 1032 275" stroke="#3D2410" stroke-width="12" fill="none" stroke-linecap="round"/>
-          <!-- Branch foliage -->
-          <circle cx="404" cy="268" r="44" fill="#142E0C"/>
-          <circle cx="370" cy="252" r="30" fill="#1A3810"/>
-          <circle cx="1036" cy="268" r="40" fill="#142E0C"/>
-          <circle cx="1072" cy="252" r="28" fill="#1A3810"/>
-        </g>
-
-        <!-- TRUNK -->
-        <g id="trunk" opacity="0">
-          <!-- Shadow left -->
-          <path d="M682 832 Q676 650 678 450 Q680 300 682 380 L694 380 Q692 300 694 450 Q694 650 694 832 Z" fill="#1A0A04" opacity=".5"/>
-          <!-- Main trunk body -->
-          <path d="M694 832 L694 380 Q698 360 720 355 Q742 360 746 380 L746 832 Z" fill="#4A3018"/>
-          <!-- Trunk right shadow -->
-          <path d="M746 832 L746 380 L758 380 Q760 300 758 450 Q756 650 758 832 Z" fill="#1A0A04" opacity=".45"/>
-          <!-- Bark texture lines -->
-          <path d="M700 420 Q698 560 702 700 Q703 780 700 832" stroke="#2C1408" stroke-width="2.5" fill="none" opacity=".55"/>
-          <path d="M712 395 Q710 540 714 680 Q715 760 712 832" stroke="#2C1408" stroke-width="2" fill="none" opacity=".4"/>
-          <path d="M730 395 Q732 540 728 680 Q727 760 730 832" stroke="#2C1408" stroke-width="2" fill="none" opacity=".4"/>
-          <path d="M742 420 Q744 560 740 700 Q739 780 742 832" stroke="#2C1408" stroke-width="2" fill="none" opacity=".5"/>
-          <!-- Resin patches (dark infected areas) -->
-          <ellipse cx="704" cy="460" rx="9" ry="20" fill="#100602" opacity=".8" transform="rotate(-6 704 460)"/>
-          <ellipse cx="738" cy="430" rx="7" ry="16" fill="#100602" opacity=".7" transform="rotate(10 738 430)"/>
-          <ellipse cx="708" cy="580" rx="8" ry="18" fill="#0A0300" opacity=".75"/>
-          <ellipse cx="734" cy="560" rx="6" ry="14" fill="#0A0300" opacity=".65"/>
-          <!-- Resin drips -->
-          <path d="M703 450 Q700 475 704 500" stroke="#0A0300" stroke-width="2" fill="none" opacity=".5"/>
-          <path d="M737 420 Q740 445 736 468" stroke="#0A0300" stroke-width="1.8" fill="none" opacity=".45"/>
-          <!-- Trunk highlight center -->
-          <path d="M720 380 L720 832" stroke="rgba(90,52,24,.6)" stroke-width="4" opacity=".35"/>
-        </g>
-
-        <!-- CUT MARK on trunk (grows as chop progresses) -->
-        <g id="cut-mark" opacity="0">
-          <path id="cut-path" d="M694 620 L720 610 L746 620" stroke="#AE8B4F" stroke-width="2.5" fill="none" opacity=".8"/>
-          <!-- Wood chips flying (small) -->
-          <g id="chips">
-            <rect x="710" y="580" width="8" height="3" rx="1" fill="#5A3418" opacity=".7" transform="rotate(25 710 580)"/>
-            <rect x="695" y="600" width="6" height="2" rx="1" fill="#4A2810" opacity=".65" transform="rotate(-15 695 600)"/>
-            <rect x="748" y="595" width="7" height="2.5" rx="1" fill="#5A3418" opacity=".6" transform="rotate(40 748 595)"/>
-            <rect x="758" y="610" width="5" height="2" rx="1" fill="#3A2010" opacity=".55" transform="rotate(-30 758 610)"/>
-            <rect x="682" y="590" width="6" height="2" rx="1" fill="#4A2810" opacity=".6" transform="rotate(20 682 590)"/>
+      <!-- WORKER LEFT -->
+      <g id="worker-left" opacity="0" filter="url(#workerShadow)" transform="translate(-200, 780)">
+        <rect x="-18" y="-120" width="36" height="75" rx="5" fill="#2E2214"/>
+        <ellipse cx="0" cy="-136" rx="18" ry="20" fill="#8B6A3E"/>
+        <ellipse cx="0" cy="-150" rx="20" ry="8" fill="#C2A368" opacity="0.9"/>
+        <rect x="-20" y="-150" width="10" height="32" rx="3" fill="#C2A368" opacity="0.8"/>
+        <rect x="-16" y="-46" width="14" height="50" rx="4" fill="#1A1208"/>
+        <rect x="2"   y="-46" width="14" height="50" rx="4" fill="#1A1208"/>
+        <g id="worker-left-arm" style="transform-origin: 0px -90px;">
+          <rect x="-6" y="-90" width="10" height="55" rx="4" fill="#2E2214" transform="rotate(-28)"/>
+          <g transform="translate(-9, -38) rotate(-28)">
+            <rect x="-4" y="0" width="8" height="28" rx="2" fill="#5C3D1A"/>
+            <polygon points="-14,-8 10,-8 10,6 -14,12" fill="#8A8A8A"/>
+            <polygon points="-14,-8 -14,12 -23,2" fill="#AAAAAA"/>
           </g>
         </g>
+        <circle cx="0" cy="-96" r="8" fill="#3A2815"/>
+      </g>
 
-      </g><!-- /tree-group -->
-
-      <!-- RESIN GLOW (appears when tree falls) -->
-      <rect id="resin-glow-rect" width="1440" height="900" fill="url(#resin-glow)" opacity="0"/>
-
-      <!-- ═══ WORKERS ═══ -->
-      <!-- Worker LEFT (starts off-screen left, walks to x≈540) -->
-      <g id="worker-left" opacity="0" style="transform:translateX(-320px);">
-        <!-- Body -->
-        <rect x="520" y="732" width="42" height="78" rx="6" fill="#4A3020"/>
-        <!-- Head -->
-        <circle cx="541" cy="718" r="22" fill="#C09060"/>
-        <!-- Headwrap -->
-        <ellipse cx="541" cy="711" rx="24" ry="13" fill="#8B6914"/>
-        <path d="M517 713 Q541 698 565 713" fill="#7A5C10"/>
-        <!-- Left arm (raised for chop) -->
-        <g id="wl-arm" style="transform-origin:520px 748px;">
-          <line x1="520" y1="748" x2="482" y2="788" stroke="#C09060" stroke-width="9" stroke-linecap="round"/>
-          <!-- Axe -->
-          <rect x="460" y="785" width="9" height="32" rx="3" fill="#6B4C20"/>
-          <path d="M462 785 L445 774 L442 793 Z" fill="#9A9090"/>
-          <path d="M462 785 L448 790 L449 803 L464 800 Z" fill="#8A8080"/>
+      <!-- WORKER RIGHT -->
+      <g id="worker-right" opacity="0" filter="url(#workerShadow)" transform="translate(1640, 780)">
+        <rect x="-18" y="-120" width="36" height="75" rx="5" fill="#2E2214"/>
+        <ellipse cx="0" cy="-136" rx="18" ry="20" fill="#8B6A3E"/>
+        <ellipse cx="0" cy="-150" rx="20" ry="8" fill="#D4BC86" opacity="0.9"/>
+        <rect x="10"  y="-150" width="10" height="32" rx="3" fill="#D4BC86" opacity="0.8"/>
+        <rect x="-16" y="-46" width="14" height="50" rx="4" fill="#1A1208"/>
+        <rect x="2"   y="-46" width="14" height="50" rx="4" fill="#1A1208"/>
+        <g id="worker-right-arm" style="transform-origin: 0px -90px;">
+          <rect x="-4" y="-90" width="10" height="55" rx="4" fill="#2E2214" transform="rotate(28)"/>
+          <g transform="translate(9, -38) rotate(28)">
+            <rect x="-4" y="0" width="8" height="28" rx="2" fill="#5C3D1A"/>
+            <polygon points="-10,-8 14,-8 14,12 -10,6" fill="#8A8A8A"/>
+            <polygon points="14,-8 14,12 23,2" fill="#AAAAAA"/>
+          </g>
         </g>
-        <!-- Right arm -->
-        <line x1="562" y1="748" x2="596" y2="772" stroke="#C09060" stroke-width="9" stroke-linecap="round"/>
-        <!-- Legs -->
-        <rect x="524" y="808" width="16" height="44" rx="5" fill="#3A2818"/>
-        <rect x="544" y="808" width="16" height="44" rx="5" fill="#3A2818"/>
+        <circle cx="0" cy="-96" r="8" fill="#3A2815"/>
       </g>
 
-      <!-- Worker RIGHT (starts off-screen right, walks to x≈900, mirrored) -->
-      <g id="worker-right" opacity="0" style="transform:translateX(320px);">
-        <!-- Body -->
-        <rect x="878" y="732" width="42" height="78" rx="6" fill="#5A3828"/>
-        <!-- Head -->
-        <circle cx="899" cy="718" r="22" fill="#B08050"/>
-        <!-- Headwrap -->
-        <ellipse cx="899" cy="711" rx="24" ry="13" fill="#6B4C10"/>
-        <path d="M875 713 Q899 698 923 713" fill="#5A3C0C"/>
-        <!-- Right arm (raised for chop) -->
-        <g id="wr-arm" style="transform-origin:920px 748px;">
-          <line x1="920" y1="748" x2="958" y2="788" stroke="#B08050" stroke-width="9" stroke-linecap="round"/>
-          <!-- Axe -->
-          <rect x="971" y="785" width="9" height="32" rx="3" fill="#6B4C20"/>
-          <path d="M978 785 L995 774 L998 793 Z" fill="#9A9090"/>
-          <path d="M978 785 L992 790 L991 803 L976 800 Z" fill="#8A8080"/>
-        </g>
-        <!-- Left arm -->
-        <line x1="878" y1="748" x2="844" y2="772" stroke="#B08050" stroke-width="9" stroke-linecap="round"/>
-        <!-- Legs -->
-        <rect x="880" y="808" width="16" height="44" rx="5" fill="#3A2818"/>
-        <rect x="900" y="808" width="16" height="44" rx="5" fill="#3A2818"/>
-      </g>
+    </svg><!-- end svg -->
 
-      <!-- ═══ OUD PIECES (rain down after tree falls) ═══ -->
-      <g id="oud-pieces">
-        <!-- 30 pieces: 6 per column, will be positioned via JS -->
-      </g>
+    <!-- Hero text -->
+    <div class="hero-text-layer">
+      <div id="hero-line1"></div>
+      <div id="hero-line2"></div>
+    </div>
 
-      <!-- ═══ PILE BASES (5 columns, visible when pieces land) ═══ -->
-      <g id="pile-bases" opacity="0">
-        <!-- Pile 1: Kinam (x=180) -->
-        <ellipse cx="180" cy="840" rx="78" ry="14" fill="#1A0A04" opacity=".7"/>
-        <!-- Pile 2: Royal (x=432) -->
-        <ellipse cx="432" cy="840" rx="78" ry="14" fill="#1A0A04" opacity=".7"/>
-        <!-- Pile 3: Super (x=720) -->
-        <ellipse cx="720" cy="840" rx="78" ry="14" fill="#1A0A04" opacity=".7"/>
-        <!-- Pile 4: Double (x=1008) -->
-        <ellipse cx="1008" cy="840" rx="78" ry="14" fill="#1A0A04" opacity=".7"/>
-        <!-- Pile 5: Standard (x=1260) -->
-        <ellipse cx="1260" cy="840" rx="78" ry="14" fill="#1A0A04" opacity=".7"/>
-      </g>
+    <!-- Pile labels -->
+    <div id="pile-labels">
+      <div class="pile-label"><span>Kinam</span>كينام</div>
+      <div class="pile-label"><span>Royal</span>رويال</div>
+      <div class="pile-label"><span>Super</span>سوبر</div>
+      <div class="pile-label"><span>Double</span>دبل</div>
+      <div class="pile-label"><span>Standard</span>ستاندرد</div>
+    </div>
+  </div>
+</div>
 
-      <!-- Bottom vignette -->
-      <linearGradient id="bot-vig" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="80%" stop-color="#050300" stop-opacity="0"/><stop offset="100%" stop-color="#050300"/>
-      </linearGradient>
-      <rect width="1440" height="900" fill="url(#bot-vig)"/>
+<!-- ═══ BRAND STATEMENT ═══ -->
+<section id="brand-statement">
+  <svg class="brand-grain" xmlns="http://www.w3.org/2000/svg">
+    <filter id="gf1"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <rect width="100%" height="100%" filter="url(#gf1)"/>
+  </svg>
+  <div class="brand-text-wrap" id="brand-parallax">
+    <div class="gold-divider reveal"></div>
+    <h2 class="brand-headline reveal reveal-delay-1">From the heart of the Aquilaria.</h2>
+    <p class="brand-sub reveal reveal-delay-2">Aged in silence. Bottled by hand.</p>
+    <div class="gold-divider reveal reveal-delay-3"></div>
+  </div>
+</section>
+
+<!-- ═══ CATEGORIES ═══ -->
+<section id="categories">
+
+  <!-- Sprays -->
+  <div class="cat-card">
+    <div class="cat-bg" style="background:linear-gradient(160deg,#16100A,#241810);"></div>
+    <div class="cat-overlay"></div>
+    <svg class="cat-svg" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#4A3520"/><stop offset="100%" stop-color="#2A1C0E"/>
+        </linearGradient>
+      </defs>
+      <rect x="30" y="70" width="60" height="110" rx="8" fill="url(#sg1)"/>
+      <path d="M30 70 Q30 50 50 46 L70 46 Q90 50 90 70Z" fill="#3A2A14"/>
+      <rect x="48" y="30" width="24" height="18" rx="4" fill="#3A2A14"/>
+      <rect x="40" y="20" width="40" height="14" rx="4" fill="#5C4020"/>
+      <rect x="76" y="24" width="20" height="6"  rx="3" fill="#6E5028"/>
+      <ellipse cx="100" cy="18" rx="12" ry="5" fill="none" stroke="#C2A368" stroke-width="0.9" opacity="0.5"/>
+      <ellipse cx="108" cy="13" rx="7"  ry="4" fill="none" stroke="#C2A368" stroke-width="0.6" opacity="0.3"/>
+      <rect x="30" y="108" width="60" height="2" fill="#C2A368" opacity="0.7"/>
+      <rect x="30" y="148" width="60" height="2" fill="#C2A368" opacity="0.65"/>
+      <rect x="38" y="116" width="44" height="28" rx="1" fill="rgba(194,163,104,0.07)"/>
+      <rect x="30" y="172" width="60" height="8" rx="4" fill="#2A1A0A"/>
     </svg>
-
-    <!-- TEXT OVERLAYS -->
-    <div id="stage-text">
-      <!-- Phase 1: Opening -->
-      <div class="stage-label" id="t-label-1">The House of Oud · Riyadh, est. 1979</div>
-      <div class="stage-headline" id="t-headline-1">We do not chase<br>the season.<br><em>We wait for the wood.</em></div>
-
-      <!-- Phase 2: Tree revealed -->
-      <div class="stage-label" id="t-label-2">Section I · The Canopy</div>
-      <div class="stage-headline" id="t-headline-2">From a tree that<br><em>keeps its own time</em></div>
-
-      <!-- Phase 3: Workers arrive -->
-      <div class="stage-label" id="t-label-3">Section II · The Harvest</div>
-      <div class="stage-headline" id="t-headline-3">Read the trunk.<br>Draw the resin.</div>
-      <div class="stage-sub" id="t-sub-3">By hand and by patience, artisans cut into the dark, aromatic core — taking only the wood the tree has darkened.</div>
-
-      <!-- Phase 4: Tree falls -->
-      <div class="stage-headline" id="t-headline-4"><em>The wood falls.</em></div>
-
-      <!-- Phase 5: Pieces rain -->
-      <div class="stage-label" id="t-label-5">Section III · The Raw Oud</div>
-      <div class="stage-headline" id="t-headline-5">Five grades<br>of agarwood</div>
-      <div class="stage-sub" id="t-sub-5">At the base, the trunk gives way to oily, resin-saturated agarwood — sorted into five elegant grades, the soul of every SHAMUM scent.</div>
-
-      <!-- CTA -->
-      <div id="stage-cta">
-        <button class="btn-gold" onclick="document.querySelector('.site-content').scrollIntoView({behavior:'smooth'})">Discover the Collection</button>
-        <button class="btn-outline-dark">Our Story</button>
-      </div>
-    </div>
-
-    <!-- PILE LABELS (HTML, positioned over SVG columns) -->
-    <div class="pile-label" id="pile-1" style="left:calc(12.5% - 48px)">
-      <div class="pile-grade">I</div>
-      <div class="pile-name">Kinam</div>
-    </div>
-    <div class="pile-label" id="pile-2" style="left:calc(30% - 48px)">
-      <div class="pile-grade">II</div>
-      <div class="pile-name">Royal</div>
-    </div>
-    <div class="pile-label" id="pile-3" style="left:calc(50% - 48px)">
-      <div class="pile-grade">III</div>
-      <div class="pile-name">Super</div>
-    </div>
-    <div class="pile-label" id="pile-4" style="left:calc(70% - 48px)">
-      <div class="pile-grade">IV</div>
-      <div class="pile-name">Double</div>
-    </div>
-    <div class="pile-label" id="pile-5" style="left:calc(87.5% - 48px)">
-      <div class="pile-grade">V</div>
-      <div class="pile-name">Standard</div>
-    </div>
-
-    <!-- DUST CANVAS -->
-    <canvas id="dust"></canvas>
-
-    <!-- SCROLL CUE -->
-    <div id="scroll-cue">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
-
-  </div><!-- /sticky-scene -->
-</div><!-- /scroll-container -->
-
-<!-- ══════════════════════════════════════
-     SITE CONTENT (after animation)
-══════════════════════════════════════ -->
-<div class="site-content">
-
-  <!-- CATEGORY GRID -->
-  <div class="cat-grid">
-    <div class="cat-card">
-      <svg viewBox="0 0 320 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="320" height="480" fill="#1A2E0C"/><ellipse cx="160" cy="95" rx="155" ry="130" fill="#234018" opacity=".9"/><circle cx="118" cy="84" r="80" fill="#1A3410"/><circle cx="202" cy="76" r="88" fill="#264A18"/><ellipse cx="160" cy="64" rx="68" ry="52" fill="#3A6028" opacity=".7"/><rect x="136" y="200" width="48" height="185" rx="7" fill="#0F0A04"/><rect x="136" y="200" width="48" height="185" rx="7" fill="none" stroke="rgba(174,139,79,.4)" stroke-width="1.5"/><rect x="140" y="240" width="40" height="143" rx="5" fill="#2A1408" opacity=".7"/><rect x="142" y="175" width="36" height="28" rx="4" fill="#AE8B4F"/><rect x="146" y="164" width="28" height="13" rx="3" fill="#D4BC86"/><rect x="174" y="158" width="20" height="5" rx="2" fill="#8C6E3A"/><path d="M194 158 L207 149 L209 158 Z" fill="#6E5328"/><rect x="142" y="252" width="36" height="58" fill="rgba(174,139,79,.08)" stroke="rgba(174,139,79,.35)" stroke-width=".8"/><text x="160" y="270" text-anchor="middle" font-family="serif" font-size="8" fill="#D4BC86" letter-spacing="1.5">SHAMUM</text><text x="160" y="286" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">Spray</text></svg>
-      <div class="cat-ov"></div>
-      <div class="cat-info"><div class="cat-ar">البخاخات</div><div class="cat-en">Sprays Collection</div><div class="cat-ct">+24 منتج</div><a class="cat-lk" href="#">Shop &#8594;</a></div>
-    </div>
-    <div class="cat-card">
-      <svg viewBox="0 0 320 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="lB" cx="50%" cy="38%" r="58%"><stop offset="0%" stop-color="#3D2010"/><stop offset="100%" stop-color="#0A0502"/></radialGradient></defs><rect width="320" height="480" fill="url(#lB)"/><path d="M160 35 L148 58 L135 44 L132 63 L160 72 L188 63 L185 44 L172 58 Z" fill="none" stroke="#C2A368" stroke-width="1.5" opacity=".65"/><circle cx="160" cy="32" r="5" fill="#AE8B4F" opacity=".6"/><path d="M136 275 Q134 218 140 192 Q147 172 160 166 Q173 172 180 192 Q186 218 184 275 Q184 330 160 336 Q136 330 136 275 Z" fill="#100808"/><path d="M136 275 Q134 218 140 192 Q147 172 160 166 Q173 172 180 192 Q186 218 184 275 Q184 330 160 336 Q136 330 136 275 Z" fill="none" stroke="rgba(194,163,104,.5)" stroke-width="1.5"/><path d="M137 214 Q134 264 136 275 Q136 330 160 336 Q184 330 184 275 Q186 264 183 214 Z" fill="#2C1208" opacity=".55"/><ellipse cx="160" cy="163" rx="15" ry="7" fill="#AE8B4F"/><rect x="148" y="146" width="24" height="18" rx="4" fill="#8C6E3A"/><ellipse cx="160" cy="145" rx="12" ry="6" fill="#C2A368"/><circle cx="160" cy="138" r="8" fill="#D4BC86"/><rect x="142" y="228" width="36" height="70" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.4)" stroke-width=".8"/><text x="160" y="246" text-anchor="middle" font-family="serif" font-size="7.5" fill="#C2A368" letter-spacing="1.5">SHAMUM</text><text x="160" y="263" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">Limited</text><text x="160" y="280" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">Edition</text></svg>
-      <div class="cat-ov"></div>
-      <div class="cat-info"><div class="cat-ar">إصدار محدود</div><div class="cat-en">Limited Edition</div><div class="cat-ct">كميات نادرة</div><a class="cat-lk" href="#">Shop &#8594;</a></div>
-    </div>
-    <div class="cat-card">
-      <svg viewBox="0 0 320 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="oB" cx="50%" cy="42%" r="55%"><stop offset="0%" stop-color="#2C1A06"/><stop offset="100%" stop-color="#080401"/></radialGradient></defs><rect width="320" height="480" fill="url(#oB)"/><rect x="142" y="192" width="36" height="168" rx="12" fill="#120A02"/><rect x="142" y="192" width="36" height="168" rx="12" fill="none" stroke="rgba(194,163,104,.45)" stroke-width="1.5"/><rect x="144" y="226" width="32" height="132" rx="9" fill="#2C1408" opacity=".8"/><ellipse cx="160" cy="190" rx="16" ry="9" fill="#AE8B4F"/><circle cx="160" cy="185" r="11" fill="#C2A368"/><circle cx="156" cy="182" r="4" fill="#D4BC86" opacity=".6"/><rect x="148" y="150" width="24" height="36" rx="4" fill="#6E5328"/><rect x="150" y="142" width="20" height="10" rx="3" fill="#AE8B4F"/><rect x="145" y="234" width="30" height="68" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.38)" stroke-width=".7"/><text x="160" y="252" text-anchor="middle" font-family="serif" font-size="6.5" fill="#C2A368" letter-spacing="1">SHAMUM</text><text x="160" y="267" text-anchor="middle" font-family="serif" font-size="8" fill="#F4EAD2" font-style="italic">دهن العود</text></svg>
-      <div class="cat-ov"></div>
-      <div class="cat-info"><div class="cat-ar">أدهان العود</div><div class="cat-en">Oud Oils</div><div class="cat-ct">+18 منتج</div><a class="cat-lk" href="#">Shop &#8594;</a></div>
-    </div>
-    <div class="cat-card">
-      <svg viewBox="0 0 320 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="wB" cx="50%" cy="55%" r="52%"><stop offset="0%" stop-color="#241408"/><stop offset="100%" stop-color="#040200"/></radialGradient></defs><rect width="320" height="480" fill="url(#wB)"/><rect x="48" y="235" width="224" height="42" rx="7" fill="#160804" transform="rotate(-5 48 235)"/><rect x="44" y="275" width="232" height="46" rx="7" fill="#1E0C06" transform="rotate(3 44 275)"/><rect x="52" y="318" width="216" height="42" rx="7" fill="#160804" transform="rotate(-2 52 318)"/><rect x="40" y="358" width="240" height="40" rx="7" fill="#241008" transform="rotate(4 40 358)"/><ellipse cx="160" cy="253" rx="90" ry="9" fill="#AE8B4F" opacity=".14"/><ellipse cx="158" cy="296" rx="84" ry="7" fill="#AE8B4F" opacity=".12"/><path d="M148 175 Q154 155 148 138 Q142 121 150 102 Q158 83 154 64" stroke="rgba(174,139,79,.15)" stroke-width="2" fill="none"/><path d="M170 178 Q178 158 172 138 Q166 118 174 98 Q182 78 178 55" stroke="rgba(174,139,79,.08)" stroke-width="1.5" fill="none"/></svg>
-      <div class="cat-ov"></div>
-      <div class="cat-info"><div class="cat-ar">أخشاب العود</div><div class="cat-en">Oud Wood</div><div class="cat-ct">+12 منتج</div><a class="cat-lk" href="#">Shop &#8594;</a></div>
+    <div class="cat-content">
+      <span class="cat-arabic">البخاخات</span>
+      <span class="cat-english">Sprays</span>
+      <span class="cat-count">12 Expressions</span>
+      <span class="cat-explore">Explore →</span>
     </div>
   </div>
 
-  <!-- PRODUCTS -->
-  <section class="sec sec-sand">
-    <div class="sec-head">
-      <span class="eyebrow">The Collection · الأكثر مبيعاً</span>
-      <h2 class="sec-title">Signature <em>Fragrances</em></h2>
-      <p class="sec-sub">Six compositions, each built on agarwood of a single provenance.</p>
-      <div class="divider" style="width:100px;margin:18px auto 0;"><div class="d-line g"></div><div class="d-diamond g"></div><div class="d-line g"></div></div>
+  <!-- Limited -->
+  <div class="cat-card">
+    <div class="cat-bg" style="background:linear-gradient(160deg,#1A120A,#1C1008);"></div>
+    <div class="cat-overlay"></div>
+    <svg class="cat-svg" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sg2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#6E5028"/><stop offset="100%" stop-color="#3A2810"/>
+        </linearGradient>
+      </defs>
+      <path d="M25 90 Q20 80 28 72 Q36 64 60 60 Q84 64 92 72 Q100 80 95 90 L95 170 Q95 182 60 182 Q25 182 25 170Z" fill="url(#sg2)"/>
+      <path d="M44 60 L44 40 Q44 28 60 28 Q76 28 76 40 L76 60Z" fill="#4A3218"/>
+      <ellipse cx="60" cy="28" rx="20" ry="10" fill="#C2A368"/>
+      <rect x="50" y="18" width="20" height="12" rx="4" fill="#AE8B4F"/>
+      <path d="M25 100 Q60 95 95 100" stroke="#C2A368" stroke-width="1.5" fill="none" opacity="0.8"/>
+      <path d="M25 160 Q60 155 95 160" stroke="#C2A368" stroke-width="1.5" fill="none" opacity="0.8"/>
+      <polygon points="60,118 63.5,127 73,127 65.5,132.5 68,142 60,136.5 52,142 54.5,132.5 47,127 56.5,127" fill="rgba(194,163,104,0.55)"/>
+    </svg>
+    <div class="cat-content">
+      <span class="cat-arabic">إصدار محدود</span>
+      <span class="cat-english">Limited Edition</span>
+      <span class="cat-count">4 Pieces Remaining</span>
+      <span class="cat-explore">Explore →</span>
     </div>
-    <div class="prod-grid">
-      <div class="prod-card">
-        <div class="prod-badge new">New</div>
-        <div class="prod-img"><svg viewBox="0 0 380 290" xmlns="http://www.w3.org/2000/svg"><rect width="380" height="290" fill="#F0E8D8"/><radialGradient id="p1c" cx="50%" cy="48%" r="44%"><stop offset="0%" stop-color="#C8AE78" stop-opacity=".35"/><stop offset="100%" stop-color="#F0E8D8" stop-opacity="0"/></radialGradient><rect width="380" height="290" fill="url(#p1c)"/><path d="M165 50 L165 33 Q165 21 180 21 L200 21 Q215 21 215 33 L215 50 Q228 60 228 80 L228 242 Q228 258 208 258 L172 258 Q152 258 152 242 L152 80 Q152 60 165 50 Z" fill="#1A0C04" opacity=".92"/><path d="M165 50 L165 33 Q165 21 180 21 L200 21 Q215 21 215 33 L215 50 Q228 60 228 80 L228 242 Q228 258 208 258 L172 258 Q152 258 152 242 L152 80 Q152 60 165 50 Z" fill="none" stroke="rgba(174,139,79,.45)" stroke-width="1.5"/><path d="M154 116 L154 242 Q154 256 172 256 L208 256 Q226 256 226 242 L226 116 Z" fill="#2C1408" opacity=".55"/><rect x="168" y="7" width="44" height="15" rx="3" fill="#AE8B4F"/><rect x="170" y="1" width="40" height="8" rx="2" fill="#C2A368"/><rect x="162" y="140" width="56" height="68" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.38)" stroke-width=".8"/><text x="190" y="160" text-anchor="middle" font-family="serif" font-size="8" fill="#AE8B4F" letter-spacing="1.5">SHAMUM</text><text x="190" y="177" text-anchor="middle" font-family="serif" font-size="10" fill="#F4EAD2" font-style="italic">ليل عود</text><text x="190" y="193" text-anchor="middle" font-family="sans-serif" font-size="6" fill="#8B7E66" letter-spacing="1.5">EAU DE PARFUM</text></svg></div>
-        <div class="prod-body">
-          <div class="prod-arabic">ليل عود</div>
-          <div class="prod-name">Layl Oud</div>
-          <div class="prod-notes">Oud · Amber · Saffron · EDP 50ml</div>
-          <div class="prod-foot"><div class="prod-price">&#163;185</div><button class="btn-add" onclick="var b=this;b.textContent='&#10003; Added';b.style.background='var(--ink)';b.style.color='var(--sand-100)';setTimeout(function(){b.textContent='Add to Bag';b.style.background='';b.style.color=''},2000)">Add to Bag</button></div>
-        </div>
-      </div>
-      <div class="prod-card">
-        <div class="prod-img"><svg viewBox="0 0 380 290" xmlns="http://www.w3.org/2000/svg"><rect width="380" height="290" fill="#EDE0C8"/><radialGradient id="p2c" cx="50%" cy="40%" r="44%"><stop offset="0%" stop-color="#B89050" stop-opacity=".3"/><stop offset="100%" stop-color="#EDE0C8" stop-opacity="0"/></radialGradient><rect width="380" height="290" fill="url(#p2c)"/><path d="M156 265 L154 126 Q154 103 168 93 L178 70 L182 70 L192 93 Q206 103 206 126 L204 265 Z" fill="#100806"/><path d="M156 265 L154 126 Q154 103 168 93 L178 70 L182 70 L192 93 Q206 103 206 126 L204 265 Z" fill="none" stroke="rgba(174,139,79,.48)" stroke-width="1.5"/><path d="M156 265 L154 162 L206 162 L204 265 Z" fill="#2C1208" opacity=".5"/><ellipse cx="180" cy="67" rx="16" ry="7" fill="#8C6E3A"/><rect x="164" y="50" width="32" height="18" rx="5" fill="#6E5328"/><ellipse cx="180" cy="48" rx="14" ry="6" fill="#AE8B4F"/><circle cx="180" cy="41" r="9" fill="#C2A368"/><rect x="160" y="146" width="40" height="68" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.35)" stroke-width=".8"/><text x="180" y="165" text-anchor="middle" font-family="serif" font-size="7.5" fill="#AE8B4F" letter-spacing="1.5">SHAMUM</text><text x="180" y="182" text-anchor="middle" font-family="serif" font-size="9" fill="#F4EAD2" font-style="italic">ورد حجازي</text></svg></div>
-        <div class="prod-body">
-          <div class="prod-arabic">ورد حجازي</div>
-          <div class="prod-name">Hijazi Rose</div>
-          <div class="prod-notes">Taif Rose · Oud · Musk · EDP 50ml</div>
-          <div class="prod-foot"><div class="prod-price">&#163;210</div><button class="btn-add" onclick="var b=this;b.textContent='&#10003; Added';b.style.background='var(--ink)';b.style.color='var(--sand-100)';setTimeout(function(){b.textContent='Add to Bag';b.style.background='';b.style.color=''},2000)">Add to Bag</button></div>
-        </div>
-      </div>
-      <div class="prod-card">
-        <div class="prod-badge ltd">Limited</div>
-        <div class="prod-img"><svg viewBox="0 0 380 290" xmlns="http://www.w3.org/2000/svg"><rect width="380" height="290" fill="#F2E8D4"/><radialGradient id="p3c" cx="50%" cy="50%" r="40%"><stop offset="0%" stop-color="#AE8B4F" stop-opacity=".18"/><stop offset="100%" stop-color="#F2E8D4" stop-opacity="0"/></radialGradient><rect width="380" height="290" fill="url(#p3c)"/><rect x="162" y="88" width="56" height="158" rx="14" fill="#120A02"/><rect x="162" y="88" width="56" height="158" rx="14" fill="none" stroke="rgba(174,139,79,.42)" stroke-width="1.5"/><rect x="164" y="118" width="52" height="126" rx="11" fill="#2A1008" opacity=".7"/><ellipse cx="190" cy="86" rx="20" ry="11" fill="#8C6E3A"/><circle cx="190" cy="81" r="13" fill="#AE8B4F"/><circle cx="186" cy="78" r="5" fill="#C2A368" opacity=".6"/><rect x="172" y="51" width="36" height="34" rx="5" fill="#6E5328"/><rect x="175" y="43" width="30" height="10" rx="3" fill="#AE8B4F"/><rect x="165" y="126" width="50" height="65" fill="rgba(174,139,79,.07)" stroke="rgba(174,139,79,.38)" stroke-width=".7"/><text x="190" y="145" text-anchor="middle" font-family="serif" font-size="6.5" fill="#AE8B4F" letter-spacing="1">SHAMUM</text><text x="190" y="161" text-anchor="middle" font-family="serif" font-size="8" fill="#F4EAD2" font-style="italic">مخلط Royale</text></svg></div>
-        <div class="prod-body">
-          <div class="prod-arabic">مخلط</div>
-          <div class="prod-name">Mukhallat Royale</div>
-          <div class="prod-notes">Sandalwood · Resin · Spice · EDP 50ml</div>
-          <div class="prod-foot"><div class="prod-price">&#163;165</div><button class="btn-add" onclick="var b=this;b.textContent='&#10003; Added';b.style.background='var(--ink)';b.style.color='var(--sand-100)';setTimeout(function(){b.textContent='Add to Bag';b.style.background='';b.style.color=''},2000)">Add to Bag</button></div>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:44px;"><button class="btn-gold">View All · جميع المنتجات</button></div>
-  </section>
-
-  <!-- QUOTE -->
-  <section class="sec sec-dark quote-sec">
-    <div class="divider" style="width:90px;margin:0 auto 36px;"><div class="d-line"></div><div class="d-diamond"></div><div class="d-line"></div></div>
-    <blockquote>العطر ذاكرة لا تُنسى —<br>وشاموم يكتب ذاكرتك.</blockquote>
-    <div class="divider" style="width:90px;margin:28px auto;"><div class="d-line"></div><div class="d-diamond"></div><div class="d-line"></div></div>
-    <p class="q-attr">Maison SHAMUM · شاموم · Riyadh</p>
-  </section>
-
-  <!-- TRUST -->
-  <div class="trust">
-    <div class="trust-item"><span class="trust-icon">&#9672;</span><div class="trust-title">شحن مجاني</div><div class="trust-sub">Free Shipping · KSA</div></div>
-    <div class="trust-item"><span class="trust-icon">&#9671;</span><div class="trust-title">عود طبيعي ١٠٠٪</div><div class="trust-sub">100% Natural Agarwood</div></div>
-    <div class="trust-item"><span class="trust-icon">&#8617;</span><div class="trust-title">إرجاع مجاني</div><div class="trust-sub">14-Day Returns</div></div>
-    <div class="trust-item"><span class="trust-icon">&#10022;</span><div class="trust-title">برنامج الولاء</div><div class="trust-sub">Earn Rewards</div></div>
   </div>
 
-  <!-- LOYALTY -->
-  <div class="loyalty">
-    <div><h2>انضم لعائلة شاموم</h2><p>اكسب نقاط مع كل عملية شراء، واستمتع بعروض حصرية تليق بك.</p></div>
-    <button class="btn-dark">Join the House · سجّل الآن</button>
+  <!-- Oud Oils -->
+  <div class="cat-card">
+    <div class="cat-bg" style="background:linear-gradient(160deg,#100C06,#1E1508);"></div>
+    <div class="cat-overlay"></div>
+    <svg class="cat-svg" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sg3" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#2E2010"/><stop offset="100%" stop-color="#1A1008"/>
+        </linearGradient>
+        <radialGradient id="oilSheen" cx="35%" cy="30%" r="50%">
+          <stop offset="0%" stop-color="#4A3218" stop-opacity="0.8"/><stop offset="100%" stop-color="#1A1008" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="60" cy="140" rx="42" ry="52" fill="url(#sg3)"/>
+      <ellipse cx="60" cy="140" rx="42" ry="52" fill="url(#oilSheen)"/>
+      <rect x="50" y="80" width="20" height="30" rx="6" fill="#241808"/>
+      <ellipse cx="60" cy="80" rx="14" ry="8" fill="#5C3D18"/>
+      <rect x="52" y="60" width="16" height="22" rx="6" fill="#3A2410"/>
+      <ellipse cx="60" cy="83" rx="14" ry="4" fill="none" stroke="#C2A368" stroke-width="1.5"/>
+      <ellipse cx="60" cy="158" rx="30" ry="18" fill="rgba(110,83,40,0.3)"/>
+      <ellipse cx="44" cy="116" rx="12" ry="18" fill="rgba(194,163,104,0.055)" transform="rotate(-20,44,116)"/>
+      <ellipse cx="60" cy="189" rx="30" ry="6" fill="#1A1008"/>
+    </svg>
+    <div class="cat-content">
+      <span class="cat-arabic">أدهان العود</span>
+      <span class="cat-english">Oud Oils</span>
+      <span class="cat-count">8 Varieties</span>
+      <span class="cat-explore">Explore →</span>
+    </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-top">
-      <div>
-        <span class="footer-brand-name">SHAMUM</span>
-        <div class="footer-brand-sub">Maison d'Oud</div>
-        <p class="footer-desc">A house of oud. Distilled with patience from the heartwood of the Aquilaria, aged in cedar, bottled by hand.</p>
-        <input class="footer-email-input" type="email" placeholder="Join the House — your email"/>
-      </div>
-      <div class="footer-col"><h4>Maison</h4><ul><li><a href="#">The House</a></li><li><a href="#">Our Oud</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Stores</a></li></ul></div>
-      <div class="footer-col"><h4>Shop</h4><ul><li><a href="#">All Fragrances</a></li><li><a href="#">Oud</a></li><li><a href="#">Rose &amp; Oud</a></li><li><a href="#">Mukhallat</a></li><li><a href="#">Gifting</a></li></ul></div>
-      <div class="footer-col"><h4>Care</h4><ul><li><a href="#">Contact</a></li><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li><li><a href="#">Authenticity</a></li></ul></div>
+  <!-- Oud Wood -->
+  <div class="cat-card">
+    <div class="cat-bg" style="background:linear-gradient(160deg,#1C1208,#120E06);"></div>
+    <div class="cat-overlay"></div>
+    <svg class="cat-svg" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+      <rect x="20" y="120" width="80" height="18" rx="3" fill="#3A2410" transform="rotate(-5,60,130)"/>
+      <rect x="18" y="138" width="84" height="18" rx="3" fill="#2E1C0C" transform="rotate(3,60,147)"/>
+      <rect x="22" y="156" width="76" height="18" rx="3" fill="#3A2410" transform="rotate(-2,60,165)"/>
+      <line x1="25" y1="122" x2="90" y2="119" stroke="rgba(194,163,104,0.22)" stroke-width="0.8"/>
+      <line x1="22" y1="140" x2="92" y2="144" stroke="rgba(194,163,104,0.2)"  stroke-width="0.8"/>
+      <line x1="25" y1="158" x2="88" y2="156" stroke="rgba(194,163,104,0.18)" stroke-width="0.8"/>
+      <rect x="38" y="98" width="44" height="24" rx="4" fill="#4A3018" transform="rotate(8,60,110)"/>
+      <ellipse cx="48" cy="114" rx="4" ry="5" fill="rgba(110,83,40,0.72)" transform="rotate(-5,48,114)"/>
+      <ellipse cx="72" cy="128" rx="3" ry="4" fill="rgba(110,83,40,0.5)"  transform="rotate(3,72,128)"/>
+      <circle cx="35" cy="175" r="1.5" fill="#C2A368" opacity="0.5"/>
+      <circle cx="88" cy="170" r="1"   fill="#C2A368" opacity="0.4"/>
+      <circle cx="60" cy="178" r="1.2" fill="#AE8B4F" opacity="0.4"/>
+    </svg>
+    <div class="cat-content">
+      <span class="cat-arabic">أخشاب العود</span>
+      <span class="cat-english">Oud Wood</span>
+      <span class="cat-count">6 Origins</span>
+      <span class="cat-explore">Explore →</span>
     </div>
-    <div class="footer-bottom">
-      <span>&#169; 2026 SHAMUM · شاموم &nbsp;·&nbsp; الرقم الضريبي: 1100190829</span>
-      <div style="display:flex;align-items:center;gap:18px;">
-        <span>Riyadh · Dubai · London</span>
-        <div class="pay"><span>Apple Pay</span><span>Visa</span><span>Mastercard</span><span>Amex</span><span>مدى</span></div>
-      </div>
-    </div>
-  </footer>
+  </div>
 
-</div><!-- /site-content -->
+</section>
+
+<!-- ═══ PRODUCTS ═══ -->
+<section id="products">
+  <div id="products-header">
+    <span class="section-eyebrow reveal">The Collection</span>
+    <h2 class="section-title reveal reveal-delay-1">Rare Expressions,<br>Carefully Composed.</h2>
+  </div>
+  <div class="products-grid">
+
+    <!-- Layl Oud -->
+    <div class="product-card">
+      <div class="product-badge new">New</div>
+      <div class="product-image-wrap" data-cursor-image>
+        <svg viewBox="0 0 140 380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="b1a" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#1A1208"/><stop offset="50%" stop-color="#241810"/><stop offset="100%" stop-color="#120E07"/>
+            </linearGradient>
+            <radialGradient id="b1b" cx="30%" cy="25%" r="60%">
+              <stop offset="0%" stop-color="#3A2810" stop-opacity="1"/><stop offset="100%" stop-color="#0D0906" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <path d="M25 120 Q20 100 35 88 L55 78 L55 50 L85 50 L85 78 L105 88 Q120 100 115 120 L115 330 Q115 348 70 348 Q25 348 25 330Z" fill="url(#b1a)"/>
+          <path d="M25 120 Q20 100 35 88 L55 78 L55 50 L85 50 L85 78 L105 88 Q120 100 115 120 L115 330 Q115 348 70 348 Q25 348 25 330Z" fill="url(#b1b)"/>
+          <rect x="50" y="28" width="40" height="26" rx="6" fill="#1C1409"/>
+          <rect x="44" y="12" width="52" height="20" rx="5" fill="#AE8B4F"/>
+          <rect x="50" y="8"  width="40" height="10" rx="4" fill="#C2A368"/>
+          <rect x="50" y="54" width="40" height="3" fill="#C2A368" opacity="0.9"/>
+          <rect x="48" y="76" width="44" height="3" fill="#AE8B4F" opacity="0.8"/>
+          <rect x="32" y="155" width="76" height="100" fill="rgba(194,163,104,0.04)" rx="2"/>
+          <rect x="32" y="155" width="76" height="1" fill="#C2A368" opacity="0.6"/>
+          <rect x="32" y="255" width="76" height="1" fill="#C2A368" opacity="0.6"/>
+          <rect x="44" y="172" width="52" height="2" fill="#C2A368" opacity="0.4" rx="1"/>
+          <rect x="50" y="182" width="40" height="1.5" fill="#AE8B4F" opacity="0.3" rx="1"/>
+          <rect x="46" y="200" width="48" height="2" fill="#C2A368" opacity="0.35" rx="1"/>
+          <rect x="52" y="210" width="36" height="1.5" fill="#8C6E3A" opacity="0.25" rx="1"/>
+          <path d="M60,192 Q70,185 80,192 Q72,188 68,192Z" fill="none" stroke="#C2A368" stroke-width="0.8" opacity="0.5"/>
+          <path d="M32 140 Q36 122 42 140" stroke="rgba(194,163,104,0.14)" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <ellipse cx="70" cy="345" rx="45" ry="10" fill="#120E07"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <span class="product-name">Layl Oud</span>
+        <span class="product-arabic">ليل العود</span>
+        <span class="product-price">£185</span>
+        <button class="add-to-bag magnetic">Add to Bag</button>
+      </div>
+    </div>
+
+    <!-- Hijazi Rose -->
+    <div class="product-card">
+      <div class="product-image-wrap" data-cursor-image>
+        <svg viewBox="0 0 140 380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="b2a" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#3A1A1A"/><stop offset="50%" stop-color="#2A1218"/><stop offset="100%" stop-color="#180A10"/>
+            </linearGradient>
+            <radialGradient id="b2b" cx="35%" cy="20%" r="55%">
+              <stop offset="0%" stop-color="#5A2428" stop-opacity="0.8"/><stop offset="100%" stop-color="#180A10" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <path d="M18 130 Q15 105 38 92 L58 82 L58 46 L82 46 L82 82 L102 92 Q125 105 122 130 L122 318 Q122 345 70 345 Q18 345 18 318Z" fill="url(#b2a)"/>
+          <path d="M18 130 Q15 105 38 92 L58 82 L58 46 L82 46 L82 82 L102 92 Q125 105 122 130 L122 318 Q122 345 70 345 Q18 345 18 318Z" fill="url(#b2b)"/>
+          <rect x="52" y="24" width="36" height="26" rx="5" fill="#28121A"/>
+          <rect x="44" y="10" width="52" height="18" rx="5" fill="#C2747A"/>
+          <rect x="50" y="6"  width="40" height="10" rx="4" fill="#D4948A"/>
+          <rect x="52" y="50" width="36" height="3" fill="#C2A368" opacity="0.9"/>
+          <rect x="50" y="80" width="40" height="3" fill="#AE8B4F" opacity="0.7"/>
+          <rect x="26" y="150" width="88" height="115" fill="rgba(194,163,104,0.04)" rx="2"/>
+          <rect x="26" y="150" width="88" height="1"   fill="#C2A368" opacity="0.5"/>
+          <rect x="26" y="265" width="88" height="1"   fill="#C2A368" opacity="0.5"/>
+          <circle cx="70" cy="195" r="18" fill="none" stroke="#C2A368" stroke-width="0.6" opacity="0.3"/>
+          <circle cx="70" cy="195" r="9"  fill="none" stroke="#C2A368" stroke-width="0.5" opacity="0.18"/>
+          <circle cx="70" cy="195" r="3"  fill="rgba(194,163,104,0.22)"/>
+          <line x1="70" y1="176" x2="70" y2="214" stroke="#C2A368" stroke-width="0.4" opacity="0.18"/>
+          <line x1="51" y1="195" x2="89" y2="195" stroke="#C2A368" stroke-width="0.4" opacity="0.18"/>
+          <rect x="38" y="224" width="64" height="2"   fill="#C2A368" opacity="0.34" rx="1"/>
+          <rect x="46" y="234" width="48" height="1.5" fill="#AE8B4F" opacity="0.24" rx="1"/>
+          <rect x="42" y="250" width="56" height="1"   fill="#8C6E3A" opacity="0.2"  rx="1"/>
+          <path d="M22 158 Q26 138 32 158" stroke="rgba(194,163,104,0.1)" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <ellipse cx="70" cy="342" rx="52" ry="11" fill="#180A10"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <span class="product-name">Hijazi Rose</span>
+        <span class="product-arabic">الوردة الحجازية</span>
+        <span class="product-price">£210</span>
+        <button class="add-to-bag magnetic">Add to Bag</button>
+      </div>
+    </div>
+
+    <!-- Mukhallat Royale -->
+    <div class="product-card">
+      <div class="product-badge limited">Limited</div>
+      <div class="product-image-wrap" data-cursor-image>
+        <svg viewBox="0 0 140 380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="b3a" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#1A1A28"/><stop offset="50%" stop-color="#12121E"/><stop offset="100%" stop-color="#0A0A14"/>
+            </linearGradient>
+            <radialGradient id="b3b" cx="30%" cy="22%" r="55%">
+              <stop offset="0%" stop-color="#282838" stop-opacity="0.9"/><stop offset="100%" stop-color="#0A0A14" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <path d="M30 118 Q28 98 44 86 L60 75 L60 42 L80 42 L80 75 L96 86 Q112 98 110 118 L110 340 Q110 352 70 352 Q30 352 30 340Z" fill="url(#b3a)"/>
+          <path d="M30 118 Q28 98 44 86 L60 75 L60 42 L80 42 L80 75 L96 86 Q112 98 110 118 L110 340 Q110 352 70 352 Q30 352 30 340Z" fill="url(#b3b)"/>
+          <rect x="54" y="20" width="32" height="26" rx="5" fill="#10101C"/>
+          <rect x="46" y="8"  width="48" height="16" rx="4" fill="#AE8B4F"/>
+          <rect x="50" y="4"  width="40" height="10" rx="5" fill="#C2A368"/>
+          <polygon points="58,4 62,0 66,4 70,0 74,4 78,0 82,4" fill="#D4BC86" opacity="0.85"/>
+          <rect x="54" y="46" width="32" height="2.5" fill="#C2A368" opacity="0.9"/>
+          <rect x="52" y="73" width="36" height="2.5" fill="#AE8B4F" opacity="0.8"/>
+          <rect x="36" y="140" width="68" height="130" fill="rgba(194,163,104,0.04)" rx="2"/>
+          <rect x="36" y="140" width="68" height="1.5" fill="#C2A368" opacity="0.6"/>
+          <rect x="36" y="270" width="68" height="1.5" fill="#C2A368" opacity="0.6"/>
+          <rect x="39" y="143" width="62" height="125" fill="none" stroke="#C2A368" stroke-width="0.4" opacity="0.2" rx="1"/>
+          <polygon points="70,162 73.5,172 84,172 75.5,178 78.5,188 70,182 61.5,188 64.5,178 56,172 66.5,172" fill="none" stroke="#C2A368" stroke-width="0.9" opacity="0.4"/>
+          <rect x="46" y="198" width="48" height="2"   fill="#C2A368" opacity="0.38" rx="1"/>
+          <rect x="50" y="208" width="40" height="1.5" fill="#AE8B4F" opacity="0.28" rx="1"/>
+          <rect x="46" y="222" width="48" height="2"   fill="#C2A368" opacity="0.3"  rx="1"/>
+          <rect x="52" y="232" width="36" height="1.5" fill="#8C6E3A" opacity="0.22" rx="1"/>
+          <path d="M34 162 Q38 140 44 162" stroke="rgba(194,163,104,0.1)" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <ellipse cx="70" cy="349" rx="40" ry="9" fill="#0A0A14"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <span class="product-name">Mukhallat Royale</span>
+        <span class="product-arabic">مخلط رويال</span>
+        <span class="product-price">£165</span>
+        <button class="add-to-bag magnetic">Add to Bag</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ QUOTE ═══ -->
+<section id="quote-section">
+  <svg class="quote-grain" xmlns="http://www.w3.org/2000/svg">
+    <filter id="gf2"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <rect width="100%" height="100%" filter="url(#gf2)"/>
+  </svg>
+  <div class="quote-inner">
+    <div class="diamond-divider reveal-scale"></div>
+    <p class="quote-arabic reveal-scale reveal-delay-1">"العطر ذاكرة لا تُنسى — وشاموم يكتب ذاكرتك."</p>
+    <span class="quote-en reveal-scale reveal-delay-2">Fragrance is unforgettable memory — and SHAMUM writes yours.</span>
+  </div>
+</section>
+
+<!-- ═══ TRUST ═══ -->
+<section id="trust">
+  <div class="trust-grid">
+    <div class="trust-item reveal">
+      <span class="trust-number"><span class="counter" data-target="14">0</span></span>
+      <span class="trust-label">Years of Craft</span>
+      <span class="trust-arabic">شحن مجاني</span>
+    </div>
+    <div class="trust-item reveal reveal-delay-1">
+      <span class="trust-number"><span class="counter" data-target="100">0</span><span class="trust-unit">%</span></span>
+      <span class="trust-label">Natural Oud</span>
+      <span class="trust-arabic">عود طبيعي ١٠٠٪</span>
+    </div>
+    <div class="trust-item reveal reveal-delay-2">
+      <span class="trust-number"><span class="counter" data-target="30">0</span></span>
+      <span class="trust-label">Day Free Returns</span>
+      <span class="trust-arabic">إرجاع مجاني</span>
+    </div>
+    <div class="trust-item reveal reveal-delay-3">
+      <span class="trust-number"><span class="counter" data-target="8000">0</span><span class="trust-unit">+</span></span>
+      <span class="trust-label">House Members</span>
+      <span class="trust-arabic">برنامج الولاء</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LOYALTY ═══ -->
+<section id="loyalty">
+  <div class="reveal">
+    <h2 class="loyalty-headline">انضم لعائلة شاموم</h2>
+    <span class="loyalty-sub">Join the House · Private Access · Curated Selections</span>
+    <br>
+    <button class="loyalty-btn magnetic">Join the House</button>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer id="footer">
+  <div class="footer-grid">
+    <div>
+      <span class="footer-brand-name">SHAMUM</span>
+      <p class="footer-desc">Maison d'Oud — شاموم · ماسون عود<br><br>We do not chase the season.<br>We wait for the wood.<br><br>Rooted in the ancient forests of Southeast Asia. Refined in the heart of Arabia.</p>
+      <form class="footer-email-form" onsubmit="return false;">
+        <input class="footer-email-input" type="email" placeholder="Your email address">
+        <button class="footer-email-submit" type="submit">Subscribe</button>
+      </form>
+    </div>
+    <div>
+      <span class="footer-col-title">Maison</span>
+      <ul class="footer-links">
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">The Oud</a></li>
+        <li><a href="#">Craftsmanship</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div>
+      <span class="footer-col-title">Shop</span>
+      <ul class="footer-links">
+        <li><a href="#">All Fragrances</a></li>
+        <li><a href="#">Oud Oils</a></li>
+        <li><a href="#">Oud Wood</a></li>
+        <li><a href="#">Limited Edition</a></li>
+        <li><a href="#">Gift Sets</a></li>
+        <li><a href="#">Bespoke</a></li>
+      </ul>
+    </div>
+    <div>
+      <span class="footer-col-title">Care</span>
+      <ul class="footer-links">
+        <li><a href="#">Fragrance Guide</a></li>
+        <li><a href="#">Shipping &amp; Returns</a></li>
+        <li><a href="#">Authenticity</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 SHAMUM — Maison d'Oud. All rights reserved.</span>
+    <span class="footer-cities">Riyadh · Dubai · London</span>
+    <div class="footer-payments">
+      <div class="payment-icon">VISA</div>
+      <div class="payment-icon">MC</div>
+      <div class="payment-icon">AMEX</div>
+      <div class="payment-icon">MADA</div>
+      <div class="payment-icon">STC</div>
+    </div>
+  </div>
+</footer>
 
 <script>
-/* ══════════════════════════════════════════
-   SHAMUM — Scroll Animation Engine v3
-   True spring physics · Canvas dust · Time-based oscillators
-   Word-by-word reveals · Ambient tree sway
-══════════════════════════════════════════ */
+(function(){
+'use strict';
 
-// ── Math helpers ──
-function lerp(a,b,t){return a+(b-a)*t;}
-function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
-function phase(p,s,e){return clamp((p-s)/(e-s),0,1);}
-function easeOut(t){return 1-Math.pow(1-t,3);}
-function easeOut4(t){return 1-Math.pow(1-t,4);}
-function easeIn(t){return t*t*t;}
-function easeInOut(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
-function easeOutBack(t){var c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2);}
+/* ──────────── CURSOR ──────────── */
+var dot  = document.getElementById('cursor-dot');
+var ring = document.getElementById('cursor-ring');
+var mx = window.innerWidth/2, my = window.innerHeight/2;
+var rx = mx, ry = my;
 
-// ── Dramatic blur+scale+translate reveal ──
-function reveal(el,p,extraY,maxBlur){
-  if(!el)return;
-  var y=extraY===undefined?50:extraY;
-  var mb=maxBlur===undefined?18:maxBlur;
-  var op=clamp(p,0,1);
-  el.style.opacity=op;
-  el.style.filter='blur('+((1-op)*mb)+'px)';
-  el.style.transform='translateY('+lerp(y,0,op)+'px) scale('+lerp(.93,1,op)+')';
-}
-
-// ── Word-split for staggered cinematic reveals ──
-function splitWords(el){
-  if(!el)return;
-  var saved=[];
-  el.childNodes.forEach(function(n){saved.push(n.cloneNode(true));});
-  el.innerHTML='';
-  saved.forEach(function(n){
-    if(n.nodeType===3){
-      n.textContent.split(/(\s+)/).forEach(function(part){
-        if(/^\s+$/.test(part)){el.appendChild(document.createTextNode(part));}
-        else if(part){var s=document.createElement('span');s.className='word';s.textContent=part;el.appendChild(s);}
-      });
-    } else if(n.nodeName==='BR'){
-      el.appendChild(document.createElement('br'));
-    } else if(n.nodeName==='EM'){
-      var em=document.createElement('em');
-      n.childNodes.forEach(function(cn){
-        if(cn.nodeType===3){
-          cn.textContent.split(/(\s+)/).forEach(function(part){
-            if(/^\s+$/.test(part)){em.appendChild(document.createTextNode(part));}
-            else if(part){var s=document.createElement('span');s.className='word';s.textContent=part;em.appendChild(s);}
-          });
-        }
-      });
-      el.appendChild(em);
-    } else {
-      el.appendChild(n.cloneNode(true));
-    }
-  });
-}
-
-function revealWords(el,p,baseY){
-  if(!el)return;
-  var words=el.querySelectorAll('.word');
-  if(!words.length){reveal(el,p,baseY||50);return;}
-  el.style.opacity=(p>0.001)?1:0;
-  el.style.filter='none';
-  el.style.transform='none';
-  var n=words.length;
-  var stagger=Math.min(0.07,0.4/Math.max(n,1));
-  words.forEach(function(w,i){
-    var wp=clamp((p-i*stagger*0.9)/(1-(n-1)*stagger*0.5),0,1);
-    var wpe=easeOut4(clamp(wp,0,1));
-    var y=baseY===undefined?46:baseY;
-    w.style.opacity=wpe;
-    w.style.filter='blur('+((1-wpe)*14)+'px)';
-    w.style.transform='translateY('+lerp(y,0,wpe)+'px) scale('+lerp(.91,1,wpe)+')';
-  });
-}
-
-// ── DOM refs ──
-var nav         =document.getElementById('nav');
-var sunGlowRect =document.getElementById('sun-glow-rect');
-var sunCircle   =document.getElementById('sun-circle');
-var bgForest    =document.getElementById('bg-forest');
-var lightRays   =document.getElementById('light-rays');
-var ground      =document.getElementById('ground');
-var groundShadow=document.getElementById('ground-shadow');
-var treeGroup   =document.getElementById('tree-group');
-var canopy      =document.getElementById('canopy');
-var branches    =document.getElementById('branches');
-var trunk       =document.getElementById('trunk');
-var cutMark     =document.getElementById('cut-mark');
-var chips       =document.getElementById('chips');
-var workerLeft  =document.getElementById('worker-left');
-var workerRight =document.getElementById('worker-right');
-var wlArm       =document.getElementById('wl-arm');
-var wrArm       =document.getElementById('wr-arm');
-var oudPieces   =document.getElementById('oud-pieces');
-var pileBases   =document.getElementById('pile-bases');
-var resinGlow   =document.getElementById('resin-glow-rect');
-var scrollCue   =document.getElementById('scroll-cue');
-var stageCta    =document.getElementById('stage-cta');
-var sceneEl     =document.getElementById('sticky-scene');
-var pileEls     =[1,2,3,4,5].map(function(i){return document.getElementById('pile-'+i);});
-
-var texts={
-  l1:document.getElementById('t-label-1'), h1:document.getElementById('t-headline-1'),
-  l2:document.getElementById('t-label-2'), h2:document.getElementById('t-headline-2'),
-  l3:document.getElementById('t-label-3'), h3:document.getElementById('t-headline-3'),
-  s3:document.getElementById('t-sub-3'),
-  h4:document.getElementById('t-headline-4'),
-  l5:document.getElementById('t-label-5'), h5:document.getElementById('t-headline-5'),
-  s5:document.getElementById('t-sub-5')
-};
-[texts.h1,texts.h2,texts.h3,texts.h4,texts.h5].forEach(splitWords);
-
-// ── Generate oud pieces ──
-// 30 pieces: 6 per column
-/* SHAMUM — Animation Engine v4 */
-function lerp(a,b,t){return a+(b-a)*t;}
-function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
-function phase(p,s,e){return clamp((p-s)/(e-s),0,1);}
-function easeOut(t){return 1-Math.pow(1-t,3);}
-function easeOut4(t){return 1-Math.pow(1-t,4);}
-function easeIn(t){return t*t*t;}
-function easeInOut(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
-function easeOutBack(t){var c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2);}
-
-function reveal(el,p,y,mb){
-  if(!el)return;
-  y=y===undefined?50:y; mb=mb===undefined?18:mb;
-  var op=clamp(p,0,1);
-  el.style.opacity=op;
-  el.style.filter='blur('+((1-op)*mb)+'px)';
-  el.style.transform='translateY('+lerp(y,0,op)+'px) scale('+lerp(.93,1,op)+')';
-}
-
-function splitWords(el){
-  if(!el)return;
-  var saved=[];
-  el.childNodes.forEach(function(n){saved.push(n.cloneNode(true));});
-  el.innerHTML='';
-  saved.forEach(function(n){
-    if(n.nodeType===3){
-      n.textContent.split(/(\s+)/).forEach(function(w){
-        if(/^\s+$/.test(w)){el.appendChild(document.createTextNode(w));}
-        else if(w){var s=document.createElement('span');s.className='word';s.textContent=w;el.appendChild(s);}
-      });
-    } else if(n.nodeName==='BR'){
-      el.appendChild(document.createElement('br'));
-    } else if(n.nodeName==='EM'){
-      var em=document.createElement('em');
-      n.childNodes.forEach(function(cn){
-        if(cn.nodeType===3){
-          cn.textContent.split(/(\s+)/).forEach(function(w){
-            if(/^\s+$/.test(w)){em.appendChild(document.createTextNode(w));}
-            else if(w){var s=document.createElement('span');s.className='word';s.textContent=w;em.appendChild(s);}
-          });
-        }
-      });
-      el.appendChild(em);
-    } else {
-      el.appendChild(n.cloneNode(true));
-    }
-  });
-}
-
-function revealWords(el,p,y){
-  if(!el)return;
-  var ws=el.querySelectorAll('.word');
-  if(!ws.length){reveal(el,p,y||50);return;}
-  el.style.opacity=(p>0.001)?1:0;
-  el.style.filter='none'; el.style.transform='none';
-  var n=ws.length, stagger=Math.min(0.08,0.5/Math.max(n,1));
-  ws.forEach(function(w,i){
-    var wp=easeOut4(clamp((p-i*stagger*0.85)/(1-(n-1)*stagger*0.45),0,1));
-    var gy=y===undefined?48:y;
-    w.style.opacity=wp;
-    w.style.filter='blur('+((1-wp)*16)+'px)';
-    w.style.transform='translateY('+lerp(gy,0,wp)+'px) scale('+lerp(.90,1,wp)+')';
-  });
-}
-
-var nav=document.getElementById('nav');
-var sunGlowRect=document.getElementById('sun-glow-rect');
-var sunCircle=document.getElementById('sun-circle');
-var bgForest=document.getElementById('bg-forest');
-var lightRays=document.getElementById('light-rays');
-var ground=document.getElementById('ground');
-var groundShadow=document.getElementById('ground-shadow');
-var treeGroup=document.getElementById('tree-group');
-var canopy=document.getElementById('canopy');
-var branches=document.getElementById('branches');
-var trunk=document.getElementById('trunk');
-var cutMark=document.getElementById('cut-mark');
-var chips=document.getElementById('chips');
-var workerLeft=document.getElementById('worker-left');
-var workerRight=document.getElementById('worker-right');
-var wlArm=document.getElementById('wl-arm');
-var wrArm=document.getElementById('wr-arm');
-var oudPieces=document.getElementById('oud-pieces');
-var pileBases=document.getElementById('pile-bases');
-var resinGlow=document.getElementById('resin-glow-rect');
-var scrollCue=document.getElementById('scroll-cue');
-var stageCta=document.getElementById('stage-cta');
-var sceneEl=document.getElementById('sticky-scene');
-var pileEls=[1,2,3,4,5].map(function(i){return document.getElementById('pile-'+i);});
-var texts={
-  l1:document.getElementById('t-label-1'),h1:document.getElementById('t-headline-1'),
-  l2:document.getElementById('t-label-2'),h2:document.getElementById('t-headline-2'),
-  l3:document.getElementById('t-label-3'),h3:document.getElementById('t-headline-3'),
-  s3:document.getElementById('t-sub-3'),
-  h4:document.getElementById('t-headline-4'),
-  l5:document.getElementById('t-label-5'),h5:document.getElementById('t-headline-5'),
-  s5:document.getElementById('t-sub-5')
-};
-[texts.h1,texts.h2,texts.h3,texts.h4,texts.h5].forEach(splitWords);
-
-var colX=[180,432,720,1008,1260];
-var pieceColors=['#0A0402','#120602','#160806','#0E0502','#1A0A04','#140804'];
-var allPieces=[];
-colX.forEach(function(cx,ci){
-  for(var i=0;i<6;i++){
-    var el=document.createElementNS('http://www.w3.org/2000/svg','rect');
-    var w=22+Math.random()*28,h=10+Math.random()*8,rot=(Math.random()-.5)*40;
-    el.setAttribute('width',w);el.setAttribute('height',h);el.setAttribute('rx',3);
-    el.setAttribute('fill',pieceColors[Math.floor(Math.random()*pieceColors.length)]);
-    el.setAttribute('opacity',0);
-    if(Math.random()>.55)el.style.filter='drop-shadow(0 0 3px rgba(174,139,79,.4))';
-    oudPieces.appendChild(el);
-    allPieces.push({el:el,col:ci,sx:720+(Math.random()-.5)*60,sy:700+Math.random()*80,
-      tx:cx+(Math.random()-.5)*50,ty:770-i*(h+4),rot:rot,
-      delay:ci*0.025+i*0.018+Math.random()*0.015,w:w,h:h});
-  }
+document.addEventListener('mousemove', function(e){
+  mx = e.clientX; my = e.clientY;
+  dot.style.transform = 'translate('+(mx-4)+'px,'+(my-4)+'px)';
 });
 
-var dustCanvas=document.getElementById('dust');
-var ctx=dustCanvas?dustCanvas.getContext('2d'):null;
-var particles=[];
-if(ctx){
-  for(var pi=0;pi<80;pi++){
-    particles.push({x:Math.random()*1440,y:400+Math.random()*500,
-      vx:(Math.random()-.5)*14,vy:-(6+Math.random()*16),
-      size:0.7+Math.random()*2,baseOpacity:0.06+Math.random()*0.25,
-      life:Math.random(),gold:Math.random()>.4});
-  }
-  function resizeDust(){dustCanvas.width=sceneEl.offsetWidth;dustCanvas.height=sceneEl.offsetHeight;}
-  resizeDust();
-  window.addEventListener('resize',resizeDust);
+(function animCursor(){
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.transform = 'translate('+(rx-20)+'px,'+(ry-20)+'px)';
+  requestAnimationFrame(animCursor);
+})();
+
+document.querySelectorAll('a,button,.nav-shop-text,.cat-card,.loyalty-btn').forEach(function(el){
+  el.addEventListener('mouseenter', function(){ ring.classList.add('hover-link'); dot.classList.add('hidden'); });
+  el.addEventListener('mouseleave', function(){ ring.classList.remove('hover-link'); dot.classList.remove('hidden'); });
+});
+document.querySelectorAll('[data-cursor-image]').forEach(function(el){
+  el.addEventListener('mouseenter', function(){ ring.classList.remove('hover-link'); ring.classList.add('hover-image'); dot.classList.add('hidden'); });
+  el.addEventListener('mouseleave', function(){ ring.classList.remove('hover-image'); dot.classList.remove('hidden'); });
+});
+
+/* ──────────── NAV ──────────── */
+var nav = document.getElementById('nav');
+var scrollBar = document.getElementById('scroll-bar');
+window.addEventListener('scroll', function(){
+  var sy = window.scrollY;
+  var maxS = document.body.scrollHeight - window.innerHeight;
+  nav.classList.toggle('scrolled', sy > window.innerHeight * 0.82);
+  scrollBar.style.transform = 'scaleX(' + (maxS > 0 ? sy/maxS : 0) + ')';
+}, {passive:true});
+
+/* ──────────── HERO SETUP ──────────── */
+var heroSpacer = document.getElementById('hero-spacer');
+var sPos = 0, sVel = 0, lastT = null;
+
+// Word spans
+var line1El = document.getElementById('hero-line1');
+var line2El = document.getElementById('hero-line2');
+function mkWords(txt){
+  return txt.split(' ').map(function(w){ return '<span class="word">'+w+'</span>'; }).join(' ');
 }
-function renderParticles(dt,strength){
-  if(!ctx||strength<0.005)return;
-  ctx.clearRect(0,0,dustCanvas.width,dustCanvas.height);
-  var sx=dustCanvas.width/1440,sy=dustCanvas.height/900;
-  particles.forEach(function(pt){
-    pt.x+=pt.vx*dt;pt.y+=pt.vy*dt;pt.life+=dt*0.22;
-    if(pt.y<-20||pt.x<-30||pt.x>1470||pt.life>1){
-      pt.x=Math.random()*1440;pt.y=870+Math.random()*40;pt.life=0;
-      pt.vy=-(6+Math.random()*16);pt.vx=(Math.random()-.5)*14;
+line1El.innerHTML = mkWords('We do not chase the season.');
+line2El.innerHTML = mkWords('We wait for the wood.');
+var words1 = Array.from(line1El.querySelectorAll('.word'));
+var words2 = Array.from(line2El.querySelectorAll('.word'));
+
+// SVG helpers
+function $s(id){ return document.getElementById(id); }
+var sc = {
+  sky:   $s('scene-sky'),   sun:   $s('scene-sun'),
+  rays:  $s('scene-rays'),  forest:$s('scene-forest'),
+  ground:$s('scene-ground'),
+  trunk: $s('tree-trunk'),  cut:   $s('tree-cut'),
+  bl1:$s('branch-l1'),bl2:$s('branch-l2'),bl3:$s('branch-l3'),
+  br1:$s('branch-r1'),br2:$s('branch-r2'),br3:$s('branch-r3'),
+  c0:$s('canopy-0'),c1:$s('canopy-1'),c2:$s('canopy-2'),c3:$s('canopy-3'),c4:$s('canopy-4'),
+  wl:$s('worker-left'),  wr:$s('worker-right'),
+  wla:$s('worker-left-arm'),wra:$s('worker-right-arm'),
+  tree:$s('tree-group'),piles:$s('scene-piles'),
+  pieces:$s('oud-pieces'),lbls:document.getElementById('pile-labels')
+};
+
+// Oud pieces
+var pileXs = [480, 580, 720, 860, 960];
+var pcColors = ['#3A2410','#2E1C0C','#4A3018','#3D2A14','#2A1A0A','#5A3C1A','#4A3220'];
+var pieces = [];
+// Seeded deterministic random
+function fakeRand(seed){ return ((Math.sin(seed * 127.1 + 311.7) * 43758.5) % 1 + 1) % 1; }
+for(var i=0; i<30; i++){
+  var r  = document.createElementNS('http://www.w3.org/2000/svg','rect');
+  var pw = 26 + fakeRand(i*3)   * 20;
+  var ph = 9  + fakeRand(i*3+1) * 8;
+  var pi = i % 5;
+  r.setAttribute('width',  pw);
+  r.setAttribute('height', ph);
+  r.setAttribute('rx','2');
+  r.setAttribute('fill', pcColors[Math.floor(fakeRand(i*3+2)*pcColors.length)]);
+  r.setAttribute('opacity','0');
+  sc.pieces.appendChild(r);
+  pieces.push({el:r, pi:pi, w:pw, h:ph,
+    angle: (fakeRand(i*5)-0.5)*58,
+    offX:  (fakeRand(i*7)-0.5)*30,
+    offY:  Math.floor(i/5)*12
+  });
+}
+
+// Canvas
+var canvas = document.getElementById('hero-canvas');
+var ctx = canvas.getContext('2d');
+function resizeCanvas(){
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas, {passive:true});
+
+var pts = [];
+for(var pi2=0; pi2<80; pi2++){
+  pts.push({
+    x: 400 + fakeRand(pi2*11)*640,
+    y: 500 + fakeRand(pi2*13)*300,
+    vx:(fakeRand(pi2*17)-0.5)*0.55,
+    vy:-0.3 - fakeRand(pi2*19)*0.85,
+    life: fakeRand(pi2*23),
+    maxLife: 0.55 + fakeRand(pi2*29)*0.45,
+    size: 0.5 + fakeRand(pi2*31)*2
+  });
+}
+function drawDust(alpha){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(alpha <= 0) return;
+  var scX = canvas.width/1440, scY = canvas.height/900;
+  for(var k=0;k<pts.length;k++){
+    var p = pts[k];
+    p.x += p.vx; p.y += p.vy; p.life += 0.009;
+    if(p.life > p.maxLife){
+      p.x = 400 + Math.random()*640; p.y = 570 + Math.random()*200;
+      p.life = 0; p.vy = -0.3-Math.random()*0.85; p.vx=(Math.random()-0.5)*0.55;
     }
-    var a=pt.baseOpacity*Math.sin(pt.life*Math.PI)*strength;
-    if(a<0.004)return;
-    ctx.beginPath();ctx.arc(pt.x*sx,pt.y*sy,pt.size,0,Math.PI*2);
-    ctx.fillStyle=pt.gold?'rgba(212,188,134,'+a+')':'rgba(139,90,40,'+a+')';
+    var lr = p.life/p.maxLife;
+    var a  = alpha * Math.sin(lr*Math.PI) * 0.48;
+    ctx.beginPath();
+    ctx.arc(p.x*scX, p.y*scY, p.size, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(194,163,104,'+a+')';
     ctx.fill();
-  });
-}
-
-/* Spring: F = k*(target-pos) - d*vel
-   k=80, d=18 → slightly underdamped → luxurious overshoot-settle */
-var sPos=0,sVel=0,SK=80,SD=18;
-var chopT=0,swayT=0,p=0,lastT=performance.now();
-
-function readRaw(){
-  var c=document.getElementById('scroll-container');
-  return clamp((window.scrollY-c.offsetTop)/(c.offsetHeight-window.innerHeight),0,1);
-}
-
-function render(p){
-  nav.classList.toggle('opaque',p>.92);
-  var cueP=clamp(1-p/.035,0,1);
-  scrollCue.style.opacity=cueP;
-  scrollCue.style.transform='translateX(-50%) translateY('+((1-cueP)*14)+'px)';
-
-  /* Phase 1: opening */
-  var o1=easeOut(phase(p,0,.18))*(1-easeIn(phase(p,.15,.27)));
-  reveal(texts.l1,o1,22,14);revealWords(texts.h1,o1,56);
-
-  /* Phase 2: tree emerges */
-  var skyP=easeInOut(phase(p,.09,.30));
-  sunGlowRect.style.opacity=skyP*.9;sunCircle.style.opacity=skyP*.2;
-  bgForest.style.opacity=skyP*.9;
-  bgForest.style.transform='translateY('+lerp(28,0,skyP)+'px) scale('+lerp(1.08,1,skyP)+')';
-  lightRays.style.opacity=easeInOut(phase(p,.14,.34));
-  var gP=easeOut(phase(p,.10,.28));
-  ground.style.opacity=gP;groundShadow.style.opacity=gP*.65;
-  var canP=clamp(easeOutBack(phase(p,.11,.32)),0,1);
-  canopy.style.opacity=canP;
-  canopy.style.filter='blur('+((1-canP)*10)+'px)';
-  canopy.style.transform='translateY('+lerp(36,0,canP)+'px) scale('+lerp(.95,1,canP)+')';
-  var brP=easeOut(phase(p,.15,.34));
-  branches.style.opacity=brP;
-  branches.style.transform='translateY('+lerp(20,0,brP)+'px)';
-  var trP=easeOut(phase(p,.07,.24));trunk.style.opacity=trP;
-  var sway=Math.sin(swayT*.72)*0.5*Math.min(1,trP*3);
-  var o2=easeOut(phase(p,.22,.35))*(1-easeIn(phase(p,.38,.48)));
-  reveal(texts.l2,o2,16,12);revealWords(texts.h2,o2,46);
-
-  /* Phase 3: workers + chop */
-  var wkP=clamp(easeOutBack(phase(p,.34,.54)),0,1);
-  var wkO=easeOut(phase(p,.34,.48));
-  workerLeft.style.opacity=wkO;workerRight.style.opacity=wkO;
-  workerLeft.style.transform='translateX(-'+lerp(400,0,wkP)+'px)';
-  workerRight.style.transform='translateX('+lerp(400,0,wkP)+'px)';
-  var cWin=phase(p,.46,.66),cEnv=Math.sin(cWin*Math.PI);
-  if(cWin>0&&cWin<1){
-    var swing=Math.sin(chopT*2.4*Math.PI*2)*36*cEnv;
-    wlArm.style.transform='rotate('+(-swing)+'deg)';
-    wrArm.style.transform='rotate('+(swing)+'deg)';
-    cutMark.style.opacity=clamp(cWin*2.5,0,1);chips.style.opacity=cEnv*.95;
-    treeGroup.style.transform='translateX('+(swing*.09)+'px) rotate('+sway+'deg)';
-    treeGroup.style.filter='none';
-  } else if(phase(p,.63,1)<0.001){
-    treeGroup.style.transform='rotate('+sway+'deg)';treeGroup.style.filter='none';
-    wlArm.style.transform='rotate(0deg)';wrArm.style.transform='rotate(0deg)';
   }
-  var o3=easeOut(phase(p,.42,.55))*(1-easeIn(phase(p,.60,.68)));
-  reveal(texts.l3,o3,14,12);revealWords(texts.h3,o3,44);reveal(texts.s3,o3*.9,22,10);
+}
 
-  /* Phase 4: tree falls */
-  var fR=phase(p,.63,.76),fP=fR<1?(1-Math.pow(1-fR,2.6)):1;
-  var sB=easeOut(phase(p,.60,.71));
-  workerLeft.style.transform='translateX(-'+lerp(0,180,sB)+'px)';
-  workerRight.style.transform='translateX('+lerp(0,180,sB)+'px)';
-  if(fP>0.001){
-    treeGroup.style.transform='rotate('+(fP*-89)+'deg)';
-    treeGroup.style.filter=(fR>0&&fR<1)?'blur('+(Math.sin(fR*Math.PI)*4.5)+'px)':'none';
+// Utilities
+function op(el,v){ if(el) el.setAttribute('opacity', Math.max(0,Math.min(1,v))); }
+function lerp(a,b,t){ return a+(b-a)*t; }
+function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
+function eOut(t){ return 1-Math.pow(1-t,3); }
+function eOutBack(t){ var c=1.70158+1; return 1+c*Math.pow(t-1,3)+(c-1)*Math.pow(t-1,2); }
+function wset(arr,t,off){
+  arr.forEach(function(w,i){
+    var th = (off||0)+i*0.085;
+    if(t>=th) w.classList.add('visible'); else w.classList.remove('visible');
+  });
+}
+
+var chopTime = 0;
+
+function heroLoop(ts){
+  requestAnimationFrame(heroLoop);
+  var dt = lastT ? Math.min((ts-lastT)/1000, 0.05) : 0.016;
+  lastT = ts;
+
+  // Raw hero progress
+  var spacerTop = heroSpacer.getBoundingClientRect().top;
+  var spacerH   = heroSpacer.offsetHeight - window.innerHeight;
+  var raw = clamp(-spacerTop / spacerH, 0, 1);
+
+  // Spring
+  var acc = (raw - sPos)*80 - sVel*18;
+  sVel += acc*dt; sPos += sVel*dt;
+  var p = clamp(sPos, 0, 1);
+
+  /* Phase 0 — 0–18% text */
+  var p0a = clamp(p/0.09, 0, 1);
+  var p0b = clamp(p/0.18, 0, 1);
+  var fade = 1 - clamp((p-0.11)/0.07, 0, 1);
+  line1El.style.opacity = eOut(p0a)*fade;
+  line2El.style.opacity = clamp(eOut(p0b)*1.3,0,1)*fade;
+  wset(words1, eOut(p0a));
+  wset(words2, eOut(p0b)-0.15);
+
+  /* Phase 1 — 9–30% tree */
+  var p1r = clamp((p-0.09)/0.21,0,1);
+  var p1  = eOutBack(p1r);
+  op(sc.sky,    clamp(p1r*2.2,0,1));
+  op(sc.sun,    clamp(p1r*1.8,0,1)*0.75);
+  op(sc.rays,   clamp((p1r-0.28)*2.2,0,1)*0.85);
+  op(sc.forest, clamp(p1r*2,0,1));
+  op(sc.ground, clamp(p1r*3,0,1));
+  [sc.c4,sc.c3,sc.c2,sc.c1,sc.c0].forEach(function(c,i){
+    var t2=clamp((p1-i*0.1)*2,0,1);
+    op(c,t2);
+    c.setAttribute('transform','translateY('+(1-t2)*70+')');
+  });
+  op(sc.trunk, clamp(p1r*3,0,1));
+  op(sc.cut,   clamp((p1r-0.45)*5,0,1));
+  [sc.bl1,sc.bl2,sc.bl3,sc.br1,sc.br2,sc.br3].forEach(function(b,i){
+    op(b, clamp((p1-i*0.06)*2.8,0,1));
+  });
+
+  /* Phase 2 — 34–54% workers + chop */
+  var p2r = clamp((p-0.34)/0.20,0,1);
+  var p2e = eOut(clamp(p2r*3,0,1));
+  sc.wl.setAttribute('transform','translate('+lerp(-200,520,p2e)+',780)');
+  op(sc.wl, p2e);
+  sc.wr.setAttribute('transform','translate('+lerp(1640,920,p2e)+',780)');
+  op(sc.wr, p2e);
+
+  if(p>=0.34 && p<0.63){
+    chopTime += dt;
+    var ca = Math.sin(chopTime*2.4*Math.PI*2)*36;
+    sc.wla.setAttribute('transform','rotate('+ca+',0,-90)');
+    sc.wra.setAttribute('transform','rotate('+(-ca)+',0,-90)');
+  } else if(p<0.34){
+    chopTime = 0;
+    sc.wla.setAttribute('transform','');
+    sc.wra.setAttribute('transform','');
   }
-  canopy.style.opacity=canP*Math.max(0,1-fP*1.8);
-  branches.style.opacity=brP*Math.max(0,1-fP*2.2);
-  var wF=easeIn(phase(p,.68,.78));
-  workerLeft.style.opacity=wkO*(1-wF);workerRight.style.opacity=wkO*(1-wF);
-  revealWords(texts.h4,easeOut(phase(p,.63,.72))*(1-easeIn(phase(p,.73,.80))),42);
-  resinGlow.style.opacity=fP*.9;ground.style.opacity=Math.min(1,gP+fP*.34);
 
-  /* Phase 5: oud rain */
-  trunk.style.opacity=trP*Math.max(0,1-easeIn(phase(p,.75,.86)));
-  allPieces.forEach(function(pc){
-    var s=0.74+pc.delay,e=Math.min(0.94,s+.16),r2=phase(p,s,e),pp=easeOut(r2);
-    if(pp<=0){pc.el.setAttribute('opacity',0);return;}
-    var cx2=lerp(pc.sx,pc.tx,pp),cy2=lerp(pc.sy,pc.ty,pp)+(-78*pp*(1-pp));
-    if(r2>.9)cy2+=Math.sin((r2-.9)/.1*Math.PI)*5*(1-(r2-.9)/.1);
-    pc.el.setAttribute('x',cx2-pc.w/2);pc.el.setAttribute('y',cy2-pc.h/2);
-    pc.el.setAttribute('opacity',Math.min(1,pp*3));
-    pc.el.style.filter=r2<1?'blur('+(Math.sin(r2*Math.PI)*2.2)+'px)':'none';
-    pc.el.setAttribute('transform','rotate('+(pc.rot*(1-pp*.7))+' '+cx2+' '+cy2+')');
-  });
-  pileBases.style.opacity=easeOut(phase(p,.84,.92));
-  var o5=easeOut(phase(p,.82,.91))*(1-easeIn(phase(p,.97,1.0)));
-  reveal(texts.l5,o5,14,12);revealWords(texts.h5,o5,44);reveal(texts.s5,o5*.88,22,10);
-  pileEls.forEach(function(el,i){
-    if(!el)return;
-    var lpc=clamp(easeOutBack(phase(p,.85+i*.027,.95+i*.027)),0,1);
-    el.style.opacity=lpc;
-    el.style.transform='translateY('+lerp(30,0,lpc)+'px) scale('+lerp(.86,1,lpc)+')';
-  });
-  var ctaP=easeOut(phase(p,.94,1.0));
-  stageCta.style.opacity=ctaP;
-  stageCta.style.transform='translateY('+lerp(20,0,ctaP)+'px)';
-  stageCta.classList.toggle('show',ctaP>.05);
-  return clamp(phase(p,.44,.52)*3,0,1)*clamp(1-phase(p,.78,.90),0,1);
+  /* Phase 3 — 63–76% fall */
+  var p3r = clamp((p-0.63)/0.13,0,1);
+  var p3  = eOut(p3r);
+  sc.tree.setAttribute('transform','rotate('+(-89*p3)+',720,820)');
+  if(p3>0 && p3<0.95){
+    sc.tree.setAttribute('filter','url(#motionBlur)');
+  } else {
+    sc.tree.removeAttribute('filter');
+  }
+  if(p3r>0){ op(sc.wl,(1-p3)*0.9); op(sc.wr,(1-p3)*0.9); }
+
+  /* Phase 4 — 74–100% pieces */
+  var p4r = clamp((p-0.74)/0.26,0,1);
+  op(sc.piles, eOut(clamp(p4r*3,0,1)));
+
+  for(var j=0;j<30;j++){
+    var pc  = pieces[j];
+    var del = j*0.022;
+    var pt  = clamp((p4r-del)/(1.0-Math.min(del,0.9)),0,1);
+    var pe  = eOut(pt);
+    var sx  = 720 + (j%2===0?1:-1)*(28+(j%7)*14) + pc.offX;
+    var sy  = 820;
+    var tx  = pileXs[pc.pi] + (j%3-1)*16;
+    var ty  = 838 - pc.offY;
+    var ay  = lerp(sy, ty, pe) + Math.sin(pt*Math.PI)*(-130-fakeRand(j*41)*50);
+    var ax  = lerp(sx, tx, pe);
+    var ar  = pc.angle*(1-pe);
+    pc.el.setAttribute('x', ax - pc.w/2);
+    pc.el.setAttribute('y', ay - pc.h/2);
+    pc.el.setAttribute('transform','rotate('+ar+','+ax+','+ay+')');
+    op(pc.el, pt>0 ? Math.min(pt*5,0.96) : 0);
+  }
+
+  sc.lbls.style.opacity = eOut(clamp((p4r-0.65)/0.35,0,1));
+
+  // Dust
+  var da=0;
+  if(p>=0.34 && p<=0.78) da = Math.sin(clamp((p-0.34)/0.44,0,1)*Math.PI)*0.88;
+  drawDust(da);
+}
+requestAnimationFrame(heroLoop);
+
+/* ──────────── INTERSECTION OBSERVERS ──────────── */
+function makeIO(threshold, callback){
+  return new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ callback(e.target); }
+    });
+  }, {threshold: threshold});
 }
 
-function tick(now){
-  var dt=Math.min(50,now-lastT)/1000;lastT=now;chopT+=dt;swayT+=dt;
-  var raw=readRaw();
-  var acc=(raw-sPos)*SK-sVel*SD;
-  sVel+=acc*dt;sPos=clamp(sPos+sVel*dt,-0.04,1.04);p=clamp(sPos,0,1);
-  var ps=render(p);
-  renderParticles(dt,ps);
-  requestAnimationFrame(tick);
-}
-requestAnimationFrame(tick);
+var revealIO = makeIO(0.15, function(el){
+  el.classList.add('visible');
+  revealIO.unobserve(el);
+});
+document.querySelectorAll('.reveal,.reveal-scale').forEach(function(el){ revealIO.observe(el); });
+
+var catIO = makeIO(0.1, function(el){
+  el.classList.add('visible');
+  catIO.unobserve(el);
+});
+document.querySelectorAll('.cat-card').forEach(function(el){ catIO.observe(el); });
+
+var prodIO = makeIO(0.12, function(el){
+  el.classList.add('visible');
+  prodIO.unobserve(el);
+});
+document.querySelectorAll('.product-card').forEach(function(el){ prodIO.observe(el); });
+
+/* ──────────── COUNTERS ──────────── */
+var cntIO = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(!e.isIntersecting) return;
+    var el = e.target;
+    var tgt = parseInt(el.dataset.target, 10);
+    var t0 = null;
+    (function step(ts){
+      if(!t0) t0 = ts;
+      var prog = Math.min((ts-t0)/1200, 1);
+      var eas  = 1-Math.pow(1-prog,3);
+      el.textContent = Math.floor(eas*tgt);
+      if(prog<1) requestAnimationFrame(step);
+      else el.textContent = tgt;
+    })(performance.now());
+    cntIO.unobserve(el);
+  });
+}, {threshold:0.5});
+document.querySelectorAll('.counter').forEach(function(el){ cntIO.observe(el); });
+
+/* ──────────── BRAND PARALLAX ──────────── */
+var brandSec = document.getElementById('brand-statement');
+var brandPx  = document.getElementById('brand-parallax');
+window.addEventListener('scroll', function(){
+  var r = brandSec.getBoundingClientRect();
+  var ratio = -r.top / (window.innerHeight + r.height);
+  brandPx.style.transform = 'translateY('+(ratio*56)+'px)';
+}, {passive:true});
+
+/* ──────────── MAGNETIC BUTTONS ──────────── */
+document.querySelectorAll('.magnetic').forEach(function(btn){
+  btn.addEventListener('mousemove', function(e){
+    var r = btn.getBoundingClientRect();
+    btn.style.transform = 'translate('+((e.clientX-r.left-r.width/2)*0.26)+'px,'+((e.clientY-r.top-r.height/2)*0.26)+'px)';
+  });
+  btn.addEventListener('mouseleave', function(){ btn.style.transform = ''; });
+});
+
+/* ──────────── ADD TO BAG ──────────── */
+document.querySelectorAll('.add-to-bag').forEach(function(btn){
+  btn.addEventListener('click', function(e){
+    var r = btn.getBoundingClientRect();
+    var rip = document.createElement('span');
+    rip.className = 'ripple';
+    var sz = Math.max(r.width, r.height)*2;
+    rip.style.cssText = 'width:'+sz+'px;height:'+sz+'px;left:'+(e.clientX-r.left-sz/2)+'px;top:'+(e.clientY-r.top-sz/2)+'px;';
+    btn.appendChild(rip);
+    setTimeout(function(){ rip.remove(); }, 700);
+    if(!btn.classList.contains('added')){
+      btn.classList.add('added');
+      btn.textContent = '✓ Added';
+      setTimeout(function(){ btn.classList.remove('added'); btn.textContent = 'Add to Bag'; }, 2200);
+    }
+  });
+});
+
+})();
 </script>
 </body>
 </html>

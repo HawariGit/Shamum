@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -753,246 +753,268 @@ var texts={
 
 // ── Generate oud pieces ──
 // 30 pieces: 6 per column
+/* SHAMUM — Animation Engine v4 */
+function lerp(a,b,t){return a+(b-a)*t;}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+function phase(p,s,e){return clamp((p-s)/(e-s),0,1);}
+function easeOut(t){return 1-Math.pow(1-t,3);}
+function easeOut4(t){return 1-Math.pow(1-t,4);}
+function easeIn(t){return t*t*t;}
+function easeInOut(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+function easeOutBack(t){var c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2);}
+
+function reveal(el,p,y,mb){
+  if(!el)return;
+  y=y===undefined?50:y; mb=mb===undefined?18:mb;
+  var op=clamp(p,0,1);
+  el.style.opacity=op;
+  el.style.filter='blur('+((1-op)*mb)+'px)';
+  el.style.transform='translateY('+lerp(y,0,op)+'px) scale('+lerp(.93,1,op)+')';
+}
+
+function splitWords(el){
+  if(!el)return;
+  var saved=[];
+  el.childNodes.forEach(function(n){saved.push(n.cloneNode(true));});
+  el.innerHTML='';
+  saved.forEach(function(n){
+    if(n.nodeType===3){
+      n.textContent.split(/(\s+)/).forEach(function(w){
+        if(/^\s+$/.test(w)){el.appendChild(document.createTextNode(w));}
+        else if(w){var s=document.createElement('span');s.className='word';s.textContent=w;el.appendChild(s);}
+      });
+    } else if(n.nodeName==='BR'){
+      el.appendChild(document.createElement('br'));
+    } else if(n.nodeName==='EM'){
+      var em=document.createElement('em');
+      n.childNodes.forEach(function(cn){
+        if(cn.nodeType===3){
+          cn.textContent.split(/(\s+)/).forEach(function(w){
+            if(/^\s+$/.test(w)){em.appendChild(document.createTextNode(w));}
+            else if(w){var s=document.createElement('span');s.className='word';s.textContent=w;em.appendChild(s);}
+          });
+        }
+      });
+      el.appendChild(em);
+    } else {
+      el.appendChild(n.cloneNode(true));
+    }
+  });
+}
+
+function revealWords(el,p,y){
+  if(!el)return;
+  var ws=el.querySelectorAll('.word');
+  if(!ws.length){reveal(el,p,y||50);return;}
+  el.style.opacity=(p>0.001)?1:0;
+  el.style.filter='none'; el.style.transform='none';
+  var n=ws.length, stagger=Math.min(0.08,0.5/Math.max(n,1));
+  ws.forEach(function(w,i){
+    var wp=easeOut4(clamp((p-i*stagger*0.85)/(1-(n-1)*stagger*0.45),0,1));
+    var gy=y===undefined?48:y;
+    w.style.opacity=wp;
+    w.style.filter='blur('+((1-wp)*16)+'px)';
+    w.style.transform='translateY('+lerp(gy,0,wp)+'px) scale('+lerp(.90,1,wp)+')';
+  });
+}
+
+var nav=document.getElementById('nav');
+var sunGlowRect=document.getElementById('sun-glow-rect');
+var sunCircle=document.getElementById('sun-circle');
+var bgForest=document.getElementById('bg-forest');
+var lightRays=document.getElementById('light-rays');
+var ground=document.getElementById('ground');
+var groundShadow=document.getElementById('ground-shadow');
+var treeGroup=document.getElementById('tree-group');
+var canopy=document.getElementById('canopy');
+var branches=document.getElementById('branches');
+var trunk=document.getElementById('trunk');
+var cutMark=document.getElementById('cut-mark');
+var chips=document.getElementById('chips');
+var workerLeft=document.getElementById('worker-left');
+var workerRight=document.getElementById('worker-right');
+var wlArm=document.getElementById('wl-arm');
+var wrArm=document.getElementById('wr-arm');
+var oudPieces=document.getElementById('oud-pieces');
+var pileBases=document.getElementById('pile-bases');
+var resinGlow=document.getElementById('resin-glow-rect');
+var scrollCue=document.getElementById('scroll-cue');
+var stageCta=document.getElementById('stage-cta');
+var sceneEl=document.getElementById('sticky-scene');
+var pileEls=[1,2,3,4,5].map(function(i){return document.getElementById('pile-'+i);});
+var texts={
+  l1:document.getElementById('t-label-1'),h1:document.getElementById('t-headline-1'),
+  l2:document.getElementById('t-label-2'),h2:document.getElementById('t-headline-2'),
+  l3:document.getElementById('t-label-3'),h3:document.getElementById('t-headline-3'),
+  s3:document.getElementById('t-sub-3'),
+  h4:document.getElementById('t-headline-4'),
+  l5:document.getElementById('t-label-5'),h5:document.getElementById('t-headline-5'),
+  s5:document.getElementById('t-sub-5')
+};
+[texts.h1,texts.h2,texts.h3,texts.h4,texts.h5].forEach(splitWords);
+
 var colX=[180,432,720,1008,1260];
 var pieceColors=['#0A0402','#120602','#160806','#0E0502','#1A0A04','#140804'];
 var allPieces=[];
-
-colX.forEach(function(cx, ci){
-  for(var i = 0; i < 6; i++){
-    var el = document.createElementNS('http://www.w3.org/2000/svg','rect');
-    var w = 22 + Math.random() * 28;
-    var h = 10 + Math.random() * 8;
-    var rot = (Math.random() - .5) * 40;
-    el.setAttribute('width', w);
-    el.setAttribute('height', h);
-    el.setAttribute('rx', 3);
-    el.setAttribute('fill', pieceColors[Math.floor(Math.random()*pieceColors.length)]);
-    el.setAttribute('opacity', 0);
-    // Gold sheen on some pieces
-    if(Math.random() > .55){
-      el.style.filter = 'drop-shadow(0 0 3px rgba(174,139,79,.35))';
-    }
+colX.forEach(function(cx,ci){
+  for(var i=0;i<6;i++){
+    var el=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    var w=22+Math.random()*28,h=10+Math.random()*8,rot=(Math.random()-.5)*40;
+    el.setAttribute('width',w);el.setAttribute('height',h);el.setAttribute('rx',3);
+    el.setAttribute('fill',pieceColors[Math.floor(Math.random()*pieceColors.length)]);
+    el.setAttribute('opacity',0);
+    if(Math.random()>.55)el.style.filter='drop-shadow(0 0 3px rgba(174,139,79,.4))';
     oudPieces.appendChild(el);
-    allPieces.push({
-      el: el,
-      col: ci,
-      // source: near base of tree (720, 700-800) with spread
-      sx: 720 + (Math.random() - .5) * 60,
-      sy: 700 + Math.random() * 80,
-      // target: in column, stacked
-      tx: cx + (Math.random() - .5) * 50,
-      ty: 770 - i * (h + 4),
-      rot: rot,
-      // delay: each column has slight offset, each piece within column also offset
-      delay: ci * 0.025 + i * 0.018 + Math.random() * 0.015,
-      w: w, h: h
-    });
+    allPieces.push({el:el,col:ci,sx:720+(Math.random()-.5)*60,sy:700+Math.random()*80,
+      tx:cx+(Math.random()-.5)*50,ty:770-i*(h+4),rot:rot,
+      delay:ci*0.025+i*0.018+Math.random()*0.015,w:w,h:h});
   }
 });
 
-// ── Smoothed progress state ──
-// raw = the actual scroll-derived 0..1 target
-// p   = the displayed, lerped value the whole scene reads from
-var raw = 0, p = 0;
-var sceneEl = document.getElementById('sticky-scene');
-
-// Continuous low-pass filtered chop oscillator (instead of a hard sine burst)
-var chopPhaseAccum = 0;
-
-function readRawProgress(){
-  var container = document.getElementById('scroll-container');
-  var scrollTop = window.scrollY - container.offsetTop;
-  var maxScroll = container.offsetHeight - window.innerHeight;
-  return clamp(scrollTop / maxScroll, 0, 1);
+var dustCanvas=document.getElementById('dust');
+var ctx=dustCanvas?dustCanvas.getContext('2d'):null;
+var particles=[];
+if(ctx){
+  for(var pi=0;pi<80;pi++){
+    particles.push({x:Math.random()*1440,y:400+Math.random()*500,
+      vx:(Math.random()-.5)*14,vy:-(6+Math.random()*16),
+      size:0.7+Math.random()*2,baseOpacity:0.06+Math.random()*0.25,
+      life:Math.random(),gold:Math.random()>.4});
+  }
+  function resizeDust(){dustCanvas.width=sceneEl.offsetWidth;dustCanvas.height=sceneEl.offsetHeight;}
+  resizeDust();
+  window.addEventListener('resize',resizeDust);
+}
+function renderParticles(dt,strength){
+  if(!ctx||strength<0.005)return;
+  ctx.clearRect(0,0,dustCanvas.width,dustCanvas.height);
+  var sx=dustCanvas.width/1440,sy=dustCanvas.height/900;
+  particles.forEach(function(pt){
+    pt.x+=pt.vx*dt;pt.y+=pt.vy*dt;pt.life+=dt*0.22;
+    if(pt.y<-20||pt.x<-30||pt.x>1470||pt.life>1){
+      pt.x=Math.random()*1440;pt.y=870+Math.random()*40;pt.life=0;
+      pt.vy=-(6+Math.random()*16);pt.vx=(Math.random()-.5)*14;
+    }
+    var a=pt.baseOpacity*Math.sin(pt.life*Math.PI)*strength;
+    if(a<0.004)return;
+    ctx.beginPath();ctx.arc(pt.x*sx,pt.y*sy,pt.size,0,Math.PI*2);
+    ctx.fillStyle=pt.gold?'rgba(212,188,134,'+a+')':'rgba(139,90,40,'+a+')';
+    ctx.fill();
+  });
 }
 
-// ── Render: everything driven purely by the smoothed `p` ──
-function render(p, velocity){
-  // ── NAV ──
-  nav.classList.toggle('opaque', p > .92);
+/* Spring: F = k*(target-pos) - d*vel
+   k=80, d=18 → slightly underdamped → luxurious overshoot-settle */
+var sPos=0,sVel=0,SK=80,SD=18;
+var chopT=0,swayT=0,p=0,lastT=performance.now();
 
-  // ── SCROLL CUE ──
-  var cueP = clamp(1 - p / .04, 0, 1);
-  scrollCue.style.opacity = cueP;
-  scrollCue.style.transform = 'translateX(-50%) translateY(' + (1-cueP)*10 + 'px)';
-
-  // A gentle parallax drift applied to the whole scene based on velocity —
-  // this single line is most of what makes scrolling feel "alive" rather
-  // than mechanically pinned to the scrollbar.
-  var driftY = clamp(velocity * -140, -14, 14);
-  sceneEl.style.transform = 'translateY(' + driftY + 'px) scale(' + (1 + Math.abs(velocity)*0.012) + ')';
-
-  // ── PHASE 1 (0 → 0.16): Opening ──
-  var p1  = easeOut(phase(p, 0, .16));
-  var p1o = easeIn(phase(p, .16, .24));
-  reveal(texts.l1, p1 * (1-p1o), 18);
-  reveal(texts.h1, p1 * (1-p1o), 34);
-
-  // ── PHASE 2 (0.09 → 0.30): Sky + tree emerge, with parallax depth ──
-  var skyP = easeInOut(phase(p, .09, .30));
-  sunGlowRect.style.opacity = skyP * .85;
-  sunCircle.style.opacity   = skyP * .18;
-  // Background forest drifts slower than foreground (parallax depth layer)
-  bgForest.style.opacity   = skyP * .85;
-  bgForest.style.transform = 'translateY(' + lerp(18, 0, skyP) + 'px) scale(' + lerp(1.04,1,skyP) + ')';
-  lightRays.style.opacity  = easeInOut(phase(p, .14, .32));
-  var groundP = easeOut(phase(p, .10, .26));
-  ground.style.opacity       = groundP;
-  groundShadow.style.opacity = groundP * .65;
-
-  var canopyP = easeOutBack(phase(p, .11, .30));
-  canopy.style.opacity     = clamp(canopyP, 0, 1);
-  canopy.style.filter      = 'blur(' + (1-clamp(canopyP,0,1)) * 6 + 'px)';
-  canopy.style.transform   = 'translateY(' + lerp(22, 0, clamp(canopyP,0,1)) + 'px) scale(' + lerp(.97,1,clamp(canopyP,0,1)) + ')';
-
-  var branchP = easeOut(phase(p, .15, .32));
-  branches.style.opacity   = branchP;
-  branches.style.transform = 'translateY(' + lerp(14,0,branchP) + 'px)';
-
-  var trunkP = easeOut(phase(p, .07, .22));
-  trunk.style.opacity = trunkP;
-
-  // Phase 2 text
-  var p2in  = easeOut(phase(p, .22, .33));
-  var p2out = easeIn(phase(p, .39, .47));
-  reveal(texts.l2, p2in * (1-p2out), 16);
-  reveal(texts.h2, p2in * (1-p2out), 28);
-
-  // ── PHASE 3 (0.34 → 0.62): Workers walk in, fluid chop ──
-  var workerP = easeOutBack(phase(p, .34, .52));
-  var workerOpacP = easeOut(phase(p, .34, .46));
-  workerLeft.style.opacity  = workerOpacP;
-  workerRight.style.opacity = workerOpacP;
-  var walkX = lerp(340, 0, clamp(workerP,0,1));
-  workerLeft.style.transform  = 'translateX(-' + walkX + 'px)';
-  workerRight.style.transform = 'translateX(' + walkX + 'px)';
-
-  // Continuous chop: a smooth, amplitude-enveloped sine rather than a
-  // sharply-clipped burst — the arm eases into and out of the motion.
-  var chopWindow = phase(p, .46, .66);
-  var chopEnvelope = Math.sin(chopWindow * Math.PI); // smooth in/out envelope, 0→1→0
-  var swing = Math.sin(p * 90) * 30 * chopEnvelope;
-  if(chopWindow > 0 && chopWindow < 1){
-    wlArm.style.transform = 'rotate(' + (-swing) + 'deg)';
-    wrArm.style.transform = 'rotate(' + swing + 'deg)';
-    var cutP = clamp(chopWindow * 2.2, 0, 1);
-    cutMark.style.opacity = cutP;
-    chips.style.opacity   = chopEnvelope * .9;
-    var shake = swing * 0.12;
-    treeGroup.style.transform = 'translateX(' + shake + 'px)';
-  } else {
-    wlArm.style.transform = 'rotate(0deg)';
-    wrArm.style.transform = 'rotate(0deg)';
-  }
-
-  // Phase 3 text
-  var p3in  = easeOut(phase(p, .42, .53));
-  var p3out = easeIn(phase(p, .60, .67));
-  var o3 = p3in * (1-p3out);
-  reveal(texts.l3, o3, 14);
-  reveal(texts.h3, o3, 24);
-  reveal(texts.s3, o3 * .9, 18);
-
-  // ── PHASE 4 (0.63 → 0.76): Tree falls, fluid arc with slight overshoot settle ──
-  var fallRaw = phase(p, .63, .75);
-  var fallP = fallRaw < 1 ? (1 - Math.pow(1-fallRaw, 2.2)) : 1; // strong ease-out fall
-  var fallAngle = fallP * -89;
-
-  var stepBack = easeOut(phase(p, .60, .70));
-  workerLeft.style.transform  = 'translateX(-' + lerp(0, 140, stepBack) + 'px)';
-  workerRight.style.transform = 'translateX(' + lerp(0, 140, stepBack) + 'px)';
-
-  if(fallP > 0.001){
-    treeGroup.style.transform = 'rotate(' + fallAngle + 'deg)';
-  }
-  // Motion blur during the fall — a hallmark of high-end scroll sites
-  var fallSpeed = fallRaw > 0 && fallRaw < 1 ? 1 : 0;
-  treeGroup.style.filter = fallSpeed ? 'blur(' + (Math.sin(fallRaw*Math.PI) * 2.2) + 'px)' : 'none';
-
-  canopy.style.opacity   = clamp(canopyP,0,1) * Math.max(0, 1 - fallP * 1.5);
-  branches.style.opacity = branchP * Math.max(0, 1 - fallP * 1.9);
-  var workerFadeP = easeIn(phase(p, .68, .77));
-  workerLeft.style.opacity  = workerOpacP * (1-workerFadeP);
-  workerRight.style.opacity = workerOpacP * (1-workerFadeP);
-
-  // Phase 4 text
-  var p4in  = easeOut(phase(p, .63, .70));
-  var p4out = easeIn(phase(p, .72, .79));
-  reveal(texts.h4, p4in * (1-p4out), 20);
-
-  resinGlow.style.opacity = fallP * .8;
-  ground.style.opacity = Math.min(1, groundP + fallP * .3);
-
-  // ── PHASE 5 (0.74 → 1.0): Oud pieces rain into 5 piles ──
-  var rainStart = .74, rainEnd = .93;
-  trunk.style.opacity = trunkP * Math.max(0, 1 - easeIn(phase(p, .75, .84)));
-
-  allPieces.forEach(function(piece){
-    var s = rainStart + piece.delay;
-    var e = Math.min(rainEnd, s + .15);
-    var raw2 = phase(p, s, e);
-    var pp = easeOut(raw2);
-
-    if(pp <= 0){ piece.el.setAttribute('opacity', 0); return; }
-
-    var cx = lerp(piece.sx, piece.tx, pp);
-    var cy = lerp(piece.sy, piece.ty, pp);
-    var arc = -64 * pp * (1 - pp); // smooth gravity arc
-    cy += arc;
-
-    // Slight settle wobble on landing (eases out like a soft bounce)
-    var settle = raw2 > .92 ? Math.sin((raw2-.92)/.08 * Math.PI) * 3 * (1-(raw2-.92)/.08) : 0;
-    cy += settle;
-
-    piece.el.setAttribute('x', cx - piece.w/2);
-    piece.el.setAttribute('y', cy - piece.h/2);
-    piece.el.setAttribute('opacity', Math.min(1, pp * 3));
-    piece.el.style.filter = raw2 < 1 ? 'blur(' + (Math.sin(raw2*Math.PI)*1.4) + 'px)' : 'none';
-    piece.el.setAttribute('transform',
-      'rotate(' + (piece.rot * (1 - pp*.6)) + ' ' + cx + ' ' + cy + ')');
-  });
-
-  pileBases.style.opacity = easeOut(phase(p, .83, .91));
-
-  // Phase 5 text
-  var p5in  = easeOut(phase(p, .81, .89));
-  var p5out = easeIn(phase(p, .97, 1.0));
-  var o5 = p5in * (1-p5out);
-  reveal(texts.l5, o5, 14);
-  reveal(texts.h5, o5, 24);
-  reveal(texts.s5, o5 * .86, 18);
-
-  pileEls.forEach(function(el, i){
-    if(!el) return;
-    var lp = easeOutBack(phase(p, .85 + i*.022, .93 + i*.022));
-    var lpClamped = clamp(lp, 0, 1);
-    el.style.opacity = lpClamped;
-    el.style.transform = 'translateY(' + lerp(22, 0, lpClamped) + 'px) scale(' + lerp(.9,1,lpClamped) + ')';
-  });
-
-  var ctaP = easeOut(phase(p, .93, .99));
-  stageCta.style.opacity = ctaP;
-  stageCta.style.transform = 'translateY(' + lerp(14,0,ctaP) + 'px)';
-  stageCta.classList.toggle('show', ctaP > .05);
+function readRaw(){
+  var c=document.getElementById('scroll-container');
+  return clamp((window.scrollY-c.offsetTop)/(c.offsetHeight-window.innerHeight),0,1);
 }
 
-// ── Continuous rAF loop with critically-damped lerp ──
-// This is the core fluidity trick: never snap `p` to `raw`. Instead chase
-// it every frame at a fixed rate, independent of how choppy the scroll
-// events themselves are (trackpad, mouse wheel notches, momentum scroll).
-var lastTime = performance.now();
+function render(p){
+  nav.classList.toggle('opaque',p>.92);
+  var cueP=clamp(1-p/.035,0,1);
+  scrollCue.style.opacity=cueP;
+  scrollCue.style.transform='translateX(-50%) translateY('+((1-cueP)*14)+'px)';
+
+  /* Phase 1: opening */
+  var o1=easeOut(phase(p,0,.18))*(1-easeIn(phase(p,.15,.27)));
+  reveal(texts.l1,o1,22,14);revealWords(texts.h1,o1,56);
+
+  /* Phase 2: tree emerges */
+  var skyP=easeInOut(phase(p,.09,.30));
+  sunGlowRect.style.opacity=skyP*.9;sunCircle.style.opacity=skyP*.2;
+  bgForest.style.opacity=skyP*.9;
+  bgForest.style.transform='translateY('+lerp(28,0,skyP)+'px) scale('+lerp(1.08,1,skyP)+')';
+  lightRays.style.opacity=easeInOut(phase(p,.14,.34));
+  var gP=easeOut(phase(p,.10,.28));
+  ground.style.opacity=gP;groundShadow.style.opacity=gP*.65;
+  var canP=clamp(easeOutBack(phase(p,.11,.32)),0,1);
+  canopy.style.opacity=canP;
+  canopy.style.filter='blur('+((1-canP)*10)+'px)';
+  canopy.style.transform='translateY('+lerp(36,0,canP)+'px) scale('+lerp(.95,1,canP)+')';
+  var brP=easeOut(phase(p,.15,.34));
+  branches.style.opacity=brP;
+  branches.style.transform='translateY('+lerp(20,0,brP)+'px)';
+  var trP=easeOut(phase(p,.07,.24));trunk.style.opacity=trP;
+  var sway=Math.sin(swayT*.72)*0.5*Math.min(1,trP*3);
+  var o2=easeOut(phase(p,.22,.35))*(1-easeIn(phase(p,.38,.48)));
+  reveal(texts.l2,o2,16,12);revealWords(texts.h2,o2,46);
+
+  /* Phase 3: workers + chop */
+  var wkP=clamp(easeOutBack(phase(p,.34,.54)),0,1);
+  var wkO=easeOut(phase(p,.34,.48));
+  workerLeft.style.opacity=wkO;workerRight.style.opacity=wkO;
+  workerLeft.style.transform='translateX(-'+lerp(400,0,wkP)+'px)';
+  workerRight.style.transform='translateX('+lerp(400,0,wkP)+'px)';
+  var cWin=phase(p,.46,.66),cEnv=Math.sin(cWin*Math.PI);
+  if(cWin>0&&cWin<1){
+    var swing=Math.sin(chopT*2.4*Math.PI*2)*36*cEnv;
+    wlArm.style.transform='rotate('+(-swing)+'deg)';
+    wrArm.style.transform='rotate('+(swing)+'deg)';
+    cutMark.style.opacity=clamp(cWin*2.5,0,1);chips.style.opacity=cEnv*.95;
+    treeGroup.style.transform='translateX('+(swing*.09)+'px) rotate('+sway+'deg)';
+    treeGroup.style.filter='none';
+  } else if(phase(p,.63,1)<0.001){
+    treeGroup.style.transform='rotate('+sway+'deg)';treeGroup.style.filter='none';
+    wlArm.style.transform='rotate(0deg)';wrArm.style.transform='rotate(0deg)';
+  }
+  var o3=easeOut(phase(p,.42,.55))*(1-easeIn(phase(p,.60,.68)));
+  reveal(texts.l3,o3,14,12);revealWords(texts.h3,o3,44);reveal(texts.s3,o3*.9,22,10);
+
+  /* Phase 4: tree falls */
+  var fR=phase(p,.63,.76),fP=fR<1?(1-Math.pow(1-fR,2.6)):1;
+  var sB=easeOut(phase(p,.60,.71));
+  workerLeft.style.transform='translateX(-'+lerp(0,180,sB)+'px)';
+  workerRight.style.transform='translateX('+lerp(0,180,sB)+'px)';
+  if(fP>0.001){
+    treeGroup.style.transform='rotate('+(fP*-89)+'deg)';
+    treeGroup.style.filter=(fR>0&&fR<1)?'blur('+(Math.sin(fR*Math.PI)*4.5)+'px)':'none';
+  }
+  canopy.style.opacity=canP*Math.max(0,1-fP*1.8);
+  branches.style.opacity=brP*Math.max(0,1-fP*2.2);
+  var wF=easeIn(phase(p,.68,.78));
+  workerLeft.style.opacity=wkO*(1-wF);workerRight.style.opacity=wkO*(1-wF);
+  revealWords(texts.h4,easeOut(phase(p,.63,.72))*(1-easeIn(phase(p,.73,.80))),42);
+  resinGlow.style.opacity=fP*.9;ground.style.opacity=Math.min(1,gP+fP*.34);
+
+  /* Phase 5: oud rain */
+  trunk.style.opacity=trP*Math.max(0,1-easeIn(phase(p,.75,.86)));
+  allPieces.forEach(function(pc){
+    var s=0.74+pc.delay,e=Math.min(0.94,s+.16),r2=phase(p,s,e),pp=easeOut(r2);
+    if(pp<=0){pc.el.setAttribute('opacity',0);return;}
+    var cx2=lerp(pc.sx,pc.tx,pp),cy2=lerp(pc.sy,pc.ty,pp)+(-78*pp*(1-pp));
+    if(r2>.9)cy2+=Math.sin((r2-.9)/.1*Math.PI)*5*(1-(r2-.9)/.1);
+    pc.el.setAttribute('x',cx2-pc.w/2);pc.el.setAttribute('y',cy2-pc.h/2);
+    pc.el.setAttribute('opacity',Math.min(1,pp*3));
+    pc.el.style.filter=r2<1?'blur('+(Math.sin(r2*Math.PI)*2.2)+'px)':'none';
+    pc.el.setAttribute('transform','rotate('+(pc.rot*(1-pp*.7))+' '+cx2+' '+cy2+')');
+  });
+  pileBases.style.opacity=easeOut(phase(p,.84,.92));
+  var o5=easeOut(phase(p,.82,.91))*(1-easeIn(phase(p,.97,1.0)));
+  reveal(texts.l5,o5,14,12);revealWords(texts.h5,o5,44);reveal(texts.s5,o5*.88,22,10);
+  pileEls.forEach(function(el,i){
+    if(!el)return;
+    var lpc=clamp(easeOutBack(phase(p,.85+i*.027,.95+i*.027)),0,1);
+    el.style.opacity=lpc;
+    el.style.transform='translateY('+lerp(30,0,lpc)+'px) scale('+lerp(.86,1,lpc)+')';
+  });
+  var ctaP=easeOut(phase(p,.94,1.0));
+  stageCta.style.opacity=ctaP;
+  stageCta.style.transform='translateY('+lerp(20,0,ctaP)+'px)';
+  stageCta.classList.toggle('show',ctaP>.05);
+  return clamp(phase(p,.44,.52)*3,0,1)*clamp(1-phase(p,.78,.90),0,1);
+}
+
 function tick(now){
-  var dt = Math.min(48, now - lastTime) / 1000; // seconds, clamped vs tab-switch spikes
-  lastTime = now;
-
-  raw = readRawProgress();
-  // Frame-rate independent exponential smoothing
-  var smoothing = 1 - Math.pow(0.0025, dt); // ~ settles in ~150ms
-  var prevP = p;
-  p += (raw - p) * smoothing;
-  var velocity = (p - prevP) / Math.max(dt, 0.0001) * 0.001; // small, bounded
-
-  render(p, velocity);
+  var dt=Math.min(50,now-lastT)/1000;lastT=now;chopT+=dt;swayT+=dt;
+  var raw=readRaw();
+  var acc=(raw-sPos)*SK-sVel*SD;
+  sVel+=acc*dt;sPos=clamp(sPos+sVel*dt,-0.04,1.04);p=clamp(sPos,0,1);
+  var ps=render(p);
+  renderParticles(dt,ps);
   requestAnimationFrame(tick);
 }
 requestAnimationFrame(tick);

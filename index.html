@@ -102,6 +102,11 @@ nav.opaque .nav-icon{color:var(--oud-800);}
 .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold-400),transparent);animation:sp 2s ease-in-out infinite;}
 @keyframes sp{0%,100%{opacity:.15}50%{opacity:.8}}
 
+/* Word-split spans for staggered reveals */
+.word{display:inline-block;will-change:transform,opacity,filter;}
+/* Dust canvas overlay */
+#dust{position:absolute;inset:0;pointer-events:none;z-index:4;width:100%;height:100%;}
+
 /* Pile labels */
 .pile-label{
   position:absolute;bottom:10%;
@@ -502,6 +507,9 @@ footer{background:var(--grad-resin);padding:70px 52px 34px;border-top:1px solid 
       <div class="pile-name">Standard</div>
     </div>
 
+    <!-- DUST CANVAS -->
+    <canvas id="dust"></canvas>
+
     <!-- SCROLL CUE -->
     <div id="scroll-cue">
       <span>Scroll</span>
@@ -630,84 +638,124 @@ footer{background:var(--grad-resin);padding:70px 52px 34px;border-top:1px solid 
 
 <script>
 /* ══════════════════════════════════════════
-   SCROLL-DRIVEN ANIMATION ENGINE — fluid build
-   Total scroll height: 700vh
-   Progress: 0 → 1 mapped to animation stages
-
-   The fluidity comes from decoupling animation from raw
-   scroll events: a continuous rAF loop lerps a "smoothed"
-   progress value toward the real scroll-derived target every
-   frame (critically-damped spring feel), and every reveal uses
-   scale + blur + translate together instead of plain opacity.
+   SHAMUM — Scroll Animation Engine v3
+   True spring physics · Canvas dust · Time-based oscillators
+   Word-by-word reveals · Ambient tree sway
 ══════════════════════════════════════════ */
 
-// ── Helpers ──
-function lerp(a, b, t){ return a + (b - a) * t; }
-function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
-function phase(p, s, e){ return clamp((p - s) / (e - s), 0, 1); }
-function easeOut(t){ return 1 - Math.pow(1 - t, 3); }
-function easeIn(t){ return t * t * t; }
-function easeInOut(t){ return t < .5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
-// Apple-style "out-back" — slight overshoot then settle, used sparingly
-function easeOutBack(t){ var c1=1.70158, c3=c1+1; return 1 + c3*Math.pow(t-1,3) + c1*Math.pow(t-1,2); }
-function set(el, v){ if(el) el.style.opacity = v; }
+// ── Math helpers ──
+function lerp(a,b,t){return a+(b-a)*t;}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+function phase(p,s,e){return clamp((p-s)/(e-s),0,1);}
+function easeOut(t){return 1-Math.pow(1-t,3);}
+function easeOut4(t){return 1-Math.pow(1-t,4);}
+function easeIn(t){return t*t*t;}
+function easeInOut(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+function easeOutBack(t){var c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2);}
 
-// Reveal a text/element with blur+scale+translate — the actual "Apple" feel
-function reveal(el, p, extraY){
-  if(!el) return;
-  var y = extraY === undefined ? 26 : extraY;
-  el.style.opacity = p;
-  el.style.filter = 'blur(' + (1 - p) * 9 + 'px)';
-  el.style.transform = 'translateY(' + lerp(y, 0, p) + 'px) scale(' + lerp(.965, 1, p) + ')';
+// ── Dramatic blur+scale+translate reveal ──
+function reveal(el,p,extraY,maxBlur){
+  if(!el)return;
+  var y=extraY===undefined?50:extraY;
+  var mb=maxBlur===undefined?18:maxBlur;
+  var op=clamp(p,0,1);
+  el.style.opacity=op;
+  el.style.filter='blur('+((1-op)*mb)+'px)';
+  el.style.transform='translateY('+lerp(y,0,op)+'px) scale('+lerp(.93,1,op)+')';
 }
 
-// ── Element refs ──
-var nav          = document.getElementById('nav');
-var skyRect      = document.getElementById('sky-rect');
-var sunGlowRect  = document.getElementById('sun-glow-rect');
-var sunCircle    = document.getElementById('sun-circle');
-var bgForest     = document.getElementById('bg-forest');
-var lightRays    = document.getElementById('light-rays');
-var ground       = document.getElementById('ground');
-var groundShadow = document.getElementById('ground-shadow');
-var treeGroup    = document.getElementById('tree-group');
-var canopy       = document.getElementById('canopy');
-var branches     = document.getElementById('branches');
-var trunk        = document.getElementById('trunk');
-var cutMark      = document.getElementById('cut-mark');
-var chips        = document.getElementById('chips');
-var workerLeft   = document.getElementById('worker-left');
-var workerRight  = document.getElementById('worker-right');
-var wlArm        = document.getElementById('wl-arm');
-var wrArm        = document.getElementById('wr-arm');
-var oudPieces    = document.getElementById('oud-pieces');
-var pileBases    = document.getElementById('pile-bases');
-var resinGlow    = document.getElementById('resin-glow-rect');
-var scrollCue    = document.getElementById('scroll-cue');
-var stageCta     = document.getElementById('stage-cta');
-var pileEls      = [1,2,3,4,5].map(function(i){ return document.getElementById('pile-'+i); });
+// ── Word-split for staggered cinematic reveals ──
+function splitWords(el){
+  if(!el)return;
+  var saved=[];
+  el.childNodes.forEach(function(n){saved.push(n.cloneNode(true));});
+  el.innerHTML='';
+  saved.forEach(function(n){
+    if(n.nodeType===3){
+      n.textContent.split(/(\s+)/).forEach(function(part){
+        if(/^\s+$/.test(part)){el.appendChild(document.createTextNode(part));}
+        else if(part){var s=document.createElement('span');s.className='word';s.textContent=part;el.appendChild(s);}
+      });
+    } else if(n.nodeName==='BR'){
+      el.appendChild(document.createElement('br'));
+    } else if(n.nodeName==='EM'){
+      var em=document.createElement('em');
+      n.childNodes.forEach(function(cn){
+        if(cn.nodeType===3){
+          cn.textContent.split(/(\s+)/).forEach(function(part){
+            if(/^\s+$/.test(part)){em.appendChild(document.createTextNode(part));}
+            else if(part){var s=document.createElement('span');s.className='word';s.textContent=part;em.appendChild(s);}
+          });
+        }
+      });
+      el.appendChild(em);
+    } else {
+      el.appendChild(n.cloneNode(true));
+    }
+  });
+}
 
-// Text elements
-var texts = {
-  l1: document.getElementById('t-label-1'),
-  h1: document.getElementById('t-headline-1'),
-  l2: document.getElementById('t-label-2'),
-  h2: document.getElementById('t-headline-2'),
-  l3: document.getElementById('t-label-3'),
-  h3: document.getElementById('t-headline-3'),
-  s3: document.getElementById('t-sub-3'),
-  h4: document.getElementById('t-headline-4'),
-  l5: document.getElementById('t-label-5'),
-  h5: document.getElementById('t-headline-5'),
-  s5: document.getElementById('t-sub-5')
+function revealWords(el,p,baseY){
+  if(!el)return;
+  var words=el.querySelectorAll('.word');
+  if(!words.length){reveal(el,p,baseY||50);return;}
+  el.style.opacity=(p>0.001)?1:0;
+  el.style.filter='none';
+  el.style.transform='none';
+  var n=words.length;
+  var stagger=Math.min(0.07,0.4/Math.max(n,1));
+  words.forEach(function(w,i){
+    var wp=clamp((p-i*stagger*0.9)/(1-(n-1)*stagger*0.5),0,1);
+    var wpe=easeOut4(clamp(wp,0,1));
+    var y=baseY===undefined?46:baseY;
+    w.style.opacity=wpe;
+    w.style.filter='blur('+((1-wpe)*14)+'px)';
+    w.style.transform='translateY('+lerp(y,0,wpe)+'px) scale('+lerp(.91,1,wpe)+')';
+  });
+}
+
+// ── DOM refs ──
+var nav         =document.getElementById('nav');
+var sunGlowRect =document.getElementById('sun-glow-rect');
+var sunCircle   =document.getElementById('sun-circle');
+var bgForest    =document.getElementById('bg-forest');
+var lightRays   =document.getElementById('light-rays');
+var ground      =document.getElementById('ground');
+var groundShadow=document.getElementById('ground-shadow');
+var treeGroup   =document.getElementById('tree-group');
+var canopy      =document.getElementById('canopy');
+var branches    =document.getElementById('branches');
+var trunk       =document.getElementById('trunk');
+var cutMark     =document.getElementById('cut-mark');
+var chips       =document.getElementById('chips');
+var workerLeft  =document.getElementById('worker-left');
+var workerRight =document.getElementById('worker-right');
+var wlArm       =document.getElementById('wl-arm');
+var wrArm       =document.getElementById('wr-arm');
+var oudPieces   =document.getElementById('oud-pieces');
+var pileBases   =document.getElementById('pile-bases');
+var resinGlow   =document.getElementById('resin-glow-rect');
+var scrollCue   =document.getElementById('scroll-cue');
+var stageCta    =document.getElementById('stage-cta');
+var sceneEl     =document.getElementById('sticky-scene');
+var pileEls     =[1,2,3,4,5].map(function(i){return document.getElementById('pile-'+i);});
+
+var texts={
+  l1:document.getElementById('t-label-1'), h1:document.getElementById('t-headline-1'),
+  l2:document.getElementById('t-label-2'), h2:document.getElementById('t-headline-2'),
+  l3:document.getElementById('t-label-3'), h3:document.getElementById('t-headline-3'),
+  s3:document.getElementById('t-sub-3'),
+  h4:document.getElementById('t-headline-4'),
+  l5:document.getElementById('t-label-5'), h5:document.getElementById('t-headline-5'),
+  s5:document.getElementById('t-sub-5')
 };
+[texts.h1,texts.h2,texts.h3,texts.h4,texts.h5].forEach(splitWords);
 
 // ── Generate oud pieces ──
 // 30 pieces: 6 per column
-// Columns at SVG x: 180, 432, 720, 1008, 1260
-var colX = [180, 432, 720, 1008, 1260];
-var pieceColors = ['#0A0402','#120602','#160806','#0E0502','#1A0A04','#140804'];
-var allPieces = [];
+var colX=[180,432,720,1008,1260];
+var pieceColors=['#0A0402','#120602','#160806','#0E0502','#1A0A04','#140804'];
+var allPieces=[];
 
 colX.forEach(function(cx, ci){
   for(var i = 0; i < 6; i++){

@@ -12,6 +12,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["serve", ".", "--port", "3001"],
       "port": 3001
+    },
+    {
+      "name": "James Highland Art",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-l", "3002", "C:/onedrive/NasserWeb"],
+      "port": 3002
     }
   ]
 }

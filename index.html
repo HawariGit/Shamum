@@ -357,6 +357,9 @@ body {
 .product-card:nth-child(1) { transition-delay: 0s; }
 .product-card:nth-child(2) { transition-delay: 0.15s; }
 .product-card:nth-child(3) { transition-delay: 0.3s; }
+.product-card:nth-child(4) { transition-delay: 0.1s; }
+.product-card:nth-child(5) { transition-delay: 0.25s; }
+.product-card:nth-child(6) { transition-delay: 0.4s; }
 
 .product-badge {
   position: absolute; top: 20px; left: 20px; z-index: 2;
@@ -370,12 +373,26 @@ body {
 .product-image-wrap {
   height: 420px; display: flex; align-items: center; justify-content: center;
   background: linear-gradient(155deg, #f9f5ed 0%, #ede5d3 100%); overflow: hidden;
+  padding: 36px;
 }
-.product-image-wrap svg {
-  height: 340px; width: auto;
+.product-image-wrap svg,
+.product-image-wrap img {
+  height: 340px; width: auto; max-width: 100%; object-fit: contain;
   transition: transform 0.65s cubic-bezier(0.16,1,0.3,1);
 }
-.product-card:hover .product-image-wrap svg { transform: translateY(-7px) scale(1.02); }
+.product-card:hover .product-image-wrap svg,
+.product-card:hover .product-image-wrap img { transform: translateY(-7px) scale(1.03); }
+.products-cta { text-align: center; margin-top: 64px; }
+.view-all-btn {
+  display: inline-block; padding: 16px 48px;
+  background: transparent; color: var(--ink);
+  border: 1px solid var(--gold-600);
+  font-family: 'Jost', sans-serif; font-size: 10px;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  text-decoration: none; cursor: none;
+  transition: background 0.45s cubic-bezier(0.16,1,0.3,1), color 0.45s;
+}
+.view-all-btn:hover { background: var(--ink); color: var(--gold-300); }
 .product-info { padding: 28px 28px 32px; }
 .product-name {
   font-family: 'Cormorant Garamond', serif; font-size: 24px;
@@ -756,8 +773,8 @@ body {
   </svg>
   <div class="brand-text-wrap" id="brand-parallax">
     <div class="gold-divider reveal"></div>
-    <h2 class="brand-headline reveal reveal-delay-1">From the heart of the Aquilaria.</h2>
-    <p class="brand-sub reveal reveal-delay-2">Aged in silence. Bottled by hand.</p>
+    <h2 class="brand-headline reveal reveal-delay-1" style="direction:rtl;">عبـقُ العطــر الأصيــل</h2>
+    <p class="brand-sub reveal reveal-delay-2">The essence of authentic fragrance — aged in silence, bottled by hand since 2010.</p>
     <div class="gold-divider reveal reveal-delay-3"></div>
   </div>
 </section>
@@ -788,9 +805,9 @@ body {
       <rect x="30" y="172" width="60" height="8" rx="4" fill="#2A1A0A"/>
     </svg>
     <div class="cat-content">
-      <span class="cat-arabic">البخاخات</span>
+      <span class="cat-arabic">البـخـاخـات</span>
       <span class="cat-english">Sprays</span>
-      <span class="cat-count">12 Expressions</span>
+      <span class="cat-count">The Signature Line</span>
       <span class="cat-explore">Explore →</span>
     </div>
   </div>
@@ -814,9 +831,9 @@ body {
       <polygon points="60,118 63.5,127 73,127 65.5,132.5 68,142 60,136.5 52,142 54.5,132.5 47,127 56.5,127" fill="rgba(194,163,104,0.55)"/>
     </svg>
     <div class="cat-content">
-      <span class="cat-arabic">إصدار محدود</span>
+      <span class="cat-arabic">إصـدار محـدود</span>
       <span class="cat-english">Limited Edition</span>
-      <span class="cat-count">4 Pieces Remaining</span>
+      <span class="cat-count">Rare Releases</span>
       <span class="cat-explore">Explore →</span>
     </div>
   </div>
@@ -845,9 +862,9 @@ body {
       <ellipse cx="60" cy="189" rx="30" ry="6" fill="#1A1008"/>
     </svg>
     <div class="cat-content">
-      <span class="cat-arabic">أدهان العود</span>
+      <span class="cat-arabic">أدهـان العـود</span>
       <span class="cat-english">Oud Oils</span>
-      <span class="cat-count">8 Varieties</span>
+      <span class="cat-count">Pure Dehn Al Oud</span>
       <span class="cat-explore">Explore →</span>
     </div>
   </div>
@@ -871,9 +888,9 @@ body {
       <circle cx="60" cy="178" r="1.2" fill="#AE8B4F" opacity="0.4"/>
     </svg>
     <div class="cat-content">
-      <span class="cat-arabic">أخشاب العود</span>
+      <span class="cat-arabic">أخشـاب العـود</span>
       <span class="cat-english">Oud Wood</span>
-      <span class="cat-count">6 Origins</span>
+      <span class="cat-count">Aged Agarwood</span>
       <span class="cat-explore">Explore →</span>
     </div>
   </div>
@@ -888,130 +905,90 @@ body {
   </div>
   <div class="products-grid">
 
-    <!-- Layl Oud -->
+    <!-- Mindali — flagship -->
     <div class="product-card">
-      <div class="product-badge new">New</div>
+      <div class="product-badge limited">Flagship</div>
       <div class="product-image-wrap" data-cursor-image>
-        <svg viewBox="0 0 140 380" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="b1a" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#1A1208"/><stop offset="50%" stop-color="#241810"/><stop offset="100%" stop-color="#120E07"/>
-            </linearGradient>
-            <radialGradient id="b1b" cx="30%" cy="25%" r="60%">
-              <stop offset="0%" stop-color="#3A2810" stop-opacity="1"/><stop offset="100%" stop-color="#0D0906" stop-opacity="0"/>
-            </radialGradient>
-          </defs>
-          <path d="M25 120 Q20 100 35 88 L55 78 L55 50 L85 50 L85 78 L105 88 Q120 100 115 120 L115 330 Q115 348 70 348 Q25 348 25 330Z" fill="url(#b1a)"/>
-          <path d="M25 120 Q20 100 35 88 L55 78 L55 50 L85 50 L85 78 L105 88 Q120 100 115 120 L115 330 Q115 348 70 348 Q25 348 25 330Z" fill="url(#b1b)"/>
-          <rect x="50" y="28" width="40" height="26" rx="6" fill="#1C1409"/>
-          <rect x="44" y="12" width="52" height="20" rx="5" fill="#AE8B4F"/>
-          <rect x="50" y="8"  width="40" height="10" rx="4" fill="#C2A368"/>
-          <rect x="50" y="54" width="40" height="3" fill="#C2A368" opacity="0.9"/>
-          <rect x="48" y="76" width="44" height="3" fill="#AE8B4F" opacity="0.8"/>
-          <rect x="32" y="155" width="76" height="100" fill="rgba(194,163,104,0.04)" rx="2"/>
-          <rect x="32" y="155" width="76" height="1" fill="#C2A368" opacity="0.6"/>
-          <rect x="32" y="255" width="76" height="1" fill="#C2A368" opacity="0.6"/>
-          <rect x="44" y="172" width="52" height="2" fill="#C2A368" opacity="0.4" rx="1"/>
-          <rect x="50" y="182" width="40" height="1.5" fill="#AE8B4F" opacity="0.3" rx="1"/>
-          <rect x="46" y="200" width="48" height="2" fill="#C2A368" opacity="0.35" rx="1"/>
-          <rect x="52" y="210" width="36" height="1.5" fill="#8C6E3A" opacity="0.25" rx="1"/>
-          <path d="M60,192 Q70,185 80,192 Q72,188 68,192Z" fill="none" stroke="#C2A368" stroke-width="0.8" opacity="0.5"/>
-          <path d="M32 140 Q36 122 42 140" stroke="rgba(194,163,104,0.14)" stroke-width="10" fill="none" stroke-linecap="round"/>
-          <ellipse cx="70" cy="345" rx="45" ry="10" fill="#120E07"/>
-        </svg>
+        <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/f03cc94a-5a46-466f-af3f-3dbf9abad89e-thumbnail-500x500.png" alt="Mindali — منــــــدلـي" loading="lazy">
       </div>
       <div class="product-info">
-        <span class="product-name">Layl Oud</span>
-        <span class="product-arabic">ليل العود</span>
-        <span class="product-price">£185</span>
+        <span class="product-name">Mindali</span>
+        <span class="product-arabic">منــــــدلـي</span>
+        <span class="product-price">240.000 ر.ع</span>
         <button class="add-to-bag magnetic">Add to Bag</button>
       </div>
     </div>
 
-    <!-- Hijazi Rose -->
+    <!-- Jawhar -->
     <div class="product-card">
       <div class="product-image-wrap" data-cursor-image>
-        <svg viewBox="0 0 140 380" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="b2a" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#3A1A1A"/><stop offset="50%" stop-color="#2A1218"/><stop offset="100%" stop-color="#180A10"/>
-            </linearGradient>
-            <radialGradient id="b2b" cx="35%" cy="20%" r="55%">
-              <stop offset="0%" stop-color="#5A2428" stop-opacity="0.8"/><stop offset="100%" stop-color="#180A10" stop-opacity="0"/>
-            </radialGradient>
-          </defs>
-          <path d="M18 130 Q15 105 38 92 L58 82 L58 46 L82 46 L82 82 L102 92 Q125 105 122 130 L122 318 Q122 345 70 345 Q18 345 18 318Z" fill="url(#b2a)"/>
-          <path d="M18 130 Q15 105 38 92 L58 82 L58 46 L82 46 L82 82 L102 92 Q125 105 122 130 L122 318 Q122 345 70 345 Q18 345 18 318Z" fill="url(#b2b)"/>
-          <rect x="52" y="24" width="36" height="26" rx="5" fill="#28121A"/>
-          <rect x="44" y="10" width="52" height="18" rx="5" fill="#C2747A"/>
-          <rect x="50" y="6"  width="40" height="10" rx="4" fill="#D4948A"/>
-          <rect x="52" y="50" width="36" height="3" fill="#C2A368" opacity="0.9"/>
-          <rect x="50" y="80" width="40" height="3" fill="#AE8B4F" opacity="0.7"/>
-          <rect x="26" y="150" width="88" height="115" fill="rgba(194,163,104,0.04)" rx="2"/>
-          <rect x="26" y="150" width="88" height="1"   fill="#C2A368" opacity="0.5"/>
-          <rect x="26" y="265" width="88" height="1"   fill="#C2A368" opacity="0.5"/>
-          <circle cx="70" cy="195" r="18" fill="none" stroke="#C2A368" stroke-width="0.6" opacity="0.3"/>
-          <circle cx="70" cy="195" r="9"  fill="none" stroke="#C2A368" stroke-width="0.5" opacity="0.18"/>
-          <circle cx="70" cy="195" r="3"  fill="rgba(194,163,104,0.22)"/>
-          <line x1="70" y1="176" x2="70" y2="214" stroke="#C2A368" stroke-width="0.4" opacity="0.18"/>
-          <line x1="51" y1="195" x2="89" y2="195" stroke="#C2A368" stroke-width="0.4" opacity="0.18"/>
-          <rect x="38" y="224" width="64" height="2"   fill="#C2A368" opacity="0.34" rx="1"/>
-          <rect x="46" y="234" width="48" height="1.5" fill="#AE8B4F" opacity="0.24" rx="1"/>
-          <rect x="42" y="250" width="56" height="1"   fill="#8C6E3A" opacity="0.2"  rx="1"/>
-          <path d="M22 158 Q26 138 32 158" stroke="rgba(194,163,104,0.1)" stroke-width="12" fill="none" stroke-linecap="round"/>
-          <ellipse cx="70" cy="342" rx="52" ry="11" fill="#180A10"/>
-        </svg>
+        <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/b60f179d-ccb0-4e01-957f-de7d33ab4d38-thumbnail-500x500-70.jpg" alt="Jawhar — جوهــــر" loading="lazy">
       </div>
       <div class="product-info">
-        <span class="product-name">Hijazi Rose</span>
-        <span class="product-arabic">الوردة الحجازية</span>
-        <span class="product-price">£210</span>
+        <span class="product-name">Jawhar</span>
+        <span class="product-arabic">جوهــــر</span>
+        <span class="product-price">150.000 ر.ع</span>
         <button class="add-to-bag magnetic">Add to Bag</button>
       </div>
     </div>
 
-    <!-- Mukhallat Royale -->
+    <!-- Razi II -->
     <div class="product-card">
-      <div class="product-badge limited">Limited</div>
       <div class="product-image-wrap" data-cursor-image>
-        <svg viewBox="0 0 140 380" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="b3a" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#1A1A28"/><stop offset="50%" stop-color="#12121E"/><stop offset="100%" stop-color="#0A0A14"/>
-            </linearGradient>
-            <radialGradient id="b3b" cx="30%" cy="22%" r="55%">
-              <stop offset="0%" stop-color="#282838" stop-opacity="0.9"/><stop offset="100%" stop-color="#0A0A14" stop-opacity="0"/>
-            </radialGradient>
-          </defs>
-          <path d="M30 118 Q28 98 44 86 L60 75 L60 42 L80 42 L80 75 L96 86 Q112 98 110 118 L110 340 Q110 352 70 352 Q30 352 30 340Z" fill="url(#b3a)"/>
-          <path d="M30 118 Q28 98 44 86 L60 75 L60 42 L80 42 L80 75 L96 86 Q112 98 110 118 L110 340 Q110 352 70 352 Q30 352 30 340Z" fill="url(#b3b)"/>
-          <rect x="54" y="20" width="32" height="26" rx="5" fill="#10101C"/>
-          <rect x="46" y="8"  width="48" height="16" rx="4" fill="#AE8B4F"/>
-          <rect x="50" y="4"  width="40" height="10" rx="5" fill="#C2A368"/>
-          <polygon points="58,4 62,0 66,4 70,0 74,4 78,0 82,4" fill="#D4BC86" opacity="0.85"/>
-          <rect x="54" y="46" width="32" height="2.5" fill="#C2A368" opacity="0.9"/>
-          <rect x="52" y="73" width="36" height="2.5" fill="#AE8B4F" opacity="0.8"/>
-          <rect x="36" y="140" width="68" height="130" fill="rgba(194,163,104,0.04)" rx="2"/>
-          <rect x="36" y="140" width="68" height="1.5" fill="#C2A368" opacity="0.6"/>
-          <rect x="36" y="270" width="68" height="1.5" fill="#C2A368" opacity="0.6"/>
-          <rect x="39" y="143" width="62" height="125" fill="none" stroke="#C2A368" stroke-width="0.4" opacity="0.2" rx="1"/>
-          <polygon points="70,162 73.5,172 84,172 75.5,178 78.5,188 70,182 61.5,188 64.5,178 56,172 66.5,172" fill="none" stroke="#C2A368" stroke-width="0.9" opacity="0.4"/>
-          <rect x="46" y="198" width="48" height="2"   fill="#C2A368" opacity="0.38" rx="1"/>
-          <rect x="50" y="208" width="40" height="1.5" fill="#AE8B4F" opacity="0.28" rx="1"/>
-          <rect x="46" y="222" width="48" height="2"   fill="#C2A368" opacity="0.3"  rx="1"/>
-          <rect x="52" y="232" width="36" height="1.5" fill="#8C6E3A" opacity="0.22" rx="1"/>
-          <path d="M34 162 Q38 140 44 162" stroke="rgba(194,163,104,0.1)" stroke-width="10" fill="none" stroke-linecap="round"/>
-          <ellipse cx="70" cy="349" rx="40" ry="9" fill="#0A0A14"/>
-        </svg>
+        <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/d8f738a5-6aa5-44a8-9625-f991ea15b0ea-thumbnail-500x500.png" alt="Razi II — رازي الثـانـي" loading="lazy">
       </div>
       <div class="product-info">
-        <span class="product-name">Mukhallat Royale</span>
-        <span class="product-arabic">مخلط رويال</span>
-        <span class="product-price">£165</span>
+        <span class="product-name">Razi II</span>
+        <span class="product-arabic">رازي الثـانـي</span>
+        <span class="product-price">125.000 ر.ع</span>
         <button class="add-to-bag magnetic">Add to Bag</button>
       </div>
     </div>
 
+    <!-- Mindal -->
+    <div class="product-card">
+      <div class="product-badge new">Featured</div>
+      <div class="product-image-wrap" data-cursor-image>
+        <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/eab2ee11-f490-468b-8fee-84eb748e4dd5-thumbnail-500x500-70.jpg" alt="Mindal — منــدل" loading="lazy">
+      </div>
+      <div class="product-info">
+        <span class="product-name">Mindal</span>
+        <span class="product-arabic">منــدل</span>
+        <span class="product-price">107.000 ر.ع</span>
+        <button class="add-to-bag magnetic">Add to Bag</button>
+      </div>
+    </div>
+
+    <!-- Zahiya -->
+    <div class="product-card">
+      <div class="product-image-wrap" data-cursor-image>
+        <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/8bdb0cc5-740e-4d60-ab75-d296c761fe70-thumbnail-500x500-70.jpg" alt="Zahiya — زاهيـــة" loading="lazy">
+      </div>
+      <div class="product-info">
+        <span class="product-name">Zahiya</span>
+        <span class="product-arabic">زاهيـــة</span>
+        <span class="product-price">68.000 ر.ع</span>
+        <button class="add-to-bag magnetic">Add to Bag</button>
+      </div>
+    </div>
+
+    <!-- Surra -->
+    <div class="product-card">
+      <div class="product-badge limited">Limited Stock</div>
+      <div class="product-image-wrap" data-cursor-image>
+        <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/baa708cd-6d63-47cb-b334-b1e7d1379c14-thumbnail-500x500-70.jpg" alt="Surra — سُــــرى" loading="lazy">
+      </div>
+      <div class="product-info">
+        <span class="product-name">Surra</span>
+        <span class="product-arabic">سُــــرى</span>
+        <span class="product-price">61.000 ر.ع</span>
+        <button class="add-to-bag magnetic">Add to Bag</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="products-cta reveal">
+    <a class="view-all-btn magnetic" href="https://shamum.com/products" target="_blank" rel="noopener">View All 15 Expressions · جميع المنتجات</a>
   </div>
 </section>
 
@@ -1032,9 +1009,9 @@ body {
 <section id="trust">
   <div class="trust-grid">
     <div class="trust-item reveal">
-      <span class="trust-number"><span class="counter" data-target="14">0</span></span>
-      <span class="trust-label">Years of Craft</span>
-      <span class="trust-arabic">شحن مجاني</span>
+      <span class="trust-number"><span class="counter" data-target="16">0</span></span>
+      <span class="trust-label">Years of Heritage</span>
+      <span class="trust-arabic">منذ ٢٠١٠</span>
     </div>
     <div class="trust-item reveal reveal-delay-1">
       <span class="trust-number"><span class="counter" data-target="100">0</span><span class="trust-unit">%</span></span>
@@ -1042,14 +1019,14 @@ body {
       <span class="trust-arabic">عود طبيعي ١٠٠٪</span>
     </div>
     <div class="trust-item reveal reveal-delay-2">
-      <span class="trust-number"><span class="counter" data-target="30">0</span></span>
-      <span class="trust-label">Day Free Returns</span>
-      <span class="trust-arabic">إرجاع مجاني</span>
+      <span class="trust-number"><span class="counter" data-target="15">0</span></span>
+      <span class="trust-label">Signature Expressions</span>
+      <span class="trust-arabic">إصدارات مميزة</span>
     </div>
     <div class="trust-item reveal reveal-delay-3">
-      <span class="trust-number"><span class="counter" data-target="8000">0</span><span class="trust-unit">+</span></span>
-      <span class="trust-label">House Members</span>
-      <span class="trust-arabic">برنامج الولاء</span>
+      <span class="trust-number"><span class="counter" data-target="4">0</span></span>
+      <span class="trust-label">Collections</span>
+      <span class="trust-arabic">مجموعات أصيلة</span>
     </div>
   </div>
 </section>
@@ -1069,7 +1046,7 @@ body {
   <div class="footer-grid">
     <div>
       <span class="footer-brand-name">SHAMUM</span>
-      <p class="footer-desc">Maison d'Oud — شاموم · ماسون عود<br><br>We do not chase the season.<br>We wait for the wood.<br><br>Rooted in the ancient forests of Southeast Asia. Refined in the heart of Arabia.</p>
+      <p class="footer-desc">شاموم — عبـقُ العطــر الأصيــل<br><br>We do not chase the season.<br>We wait for the wood.<br><br>A house of oud and fragrance, preserving heritage craftsmanship since 2010.<br><br>Instagram: @shamumofficial<br>+968 9854 0321</p>
       <form class="footer-email-form" onsubmit="return false;">
         <input class="footer-email-input" type="email" placeholder="Your email address">
         <button class="footer-email-submit" type="submit">Subscribe</button>
@@ -1110,14 +1087,13 @@ body {
     </div>
   </div>
   <div class="footer-bottom">
-    <span class="footer-copy">© 2026 SHAMUM — Maison d'Oud. All rights reserved.</span>
-    <span class="footer-cities">Riyadh · Dubai · London</span>
+    <span class="footer-copy">© 2026 SHAMUM · شاموم — Est. 2010 · الرقم الضريبي 1100190829</span>
+    <span class="footer-cities">Sultanate of Oman · سلطنة عمان</span>
     <div class="footer-payments">
+      <div class="payment-icon">APPLE PAY</div>
       <div class="payment-icon">VISA</div>
       <div class="payment-icon">MC</div>
       <div class="payment-icon">AMEX</div>
-      <div class="payment-icon">MADA</div>
-      <div class="payment-icon">STC</div>
     </div>
   </div>
 </footer>

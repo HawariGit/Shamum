@@ -148,28 +148,26 @@ body {
   position: sticky; top: 0; height: 100vh; width: 100%;
   overflow: hidden; background: #080503;
 }
+#hero-sticky::after {
+  content: ''; position: absolute; inset: 0; z-index: 5; pointer-events: none;
+  background: radial-gradient(ellipse 115% 90% at 50% 44%, transparent 52%, rgba(4,2,0,0.62) 100%);
+}
 #hero-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
 #hero-svg-scene { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
 
-.hero-text-layer {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center; padding: 0 24px;
-  pointer-events: none; z-index: 10;
+.footer-logo {
+  width: 120px; display: block; margin-bottom: 10px; margin-left: -14px;
+  filter: invert(1) sepia(1) saturate(2.4) hue-rotate(-14deg) brightness(1.06);
+  mix-blend-mode: screen;
 }
-#hero-line1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(52px, 7.5vw, 108px);
-  font-weight: 300; color: var(--sand-50);
-  line-height: 1.05; letter-spacing: -0.01em;
-}
-#hero-line2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(52px, 7.5vw, 108px);
-  font-weight: 300; color: var(--gold-300);
-  line-height: 1.05; letter-spacing: -0.01em;
-  margin-top: 8px; font-style: italic;
+#hero-logo {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%) scale(0.92);
+  width: clamp(250px, 30vw, 390px);
+  opacity: 0; z-index: 10; pointer-events: none;
+  filter: invert(1) sepia(1) saturate(2.4) hue-rotate(-14deg) brightness(1.06);
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
 }
 .word {
   display: inline-block; opacity: 0;
@@ -708,6 +706,27 @@ body {
           <stop offset="50%" stop-color="#100904"/>
           <stop offset="100%" stop-color="#0A0502"/>
         </linearGradient>
+        <radialGradient id="folA" cx="38%" cy="26%" r="80%">
+          <stop offset="0%" stop-color="#33591F"/><stop offset="55%" stop-color="#1E3A14"/><stop offset="100%" stop-color="#0D1B08"/>
+        </radialGradient>
+        <radialGradient id="folB" cx="40%" cy="28%" r="80%">
+          <stop offset="0%" stop-color="#264A18"/><stop offset="60%" stop-color="#15300E"/><stop offset="100%" stop-color="#0A1606"/>
+        </radialGradient>
+        <radialGradient id="folC" cx="45%" cy="35%" r="85%">
+          <stop offset="0%" stop-color="#1A3410"/><stop offset="60%" stop-color="#0F2008"/><stop offset="100%" stop-color="#060E03"/>
+        </radialGradient>
+        <linearGradient id="chunkA" x1="0" y1="0" x2="0.3" y2="1">
+          <stop offset="0%" stop-color="#5A3A1C"/><stop offset="40%" stop-color="#2E1A0A"/><stop offset="100%" stop-color="#100702"/>
+        </linearGradient>
+        <linearGradient id="chunkB" x1="0" y1="0" x2="0.2" y2="1">
+          <stop offset="0%" stop-color="#48301A"/><stop offset="45%" stop-color="#241206"/><stop offset="100%" stop-color="#0A0401"/>
+        </linearGradient>
+        <linearGradient id="chunkC" x1="0" y1="0" x2="0.4" y2="1">
+          <stop offset="0%" stop-color="#6A4826"/><stop offset="45%" stop-color="#38220E"/><stop offset="100%" stop-color="#130A03"/>
+        </linearGradient>
+        <radialGradient id="emberCore" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFE090"/><stop offset="45%" stop-color="#F09030"/><stop offset="100%" stop-color="#F09030" stop-opacity="0"/>
+        </radialGradient>
         <filter id="forestBlur"><feGaussianBlur stdDeviation="18"/></filter>
         <filter id="dropGlow" x="-120%" y="-120%" width="340%" height="340%">
           <feDropShadow dx="0" dy="0" stdDeviation="9" flood-color="#E0A030" flood-opacity="0.55"/>
@@ -745,18 +764,28 @@ body {
           </g>
           <rect id="f1-ground" x="0" y="800" width="1440" height="100" fill="url(#groundGrad)" opacity="0"/>
           <g id="f1-tree" opacity="0">
-            <rect x="693" y="558" width="54" height="264" rx="4" fill="url(#trunkGrad)"/>
-            <line x1="720" y1="598" x2="558" y2="498" stroke="#271604" stroke-width="15" stroke-linecap="round"/>
-            <line x1="558" y1="498" x2="474" y2="428" stroke="#271604" stroke-width="9"  stroke-linecap="round"/>
-            <line x1="720" y1="578" x2="618" y2="508" stroke="#271604" stroke-width="10" stroke-linecap="round"/>
-            <line x1="720" y1="598" x2="882" y2="498" stroke="#271604" stroke-width="15" stroke-linecap="round"/>
-            <line x1="882" y1="498" x2="962" y2="428" stroke="#271604" stroke-width="9"  stroke-linecap="round"/>
-            <line x1="720" y1="578" x2="822" y2="508" stroke="#271604" stroke-width="10" stroke-linecap="round"/>
-            <ellipse cx="720" cy="480" rx="244" ry="132" fill="#0D1E0A"/>
-            <ellipse cx="700" cy="428" rx="194" ry="112" fill="#112410"/>
-            <ellipse cx="730" cy="378" rx="158" ry="96"  fill="#142A12"/>
-            <ellipse cx="720" cy="338" rx="122" ry="80"  fill="#193014"/>
-            <ellipse cx="718" cy="292" rx="76"  ry="56"  fill="#1C3416"/>
+            <ellipse cx="720" cy="824" rx="160" ry="15" fill="#030200" opacity="0.75"/>
+            <path d="M704 822 C690 806 672 800 652 810 L648 822 Z" fill="#1E1206"/>
+            <path d="M736 822 C750 806 768 800 788 810 L792 822 Z" fill="#1E1206"/>
+            <path d="M700 822 C702 780 698 700 704 640 C706 610 700 580 708 558 L732 558 C740 582 734 612 736 642 C742 702 738 782 740 822 Z" fill="url(#trunkGrad)"/>
+            <path d="M712 810 C710 750 714 680 712 604" stroke="#150A02" stroke-width="2.2" fill="none" opacity="0.65"/>
+            <path d="M724 812 C727 748 722 690 726 612" stroke="#150A02" stroke-width="1.5" fill="none" opacity="0.5"/>
+            <path d="M718 790 C716 760 720 730 717 700" stroke="#0E0701" stroke-width="1.2" fill="none" opacity="0.5"/>
+            <path d="M735 800 C737 740 733 700 736 632" stroke="#C2A368" stroke-width="1.8" fill="none" opacity="0.16"/>
+            <path d="M718 600 C660 560 600 530 560 500 C520 470 490 445 474 428" stroke="#271604" stroke-width="13" fill="none" stroke-linecap="round"/>
+            <path d="M716 578 C670 550 640 528 618 508" stroke="#271604" stroke-width="9" fill="none" stroke-linecap="round"/>
+            <path d="M722 600 C780 560 840 530 880 500 C920 470 948 445 962 428" stroke="#271604" stroke-width="13" fill="none" stroke-linecap="round"/>
+            <path d="M724 578 C770 550 800 528 822 508" stroke="#271604" stroke-width="9" fill="none" stroke-linecap="round"/>
+            <ellipse cx="720" cy="470" rx="252" ry="130" fill="url(#folC)"/>
+            <ellipse cx="560" cy="468" rx="112" ry="82"  fill="url(#folC)"/>
+            <ellipse cx="880" cy="478" rx="112" ry="82"  fill="url(#folC)"/>
+            <ellipse cx="600" cy="418" rx="152" ry="100" fill="url(#folB)"/>
+            <ellipse cx="850" cy="428" rx="152" ry="100" fill="url(#folB)"/>
+            <ellipse cx="700" cy="378" rx="172" ry="106" fill="url(#folB)"/>
+            <ellipse cx="760" cy="330" rx="132" ry="86"  fill="url(#folA)"/>
+            <ellipse cx="650" cy="322" rx="102" ry="72"  fill="url(#folA)"/>
+            <ellipse cx="720" cy="280" rx="86"  ry="60"  fill="url(#folA)"/>
+            <ellipse cx="720" cy="522" rx="212" ry="58" fill="#050B03" opacity="0.55"/>
           </g>
           <!-- Roots reaching down into floor 2 -->
           <g id="f1-roots" opacity="0">
@@ -779,31 +808,67 @@ body {
           </g>
           <!-- ledge -->
           <g id="f2-ledge" opacity="0">
-            <ellipse cx="720" cy="1596" rx="290" ry="20" fill="#000000" opacity="0.55"/>
+            <ellipse cx="720" cy="1600" rx="300" ry="22" fill="#000000" opacity="0.6"/>
             <rect x="430" y="1566" width="580" height="12" rx="6" fill="#2A1B0E"/>
+            <rect x="430" y="1566" width="580" height="3" rx="1.5" fill="#4A3018" opacity="0.8"/>
             <rect x="438" y="1576" width="564" height="28" rx="6" fill="#1A0F08"/>
           </g>
-          <!-- wood chunks -->
+          <!-- wood chunks: gradient-lit agarwood with resin veins -->
           <g id="f2-wood" opacity="0">
-            <path d="M560 1540 L600 1528 L616 1556 L570 1566 Z" fill="#100701"/>
-            <path d="M600 1520 L648 1504 L688 1516 L692 1552 L640 1566 L604 1550 Z" fill="#241206"/>
-            <path d="M700 1498 L752 1490 L788 1508 L780 1544 L724 1552 L698 1528 Z" fill="#1A0C04"/>
-            <path d="M790 1520 L836 1510 L868 1526 L860 1556 L806 1562 L788 1544 Z" fill="#2E1A0A"/>
-            <path d="M666 1430 L694 1420 L706 1502 L672 1510 Z" fill="#180A02"/>
-            <path d="M742 1416 L770 1428 L760 1506 L734 1500 Z" fill="#221004"/>
-            <path d="M636 1560 L674 1554 L690 1572 L648 1580 Z" fill="#130802"/>
-            <path d="M756 1558 L798 1552 L812 1572 L768 1580 Z" fill="#1D0E05"/>
-            <path d="M612 1532 Q640 1524 680 1534" stroke="#AE8B4F" stroke-width="1" fill="none" opacity="0.5"/>
-            <path d="M708 1516 Q740 1508 776 1522" stroke="#AE8B4F" stroke-width="1" fill="none" opacity="0.45"/>
-            <path d="M676 1440 L698 1494" stroke="#C2A368" stroke-width="0.8" fill="none" opacity="0.5"/>
-            <path d="M752 1436 L746 1498" stroke="#C2A368" stroke-width="0.8" fill="none" opacity="0.45"/>
-            <path d="M816 1526 Q838 1520 856 1532" stroke="#8C6E3A" stroke-width="0.9" fill="none" opacity="0.4"/>
+            <ellipse cx="646" cy="1564" rx="58" ry="8" fill="#000000" opacity="0.55"/>
+            <ellipse cx="744" cy="1552" rx="52" ry="8" fill="#000000" opacity="0.5"/>
+            <ellipse cx="826" cy="1558" rx="46" ry="7" fill="#000000" opacity="0.5"/>
+            <ellipse cx="688" cy="1510" rx="26" ry="5" fill="#000000" opacity="0.45"/>
+            <ellipse cx="752" cy="1506" rx="24" ry="5" fill="#000000" opacity="0.45"/>
+            <path d="M566 1546 C574 1532 596 1524 614 1530 C628 1524 640 1532 638 1544 C640 1556 624 1564 604 1564 C584 1566 570 1558 566 1546 Z" fill="url(#chunkB)"/>
+            <path d="M596 1518 C604 1500 632 1490 658 1496 C682 1488 698 1502 700 1520 C706 1538 692 1554 668 1560 C640 1568 610 1560 600 1546 C592 1536 590 1528 596 1518 Z" fill="url(#chunkA)"/>
+            <path d="M600 1520 C620 1508 660 1504 698 1520 L692 1530 C660 1518 624 1520 606 1530 Z" fill="#D4AA6E" opacity="0.10"/>
+            <path d="M612 1536 C632 1528 662 1528 684 1536" stroke="#140A03" stroke-width="1.6" fill="none" opacity="0.7"/>
+            <path d="M616 1546 C638 1538 664 1538 686 1546" stroke="#140A03" stroke-width="1.2" fill="none" opacity="0.55"/>
+            <path d="M624 1512 C640 1520 668 1522 688 1516" stroke="#C89040" stroke-width="0.9" fill="none" opacity="0.5"/>
+            <path d="M648 1500 L654 1512" stroke="#F0C070" stroke-width="1.6" fill="none" opacity="0.25" stroke-linecap="round"/>
+            <path d="M700 1494 C712 1480 742 1474 766 1482 C786 1478 798 1492 796 1508 C800 1526 784 1540 758 1544 C732 1550 708 1540 702 1526 C696 1514 694 1504 700 1494 Z" fill="url(#chunkC)"/>
+            <path d="M704 1498 C728 1486 764 1484 794 1502 L788 1512 C760 1498 728 1498 710 1508 Z" fill="#E0B878" opacity="0.12"/>
+            <path d="M714 1516 C736 1508 762 1508 786 1518" stroke="#180C04" stroke-width="1.6" fill="none" opacity="0.7"/>
+            <path d="M718 1528 C740 1520 764 1520 784 1528" stroke="#180C04" stroke-width="1.1" fill="none" opacity="0.5"/>
+            <path d="M726 1490 C740 1498 764 1500 782 1494" stroke="#D89838" stroke-width="1" fill="none" opacity="0.55"/>
+            <path d="M748 1478 L754 1490" stroke="#FFD080" stroke-width="1.4" fill="none" opacity="0.3" stroke-linecap="round"/>
+            <path d="M792 1522 C800 1508 822 1500 844 1506 C862 1502 872 1514 870 1528 C874 1542 860 1554 838 1556 C816 1560 798 1552 792 1540 C788 1532 788 1528 792 1522 Z" fill="url(#chunkB)"/>
+            <path d="M796 1524 C816 1512 848 1510 868 1526 L862 1534 C840 1522 814 1524 802 1532 Z" fill="#D4AA6E" opacity="0.09"/>
+            <path d="M804 1538 C822 1532 846 1532 864 1540" stroke="#120902" stroke-width="1.4" fill="none" opacity="0.65"/>
+            <path d="M818 1504 C830 1510 848 1512 860 1508" stroke="#C89040" stroke-width="0.8" fill="none" opacity="0.45"/>
+            <path d="M668 1424 C676 1418 690 1416 696 1422 C702 1446 706 1478 704 1502 C696 1510 680 1512 672 1506 C668 1478 664 1448 668 1424 Z" fill="url(#chunkB)"/>
+            <path d="M694 1424 C698 1448 702 1478 701 1500" stroke="#C2A368" stroke-width="1.4" fill="none" opacity="0.35"/>
+            <path d="M676 1430 C674 1452 672 1480 674 1500" stroke="#100801" stroke-width="2" fill="none" opacity="0.6"/>
+            <path d="M684 1420 L686 1434" stroke="#F0C070" stroke-width="1.2" opacity="0.3" stroke-linecap="round"/>
+            <path d="M744 1412 C754 1408 768 1412 772 1420 C776 1446 772 1476 766 1500 C758 1506 746 1504 740 1498 C736 1470 738 1438 744 1412 Z" fill="url(#chunkC)"/>
+            <path d="M768 1420 C770 1444 768 1474 763 1496" stroke="#D8A850" stroke-width="1.3" fill="none" opacity="0.4"/>
+            <path d="M748 1418 C744 1444 744 1474 746 1496" stroke="#140A02" stroke-width="2" fill="none" opacity="0.6"/>
+            <path d="M640 1560 C650 1554 668 1552 680 1558 C688 1564 686 1572 676 1576 C662 1580 646 1578 640 1572 C636 1568 636 1564 640 1560 Z" fill="url(#chunkB)"/>
+            <path d="M756 1556 C768 1550 788 1550 800 1556 C808 1562 806 1570 794 1574 C780 1578 764 1576 756 1570 C752 1566 752 1560 756 1556 Z" fill="url(#chunkA)"/>
+            <path d="M760 1558 C776 1552 792 1552 798 1558" stroke="#E0B060" stroke-width="0.8" fill="none" opacity="0.4"/>
+          </g>
+          <!-- glowing embers -->
+          <g id="f2-embers">
+            <circle cx="664" cy="1502" r="5"   fill="url(#emberCore)" opacity="0"/>
+            <circle cx="748" cy="1494" r="4"   fill="url(#emberCore)" opacity="0"/>
+            <circle cx="704" cy="1524" r="3.4" fill="url(#emberCore)" opacity="0"/>
+            <circle cx="780" cy="1520" r="4.4" fill="url(#emberCore)" opacity="0"/>
+            <circle cx="646" cy="1540" r="3"   fill="url(#emberCore)" opacity="0"/>
+            <circle cx="820" cy="1534" r="3.6" fill="url(#emberCore)" opacity="0"/>
           </g>
         </g>
 
         <!-- FLOOR 3 · THE OIL (y 1800–2700) -->
         <g id="f3">
           <polygon id="f3-spot" points="640,1800 800,1800 900,2420 540,2420" fill="url(#spotGrad)" opacity="0"/>
+          <g id="f3-motes">
+            <circle cx="700" cy="2050" r="1.6" fill="#D4BC86" opacity="0"/>
+            <circle cx="745" cy="2130" r="1.2" fill="#C2A368" opacity="0"/>
+            <circle cx="680" cy="2220" r="1.4" fill="#D4BC86" opacity="0"/>
+            <circle cx="762" cy="1980" r="1.1" fill="#C2A368" opacity="0"/>
+            <circle cx="722" cy="2290" r="1.3" fill="#D4BC86" opacity="0"/>
+          </g>
           <!-- vial -->
           <g id="f3-vial">
             <ellipse cx="720" cy="2408" rx="110" ry="14" fill="#000000" opacity="0.5"/>
@@ -815,6 +880,8 @@ body {
             <rect x="692" y="2072" width="56" height="60" rx="9" fill="url(#goldCap)"/>
             <ellipse cx="720" cy="2072" rx="24" ry="7" fill="#D4BC86"/>
             <path d="M678 2226 Q672 2290 680 2368" stroke="rgba(255,255,255,0.16)" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <path d="M762 2230 Q766 2300 762 2360" stroke="rgba(255,255,255,0.28)" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <ellipse cx="720" cy="2182" rx="52" ry="6" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.2"/>
           </g>
           <!-- splash -->
           <circle id="f3-ring"  cx="720" cy="2378" r="16" stroke="#E0A030" stroke-width="2.5" fill="none" opacity="0"/>
@@ -845,22 +912,35 @@ body {
             <text x="720" y="3186" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#D4BC86" letter-spacing="4">SHAMUM</text>
             <text x="720" y="3212" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#C2A368">شاموم</text>
             <rect x="717" y="3222" width="6" height="6" fill="#AE8B4F" transform="rotate(45 720 3225)"/>
+            <path d="M786 3062 C786 3160 786 3250 786 3314" stroke="rgba(212,188,134,0.4)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
             <rect x="700" y="2922" width="40" height="12" fill="#6E5328"/>
             <rect x="694" y="2848" width="52" height="80" rx="7" fill="url(#goldCap)" stroke="#8C6E3A" stroke-width="0.8"/>
+          </g>
+          <path d="M648 3352 C648 3396 660 3420 720 3420 C780 3420 792 3396 792 3352 L792 3346 Q792 3360 720 3360 Q648 3360 648 3346 Z" fill="rgba(194,163,104,0.05)"/>
+          <g id="f4-sparks">
+            <rect x="636" y="2986" width="5" height="5" fill="#F5D68A" opacity="0"/>
+            <rect x="806" y="3062" width="4" height="4" fill="#D4BC86" opacity="0"/>
+            <rect x="618" y="3186" width="4" height="4" fill="#F5D68A" opacity="0"/>
+            <rect x="814" y="3252" width="5" height="5" fill="#D4BC86" opacity="0"/>
           </g>
           <g id="f4-mist"></g>
         </g>
 
       </g><!-- /world -->
+
+      <!-- Near parallax layer: sweeps past 1.3x faster during camera pans -->
+      <g id="world-near">
+        <ellipse cx="150"  cy="1060" rx="380" ry="140" fill="#040200" opacity="0.9"  filter="url(#forestBlur)"/>
+        <ellipse cx="1300" cy="1000" rx="350" ry="120" fill="#050301" opacity="0.85" filter="url(#forestBlur)"/>
+        <ellipse cx="220"  cy="2040" rx="390" ry="130" fill="#040200" opacity="0.9"  filter="url(#forestBlur)"/>
+        <ellipse cx="1260" cy="2090" rx="350" ry="135" fill="#050301" opacity="0.85" filter="url(#forestBlur)"/>
+        <ellipse cx="180"  cy="2960" rx="370" ry="125" fill="#040200" opacity="0.9"  filter="url(#forestBlur)"/>
+        <ellipse cx="1280" cy="2905" rx="340" ry="118" fill="#050301" opacity="0.85" filter="url(#forestBlur)"/>
+      </g>
     </svg>
 
-    <!-- Hero text overlays -->
-    <div class="hero-text-layer">
-      <div id="hero-title">
-        <div id="hero-line1"></div>
-        <div id="hero-line2"></div>
-      </div>
-    </div>
+    <!-- Opening logo -->
+    <img id="hero-logo" alt="SHAMUM — شاموم" src="https://media.zid.store/cdn-cgi/image/h=400,q=100/https://media.zid.store/12495741-3239-4f1c-9472-c6b513a5dbf4/fe373d03-c6d4-4576-93bb-3226e3b71179.jpg">
 
     <div class="ch-text" id="ht1">
       <span class="ch-eyebrow">Chapter I · The Tree</span>
@@ -1171,6 +1251,7 @@ body {
 <footer id="footer">
   <div class="footer-grid">
     <div>
+      <img class="footer-logo" alt="SHAMUM logo" src="https://media.zid.store/cdn-cgi/image/h=260,q=90/https://media.zid.store/12495741-3239-4f1c-9472-c6b513a5dbf4/fe373d03-c6d4-4576-93bb-3226e3b71179.jpg">
       <span class="footer-brand-name">SHAMUM</span>
       <p class="footer-desc">شاموم — عبـقُ العطــر الأصيــل<br><br>We do not chase the season.<br>We wait for the wood.<br><br>A house of oud and fragrance, preserving heritage craftsmanship since 2010.<br><br>Instagram: @shamumofficial<br>+968 9854 0321</p>
       <form class="footer-email-form" onsubmit="return false;">
@@ -1270,16 +1351,8 @@ window.addEventListener('scroll', function(){
 var heroSpacer = document.getElementById('hero-spacer');
 var sPos = 0, sVel = 0, lastT = null;
 
-// Opening title words
-var line1El = document.getElementById('hero-line1');
-var line2El = document.getElementById('hero-line2');
-function mkWords(txt){
-  return txt.split(' ').map(function(w){ return '<span class="word">'+w+'</span>'; }).join(' ');
-}
-line1El.innerHTML = mkWords('We do not chase the season.');
-line2El.innerHTML = mkWords('We wait for the wood.');
-var words1 = Array.from(line1El.querySelectorAll('.word'));
-var words2 = Array.from(line2El.querySelectorAll('.word'));
+// Opening logo
+var heroLogo = document.getElementById('hero-logo');
 
 function $s(id){ return document.getElementById(id); }
 var sc = {
@@ -1292,10 +1365,13 @@ var sc = {
   ring: $s('f3-ring'), ring2: $s('f3-ring2'), splash: $s('f3-splash'),
   drop: $s('drop-g'),
   f4glow: $s('f4-glow'), f4mist: $s('f4-mist'),
-  title: $s('hero-title'),
   ht1: $s('ht1'), ht2: $s('ht2'), ht3: $s('ht3'), ht4: $s('ht4'),
   cta: $s('hero-cta')
 };
+sc.worldNear = $s('world-near');
+var emberEls = Array.prototype.slice.call(document.querySelectorAll('#f2-embers circle'));
+var moteEls  = Array.prototype.slice.call(document.querySelectorAll('#f3-motes circle'));
+var sparkEls = Array.prototype.slice.call(document.querySelectorAll('#f4-sparks rect'));
 
 // Mist particles (SVG circles, positioned per-frame)
 var mistEls = [];
@@ -1357,12 +1433,6 @@ function eOut(t){ return 1-Math.pow(1-t,3); }
 function eIn(t){ return t*t; }
 function sstep(t){ t = clamp(t,0,1); return t*t*(3-2*t); }
 function seg(p,a,b){ return clamp((p-a)/(b-a),0,1); }
-function wset(arr,t,off){
-  arr.forEach(function(w,i){
-    var th = (off||0)+i*0.085;
-    if(t>=th) w.classList.add('visible'); else w.classList.remove('visible');
-  });
-}
 // Chapter text reveal: opacity + blur + rise, fully scrub-reversible
 function chReveal(el, tin, tout){
   var t = eOut(tin) * (1 - eIn(tout));
@@ -1388,12 +1458,11 @@ function heroLoop(ts){
   sVel += acc*dt; sPos += sVel*dt;
   var p = clamp(sPos, 0, 1);
 
-  /* ── Opening title: 0–0.08 in, 0.10–0.15 out ── */
-  var t0in  = seg(p, 0, 0.08);
-  var t0out = seg(p, 0.10, 0.15);
-  sc.title.style.opacity = 1 - eIn(t0out);
-  wset(words1, eOut(t0in)*1.4);
-  wset(words2, eOut(t0in)*1.4 - 0.25);
+  /* ── Opening logo: fade + settle in, dissolve out ── */
+  var t0in  = seg(p, 0, 0.07);
+  var t0out = seg(p, 0.095, 0.15);
+  heroLogo.style.opacity = eOut(t0in) * (1 - eIn(t0out));
+  heroLogo.style.transform = 'translate(-50%,-50%) scale(' + (0.92 + 0.08*eOut(t0in)) + ')';
 
   /* ── Floor 1 reveal: 0.08–0.24 ── */
   var f1r = seg(p, 0.08, 0.24);
@@ -1417,7 +1486,11 @@ function heroLoop(ts){
   else if (p < 0.80) camY = 1800;
   else if (p < 0.92) camY = 1800 + sstep(seg(p, 0.80, 0.92)) * 900;
   else               camY = 2700;
+  // Subtle breathing so the frame is never frozen, even at rest
+  camY += Math.sin(heroTime*0.35) * 2.5;
   sc.world.setAttribute('transform', 'translate(0,' + (-camY) + ')');
+  // Near layer moves 1.3x faster — parallax depth during pans
+  sc.worldNear.setAttribute('transform', 'translate(0,' + (-camY*1.3) + ')');
 
   /* ── Floor 2: wood + smoke (visible 0.30–0.60) ── */
   var f2r = seg(p, 0.34, 0.44);
@@ -1432,6 +1505,11 @@ function heroLoop(ts){
     var sway = Math.sin(heroTime*0.55 + i*2.1) * (8 + i*4);
     s.setAttribute('transform', 'translate(' + sway + ',0)');
     op(s, smokeEnv * [0.5, 0.36, 0.3][i]);
+  });
+  // Embers breathe like live coals
+  emberEls.forEach(function(e2, i){
+    var pulse = 0.5 + 0.5*Math.sin(heroTime*2.6 + i*1.7);
+    e2.setAttribute('opacity', woodT * (0.25 + 0.55*pulse));
   });
 
   /* ── The drop ── */
@@ -1458,6 +1536,13 @@ function heroLoop(ts){
 
   /* ── Floor 3: spotlight, splash, liquid rise ── */
   op(sc.f3spot, eOut(seg(p, 0.60, 0.70)) * 0.85);
+  var spotEnv = eOut(seg(p, 0.60, 0.72));
+  moteEls.forEach(function(m2, i){
+    var cyc = (heroTime*0.045 + i*0.2) % 1;
+    m2.setAttribute('cy', 1960 + cyc*380);
+    m2.setAttribute('cx', 700 + Math.sin(heroTime*0.6 + i*1.9)*26 + i*9);
+    m2.setAttribute('opacity', spotEnv * 0.5 * Math.sin(cyc*Math.PI));
+  });
   var spT = seg(p, 0.675, 0.735);
   if (spT > 0 && spT < 1) {
     sc.ring.setAttribute('r', 16 + spT*74);
@@ -1493,6 +1578,12 @@ function heroLoop(ts){
   } else {
     mistEls.forEach(function(m){ m.setAttribute('opacity', 0); });
   }
+  var f4env = eOut(seg(p, 0.88, 0.97));
+  sparkEls.forEach(function(s2, i){
+    var tw = Math.max(0, Math.sin(heroTime*2.2 + i*2.4));
+    s2.setAttribute('opacity', f4env * tw*tw*tw * 0.85);
+    s2.setAttribute('transform', 'rotate(45 ' + (+s2.getAttribute('x')+2.5) + ' ' + (+s2.getAttribute('y')+2.5) + ')');
+  });
 
   /* ── Chapter text ── */
   chReveal(sc.ht1, seg(p, 0.13, 0.18), seg(p, 0.235, 0.275));

@@ -667,6 +667,7 @@ body {
         <clipPath id="vialClip">
           <path d="M672 2232 Q672 2214 692 2212 L748 2212 Q768 2214 768 2232 L766 2378 Q766 2394 720 2394 Q674 2394 674 2378 Z"/>
         </clipPath>
+        <clipPath id="bottleClip"><rect x="658" y="3080" width="124" height="246" rx="6"/></clipPath>
       </defs>
 
       <!-- ═══ WORLD — camera pans through 4 floors ═══ -->
@@ -871,6 +872,7 @@ body {
             <path d="M648 3320 L648 3062 Q648 3014 690 3000 L706 2995 L706 2932 L734 2932 L734 2995 L750 3000 Q792 3014 792 3062 L792 3320 Q792 3338 720 3338 Q648 3338 648 3320 Z"
                   fill="url(#bottleGrad)" stroke="rgba(194,163,104,0.5)" stroke-width="1.2"/>
             <rect x="658" y="3080" width="124" height="246" rx="6" fill="#2A1206" opacity="0.8"/>
+            <rect id="f4-shimmer" x="648" y="3080" width="34" height="246" fill="rgba(255,240,200,0.10)" clip-path="url(#bottleClip)"/>
             <path d="M668 3060 L668 3310" stroke="rgba(255,255,255,0.06)" stroke-width="10" stroke-linecap="round"/>
             <rect x="664" y="3150" width="112" height="86" fill="rgba(194,163,104,0.06)" stroke="rgba(194,163,104,0.55)" stroke-width="1"/>
             <text x="720" y="3186" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#D4BC86" letter-spacing="4">SHAMUM</text>
@@ -878,7 +880,7 @@ body {
             <rect x="717" y="3222" width="6" height="6" fill="#AE8B4F" transform="rotate(45 720 3225)"/>
             <path d="M786 3062 C786 3160 786 3250 786 3314" stroke="rgba(212,188,134,0.4)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
             <rect x="700" y="2922" width="40" height="12" fill="#6E5328"/>
-            <rect x="694" y="2848" width="52" height="80" rx="7" fill="url(#goldCap)" stroke="#8C6E3A" stroke-width="0.8"/>
+            <rect id="f4-cap" x="694" y="2848" width="52" height="80" rx="7" fill="url(#goldCap)" stroke="#8C6E3A" stroke-width="0.8"/>
           </g>
           <path d="M648 3352 C648 3396 660 3420 720 3420 C780 3420 792 3396 792 3352 L792 3346 Q792 3360 720 3360 Q648 3360 648 3346 Z" fill="rgba(194,163,104,0.05)"/>
           <g id="f4-sparks">
@@ -1223,6 +1225,21 @@ var emberEls = Array.prototype.slice.call(document.querySelectorAll('#f2-embers 
 var moteEls  = Array.prototype.slice.call(document.querySelectorAll('#f3-motes circle'));
 var sparkEls = Array.prototype.slice.call(document.querySelectorAll('#f4-sparks rect'));
 var bokehEls = Array.prototype.slice.call(document.querySelectorAll('#f4-bokeh circle'));
+sc.f4cap     = $s('f4-cap');
+sc.f4shimmer = $s('f4-shimmer');
+
+// Spray burst particles: cone up-right from the atomizer, scroll-scrubbed
+var burst = [];
+for (var bi = 0; bi < 64; bi++) {
+  var bAng = (-58 + (fakeRand(bi*7) - 0.5) * 48) * Math.PI / 180;
+  burst.push({
+    ang: bAng,
+    spd: 130 + fakeRand(bi*13) * 300,
+    rr:  fakeRand(bi*29),
+    sz:  1.2 + fakeRand(bi*31) * 2.6,
+    lite: fakeRand(bi*17) > 0.55
+  });
+}
 
 // Mist particles (SVG circles, positioned per-frame)
 var mistEls = [];
@@ -1257,22 +1274,54 @@ for (var pi2 = 0; pi2 < 60; pi2++) {
     size: 0.5 + fakeRand(pi2*31)*1.8
   });
 }
-function drawDust(alpha){
+function drawFx(alpha, burstT, nozzleX, nozzleY){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  if(alpha <= 0.004) return;
-  for(var k=0;k<pts.length;k++){
-    var p = pts[k];
-    p.x += p.vx; p.y += p.vy; p.life += 0.008;
-    if(p.life > p.maxLife){
-      p.x = 300 + Math.random()*840; p.y = 480 + Math.random()*320;
-      p.life = 0; p.vy = -0.25-Math.random()*0.7; p.vx=(Math.random()-0.5)*0.4;
+  var sx = canvas.width/1440, sy = canvas.height/900;
+
+  // ambient dust motes
+  if(alpha > 0.004){
+    for(var k=0;k<pts.length;k++){
+      var p = pts[k];
+      p.x += p.vx; p.y += p.vy; p.life += 0.008;
+      if(p.life > p.maxLife){
+        p.x = 300 + Math.random()*840; p.y = 480 + Math.random()*320;
+        p.life = 0; p.vy = -0.25-Math.random()*0.7; p.vx=(Math.random()-0.5)*0.4;
+      }
+      var lr = p.life/p.maxLife;
+      var a  = alpha * Math.sin(lr*Math.PI) * 0.42;
+      ctx.beginPath();
+      ctx.arc(p.x*sx, p.y*sy, p.size, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(194,163,104,'+a+')';
+      ctx.fill();
     }
-    var lr = p.life/p.maxLife;
-    var a  = alpha * Math.sin(lr*Math.PI) * 0.42;
-    ctx.beginPath();
-    ctx.arc(p.x/1440*canvas.width, p.y/900*canvas.height, p.size, 0, Math.PI*2);
-    ctx.fillStyle = 'rgba(194,163,104,'+a+')';
-    ctx.fill();
+  }
+
+  // spray burst: slow-motion cone of mist, scrubbed by scroll
+  if(burstT > 0 && burstT < 1){
+    // light flash at the nozzle as the burst begins
+    var flashA = Math.sin(Math.min(burstT*2.2,1)*Math.PI) * 0.20;
+    if(flashA > 0.005){
+      var fr = (60 + burstT*280) * sx;
+      var grad = ctx.createRadialGradient(nozzleX*sx, nozzleY*sy, 0, nozzleX*sx, nozzleY*sy, fr);
+      grad.addColorStop(0, 'rgba(245,214,138,'+flashA+')');
+      grad.addColorStop(1, 'rgba(245,214,138,0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+    }
+    var reach = 1-Math.pow(1-burstT,3);
+    for(var b=0;b<burst.length;b++){
+      var bp = burst[b];
+      var d  = reach * bp.spd;
+      var bx = nozzleX + Math.cos(bp.ang)*d + Math.sin(heroTime*2.4 + b)*9*burstT;
+      var by = nozzleY + Math.sin(bp.ang)*d - burstT*burstT*34;
+      var bsz = bp.sz * (0.6 + d*0.009);
+      var ba = Math.sin(Math.min(burstT*3,1)*Math.PI/2) * Math.pow(1-burstT,1.2) * (0.22 + bp.rr*0.4);
+      if(ba < 0.006) continue;
+      ctx.beginPath();
+      ctx.arc(bx*sx, by*sy, bsz, 0, Math.PI*2);
+      ctx.fillStyle = bp.lite ? 'rgba(245,214,138,'+ba+')' : 'rgba(194,163,104,'+ba+')';
+      ctx.fill();
+    }
   }
 }
 
@@ -1426,14 +1475,22 @@ function heroLoop(ts){
   op(sc.f4halo, f4in * 0.85);
   var hs = 0.88 + 0.12*f4in;
   sc.f4halo.setAttribute('transform', 'translate(720 3140) scale(' + hs + ') translate(-720 -3140)');
+  // Bottle rises out of the dark and settles
   var bs = 0.94 + 0.06*f4in;
-  sc.f4bottle.setAttribute('transform', 'translate(720 3140) scale(' + bs + ') translate(-720 -3140)');
+  sc.f4bottle.setAttribute('transform', 'translate(720 3140) scale(' + bs + ') translate(-720 -3140) translate(0,' + ((1-f4in)*80) + ')');
+  // Atomizer press: cap dips as the spray fires
+  var pressT = seg(p, 0.925, 0.94);
+  var capDy = Math.sin(pressT*Math.PI)*9;
+  sc.f4cap.setAttribute('transform', 'translate(0,' + capDy + ')');
+  // Light band sweeping through the liquid
+  sc.f4shimmer.setAttribute('x', 646 + ((heroTime*55) % 172));
+  op(sc.f4shimmer, f4in * 0.9);
   bokehEls.forEach(function(b2, i){
     b2.setAttribute('cy', [3000,3080,3260,3290][i] + Math.sin(heroTime*0.4 + i*1.6)*24);
     b2.setAttribute('cx', [520,930,560,900][i] + Math.cos(heroTime*0.3 + i*2.2)*18);
     b2.setAttribute('opacity', f4in * [0.07,0.09,0.06,0.08][i]);
   });
-  var mistEnv = eOut(seg(p, 0.93, 0.99));
+  var mistEnv = eOut(seg(p, 0.96, 1));
   if (mistEnv > 0.01) {
     mistEls.forEach(function(m, i){
       var tm = (heroTime*0.55 + i*0.0833) % 1;
@@ -1458,13 +1515,14 @@ function heroLoop(ts){
   chReveal(sc.ht1, seg(p, 0.13, 0.18), seg(p, 0.235, 0.275));
   chReveal(sc.ht2, seg(p, 0.41, 0.465), seg(p, 0.535, 0.575));
   chReveal(sc.ht3, seg(p, 0.705, 0.76), seg(p, 0.785, 0.825));
-  chReveal(sc.ht4, seg(p, 0.925, 0.975), 0);
-  sc.ht4.style.pointerEvents = p > 0.94 ? 'auto' : 'none';
+  chReveal(sc.ht4, seg(p, 0.955, 0.99), 0);
+  sc.ht4.style.pointerEvents = p > 0.965 ? 'auto' : 'none';
 
   /* ── Ambient dust: bukhoor floor + perfume floor ── */
   var da = Math.sin(seg(p, 0.30, 0.60)*Math.PI)*0.5
          + eOut(seg(p, 0.86, 1))*0.25;
-  drawDust(Math.min(da, 0.7));
+  var burstT = seg(p, 0.935, 0.98);
+  drawFx(Math.min(da, 0.7), burstT, 720, 2846 - camY - capDy);
 }
 requestAnimationFrame(heroLoop);
 window.__heroTick = heroLoop; // manual frame stepping for automated tests

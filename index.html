@@ -27,51 +27,7 @@ body {
   font-family: 'Jost', sans-serif;
   background: var(--ink);
   color: var(--sand-50);
-  cursor: none;
   overflow-x: hidden;
-}
-
-/* ─── CURSOR ─── */
-#cursor-dot {
-  position: fixed; width: 8px; height: 8px;
-  background: var(--gold-400); border-radius: 50%;
-  pointer-events: none; z-index: 9999;
-  transform: translate(-4px,-4px);
-  transition: opacity 0.2s;
-  mix-blend-mode: difference;
-  will-change: transform;
-}
-#cursor-ring {
-  position: fixed; width: 40px; height: 40px;
-  border: 1px solid var(--gold-400); border-radius: 50%;
-  pointer-events: none; z-index: 9998;
-  transform: translate(-20px,-20px);
-  transition: width 0.35s cubic-bezier(0.16,1,0.3,1),
-              height 0.35s cubic-bezier(0.16,1,0.3,1),
-              background 0.3s, border-color 0.3s, opacity 0.2s;
-  display: flex; align-items: center; justify-content: center;
-  will-change: transform;
-}
-#cursor-ring.hover-link {
-  width: 80px; height: 80px;
-  background: rgba(194,163,104,0.15);
-  border-color: var(--gold-300);
-}
-#cursor-dot.hidden { opacity: 0; }
-#cursor-ring.hover-image {
-  width: 120px; height: 120px;
-  border-color: var(--gold-300);
-  background: rgba(194,163,104,0.06);
-}
-#cursor-ring .ring-label {
-  font-family: 'Jost', sans-serif; font-size: 9px;
-  letter-spacing: 0.18em; color: var(--gold-300);
-  opacity: 0; transition: opacity 0.2s; text-transform: uppercase;
-}
-#cursor-ring.hover-image .ring-label { opacity: 1; }
-@media (max-width: 768px) {
-  #cursor-dot, #cursor-ring { display: none; }
-  body { cursor: auto; }
 }
 
 /* ─── NAV ─── */
@@ -129,11 +85,11 @@ body {
 .nav-shop-text {
   font-family: 'Jost', sans-serif; font-size: 11px;
   letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--sand-100); cursor: none; transition: color 0.3s;
+  color: var(--sand-100); cursor: pointer; transition: color 0.3s;
 }
 .nav-shop-text:hover { color: var(--gold-400); }
 .nav-icon {
-  color: var(--sand-100); cursor: none; transition: color 0.3s;
+  color: var(--sand-100); cursor: pointer; transition: color 0.3s;
   width: 18px; height: 18px;
 }
 .nav-icon:hover { color: var(--gold-400); }
@@ -217,7 +173,7 @@ body {
   letter-spacing: 0.24em; text-transform: uppercase;
   background: linear-gradient(135deg, #D4BC86 0%, #AE8B4F 48%, #8C6E3A 100%);
   color: var(--ink); padding: 16px 38px; text-decoration: none;
-  border: 1px solid var(--gold-600); cursor: none;
+  border: 1px solid var(--gold-600); cursor: pointer;
   transition: filter 0.35s;
 }
 .btn-hero-gold:hover { filter: brightness(1.1); }
@@ -226,7 +182,7 @@ body {
   letter-spacing: 0.24em; text-transform: uppercase;
   background: transparent; color: var(--sand-100);
   padding: 16px 38px; text-decoration: none;
-  border: 1px solid rgba(212,188,134,0.35); cursor: none;
+  border: 1px solid rgba(212,188,134,0.35); cursor: pointer;
   transition: background 0.35s, border-color 0.35s;
 }
 .btn-hero-ghost:hover { background: rgba(212,188,134,0.08); border-color: rgba(212,188,134,0.6); }
@@ -308,7 +264,7 @@ body {
 }
 .product-card {
   background: #fff; border-radius: 2px; overflow: hidden;
-  position: relative; cursor: none;
+  position: relative; cursor: pointer;
   box-shadow: 0 2px 20px rgba(21,16,10,0.06);
   opacity: 0; transform: translateY(60px);
   transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
@@ -355,7 +311,7 @@ body {
   border: 1px solid var(--gold-600);
   font-family: 'Jost', sans-serif; font-size: 10px;
   letter-spacing: 0.28em; text-transform: uppercase;
-  text-decoration: none; cursor: none;
+  text-decoration: none; cursor: pointer;
   transition: background 0.45s cubic-bezier(0.16,1,0.3,1), color 0.45s;
 }
 .view-all-btn:hover { background: var(--ink); color: var(--gold-300); }
@@ -377,7 +333,7 @@ body {
   background: var(--ink); color: var(--gold-300); border: none;
   font-family: 'Jost', sans-serif; font-size: 10px;
   letter-spacing: 0.25em; text-transform: uppercase;
-  cursor: none; position: relative; overflow: hidden;
+  cursor: pointer; position: relative; overflow: hidden;
   transition: background 0.4s, color 0.4s, transform 0.3s cubic-bezier(0.16,1,0.3,1);
 }
 .add-to-bag:hover { background: var(--oud-800); }
@@ -462,7 +418,7 @@ body {
   display: inline-block; margin-top: 36px; padding: 16px 52px;
   background: var(--ink); color: var(--gold-300); border: none;
   font-family: 'Jost', sans-serif; font-size: 11px;
-  letter-spacing: 0.25em; text-transform: uppercase; cursor: none;
+  letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer;
   position: relative; overflow: hidden;
   transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
               box-shadow 0.35s cubic-bezier(0.16,1,0.3,1);
@@ -545,8 +501,6 @@ body {
 <body>
 
 <!-- CURSOR -->
-<div id="cursor-ring"><span class="ring-label">VIEW</span></div>
-<div id="cursor-dot"></div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -699,6 +653,8 @@ body {
             <path d="M704 822 C690 806 672 800 652 810 L648 822 Z" fill="#1E1206"/>
             <path d="M736 822 C750 806 768 800 788 810 L792 822 Z" fill="#1E1206"/>
             <path d="M700 822 C702 780 698 700 704 640 C706 610 700 580 708 558 L732 558 C740 582 734 612 736 642 C742 702 738 782 740 822 Z" fill="url(#trunkGrad)"/>
+            <path id="f1-notch" d="M701 778 L727 789 L701 800 Z" fill="#0A0501" opacity="0"/>
+            <path id="f1-notch2" d="M739 784 L715 793 L739 802 Z" fill="#0A0501" opacity="0"/>
             <path d="M712 810 C710 750 714 680 712 604" stroke="#150A02" stroke-width="2.2" fill="none" opacity="0.65"/>
             <path d="M724 812 C727 748 722 690 726 612" stroke="#150A02" stroke-width="1.5" fill="none" opacity="0.5"/>
             <path d="M718 790 C716 760 720 730 717 700" stroke="#0E0701" stroke-width="1.2" fill="none" opacity="0.5"/>
@@ -718,6 +674,43 @@ body {
             <ellipse cx="720" cy="280" rx="86"  ry="60"  fill="url(#folA)"/>
             <ellipse cx="720" cy="522" rx="212" ry="58" fill="#050B03" opacity="0.55"/>
           </g>
+          <!-- Workers felling the tree -->
+          <g id="f1-workers" opacity="0">
+            <g id="f1-wl" transform="translate(628,816)">
+              <ellipse cx="0" cy="6" rx="26" ry="5" fill="#000000" opacity="0.5"/>
+              <rect x="-16" y="-46" width="13" height="50" rx="4" fill="#1A1208"/>
+              <rect x="3"   y="-46" width="13" height="50" rx="4" fill="#1A1208"/>
+              <rect x="-18" y="-120" width="36" height="76" rx="6" fill="#2E2214"/>
+              <ellipse cx="0" cy="-136" rx="17" ry="19" fill="#8B6A3E"/>
+              <ellipse cx="0" cy="-149" rx="19" ry="7" fill="#C2A368" opacity="0.9"/>
+              <rect x="-21" y="-149" width="9" height="30" rx="3" fill="#C2A368" opacity="0.8"/>
+              <g id="f1-wl-arm">
+                <rect x="-5" y="-96" width="9" height="52" rx="4" fill="#2E2214"/>
+                <g transform="translate(0,-40)">
+                  <rect x="-3" y="-6" width="7" height="34" rx="2" fill="#5C3D1A"/>
+                  <polygon points="4,-10 26,-14 28,2 4,4" fill="#9A9A9A"/>
+                  <polygon points="26,-14 34,-6 28,2" fill="#C8C8C8"/>
+                </g>
+              </g>
+            </g>
+            <g id="f1-wr" transform="translate(812,816) scale(-1,1)">
+              <ellipse cx="0" cy="6" rx="26" ry="5" fill="#000000" opacity="0.5"/>
+              <rect x="-16" y="-46" width="13" height="50" rx="4" fill="#1A1208"/>
+              <rect x="3"   y="-46" width="13" height="50" rx="4" fill="#1A1208"/>
+              <rect x="-18" y="-120" width="36" height="76" rx="6" fill="#2E2214"/>
+              <ellipse cx="0" cy="-136" rx="17" ry="19" fill="#8B6A3E"/>
+              <ellipse cx="0" cy="-149" rx="19" ry="7" fill="#D4BC86" opacity="0.9"/>
+              <rect x="-21" y="-149" width="9" height="30" rx="3" fill="#D4BC86" opacity="0.8"/>
+              <g id="f1-wr-arm">
+                <rect x="-5" y="-96" width="9" height="52" rx="4" fill="#2E2214"/>
+                <g transform="translate(0,-40)">
+                  <rect x="-3" y="-6" width="7" height="34" rx="2" fill="#5C3D1A"/>
+                  <polygon points="4,-10 26,-14 28,2 4,4" fill="#9A9A9A"/>
+                  <polygon points="26,-14 34,-6 28,2" fill="#C8C8C8"/>
+                </g>
+              </g>
+            </g>
+          </g>
           <!-- Roots reaching down into floor 2 -->
           <g id="f1-roots" opacity="0">
             <path d="M700 822 Q680 900 640 1000 Q620 1070 630 1140" stroke="#1E1206" stroke-width="12" fill="none" stroke-linecap="round"/>
@@ -728,65 +721,42 @@ body {
           </g>
         </g>
 
-        <!-- FLOOR 2 · THE WOOD — BUKHOOR (y 900–1800) -->
+        <!-- FLOOR 2 · THE BUKHOOR — MABKHARA (y 900–1800) -->
         <g id="f2">
-          <ellipse id="f2-ember" cx="720" cy="1450" rx="540" ry="320" fill="url(#emberGrad)" opacity="0"/>
-          <!-- smoke -->
+          <ellipse id="f2-ember" cx="720" cy="1470" rx="540" ry="320" fill="url(#emberGrad)" opacity="0"/>
           <g id="f2-smoke-wrap">
-            <path id="f2-smoke1" d="M700 1440 C690 1360 740 1310 720 1230 C700 1150 745 1110 730 1050" stroke="url(#smokeGrad)" stroke-width="11" fill="none" stroke-linecap="round" opacity="0"/>
-            <path id="f2-smoke2" d="M745 1445 C760 1370 720 1330 745 1250 C765 1180 735 1140 750 1080" stroke="url(#smokeGrad)" stroke-width="7" fill="none" stroke-linecap="round" opacity="0"/>
-            <path id="f2-smoke3" d="M672 1450 C660 1390 700 1340 686 1270 C676 1215 692 1180 684 1130" stroke="url(#smokeGrad)" stroke-width="5" fill="none" stroke-linecap="round" opacity="0"/>
+            <path id="f2-smoke1" d="M710 1428 C700 1350 750 1300 730 1220 C710 1140 755 1100 740 1040" stroke="url(#smokeGrad)" stroke-width="11" fill="none" stroke-linecap="round" opacity="0"/>
+            <path id="f2-smoke2" d="M735 1430 C750 1360 715 1320 738 1240 C755 1170 728 1130 742 1070" stroke="url(#smokeGrad)" stroke-width="7" fill="none" stroke-linecap="round" opacity="0"/>
+            <path id="f2-smoke3" d="M697 1432 C687 1374 722 1330 710 1260 C702 1205 714 1170 708 1120" stroke="url(#smokeGrad)" stroke-width="5" fill="none" stroke-linecap="round" opacity="0"/>
           </g>
-          <!-- ledge -->
-          <g id="f2-ledge" opacity="0">
-            <ellipse cx="720" cy="1600" rx="300" ry="22" fill="#000000" opacity="0.6"/>
-            <rect x="430" y="1566" width="580" height="12" rx="6" fill="#2A1B0E"/>
-            <rect x="430" y="1566" width="580" height="3" rx="1.5" fill="#4A3018" opacity="0.8"/>
-            <rect x="438" y="1576" width="564" height="28" rx="6" fill="#1A0F08"/>
+          <!-- falling oud pieces land here (behind the cup wall) -->
+          <g id="fall-pieces"></g>
+          <g id="f2-mabkhara" opacity="0">
+            <ellipse cx="720" cy="1596" rx="250" ry="18" fill="#000000" opacity="0.55"/>
+            <rect x="570" y="1560" width="300" height="14" rx="7" fill="#241810"/>
+            <rect x="578" y="1572" width="284" height="22" rx="7" fill="#160D07"/>
+            <path d="M676 1558 L764 1558 L750 1532 L690 1532 Z" fill="url(#goldCap)" stroke="#6E5328" stroke-width="1"/>
+            <rect x="688" y="1524" width="64" height="10" rx="3" fill="#8C6E3A"/>
+            <path d="M708 1524 L732 1524 L727 1498 L713 1498 Z" fill="url(#goldCap)"/>
+            <ellipse cx="720" cy="1498" rx="14" ry="4" fill="#D4BC86" opacity="0.7"/>
+            <path d="M666 1420 L774 1420 L750 1498 L690 1498 Z" fill="url(#goldCap)" stroke="#6E5328" stroke-width="1.2"/>
+            <path d="M676 1424 L764 1424 L752 1454 L688 1454 Z" fill="#180A03"/>
+            <path d="M672 1440 L768 1440" stroke="#6E5328" stroke-width="3" opacity="0.7"/>
+            <circle cx="690" cy="1462" r="2" fill="#D4BC86" opacity="0.6"/>
+            <circle cx="720" cy="1466" r="2" fill="#D4BC86" opacity="0.6"/>
+            <circle cx="750" cy="1462" r="2" fill="#D4BC86" opacity="0.6"/>
+            <path d="M666 1426 Q644 1436 656 1458" stroke="#AE8B4F" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <path d="M774 1426 Q796 1436 784 1458" stroke="#AE8B4F" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <path d="M666 1420 L774 1420" stroke="#F0D9A0" stroke-width="2.2" opacity="0.65"/>
+            <path d="M684 1432 L700 1490" stroke="rgba(255,240,200,0.22)" stroke-width="5" stroke-linecap="round"/>
           </g>
-          <!-- wood chunks: gradient-lit agarwood with resin veins -->
-          <g id="f2-wood" opacity="0">
-            <ellipse cx="646" cy="1564" rx="58" ry="8" fill="#000000" opacity="0.55"/>
-            <ellipse cx="744" cy="1552" rx="52" ry="8" fill="#000000" opacity="0.5"/>
-            <ellipse cx="826" cy="1558" rx="46" ry="7" fill="#000000" opacity="0.5"/>
-            <ellipse cx="688" cy="1510" rx="26" ry="5" fill="#000000" opacity="0.45"/>
-            <ellipse cx="752" cy="1506" rx="24" ry="5" fill="#000000" opacity="0.45"/>
-            <path d="M566 1546 C574 1532 596 1524 614 1530 C628 1524 640 1532 638 1544 C640 1556 624 1564 604 1564 C584 1566 570 1558 566 1546 Z" fill="url(#chunkB)"/>
-            <path d="M596 1518 C604 1500 632 1490 658 1496 C682 1488 698 1502 700 1520 C706 1538 692 1554 668 1560 C640 1568 610 1560 600 1546 C592 1536 590 1528 596 1518 Z" fill="url(#chunkA)"/>
-            <path d="M600 1520 C620 1508 660 1504 698 1520 L692 1530 C660 1518 624 1520 606 1530 Z" fill="#D4AA6E" opacity="0.10"/>
-            <path d="M612 1536 C632 1528 662 1528 684 1536" stroke="#140A03" stroke-width="1.6" fill="none" opacity="0.7"/>
-            <path d="M616 1546 C638 1538 664 1538 686 1546" stroke="#140A03" stroke-width="1.2" fill="none" opacity="0.55"/>
-            <path d="M624 1512 C640 1520 668 1522 688 1516" stroke="#C89040" stroke-width="0.9" fill="none" opacity="0.5"/>
-            <path d="M648 1500 L654 1512" stroke="#F0C070" stroke-width="1.6" fill="none" opacity="0.25" stroke-linecap="round"/>
-            <path d="M700 1494 C712 1480 742 1474 766 1482 C786 1478 798 1492 796 1508 C800 1526 784 1540 758 1544 C732 1550 708 1540 702 1526 C696 1514 694 1504 700 1494 Z" fill="url(#chunkC)"/>
-            <path d="M704 1498 C728 1486 764 1484 794 1502 L788 1512 C760 1498 728 1498 710 1508 Z" fill="#E0B878" opacity="0.12"/>
-            <path d="M714 1516 C736 1508 762 1508 786 1518" stroke="#180C04" stroke-width="1.6" fill="none" opacity="0.7"/>
-            <path d="M718 1528 C740 1520 764 1520 784 1528" stroke="#180C04" stroke-width="1.1" fill="none" opacity="0.5"/>
-            <path d="M726 1490 C740 1498 764 1500 782 1494" stroke="#D89838" stroke-width="1" fill="none" opacity="0.55"/>
-            <path d="M748 1478 L754 1490" stroke="#FFD080" stroke-width="1.4" fill="none" opacity="0.3" stroke-linecap="round"/>
-            <path d="M792 1522 C800 1508 822 1500 844 1506 C862 1502 872 1514 870 1528 C874 1542 860 1554 838 1556 C816 1560 798 1552 792 1540 C788 1532 788 1528 792 1522 Z" fill="url(#chunkB)"/>
-            <path d="M796 1524 C816 1512 848 1510 868 1526 L862 1534 C840 1522 814 1524 802 1532 Z" fill="#D4AA6E" opacity="0.09"/>
-            <path d="M804 1538 C822 1532 846 1532 864 1540" stroke="#120902" stroke-width="1.4" fill="none" opacity="0.65"/>
-            <path d="M818 1504 C830 1510 848 1512 860 1508" stroke="#C89040" stroke-width="0.8" fill="none" opacity="0.45"/>
-            <path d="M668 1424 C676 1418 690 1416 696 1422 C702 1446 706 1478 704 1502 C696 1510 680 1512 672 1506 C668 1478 664 1448 668 1424 Z" fill="url(#chunkB)"/>
-            <path d="M694 1424 C698 1448 702 1478 701 1500" stroke="#C2A368" stroke-width="1.4" fill="none" opacity="0.35"/>
-            <path d="M676 1430 C674 1452 672 1480 674 1500" stroke="#100801" stroke-width="2" fill="none" opacity="0.6"/>
-            <path d="M684 1420 L686 1434" stroke="#F0C070" stroke-width="1.2" opacity="0.3" stroke-linecap="round"/>
-            <path d="M744 1412 C754 1408 768 1412 772 1420 C776 1446 772 1476 766 1500 C758 1506 746 1504 740 1498 C736 1470 738 1438 744 1412 Z" fill="url(#chunkC)"/>
-            <path d="M768 1420 C770 1444 768 1474 763 1496" stroke="#D8A850" stroke-width="1.3" fill="none" opacity="0.4"/>
-            <path d="M748 1418 C744 1444 744 1474 746 1496" stroke="#140A02" stroke-width="2" fill="none" opacity="0.6"/>
-            <path d="M640 1560 C650 1554 668 1552 680 1558 C688 1564 686 1572 676 1576 C662 1580 646 1578 640 1572 C636 1568 636 1564 640 1560 Z" fill="url(#chunkB)"/>
-            <path d="M756 1556 C768 1550 788 1550 800 1556 C808 1562 806 1570 794 1574 C780 1578 764 1576 756 1570 C752 1566 752 1560 756 1556 Z" fill="url(#chunkA)"/>
-            <path d="M760 1558 C776 1552 792 1552 798 1558" stroke="#E0B060" stroke-width="0.8" fill="none" opacity="0.4"/>
-          </g>
-          <!-- glowing embers -->
           <g id="f2-embers">
-            <circle cx="664" cy="1502" r="5"   fill="url(#emberCore)" opacity="0"/>
-            <circle cx="748" cy="1494" r="4"   fill="url(#emberCore)" opacity="0"/>
-            <circle cx="704" cy="1524" r="3.4" fill="url(#emberCore)" opacity="0"/>
-            <circle cx="780" cy="1520" r="4.4" fill="url(#emberCore)" opacity="0"/>
-            <circle cx="646" cy="1540" r="3"   fill="url(#emberCore)" opacity="0"/>
-            <circle cx="820" cy="1534" r="3.6" fill="url(#emberCore)" opacity="0"/>
+            <circle cx="700" cy="1440" r="4.4" fill="url(#emberCore)" opacity="0"/>
+            <circle cx="724" cy="1444" r="3.6" fill="url(#emberCore)" opacity="0"/>
+            <circle cx="744" cy="1438" r="4"   fill="url(#emberCore)" opacity="0"/>
+            <circle cx="712" cy="1436" r="3"   fill="url(#emberCore)" opacity="0"/>
+            <circle cx="734" cy="1448" r="3.2" fill="url(#emberCore)" opacity="0"/>
+            <circle cx="696" cy="1450" r="2.6" fill="url(#emberCore)" opacity="0"/>
           </g>
         </g>
 
@@ -913,10 +883,10 @@ body {
       <h3 class="ch-head">From a tree that keeps its own time</h3>
     </div>
     <div class="ch-text" id="ht2">
-      <span class="ch-eyebrow">Chapter II · Beneath the Canopy</span>
+      <span class="ch-eyebrow">Chapter II · The Mabkhara</span>
       <span class="ch-ar">أخشـاب العـود</span>
-      <h3 class="ch-head">The Wood</h3>
-      <p class="ch-sub">Resin-dark heartwood, gathered beneath the tree — the bukhoor that carries decades in a single ember.</p>
+      <h3 class="ch-head">The Bukhoor</h3>
+      <p class="ch-sub">From the cut of the axe, resin-dark heartwood falls to the mabkhara below — burned as it has been for generations.</p>
     </div>
     <div class="ch-text" id="ht3">
       <span class="ch-eyebrow">Chapter III · The Distillation</span>
@@ -1157,33 +1127,6 @@ body {
 (function(){
 'use strict';
 
-/* ──────────── CURSOR ──────────── */
-var dot  = document.getElementById('cursor-dot');
-var ring = document.getElementById('cursor-ring');
-var mx = window.innerWidth/2, my = window.innerHeight/2;
-var rx = mx, ry = my;
-
-document.addEventListener('mousemove', function(e){
-  mx = e.clientX; my = e.clientY;
-  dot.style.transform = 'translate('+(mx-4)+'px,'+(my-4)+'px)';
-});
-
-(function animCursor(){
-  rx += (mx - rx) * 0.12;
-  ry += (my - ry) * 0.12;
-  ring.style.transform = 'translate('+(rx-20)+'px,'+(ry-20)+'px)';
-  requestAnimationFrame(animCursor);
-})();
-
-document.querySelectorAll('a,button,.nav-shop-text,.loyalty-btn').forEach(function(el){
-  el.addEventListener('mouseenter', function(){ ring.classList.add('hover-link'); dot.classList.add('hidden'); });
-  el.addEventListener('mouseleave', function(){ ring.classList.remove('hover-link'); dot.classList.remove('hidden'); });
-});
-document.querySelectorAll('[data-cursor-image]').forEach(function(el){
-  el.addEventListener('mouseenter', function(){ ring.classList.remove('hover-link'); ring.classList.add('hover-image'); dot.classList.add('hidden'); });
-  el.addEventListener('mouseleave', function(){ ring.classList.remove('hover-image'); dot.classList.remove('hidden'); });
-});
-
 /* ──────────── NAV ──────────── */
 var nav = document.getElementById('nav');
 var scrollBar = document.getElementById('scroll-bar');
@@ -1207,7 +1150,7 @@ var sc = {
   world: $s('world'),
   f1sun: $s('f1-sun'), f1rays: $s('f1-rays'), f1forest: $s('f1-forest'),
   f1ground: $s('f1-ground'), f1tree: $s('f1-tree'), f1roots: $s('f1-roots'),
-  f2ember: $s('f2-ember'), f2ledge: $s('f2-ledge'), f2wood: $s('f2-wood'),
+  f2ember: $s('f2-ember'), mabkhara: $s('f2-mabkhara'),
   smoke: [$s('f2-smoke1'), $s('f2-smoke2'), $s('f2-smoke3')],
   f3spot: $s('f3-spot'), f3liquid: $s('f3-liquid'), f3surface: $s('f3-surface'),
   ring: $s('f3-ring'), ring2: $s('f3-ring2'), splash: $s('f3-splash'),
@@ -1217,6 +1160,13 @@ var sc = {
   cta: $s('hero-cta')
 };
 sc.worldNear = $s('world-near');
+sc.workers = $s('f1-workers');
+sc.wl      = $s('f1-wl');
+sc.wr      = $s('f1-wr');
+sc.wlArm   = $s('f1-wl-arm');
+sc.wrArm   = $s('f1-wr-arm');
+sc.notch   = $s('f1-notch');
+sc.notch2  = $s('f1-notch2');
 sc.f3cap    = $s('f3-cap');
 sc.f4rays   = $s('f4-rays');
 sc.f4halo   = $s('f4-halo');
@@ -1227,6 +1177,27 @@ var sparkEls = Array.prototype.slice.call(document.querySelectorAll('#f4-sparks 
 var bokehEls = Array.prototype.slice.call(document.querySelectorAll('#f4-bokeh circle'));
 sc.f4cap     = $s('f4-cap');
 sc.f4shimmer = $s('f4-shimmer');
+
+// Oud pieces: chopped from the trunk, tumbling down into the mabkhara
+var fpColors = ['#241206','#1A0C04','#38220E','#2E1A0A','#48301A'];
+var fallPieces = [];
+(function(){
+  var host = $s('fall-pieces');
+  for(var fi = 0; fi < 10; fi++){
+    var r = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    var w = 16 + fakeRand(fi*3)*14, h = 7 + fakeRand(fi*3+1)*6;
+    r.setAttribute('width', w); r.setAttribute('height', h);
+    r.setAttribute('rx', 2);
+    r.setAttribute('fill', fpColors[fi % 5]);
+    r.setAttribute('opacity', 0);
+    host.appendChild(r);
+    fallPieces.push({el:r, w:w, h:h,
+      sx: 706 + fakeRand(fi*7)*30,
+      tx: 698 + fakeRand(fi*11)*46,
+      ty: 1412 + (fi%3)*6,
+      rot: (fakeRand(fi*13)-0.5)*720});
+  }
+})();
 
 // Spray burst particles: cone up-right from the atomizer, scroll-scrubbed
 var burst = [];
@@ -1373,8 +1344,22 @@ function heroLoop(ts){
   op(sc.f1rays,   eOut(seg(f1r, 0.45, 1))*0.85);
   var treeT = eOut(seg(f1r, 0.15, 0.9));
   op(sc.f1tree, treeT);
-  sc.f1tree.setAttribute('transform', 'translate(0,' + (1-treeT)*60 + ')');
   op(sc.f1roots, eOut(seg(p, 0.22, 0.30)));
+
+  // Workers arrive and swing at a steady 2.2 strikes/sec (time-based)
+  var wIn = eOut(seg(p, 0.14, 0.20));
+  op(sc.workers, wIn);
+  sc.wl.setAttribute('transform', 'translate(' + (628 - (1-wIn)*130) + ',816)');
+  sc.wr.setAttribute('transform', 'translate(' + (812 + (1-wIn)*130) + ',816) scale(-1,1)');
+  var chopEnv = seg(p, 0.17, 0.22) * (1 - eIn(seg(p, 0.44, 0.52)));
+  var swing = Math.sin(heroTime*2.2*Math.PI*2) * 34 * chopEnv;
+  sc.wlArm.setAttribute('transform', 'rotate(' + swing + ' 0 -96)');
+  sc.wrArm.setAttribute('transform', 'rotate(' + swing + ' 0 -96)');
+  // notch deepens, trunk shudders on each strike
+  op(sc.notch,  seg(p, 0.18, 0.26));
+  op(sc.notch2, seg(p, 0.21, 0.28));
+  var shudder = Math.max(0, Math.sin(heroTime*2.2*Math.PI*2)) * 2.4 * chopEnv;
+  sc.f1tree.setAttribute('transform', 'translate(' + shudder + ',' + (1-treeT)*60 + ')');
 
   /* ── Camera ── */
   var camY;
@@ -1393,24 +1378,36 @@ function heroLoop(ts){
   // Near layer moves 1.3x faster — parallax depth during pans
   sc.worldNear.setAttribute('transform', 'translate(0,' + (-camY*1.3) + ')');
 
-  /* ── Floor 2: wood + smoke (visible 0.30–0.60) ── */
-  var f2r = seg(p, 0.34, 0.44);
-  op(sc.f2ember, eOut(f2r));
-  op(sc.f2ledge, eOut(seg(p, 0.35, 0.42)));
-  var woodT = eOut(seg(p, 0.36, 0.46));
-  op(sc.f2wood, woodT);
-  sc.f2wood.setAttribute('transform', 'translate(0,' + (1-woodT)*30 + ')');
-  // smoke: time-based sway, phase-based opacity
-  var smokeEnv = eOut(seg(p, 0.38, 0.48)) * (1 - eIn(seg(p, 0.56, 0.64)));
+  /* ── Floor 2: mabkhara + falling oud + smoke ── */
+  op(sc.f2ember, eOut(seg(p, 0.32, 0.42)));
+  op(sc.mabkhara, eOut(seg(p, 0.28, 0.38)));
+
+  // Chopped pieces tumble from the trunk down into the mabkhara cup
+  fallPieces.forEach(function(fp, i){
+    var fs = 0.255 + i*0.016;
+    var ft = seg(p, fs, fs + 0.115);
+    if(ft <= 0){ fp.el.setAttribute('opacity', 0); return; }
+    var fy = lerp(795, fp.ty, eIn(ft));
+    var fx = lerp(fp.sx, fp.tx, ft);
+    var rot = fp.rot * (1 - Math.pow(1-ft, 2));
+    fp.el.setAttribute('x', fx - fp.w/2);
+    fp.el.setAttribute('y', fy - fp.h/2);
+    fp.el.setAttribute('transform', 'rotate(' + rot + ' ' + fx + ' ' + fy + ')');
+    fp.el.setAttribute('opacity', Math.min(1, ft*6));
+  });
+
+  // Smoke rises from the cup once the bukhoor is burning
+  var landedT = eOut(seg(p, 0.38, 0.46));
+  var smokeEnv = eOut(seg(p, 0.42, 0.52)) * (1 - eIn(seg(p, 0.56, 0.64)));
   sc.smoke.forEach(function(s, i){
     var sway = Math.sin(heroTime*0.55 + i*2.1) * (8 + i*4);
     s.setAttribute('transform', 'translate(' + sway + ',0)');
     op(s, smokeEnv * [0.5, 0.36, 0.3][i]);
   });
-  // Embers breathe like live coals
+  // Coals flare as the wood lands
   emberEls.forEach(function(e2, i){
     var pulse = 0.5 + 0.5*Math.sin(heroTime*2.6 + i*1.7);
-    e2.setAttribute('opacity', woodT * (0.25 + 0.55*pulse));
+    e2.setAttribute('opacity', landedT * (0.3 + 0.55*pulse));
   });
 
   /* ── The drop ── */

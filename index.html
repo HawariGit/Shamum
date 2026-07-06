@@ -284,78 +284,6 @@ body {
 }
 .reveal-scale.visible { opacity: 1; transform: scale(1); filter: blur(0); }
 
-/* ─── CATEGORIES ─── */
-#categories {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  height: 100vh; min-height: 560px;
-}
-@media (max-width: 900px) {
-  #categories { grid-template-columns: repeat(2,1fr); height: auto; min-height: unset; }
-}
-@media (max-width: 480px) {
-  #categories { grid-template-columns: 1fr; }
-}
-.cat-card {
-  position: relative; overflow: hidden; cursor: none;
-  border-right: 1px solid rgba(174,139,79,0.1);
-  opacity: 0; transform: translateY(30px);
-  transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1),
-              transform 0.85s cubic-bezier(0.16,1,0.3,1);
-}
-.cat-card:last-child { border-right: none; }
-.cat-card.visible { opacity: 1; transform: translateY(0); }
-.cat-card:nth-child(1) { transition-delay: 0s; }
-.cat-card:nth-child(2) { transition-delay: 0.1s; }
-.cat-card:nth-child(3) { transition-delay: 0.2s; }
-.cat-card:nth-child(4) { transition-delay: 0.3s; }
-
-.cat-bg {
-  position: absolute; inset: 0;
-  transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
-}
-.cat-card:hover .cat-bg { transform: scale(1.04); }
-.cat-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(8,5,3,0.88) 0%, rgba(8,5,3,0.28) 60%, transparent 100%);
-  transition: background 0.4s;
-}
-.cat-card:hover .cat-overlay {
-  background: linear-gradient(to top, rgba(8,5,3,0.95) 0%, rgba(8,5,3,0.5) 60%, rgba(8,5,3,0.18) 100%);
-}
-.cat-svg {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -56%);
-  width: 55%; max-width: 160px; opacity: 0.72;
-  transition: opacity 0.4s, transform 0.55s cubic-bezier(0.16,1,0.3,1);
-}
-.cat-card:hover .cat-svg { opacity: 0.35; transform: translate(-50%, -61%); }
-.cat-content {
-  position: absolute; bottom: 0; left: 0; right: 0; padding: 32px 28px;
-  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-}
-.cat-card:hover .cat-content { transform: translateY(-10px); }
-.cat-arabic {
-  font-family: 'Cormorant Garamond', serif; font-size: 13px;
-  color: var(--gold-400); letter-spacing: 0.08em;
-  display: block; margin-bottom: 6px; direction: rtl;
-}
-.cat-english {
-  font-family: 'Cormorant Garamond', serif; font-size: 25px;
-  font-weight: 400; color: var(--sand-50); display: block; line-height: 1.2;
-}
-.cat-count {
-  font-family: 'Jost', sans-serif; font-size: 10px;
-  letter-spacing: 0.2em; color: var(--gold-400);
-  display: block; margin-top: 4px; text-transform: uppercase;
-}
-.cat-explore {
-  display: block; font-family: 'Jost', sans-serif; font-size: 11px;
-  letter-spacing: 0.15em; color: var(--gold-300); text-transform: uppercase;
-  margin-top: 12px; opacity: 0; transform: translateY(8px);
-  transition: opacity 0.3s 0.05s, transform 0.4s cubic-bezier(0.16,1,0.3,1) 0.05s;
-}
-.cat-card:hover .cat-explore { opacity: 1; transform: translateY(0); }
-
 /* ─── PRODUCTS ─── */
 #products { background: var(--sand-50); padding: 120px 48px; }
 #products-header { text-align: center; margin-bottom: 80px; }
@@ -624,7 +552,7 @@ body {
 <nav id="nav">
   <ul class="nav-links">
     <li><a href="#" class="nav-link">Home</a></li>
-    <li><a href="#categories" class="nav-link">Collection</a></li>
+    <li><a href="#products" class="nav-link">Collection</a></li>
     <li><a href="#brand-statement" class="nav-link">Our Oud</a></li>
     <li><a href="#footer" class="nav-link">The House</a></li>
   </ul>
@@ -692,10 +620,6 @@ body {
           <stop offset="55%" stop-color="#C98A1E"/>
           <stop offset="100%" stop-color="#7A4E10"/>
         </radialGradient>
-        <linearGradient id="liquidGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#D89A28"/>
-          <stop offset="100%" stop-color="#7A4A0E"/>
-        </linearGradient>
         <linearGradient id="goldCap" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stop-color="#D4BC86"/>
           <stop offset="50%" stop-color="#AE8B4F"/>
@@ -734,8 +658,14 @@ body {
         <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
           <feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#C2A368" flood-opacity="0.28"/>
         </filter>
+        <linearGradient id="oilGrad" gradientUnits="userSpaceOnUse" x1="0" y1="2270" x2="0" y2="2396">
+          <stop offset="0%" stop-color="#5A2148"/>
+          <stop offset="30%" stop-color="#93401A"/>
+          <stop offset="65%" stop-color="#D98A28"/>
+          <stop offset="100%" stop-color="#F0BE68"/>
+        </linearGradient>
         <clipPath id="vialClip">
-          <path d="M664 2200 L664 2374 Q664 2400 720 2400 Q776 2400 776 2374 L776 2200 Q776 2178 720 2178 Q664 2178 664 2200 Z"/>
+          <path d="M672 2232 Q672 2214 692 2212 L748 2212 Q768 2214 768 2232 L766 2378 Q766 2394 720 2394 Q674 2394 674 2378 Z"/>
         </clipPath>
       </defs>
 
@@ -871,37 +801,71 @@ body {
           </g>
           <!-- vial -->
           <g id="f3-vial">
-            <ellipse cx="720" cy="2408" rx="110" ry="14" fill="#000000" opacity="0.5"/>
-            <rect id="f3-liquid" x="666" y="2380" width="108" height="16" fill="url(#liquidGrad)" clip-path="url(#vialClip)"/>
-            <ellipse id="f3-surface" cx="720" cy="2380" rx="54" ry="5" fill="#E8B048" opacity="0.55"/>
-            <path d="M664 2200 L664 2374 Q664 2400 720 2400 Q776 2400 776 2374 L776 2200 Q776 2178 720 2178 Q664 2178 664 2200 Z"
-                  fill="rgba(255,255,255,0.035)" stroke="rgba(244,234,210,0.4)" stroke-width="1.5"/>
-            <rect x="702" y="2128" width="36" height="52" fill="rgba(255,255,255,0.04)" stroke="rgba(244,234,210,0.35)" stroke-width="1.2"/>
-            <rect x="692" y="2072" width="56" height="60" rx="9" fill="url(#goldCap)"/>
-            <ellipse cx="720" cy="2072" rx="24" ry="7" fill="#D4BC86"/>
-            <path d="M678 2226 Q672 2290 680 2368" stroke="rgba(255,255,255,0.16)" stroke-width="6" fill="none" stroke-linecap="round"/>
-            <path d="M762 2230 Q766 2300 762 2360" stroke="rgba(255,255,255,0.28)" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <ellipse cx="720" cy="2182" rx="52" ry="6" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.2"/>
+            <ellipse cx="720" cy="2404" rx="104" ry="13" fill="#000000" opacity="0.55"/>
+            <rect id="f3-liquid" x="666" y="2388" width="108" height="10" fill="url(#oilGrad)" clip-path="url(#vialClip)"/>
+            <ellipse id="f3-surface" cx="720" cy="2388" rx="47" ry="4.5" fill="#F0B860" opacity="0.6"/>
+            <path d="M670 2232 Q670 2212 692 2210 L748 2210 Q770 2212 770 2232 L768 2378 Q768 2396 720 2396 Q672 2396 672 2378 Z"
+                  fill="rgba(255,255,255,0.05)" stroke="rgba(244,234,210,0.48)" stroke-width="1.6"/>
+            <path d="M672 2378 Q672 2394 720 2394 Q768 2394 768 2378 L768 2366 Q768 2382 720 2382 Q672 2382 672 2366 Z" fill="rgba(255,255,255,0.08)"/>
+            <text x="720" y="2298" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#D4BC86" letter-spacing="2.5" opacity="0.9">SHAMUM</text>
+            <text x="720" y="2316" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#C2A368" opacity="0.85">شاموم</text>
+            <rect x="717" y="2324" width="5" height="5" fill="#AE8B4F" opacity="0.7" transform="rotate(45 719.5 2326.5)"/>
+            <rect x="706" y="2198" width="28" height="14" fill="rgba(255,255,255,0.06)" stroke="rgba(244,234,210,0.3)" stroke-width="1"/>
+            <g id="f3-cap">
+              <path d="M686 2152 Q686 2136 720 2136 Q754 2136 754 2152 L754 2196 Q754 2204 746 2204 L694 2204 Q686 2204 686 2196 Z" fill="url(#goldCap)" stroke="#8C6E3A" stroke-width="0.8"/>
+              <path d="M697 2140 L697 2202" stroke="#8C6E3A" stroke-width="1.4" opacity="0.55"/>
+              <path d="M708 2137 L708 2203" stroke="#8C6E3A" stroke-width="1.4" opacity="0.55"/>
+              <path d="M720 2136 L720 2204" stroke="#8C6E3A" stroke-width="1.4" opacity="0.55"/>
+              <path d="M732 2137 L732 2203" stroke="#8C6E3A" stroke-width="1.4" opacity="0.55"/>
+              <path d="M743 2140 L743 2202" stroke="#8C6E3A" stroke-width="1.4" opacity="0.55"/>
+              <path d="M692 2144 Q706 2138 718 2140" stroke="#F0D9A0" stroke-width="2.2" fill="none" opacity="0.7" stroke-linecap="round"/>
+            </g>
+            <path d="M680 2238 Q676 2300 682 2366" stroke="rgba(255,255,255,0.2)" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M758 2240 Q762 2300 758 2362" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" stroke-linecap="round"/>
           </g>
           <!-- splash -->
-          <circle id="f3-ring"  cx="720" cy="2378" r="16" stroke="#E0A030" stroke-width="2.5" fill="none" opacity="0"/>
-          <circle id="f3-ring2" cx="720" cy="2378" r="10" stroke="#F5D68A" stroke-width="1.5" fill="none" opacity="0"/>
+          <circle id="f3-ring"  cx="720" cy="2386" r="16" stroke="#E0A030" stroke-width="2.5" fill="none" opacity="0"/>
+          <circle id="f3-ring2" cx="720" cy="2386" r="10" stroke="#F5D68A" stroke-width="1.5" fill="none" opacity="0"/>
           <g id="f3-splash" opacity="0">
-            <circle cx="694" cy="2360" r="3.2" fill="#E0A030"/>
-            <circle cx="748" cy="2356" r="2.6" fill="#F5D68A"/>
-            <circle cx="706" cy="2344" r="2.2" fill="#C98A1E"/>
-            <circle cx="738" cy="2342" r="1.8" fill="#E0A030"/>
+            <circle cx="694" cy="2368" r="3.2" fill="#E0A030"/>
+            <circle cx="748" cy="2364" r="2.6" fill="#F5D68A"/>
+            <circle cx="706" cy="2352" r="2.2" fill="#C98A1E"/>
+            <circle cx="738" cy="2350" r="1.8" fill="#E0A030"/>
           </g>
         </g>
 
         <!-- THE DROP — travels between floors 2 and 3 -->
         <g id="drop-g" opacity="0" filter="url(#dropGlow)">
-          <path id="drop-shape" d="M0 -20 C 11 -6 15 6 0 18 C -15 6 -11 -6 0 -20" fill="url(#dropGrad)"/>
+          <path id="drop-shape" d="M0 -24 C 2.5 -16 8 -9.5 10.5 -2 A 11 11 0 1 1 -10.5 -2 C -8 -9.5 -2.5 -16 0 -24 Z" fill="url(#dropGrad)"/>
+          <ellipse cx="-3.5" cy="1" rx="3.2" ry="4.6" fill="#FFF3D0" opacity="0.55"/>
+          <path d="M -7 8.5 A 9 9 0 0 0 7 8.5 C 3 12.5 -3 12.5 -7 8.5 Z" fill="#5A3208" opacity="0.5"/>
         </g>
 
         <!-- FLOOR 4 · THE PERFUME (y 2700–3600) -->
         <g id="f4">
           <ellipse id="f4-glow" cx="720" cy="3140" rx="520" ry="340" fill="url(#sunGlow)" opacity="0"/>
+          <g id="f4-rays" opacity="0">
+            <polygon points="720,3140 700,2770 740,2770" fill="url(#rayGrad)" opacity="0.3"/>
+            <polygon points="720,3140 700,2770 740,2770" fill="url(#rayGrad)" opacity="0.22" transform="rotate(45 720 3140)"/>
+            <polygon points="720,3140 700,2770 740,2770" fill="url(#rayGrad)" opacity="0.3"  transform="rotate(90 720 3140)"/>
+            <polygon points="720,3140 700,2770 740,2770" fill="url(#rayGrad)" opacity="0.22" transform="rotate(135 720 3140)"/>
+            <polygon points="720,3140 700,2770 740,2770" fill="url(#rayGrad)" opacity="0.3"  transform="rotate(180 720 3140)"/>
+            <polygon points="720,3140 700,2770 740,2770" fill="url(#rayGrad)" opacity="0.22" transform="rotate(225 720 3140)"/>
+            <polygon points="720,3140 700,2770 740,2770" fill="url(#rayGrad)" opacity="0.3"  transform="rotate(270 720 3140)"/>
+            <polygon points="720,3140 700,2770 740,2770" fill="url(#rayGrad)" opacity="0.22" transform="rotate(315 720 3140)"/>
+          </g>
+          <g id="f4-halo" opacity="0">
+            <circle cx="720" cy="3140" r="228" stroke="rgba(212,188,134,0.3)" stroke-width="1.2" fill="none"/>
+            <circle cx="720" cy="3140" r="248" stroke="rgba(212,188,134,0.12)" stroke-width="1" fill="none"/>
+            <rect x="717" y="2907" width="6" height="6" fill="#C2A368" opacity="0.8" transform="rotate(45 720 2910)"/>
+            <rect x="717" y="3365" width="6" height="6" fill="#C2A368" opacity="0.8" transform="rotate(45 720 3368)"/>
+          </g>
+          <g id="f4-bokeh" filter="url(#forestBlur)">
+            <circle cx="520" cy="3000" r="34" fill="#C2A368" opacity="0"/>
+            <circle cx="930" cy="3080" r="42" fill="#AE8B4F" opacity="0"/>
+            <circle cx="560" cy="3260" r="28" fill="#D4BC86" opacity="0"/>
+            <circle cx="900" cy="3290" r="36" fill="#C2A368" opacity="0"/>
+          </g>
           <g id="f4-bottle" filter="url(#softGlow)">
             <ellipse cx="720" cy="3342" rx="180" ry="16" fill="#0D0805"/>
             <path d="M648 3320 L648 3062 Q648 3014 690 3000 L706 2995 L706 2932 L734 2932 L734 2995 L750 3000 Q792 3014 792 3062 L792 3320 Q792 3338 720 3338 Q648 3338 648 3320 Z"
@@ -983,124 +947,6 @@ body {
     <p class="brand-sub reveal reveal-delay-2">The essence of authentic fragrance — aged in silence, bottled by hand since 2010.</p>
     <div class="gold-divider reveal reveal-delay-3"></div>
   </div>
-</section>
-
-<!-- ═══ CATEGORIES ═══ -->
-<section id="categories">
-
-  <!-- Sprays -->
-  <div class="cat-card">
-    <div class="cat-bg" style="background:linear-gradient(160deg,#16100A,#241810);"></div>
-    <div class="cat-overlay"></div>
-    <svg class="cat-svg" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#4A3520"/><stop offset="100%" stop-color="#2A1C0E"/>
-        </linearGradient>
-      </defs>
-      <rect x="30" y="70" width="60" height="110" rx="8" fill="url(#sg1)"/>
-      <path d="M30 70 Q30 50 50 46 L70 46 Q90 50 90 70Z" fill="#3A2A14"/>
-      <rect x="48" y="30" width="24" height="18" rx="4" fill="#3A2A14"/>
-      <rect x="40" y="20" width="40" height="14" rx="4" fill="#5C4020"/>
-      <rect x="76" y="24" width="20" height="6"  rx="3" fill="#6E5028"/>
-      <ellipse cx="100" cy="18" rx="12" ry="5" fill="none" stroke="#C2A368" stroke-width="0.9" opacity="0.5"/>
-      <ellipse cx="108" cy="13" rx="7"  ry="4" fill="none" stroke="#C2A368" stroke-width="0.6" opacity="0.3"/>
-      <rect x="30" y="108" width="60" height="2" fill="#C2A368" opacity="0.7"/>
-      <rect x="30" y="148" width="60" height="2" fill="#C2A368" opacity="0.65"/>
-      <rect x="38" y="116" width="44" height="28" rx="1" fill="rgba(194,163,104,0.07)"/>
-      <rect x="30" y="172" width="60" height="8" rx="4" fill="#2A1A0A"/>
-    </svg>
-    <div class="cat-content">
-      <span class="cat-arabic">البـخـاخـات</span>
-      <span class="cat-english">Sprays</span>
-      <span class="cat-count">The Signature Line</span>
-      <span class="cat-explore">Explore →</span>
-    </div>
-  </div>
-
-  <!-- Limited -->
-  <div class="cat-card">
-    <div class="cat-bg" style="background:linear-gradient(160deg,#1A120A,#1C1008);"></div>
-    <div class="cat-overlay"></div>
-    <svg class="cat-svg" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="sg2" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#6E5028"/><stop offset="100%" stop-color="#3A2810"/>
-        </linearGradient>
-      </defs>
-      <path d="M25 90 Q20 80 28 72 Q36 64 60 60 Q84 64 92 72 Q100 80 95 90 L95 170 Q95 182 60 182 Q25 182 25 170Z" fill="url(#sg2)"/>
-      <path d="M44 60 L44 40 Q44 28 60 28 Q76 28 76 40 L76 60Z" fill="#4A3218"/>
-      <ellipse cx="60" cy="28" rx="20" ry="10" fill="#C2A368"/>
-      <rect x="50" y="18" width="20" height="12" rx="4" fill="#AE8B4F"/>
-      <path d="M25 100 Q60 95 95 100" stroke="#C2A368" stroke-width="1.5" fill="none" opacity="0.8"/>
-      <path d="M25 160 Q60 155 95 160" stroke="#C2A368" stroke-width="1.5" fill="none" opacity="0.8"/>
-      <polygon points="60,118 63.5,127 73,127 65.5,132.5 68,142 60,136.5 52,142 54.5,132.5 47,127 56.5,127" fill="rgba(194,163,104,0.55)"/>
-    </svg>
-    <div class="cat-content">
-      <span class="cat-arabic">إصـدار محـدود</span>
-      <span class="cat-english">Limited Edition</span>
-      <span class="cat-count">Rare Releases</span>
-      <span class="cat-explore">Explore →</span>
-    </div>
-  </div>
-
-  <!-- Oud Oils -->
-  <div class="cat-card">
-    <div class="cat-bg" style="background:linear-gradient(160deg,#100C06,#1E1508);"></div>
-    <div class="cat-overlay"></div>
-    <svg class="cat-svg" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="sg3" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#2E2010"/><stop offset="100%" stop-color="#1A1008"/>
-        </linearGradient>
-        <radialGradient id="oilSheen" cx="35%" cy="30%" r="50%">
-          <stop offset="0%" stop-color="#4A3218" stop-opacity="0.8"/><stop offset="100%" stop-color="#1A1008" stop-opacity="0"/>
-        </radialGradient>
-      </defs>
-      <ellipse cx="60" cy="140" rx="42" ry="52" fill="url(#sg3)"/>
-      <ellipse cx="60" cy="140" rx="42" ry="52" fill="url(#oilSheen)"/>
-      <rect x="50" y="80" width="20" height="30" rx="6" fill="#241808"/>
-      <ellipse cx="60" cy="80" rx="14" ry="8" fill="#5C3D18"/>
-      <rect x="52" y="60" width="16" height="22" rx="6" fill="#3A2410"/>
-      <ellipse cx="60" cy="83" rx="14" ry="4" fill="none" stroke="#C2A368" stroke-width="1.5"/>
-      <ellipse cx="60" cy="158" rx="30" ry="18" fill="rgba(110,83,40,0.3)"/>
-      <ellipse cx="44" cy="116" rx="12" ry="18" fill="rgba(194,163,104,0.055)" transform="rotate(-20,44,116)"/>
-      <ellipse cx="60" cy="189" rx="30" ry="6" fill="#1A1008"/>
-    </svg>
-    <div class="cat-content">
-      <span class="cat-arabic">أدهـان العـود</span>
-      <span class="cat-english">Oud Oils</span>
-      <span class="cat-count">Pure Dehn Al Oud</span>
-      <span class="cat-explore">Explore →</span>
-    </div>
-  </div>
-
-  <!-- Oud Wood -->
-  <div class="cat-card">
-    <div class="cat-bg" style="background:linear-gradient(160deg,#1C1208,#120E06);"></div>
-    <div class="cat-overlay"></div>
-    <svg class="cat-svg" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
-      <rect x="20" y="120" width="80" height="18" rx="3" fill="#3A2410" transform="rotate(-5,60,130)"/>
-      <rect x="18" y="138" width="84" height="18" rx="3" fill="#2E1C0C" transform="rotate(3,60,147)"/>
-      <rect x="22" y="156" width="76" height="18" rx="3" fill="#3A2410" transform="rotate(-2,60,165)"/>
-      <line x1="25" y1="122" x2="90" y2="119" stroke="rgba(194,163,104,0.22)" stroke-width="0.8"/>
-      <line x1="22" y1="140" x2="92" y2="144" stroke="rgba(194,163,104,0.2)"  stroke-width="0.8"/>
-      <line x1="25" y1="158" x2="88" y2="156" stroke="rgba(194,163,104,0.18)" stroke-width="0.8"/>
-      <rect x="38" y="98" width="44" height="24" rx="4" fill="#4A3018" transform="rotate(8,60,110)"/>
-      <ellipse cx="48" cy="114" rx="4" ry="5" fill="rgba(110,83,40,0.72)" transform="rotate(-5,48,114)"/>
-      <ellipse cx="72" cy="128" rx="3" ry="4" fill="rgba(110,83,40,0.5)"  transform="rotate(3,72,128)"/>
-      <circle cx="35" cy="175" r="1.5" fill="#C2A368" opacity="0.5"/>
-      <circle cx="88" cy="170" r="1"   fill="#C2A368" opacity="0.4"/>
-      <circle cx="60" cy="178" r="1.2" fill="#AE8B4F" opacity="0.4"/>
-    </svg>
-    <div class="cat-content">
-      <span class="cat-arabic">أخشـاب العـود</span>
-      <span class="cat-english">Oud Wood</span>
-      <span class="cat-count">Aged Agarwood</span>
-      <span class="cat-explore">Explore →</span>
-    </div>
-  </div>
-
 </section>
 
 <!-- ═══ PRODUCTS ═══ -->
@@ -1327,7 +1173,7 @@ document.addEventListener('mousemove', function(e){
   requestAnimationFrame(animCursor);
 })();
 
-document.querySelectorAll('a,button,.nav-shop-text,.cat-card,.loyalty-btn').forEach(function(el){
+document.querySelectorAll('a,button,.nav-shop-text,.loyalty-btn').forEach(function(el){
   el.addEventListener('mouseenter', function(){ ring.classList.add('hover-link'); dot.classList.add('hidden'); });
   el.addEventListener('mouseleave', function(){ ring.classList.remove('hover-link'); dot.classList.remove('hidden'); });
 });
@@ -1369,13 +1215,18 @@ var sc = {
   cta: $s('hero-cta')
 };
 sc.worldNear = $s('world-near');
+sc.f3cap    = $s('f3-cap');
+sc.f4rays   = $s('f4-rays');
+sc.f4halo   = $s('f4-halo');
+sc.f4bottle = $s('f4-bottle');
 var emberEls = Array.prototype.slice.call(document.querySelectorAll('#f2-embers circle'));
 var moteEls  = Array.prototype.slice.call(document.querySelectorAll('#f3-motes circle'));
 var sparkEls = Array.prototype.slice.call(document.querySelectorAll('#f4-sparks rect'));
+var bokehEls = Array.prototype.slice.call(document.querySelectorAll('#f4-bokeh circle'));
 
 // Mist particles (SVG circles, positioned per-frame)
 var mistEls = [];
-for (var mi = 0; mi < 12; mi++) {
+for (var mi = 0; mi < 18; mi++) {
   var mc = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
   mc.setAttribute('fill', mi % 3 === 0 ? '#D4BC86' : '#C2A368');
   mc.setAttribute('opacity', '0');
@@ -1445,17 +1296,18 @@ var heroTime = 0;
 
 function heroLoop(ts){
   requestAnimationFrame(heroLoop);
-  var dt = lastT ? Math.min((ts-lastT)/1000, 0.05) : 0.016;
+  var dt = lastT ? Math.min(Math.max((ts-lastT)/1000, 0.001), 0.05) : 0.016;
   lastT = ts;
   heroTime += dt;
 
   var spacerTop = heroSpacer.getBoundingClientRect().top;
   var spacerH   = heroSpacer.offsetHeight - window.innerHeight;
-  var raw = clamp(-spacerTop / spacerH, 0, 1);
+  var raw = spacerH > 0 ? clamp(-spacerTop / spacerH, 0, 1) : 0;
 
   // Spring smoothing (critically damped)
   var acc = (raw - sPos)*80 - sVel*18;
   sVel += acc*dt; sPos += sVel*dt;
+  if (!isFinite(sPos)) { sPos = raw; sVel = 0; }
   var p = clamp(sPos, 0, 1);
 
   /* ── Opening logo: fade + settle in, dissolve out ── */
@@ -1525,7 +1377,7 @@ function heroLoop(ts){
       sc.drop.setAttribute('transform', 'translate(720,' + dy + ') scale(' + scale + ',' + (scale*elong) + ')');
     } else {
       // falling: gravity + vertical stretch
-      dy = lerp(1606, 2368, eIn(fallT));
+      dy = lerp(1606, 2380, eIn(fallT));
       var stretch = 1 + fallT*(1-fallT)*1.1;
       sc.drop.setAttribute('transform', 'translate(720,' + dy + ') scale(1,' + stretch + ')');
     }
@@ -1555,15 +1407,32 @@ function heroLoop(ts){
     op(sc.ring, 0); op(sc.ring2, 0); op(sc.splash, 0);
   }
   var lvT = eOut(seg(p, 0.68, 0.80));
-  var level = 2380 - lvT*118;
+  var level = 2388 - lvT*110;
   var wobble = Math.sin(heroTime*5)*1.6*(lvT>0&&lvT<1?1:0.3);
   sc.f3liquid.setAttribute('y', level + wobble);
-  sc.f3liquid.setAttribute('height', 2398 - level);
+  sc.f3liquid.setAttribute('height', 2394 - level);
   sc.f3surface.setAttribute('cy', level + wobble);
-  op(sc.f3surface, lvT > 0.02 ? 0.55 : 0);
+  op(sc.f3surface, lvT > 0.02 ? 0.6 : 0);
+  // Cap hovers beside the open bottle, then descends and seals after the fill
+  var capT = eOut(seg(p, 0.80, 0.88));
+  sc.f3cap.setAttribute('transform',
+    'translate(' + lerp(96, 0, capT) + ',' + lerp(-64, 0, capT) + ') rotate(' + lerp(22, 0, capT) + ' 720 2170)');
 
-  /* ── Floor 4: glow + mist ── */
-  op(sc.f4glow, eOut(seg(p, 0.86, 0.96)));
+  /* ── Floor 4: glow, rays, halo, bottle settle, bokeh, mist ── */
+  var f4in = eOut(seg(p, 0.86, 0.96));
+  op(sc.f4glow, f4in);
+  op(sc.f4rays, f4in * 0.6);
+  sc.f4rays.setAttribute('transform', 'rotate(' + ((heroTime*2.2) % 360) + ' 720 3140)');
+  op(sc.f4halo, f4in * 0.85);
+  var hs = 0.88 + 0.12*f4in;
+  sc.f4halo.setAttribute('transform', 'translate(720 3140) scale(' + hs + ') translate(-720 -3140)');
+  var bs = 0.94 + 0.06*f4in;
+  sc.f4bottle.setAttribute('transform', 'translate(720 3140) scale(' + bs + ') translate(-720 -3140)');
+  bokehEls.forEach(function(b2, i){
+    b2.setAttribute('cy', [3000,3080,3260,3290][i] + Math.sin(heroTime*0.4 + i*1.6)*24);
+    b2.setAttribute('cx', [520,930,560,900][i] + Math.cos(heroTime*0.3 + i*2.2)*18);
+    b2.setAttribute('opacity', f4in * [0.07,0.09,0.06,0.08][i]);
+  });
   var mistEnv = eOut(seg(p, 0.93, 0.99));
   if (mistEnv > 0.01) {
     mistEls.forEach(function(m, i){
@@ -1614,12 +1483,6 @@ var revealIO = makeIO(0.15, function(el){
   revealIO.unobserve(el);
 });
 document.querySelectorAll('.reveal,.reveal-scale').forEach(function(el){ revealIO.observe(el); });
-
-var catIO = makeIO(0.1, function(el){
-  el.classList.add('visible');
-  catIO.unobserve(el);
-});
-document.querySelectorAll('.cat-card').forEach(function(el){ catIO.observe(el); });
 
 var prodIO = makeIO(0.12, function(el){
   el.classList.add('visible');

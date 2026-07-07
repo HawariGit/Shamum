@@ -97,6 +97,13 @@ body {
   .nav-links { display: none; }
   #nav { padding: 0 24px; }
 }
+@media (max-width: 768px) {
+  /* backdrop blur is expensive on mobile GPUs — solid glass instead */
+  #nav.scrolled {
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    background: rgba(255,255,255,0.97);
+  }
+}
 
 /* ─── HERO ─── */
 #hero-spacer { height: 800vh; }
@@ -605,6 +612,21 @@ body {
         <radialGradient id="emberCore" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stop-color="#FFE090"/><stop offset="45%" stop-color="#F09030"/><stop offset="100%" stop-color="#F09030" stop-opacity="0"/>
         </radialGradient>
+        <radialGradient id="softBlobA" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#0C1A08"/><stop offset="60%" stop-color="#0C1A08" stop-opacity="0.6"/><stop offset="100%" stop-color="#0C1A08" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="softBlobB" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#0E1F09"/><stop offset="60%" stop-color="#0E1F09" stop-opacity="0.6"/><stop offset="100%" stop-color="#0E1F09" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="nearBlob" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#040200"/><stop offset="55%" stop-color="#040200" stop-opacity="0.75"/><stop offset="100%" stop-color="#040200" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="bokehBlob" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#C2A368" stop-opacity="0.9"/><stop offset="60%" stop-color="#C2A368" stop-opacity="0.4"/><stop offset="100%" stop-color="#C2A368" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="dropHalo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#E0A030" stop-opacity="0.5"/><stop offset="100%" stop-color="#E0A030" stop-opacity="0"/>
+        </radialGradient>
         <filter id="forestBlur"><feGaussianBlur stdDeviation="18"/></filter>
         <filter id="dropGlow" x="-120%" y="-120%" width="340%" height="340%">
           <feDropShadow dx="0" dy="0" stdDeviation="9" flood-color="#E0A030" flood-opacity="0.55"/>
@@ -637,15 +659,15 @@ body {
             <polygon points="720,230 520,900 582,900" fill="url(#rayGrad)" opacity="0.12"/>
             <polygon points="720,230 858,900 930,900" fill="url(#rayGrad)" opacity="0.12"/>
           </g>
-          <g id="f1-forest" opacity="0" filter="url(#forestBlur)">
-            <ellipse cx="200"  cy="700" rx="180" ry="250" fill="#0C1A08"/>
-            <ellipse cx="380"  cy="680" rx="130" ry="200" fill="#0E1F09"/>
-            <ellipse cx="1060" cy="700" rx="160" ry="240" fill="#0C1A08"/>
-            <ellipse cx="1260" cy="680" rx="140" ry="210" fill="#0E1F09"/>
-            <ellipse cx="100"  cy="720" rx="100" ry="180" fill="#091508"/>
-            <ellipse cx="1340" cy="720" rx="110" ry="190" fill="#091508"/>
-            <ellipse cx="500"  cy="710" rx="90"  ry="160" fill="#0B1807"/>
-            <ellipse cx="940"  cy="710" rx="95"  ry="170" fill="#0B1807"/>
+          <g id="f1-forest" opacity="0">
+            <ellipse cx="200"  cy="700" rx="230" ry="310" fill="url(#softBlobA)"/>
+            <ellipse cx="380"  cy="680" rx="170" ry="255" fill="url(#softBlobB)"/>
+            <ellipse cx="1060" cy="700" rx="205" ry="300" fill="url(#softBlobA)"/>
+            <ellipse cx="1260" cy="680" rx="180" ry="265" fill="url(#softBlobB)"/>
+            <ellipse cx="100"  cy="720" rx="130" ry="230" fill="url(#softBlobA)"/>
+            <ellipse cx="1340" cy="720" rx="145" ry="245" fill="url(#softBlobA)"/>
+            <ellipse cx="500"  cy="710" rx="120" ry="205" fill="url(#softBlobB)"/>
+            <ellipse cx="940"  cy="710" rx="125" ry="215" fill="url(#softBlobB)"/>
           </g>
           <rect id="f1-ground" x="0" y="800" width="1440" height="100" fill="url(#groundGrad)" opacity="0"/>
           <g id="f1-tree" opacity="0">
@@ -806,7 +828,8 @@ body {
         </g>
 
         <!-- THE DROP — travels between floors 2 and 3 -->
-        <g id="drop-g" opacity="0" filter="url(#dropGlow)">
+        <g id="drop-g" opacity="0">
+          <circle cx="0" cy="2" r="30" fill="url(#dropHalo)"/>
           <path id="drop-shape" d="M0 -24 C 2.5 -16 8 -9.5 10.5 -2 A 11 11 0 1 1 -10.5 -2 C -8 -9.5 -2.5 -16 0 -24 Z" fill="url(#dropGrad)"/>
           <ellipse cx="-3.5" cy="1" rx="3.2" ry="4.6" fill="#FFF3D0" opacity="0.55"/>
           <path d="M -7 8.5 A 9 9 0 0 0 7 8.5 C 3 12.5 -3 12.5 -7 8.5 Z" fill="#5A3208" opacity="0.5"/>
@@ -831,13 +854,14 @@ body {
             <rect x="717" y="2907" width="6" height="6" fill="#C2A368" opacity="0.8" transform="rotate(45 720 2910)"/>
             <rect x="717" y="3365" width="6" height="6" fill="#C2A368" opacity="0.8" transform="rotate(45 720 3368)"/>
           </g>
-          <g id="f4-bokeh" filter="url(#forestBlur)">
-            <circle cx="520" cy="3000" r="34" fill="#C2A368" opacity="0"/>
-            <circle cx="930" cy="3080" r="42" fill="#AE8B4F" opacity="0"/>
-            <circle cx="560" cy="3260" r="28" fill="#D4BC86" opacity="0"/>
-            <circle cx="900" cy="3290" r="36" fill="#C2A368" opacity="0"/>
+          <g id="f4-bokeh">
+            <circle cx="520" cy="3000" r="52" fill="url(#bokehBlob)" opacity="0"/>
+            <circle cx="930" cy="3080" r="64" fill="url(#bokehBlob)" opacity="0"/>
+            <circle cx="560" cy="3260" r="44" fill="url(#bokehBlob)" opacity="0"/>
+            <circle cx="900" cy="3290" r="56" fill="url(#bokehBlob)" opacity="0"/>
           </g>
-          <g id="f4-bottle" filter="url(#softGlow)">
+          <ellipse cx="720" cy="3150" rx="185" ry="270" fill="url(#sunGlow)" opacity="0.6"/>
+          <g id="f4-bottle">
             <ellipse cx="720" cy="3342" rx="180" ry="16" fill="#0D0805"/>
             <path d="M648 3320 L648 3062 Q648 3014 690 3000 L706 2995 L706 2932 L734 2932 L734 2995 L750 3000 Q792 3014 792 3062 L792 3320 Q792 3338 720 3338 Q648 3338 648 3320 Z"
                   fill="url(#bottleGrad)" stroke="rgba(194,163,104,0.5)" stroke-width="1.2"/>
@@ -866,12 +890,12 @@ body {
 
       <!-- Near parallax layer: sweeps past 1.3x faster during camera pans -->
       <g id="world-near">
-        <ellipse cx="150"  cy="1060" rx="380" ry="140" fill="#040200" opacity="0.9"  filter="url(#forestBlur)"/>
-        <ellipse cx="1300" cy="1000" rx="350" ry="120" fill="#050301" opacity="0.85" filter="url(#forestBlur)"/>
-        <ellipse cx="220"  cy="2040" rx="390" ry="130" fill="#040200" opacity="0.9"  filter="url(#forestBlur)"/>
-        <ellipse cx="1260" cy="2090" rx="350" ry="135" fill="#050301" opacity="0.85" filter="url(#forestBlur)"/>
-        <ellipse cx="180"  cy="2960" rx="370" ry="125" fill="#040200" opacity="0.9"  filter="url(#forestBlur)"/>
-        <ellipse cx="1280" cy="2905" rx="340" ry="118" fill="#050301" opacity="0.85" filter="url(#forestBlur)"/>
+        <ellipse cx="150"  cy="1060" rx="480" ry="185" fill="url(#nearBlob)" opacity="0.9"/>
+        <ellipse cx="1300" cy="1000" rx="445" ry="160" fill="url(#nearBlob)" opacity="0.85"/>
+        <ellipse cx="220"  cy="2040" rx="495" ry="170" fill="url(#nearBlob)" opacity="0.9"/>
+        <ellipse cx="1260" cy="2090" rx="445" ry="175" fill="url(#nearBlob)" opacity="0.85"/>
+        <ellipse cx="180"  cy="2960" rx="470" ry="165" fill="url(#nearBlob)" opacity="0.9"/>
+        <ellipse cx="1280" cy="2905" rx="430" ry="155" fill="url(#nearBlob)" opacity="0.85"/>
       </g>
     </svg>
 
@@ -1140,10 +1164,16 @@ window.addEventListener('scroll', function(){
 
 /* ──────────── HERO SETUP ──────────── */
 var heroSpacer = document.getElementById('hero-spacer');
-var sPos = 0, sVel = 0, lastT = null;
+var sPos = 0, sVel = 0, lastT = null, lastCamStr = '';
 
 // Opening logo
 var heroLogo = document.getElementById('hero-logo');
+
+// Mobile: fewer particles, no parallax near-layer, no camera breathing
+var isMobile = window.matchMedia('(max-width: 768px)').matches;
+var MIST_N  = isMobile ? 10 : 18;
+var DUST_N  = isMobile ? 24 : 60;
+var BURST_N = isMobile ? 36 : 64;
 
 function $s(id){ return document.getElementById(id); }
 var sc = {
@@ -1160,6 +1190,7 @@ var sc = {
   cta: $s('hero-cta')
 };
 sc.worldNear = $s('world-near');
+if (isMobile) sc.worldNear.style.display = 'none';
 sc.workers = $s('f1-workers');
 sc.wl      = $s('f1-wl');
 sc.wr      = $s('f1-wr');
@@ -1201,7 +1232,7 @@ var fallPieces = [];
 
 // Spray burst particles: cone up-right from the atomizer, scroll-scrubbed
 var burst = [];
-for (var bi = 0; bi < 64; bi++) {
+for (var bi = 0; bi < BURST_N; bi++) {
   var bAng = (-58 + (fakeRand(bi*7) - 0.5) * 48) * Math.PI / 180;
   burst.push({
     ang: bAng,
@@ -1214,7 +1245,7 @@ for (var bi = 0; bi < 64; bi++) {
 
 // Mist particles (SVG circles, positioned per-frame)
 var mistEls = [];
-for (var mi = 0; mi < 18; mi++) {
+for (var mi = 0; mi < MIST_N; mi++) {
   var mc = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
   mc.setAttribute('fill', mi % 3 === 0 ? '#D4BC86' : '#C2A368');
   mc.setAttribute('opacity', '0');
@@ -1234,7 +1265,7 @@ window.addEventListener('resize', resizeCanvas, {passive:true});
 
 function fakeRand(seed){ return ((Math.sin(seed * 127.1 + 311.7) * 43758.5) % 1 + 1) % 1; }
 var pts = [];
-for (var pi2 = 0; pi2 < 60; pi2++) {
+for (var pi2 = 0; pi2 < DUST_N; pi2++) {
   pts.push({
     x: 300 + fakeRand(pi2*11)*840,
     y: 350 + fakeRand(pi2*13)*450,
@@ -1245,7 +1276,14 @@ for (var pi2 = 0; pi2 < 60; pi2++) {
     size: 0.5 + fakeRand(pi2*31)*1.8
   });
 }
+var fxDirty = false;
 function drawFx(alpha, burstT, nozzleX, nozzleY){
+  var active = alpha > 0.004 || (burstT > 0 && burstT < 1);
+  if(!active){
+    if(fxDirty){ ctx.clearRect(0,0,canvas.width,canvas.height); fxDirty = false; }
+    return;
+  }
+  fxDirty = true;
   ctx.clearRect(0,0,canvas.width,canvas.height);
   var sx = canvas.width/1440, sy = canvas.height/900;
 
@@ -1307,6 +1345,8 @@ function seg(p,a,b){ return clamp((p-a)/(b-a),0,1); }
 // Chapter text reveal: opacity + blur + rise, fully scrub-reversible
 function chReveal(el, tin, tout){
   var t = eOut(tin) * (1 - eIn(tout));
+  if (el.__lt !== undefined && Math.abs(el.__lt - t) < 0.002) return;
+  el.__lt = t;
   el.style.opacity = t;
   el.style.filter = 'blur(' + (1-t)*10 + 'px)';
   el.style.transform = 'translateX(-50%) translateY(' + (1-t)*26 + 'px)';
@@ -1321,6 +1361,8 @@ function heroLoop(ts){
   heroTime += dt;
 
   var spacerTop = heroSpacer.getBoundingClientRect().top;
+  // Hero fully scrolled past — skip all scene work
+  if (spacerTop + heroSpacer.offsetHeight < -60) { drawFx(0, 0, 0, 0); return; }
   var spacerH   = heroSpacer.offsetHeight - window.innerHeight;
   var raw = spacerH > 0 ? clamp(-spacerTop / spacerH, 0, 1) : 0;
 
@@ -1331,35 +1373,39 @@ function heroLoop(ts){
   var p = clamp(sPos, 0, 1);
 
   /* ── Opening logo: fade + settle in, dissolve out ── */
-  var t0in  = seg(p, 0, 0.07);
-  var t0out = seg(p, 0.095, 0.15);
-  heroLogo.style.opacity = eOut(t0in) * (1 - eIn(t0out));
-  heroLogo.style.transform = 'translate(-50%,-50%) scale(' + (0.92 + 0.08*eOut(t0in)) + ')';
+  if (p < 0.22) {
+    var t0in  = seg(p, 0, 0.07);
+    var t0out = seg(p, 0.095, 0.15);
+    heroLogo.style.opacity = eOut(t0in) * (1 - eIn(t0out));
+    heroLogo.style.transform = 'translate(-50%,-50%) scale(' + (0.92 + 0.08*eOut(t0in)) + ')';
+  }
 
-  /* ── Floor 1 reveal: 0.08–0.24 ── */
-  var f1r = seg(p, 0.08, 0.24);
-  op(sc.f1sun,    eOut(seg(f1r, 0, 0.5)));
-  op(sc.f1forest, eOut(seg(f1r, 0.05, 0.6)));
-  op(sc.f1ground, eOut(seg(f1r, 0.1, 0.5)));
-  op(sc.f1rays,   eOut(seg(f1r, 0.45, 1))*0.85);
-  var treeT = eOut(seg(f1r, 0.15, 0.9));
-  op(sc.f1tree, treeT);
-  op(sc.f1roots, eOut(seg(p, 0.22, 0.30)));
+  /* ── Floor 1: only while on/near the tree floor ── */
+  if (p < 0.56) {
+    var f1r = seg(p, 0.08, 0.24);
+    op(sc.f1sun,    eOut(seg(f1r, 0, 0.5)));
+    op(sc.f1forest, eOut(seg(f1r, 0.05, 0.6)));
+    op(sc.f1ground, eOut(seg(f1r, 0.1, 0.5)));
+    op(sc.f1rays,   eOut(seg(f1r, 0.45, 1))*0.85);
+    var treeT = eOut(seg(f1r, 0.15, 0.9));
+    op(sc.f1tree, treeT);
+    op(sc.f1roots, eOut(seg(p, 0.22, 0.30)));
 
-  // Workers arrive and swing at a steady 2.2 strikes/sec (time-based)
-  var wIn = eOut(seg(p, 0.14, 0.20));
-  op(sc.workers, wIn);
-  sc.wl.setAttribute('transform', 'translate(' + (628 - (1-wIn)*130) + ',816)');
-  sc.wr.setAttribute('transform', 'translate(' + (812 + (1-wIn)*130) + ',816) scale(-1,1)');
-  var chopEnv = seg(p, 0.17, 0.22) * (1 - eIn(seg(p, 0.44, 0.52)));
-  var swing = Math.sin(heroTime*2.2*Math.PI*2) * 34 * chopEnv;
-  sc.wlArm.setAttribute('transform', 'rotate(' + swing + ' 0 -96)');
-  sc.wrArm.setAttribute('transform', 'rotate(' + swing + ' 0 -96)');
-  // notch deepens, trunk shudders on each strike
-  op(sc.notch,  seg(p, 0.18, 0.26));
-  op(sc.notch2, seg(p, 0.21, 0.28));
-  var shudder = Math.max(0, Math.sin(heroTime*2.2*Math.PI*2)) * 2.4 * chopEnv;
-  sc.f1tree.setAttribute('transform', 'translate(' + shudder + ',' + (1-treeT)*60 + ')');
+    // Workers arrive and swing at a steady 2.2 strikes/sec (time-based)
+    var wIn = eOut(seg(p, 0.14, 0.20));
+    op(sc.workers, wIn);
+    sc.wl.setAttribute('transform', 'translate(' + (628 - (1-wIn)*130) + ',816)');
+    sc.wr.setAttribute('transform', 'translate(' + (812 + (1-wIn)*130) + ',816) scale(-1,1)');
+    var chopEnv = seg(p, 0.17, 0.22) * (1 - eIn(seg(p, 0.44, 0.52)));
+    var swing = Math.sin(heroTime*2.2*Math.PI*2) * 34 * chopEnv;
+    sc.wlArm.setAttribute('transform', 'rotate(' + swing + ' 0 -96)');
+    sc.wrArm.setAttribute('transform', 'rotate(' + swing + ' 0 -96)');
+    // notch deepens, trunk shudders on each strike
+    op(sc.notch,  seg(p, 0.18, 0.26));
+    op(sc.notch2, seg(p, 0.21, 0.28));
+    var shudder = Math.max(0, Math.sin(heroTime*2.2*Math.PI*2)) * 2.4 * chopEnv;
+    sc.f1tree.setAttribute('transform', 'translate(' + shudder + ',' + (1-treeT)*60 + ')');
+  }
 
   /* ── Camera ── */
   var camY;
@@ -1372,13 +1418,18 @@ function heroLoop(ts){
   else if (p < 0.80) camY = 1800;
   else if (p < 0.92) camY = 1800 + sstep(seg(p, 0.80, 0.92)) * 900;
   else               camY = 2700;
-  // Subtle breathing so the frame is never frozen, even at rest
-  camY += Math.sin(heroTime*0.35) * 2.5;
-  sc.world.setAttribute('transform', 'translate(0,' + (-camY) + ')');
-  // Near layer moves 1.3x faster — parallax depth during pans
-  sc.worldNear.setAttribute('transform', 'translate(0,' + (-camY*1.3) + ')');
+  // Subtle breathing (desktop only — keeps mobile frames cacheable)
+  if (!isMobile) camY += Math.sin(heroTime*0.35) * 2.5;
+  var camStr = 'translate(0,' + (-Math.round(camY*10)/10) + ')';
+  if (camStr !== lastCamStr) {
+    lastCamStr = camStr;
+    sc.world.setAttribute('transform', camStr);
+    // Near layer moves 1.3x faster — parallax depth during pans
+    if (!isMobile) sc.worldNear.setAttribute('transform', 'translate(0,' + (-Math.round(camY*13)/10) + ')');
+  }
 
-  /* ── Floor 2: mabkhara + falling oud + smoke ── */
+  /* ── Floor 2: mabkhara + falling oud + smoke (gated) ── */
+  if (p > 0.18 && p < 0.72) {
   op(sc.f2ember, eOut(seg(p, 0.32, 0.42)));
   op(sc.mabkhara, eOut(seg(p, 0.28, 0.38)));
 
@@ -1409,8 +1460,10 @@ function heroLoop(ts){
     var pulse = 0.5 + 0.5*Math.sin(heroTime*2.6 + i*1.7);
     e2.setAttribute('opacity', landedT * (0.3 + 0.55*pulse));
   });
+  }
 
-  /* ── The drop ── */
+  /* ── The drop (gated) ── */
+  if (p > 0.44 && p < 0.70) {
   var formT = seg(p, 0.47, 0.56);
   var dropVisible = p >= 0.47 && p < 0.68;
   if (dropVisible) {
@@ -1431,8 +1484,10 @@ function heroLoop(ts){
   } else {
     op(sc.drop, 0);
   }
+  }
 
-  /* ── Floor 3: spotlight, splash, liquid rise ── */
+  /* ── Floor 3: spotlight, splash, liquid rise (gated) ── */
+  if (p > 0.52 && p < 0.97) {
   op(sc.f3spot, eOut(seg(p, 0.60, 0.70)) * 0.85);
   var spotEnv = eOut(seg(p, 0.60, 0.72));
   moteEls.forEach(function(m2, i){
@@ -1463,8 +1518,11 @@ function heroLoop(ts){
   var capT = eOut(seg(p, 0.80, 0.88));
   sc.f3cap.setAttribute('transform',
     'translate(' + lerp(96, 0, capT) + ',' + lerp(-64, 0, capT) + ') rotate(' + lerp(22, 0, capT) + ' 720 2170)');
+  }
 
-  /* ── Floor 4: glow, rays, halo, bottle settle, bokeh, mist ── */
+  /* ── Floor 4: glow, rays, halo, bottle settle, bokeh, mist (gated) ── */
+  var capDy = 0;
+  if (p > 0.80) {
   var f4in = eOut(seg(p, 0.86, 0.96));
   op(sc.f4glow, f4in);
   op(sc.f4rays, f4in * 0.6);
@@ -1477,7 +1535,7 @@ function heroLoop(ts){
   sc.f4bottle.setAttribute('transform', 'translate(720 3140) scale(' + bs + ') translate(-720 -3140) translate(0,' + ((1-f4in)*80) + ')');
   // Atomizer press: cap dips as the spray fires
   var pressT = seg(p, 0.925, 0.94);
-  var capDy = Math.sin(pressT*Math.PI)*9;
+  capDy = Math.sin(pressT*Math.PI)*9;
   sc.f4cap.setAttribute('transform', 'translate(0,' + capDy + ')');
   // Light band sweeping through the liquid
   sc.f4shimmer.setAttribute('x', 646 + ((heroTime*55) % 172));
@@ -1507,6 +1565,7 @@ function heroLoop(ts){
     s2.setAttribute('opacity', f4env * tw*tw*tw * 0.85);
     s2.setAttribute('transform', 'rotate(45 ' + (+s2.getAttribute('x')+2.5) + ' ' + (+s2.getAttribute('y')+2.5) + ')');
   });
+  }
 
   /* ── Chapter text ── */
   chReveal(sc.ht1, seg(p, 0.13, 0.18), seg(p, 0.235, 0.275));

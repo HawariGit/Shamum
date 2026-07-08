@@ -299,34 +299,62 @@ body {
   .ritual-text { padding: 64px 24px; }
 }
 
-/* ─── EMBER & ESSENCE DIPTYCH ─── */
+/* ─── EMBER & ESSENCE — gallery plates ─── */
 #essence {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 3px; background: #0A0503;
+  background: #0F0805; position: relative;
+  padding: 130px 48px 150px;
 }
-.ess-panel { position: relative; overflow: hidden; height: 88vh; margin: 0; }
-.ess-panel img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  transition: transform 1.4s cubic-bezier(0.16,1,0.3,1);
+.ess-head { text-align: center; margin-bottom: 76px; }
+.ess-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 3.4vw, 48px); font-weight: 300;
+  color: var(--sand-50); margin-top: 14px;
 }
-.ess-panel:hover img { transform: scale(1.045); }
-.ess-panel figcaption {
-  position: absolute; left: 0; right: 0; bottom: 0;
-  padding: 44px 40px;
-  background: linear-gradient(to top, rgba(10,5,3,0.82), transparent);
+.ess-title em { font-style: italic; color: var(--gold-300); }
+.ess-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 480px));
+  gap: clamp(36px, 7vw, 130px); justify-content: center;
+}
+.ess-panel { margin: 0; }
+.ess-frame {
+  position: relative; padding: 14px;
+  border: 1px solid rgba(201,161,90,0.45);
+  transition: border-color 0.6s;
+}
+.ess-frame::after {
+  content: ''; position: absolute; inset: 6px;
+  border: 1px solid rgba(201,161,90,0.14); pointer-events: none;
+}
+.ess-panel:hover .ess-frame { border-color: rgba(201,161,90,0.85); }
+.ess-clip { overflow: hidden; display: block; }
+.ess-clip img {
+  display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+  transition: transform 1.3s cubic-bezier(0.16,1,0.3,1);
+}
+.ess-panel:hover .ess-clip img { transform: scale(1.035); }
+.ess-panel figcaption { text-align: center; margin-top: 30px; }
+.ess-num {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 15px; letter-spacing: 0.35em; color: var(--gold-500);
+  display: block; margin-bottom: 10px;
 }
 .ess-ar {
-  font-family: 'Cormorant Garamond', serif; font-size: 34px;
-  color: var(--sand-50); display: block; direction: rtl; text-align: left;
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(30px, 3vw, 42px);
+  color: var(--sand-50); display: block; direction: rtl;
 }
 .ess-en {
   font-family: 'Jost', sans-serif; font-size: 10px;
-  letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--gold-400); display: block; margin-top: 6px;
+  letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--gold-400); display: block; margin-top: 8px;
+}
+.ess-desc {
+  font-family: 'Jost', sans-serif; font-size: 12.5px; font-weight: 300;
+  color: rgba(244,234,210,0.58); line-height: 1.85;
+  margin: 14px auto 0; max-width: 36ch;
 }
 @media (max-width: 900px) {
-  #essence { grid-template-columns: 1fr; }
-  .ess-panel { height: 62vh; }
+  #essence { padding: 90px 24px 100px; }
+  .ess-grid { grid-template-columns: minmax(0, 480px); gap: 80px; }
 }
 
 /* ─── REVEAL SYSTEM ─── */
@@ -1114,20 +1142,43 @@ body {
 
 <!-- ═══ EMBER & ESSENCE ═══ -->
 <section id="essence">
-  <figure class="ess-panel">
-    <img src="assets/ig-bukhoor.webp" alt="SHAMUM bukhoor burning — بخور شاموم" loading="lazy">
-    <figcaption>
-      <span class="ess-ar">البخور</span>
-      <span class="ess-en">The Ember</span>
-    </figcaption>
-  </figure>
-  <figure class="ess-panel">
-    <img src="assets/ig-decanter.webp" alt="Pure oud oil beneath the quatrefoil — دهن العود" loading="lazy">
-    <figcaption>
-      <span class="ess-ar">الدهن</span>
-      <span class="ess-en">The Essence</span>
-    </figcaption>
-  </figure>
+  <div class="ess-head">
+    <span class="section-eyebrow reveal" style="color: var(--gold-400);">عطايا العود · The Two Gifts of the Wood</span>
+    <h2 class="ess-title reveal reveal-delay-1">One tree. <em>Two inheritances.</em></h2>
+    <div class="ornament reveal reveal-delay-2">
+      <span class="orn-line"></span>
+      <img class="orn-mark" src="assets/logo-mark.png" alt="">
+      <span class="orn-line"></span>
+    </div>
+  </div>
+  <div class="ess-grid">
+    <figure class="ess-panel reveal">
+      <div class="ess-frame">
+        <span class="ess-clip">
+          <img src="assets/ig-bukhoor.webp" alt="SHAMUM bukhoor over live coal — بخور شاموم" loading="lazy">
+        </span>
+      </div>
+      <figcaption>
+        <span class="ess-num">I</span>
+        <span class="ess-ar">البخور</span>
+        <span class="ess-en">The Ember</span>
+        <p class="ess-desc">Resin-dark heartwood over live coal — the scent that opens every majlis.</p>
+      </figcaption>
+    </figure>
+    <figure class="ess-panel reveal reveal-delay-1">
+      <div class="ess-frame">
+        <span class="ess-clip">
+          <img src="assets/ig-decanter.webp" alt="Pure dehn al oud beneath the quatrefoil — دهن العود" loading="lazy">
+        </span>
+      </div>
+      <figcaption>
+        <span class="ess-num">II</span>
+        <span class="ess-ar">الدهن</span>
+        <span class="ess-en">The Essence</span>
+        <p class="ess-desc">Pure dehn al oud, decanted after years of rest beneath the quatrefoil.</p>
+      </figcaption>
+    </figure>
+  </div>
 </section>
 
 <!-- ═══ PRODUCTS ═══ -->

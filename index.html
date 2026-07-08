@@ -383,6 +383,8 @@ body {
 }
 .add-to-bag {
   margin-top: 20px; width: 100%; padding: 14px 24px;
+  display: block; text-align: center; text-decoration: none;
+  box-sizing: border-box;
   background: var(--ink); color: var(--gold-300); border: none;
   font-family: 'Jost', sans-serif; font-size: 10px;
   letter-spacing: 0.25em; text-transform: uppercase;
@@ -390,7 +392,6 @@ body {
   transition: background 0.4s, color 0.4s, transform 0.3s cubic-bezier(0.16,1,0.3,1);
 }
 .add-to-bag:hover { background: var(--oud-800); }
-.add-to-bag.added { background: var(--gold-500); color: #fff; }
 .add-to-bag .ripple {
   position: absolute; border-radius: 50%;
   background: rgba(255,255,255,0.22);
@@ -1037,7 +1038,7 @@ body {
         <span class="product-name">Mindali</span>
         <span class="product-arabic">منــــــدلـي</span>
         <span class="product-price">240.000 ر.ع</span>
-        <button class="add-to-bag magnetic">Add to Bag</button>
+        <a class="add-to-bag magnetic" href="https://shamum.com/products/منــــــدلـي-1" target="_blank" rel="noopener">View Product · اكتشف</a>
       </div>
     </div>
 
@@ -1050,7 +1051,7 @@ body {
         <span class="product-name">Jawhar</span>
         <span class="product-arabic">جوهــــر</span>
         <span class="product-price">150.000 ر.ع</span>
-        <button class="add-to-bag magnetic">Add to Bag</button>
+        <a class="add-to-bag magnetic" href="https://shamum.com/products/جوهــــر" target="_blank" rel="noopener">View Product · اكتشف</a>
       </div>
     </div>
 
@@ -1063,7 +1064,7 @@ body {
         <span class="product-name">Razi II</span>
         <span class="product-arabic">رازي الثـانـي</span>
         <span class="product-price">125.000 ر.ع</span>
-        <button class="add-to-bag magnetic">Add to Bag</button>
+        <a class="add-to-bag magnetic" href="https://shamum.com/products/رازي" target="_blank" rel="noopener">View Product · اكتشف</a>
       </div>
     </div>
 
@@ -1077,7 +1078,7 @@ body {
         <span class="product-name">Mindal</span>
         <span class="product-arabic">منــدل</span>
         <span class="product-price">107.000 ر.ع</span>
-        <button class="add-to-bag magnetic">Add to Bag</button>
+        <a class="add-to-bag magnetic" href="https://shamum.com/products/منــدل" target="_blank" rel="noopener">View Product · اكتشف</a>
       </div>
     </div>
 
@@ -1090,7 +1091,7 @@ body {
         <span class="product-name">Zahiya</span>
         <span class="product-arabic">زاهيـــة</span>
         <span class="product-price">68.000 ر.ع</span>
-        <button class="add-to-bag magnetic">Add to Bag</button>
+        <a class="add-to-bag magnetic" href="https://shamum.com/products/زاهيـــة" target="_blank" rel="noopener">View Product · اكتشف</a>
       </div>
     </div>
 
@@ -1104,7 +1105,7 @@ body {
         <span class="product-name">Surra</span>
         <span class="product-arabic">سُــــرى</span>
         <span class="product-price">61.000 ر.ع</span>
-        <button class="add-to-bag magnetic">Add to Bag</button>
+        <a class="add-to-bag magnetic" href="https://shamum.com/products/ســــرى" target="_blank" rel="noopener">View Product · اكتشف</a>
       </div>
     </div>
 
@@ -1716,7 +1717,7 @@ document.querySelectorAll('.magnetic').forEach(function(btn){
   btn.addEventListener('mouseleave', function(){ btn.style.transform = ''; });
 });
 
-/* ──────────── ADD TO BAG ──────────── */
+/* ──────────── PRODUCT LINK RIPPLE ──────────── */
 document.querySelectorAll('.add-to-bag').forEach(function(btn){
   btn.addEventListener('click', function(e){
     var r = btn.getBoundingClientRect();
@@ -1726,11 +1727,6 @@ document.querySelectorAll('.add-to-bag').forEach(function(btn){
     rip.style.cssText = 'width:'+sz+'px;height:'+sz+'px;left:'+(e.clientX-r.left-sz/2)+'px;top:'+(e.clientY-r.top-sz/2)+'px;';
     btn.appendChild(rip);
     setTimeout(function(){ rip.remove(); }, 700);
-    if(!btn.classList.contains('added')){
-      btn.classList.add('added');
-      btn.textContent = '✓ Added';
-      setTimeout(function(){ btn.classList.remove('added'); btn.textContent = 'Add to Bag'; }, 2200);
-    }
   });
 });
 

@@ -262,6 +262,73 @@ body {
   margin: 40px auto;
 }
 
+/* ─── THE RITUAL ─── */
+#ritual {
+  display: grid; grid-template-columns: 1fr 1fr;
+  background: #120A06; min-height: 92vh;
+}
+.ritual-media { position: relative; overflow: hidden; }
+.ritual-media img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  object-position: center top;
+}
+.ritual-text {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 96px 7vw; position: relative;
+}
+.ritual-text::before {
+  content: ''; position: absolute; inset: 26px; pointer-events: none;
+  border: 1px solid rgba(201,161,90,0.22);
+}
+.ritual-head {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(34px, 4.2vw, 64px);
+  font-weight: 300; color: var(--sand-50); line-height: 1.12;
+  margin-top: 18px;
+}
+.ritual-head em { font-style: italic; color: var(--gold-300); }
+.ritual-sub {
+  font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 300;
+  color: rgba(244,234,210,0.7); line-height: 1.95;
+  margin-top: 26px; max-width: 46ch;
+}
+.ritual-text .ornament { justify-content: flex-start; margin-top: 38px; }
+@media (max-width: 900px) {
+  #ritual { grid-template-columns: 1fr; }
+  .ritual-media { height: 64vh; }
+  .ritual-text { padding: 64px 24px; }
+}
+
+/* ─── EMBER & ESSENCE DIPTYCH ─── */
+#essence {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3px; background: #0A0503;
+}
+.ess-panel { position: relative; overflow: hidden; height: 88vh; margin: 0; }
+.ess-panel img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 1.4s cubic-bezier(0.16,1,0.3,1);
+}
+.ess-panel:hover img { transform: scale(1.045); }
+.ess-panel figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 44px 40px;
+  background: linear-gradient(to top, rgba(10,5,3,0.82), transparent);
+}
+.ess-ar {
+  font-family: 'Cormorant Garamond', serif; font-size: 34px;
+  color: var(--sand-50); display: block; direction: rtl; text-align: left;
+}
+.ess-en {
+  font-family: 'Jost', sans-serif; font-size: 10px;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold-400); display: block; margin-top: 6px;
+}
+@media (max-width: 900px) {
+  #essence { grid-template-columns: 1fr; }
+  .ess-panel { height: 62vh; }
+}
+
 /* ─── REVEAL SYSTEM ─── */
 .reveal {
   opacity: 0; transform: translateY(40px);
@@ -462,40 +529,54 @@ body {
   color: var(--gold-500); direction: rtl; display: block; margin-top: 4px;
 }
 
-/* ─── LOYALTY ─── */
+/* ─── GIFTING ─── */
 #loyalty {
-  background: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-300) 50%, var(--gold-400) 100%);
-  padding: 90px 48px; text-align: center;
-  position: relative;
+  padding: 150px 48px; text-align: center;
+  position: relative; overflow: hidden; background: #0D0704;
 }
+.gift-photo {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 58%;
+}
+.gift-scrim {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(13,7,4,0.6), rgba(13,7,4,0.24) 45%, rgba(13,7,4,0.7)),
+    radial-gradient(ellipse 120% 100% at 50% 50%, transparent 55%, rgba(13,7,4,0.55) 100%);
+}
+.gift-inner { position: relative; z-index: 2; }
 #loyalty::before {
-  content: ''; position: absolute; inset: 16px; pointer-events: none;
-  border: 1px solid rgba(21,16,10,0.28);
+  content: ''; position: absolute; inset: 16px; pointer-events: none; z-index: 1;
+  border: 1px solid rgba(201,161,90,0.45);
 }
 #loyalty::after {
-  content: ''; position: absolute; inset: 22px; pointer-events: none;
-  border: 1px solid rgba(21,16,10,0.1);
+  content: ''; position: absolute; inset: 22px; pointer-events: none; z-index: 1;
+  border: 1px solid rgba(201,161,90,0.16);
 }
 .loyalty-headline {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(28px, 4vw, 54px);
-  font-weight: 400; color: var(--ink); direction: rtl; letter-spacing: -0.01em;
+  font-size: clamp(30px, 4.4vw, 58px);
+  font-weight: 400; color: var(--sand-50); direction: rtl; letter-spacing: -0.01em;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.55);
 }
 .loyalty-sub {
   font-family: 'Jost', sans-serif; font-size: 12px;
   letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--oud-800); margin-top: 12px; display: block;
+  color: var(--gold-300); margin-top: 12px; display: block;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.6);
 }
 .loyalty-btn {
   display: inline-block; margin-top: 36px; padding: 16px 52px;
-  background: var(--ink); color: var(--gold-300); border: none;
+  background: linear-gradient(135deg, #D4BC86 0%, #AE8B4F 48%, #8C6E3A 100%);
+  color: var(--ink); border: 1px solid var(--gold-600);
+  text-decoration: none;
   font-family: 'Jost', sans-serif; font-size: 11px;
   letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer;
   position: relative; overflow: hidden;
   transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
               box-shadow 0.35s cubic-bezier(0.16,1,0.3,1);
 }
-.loyalty-btn:hover { box-shadow: 0 14px 44px rgba(21,16,10,0.35); }
+.loyalty-btn:hover { box-shadow: 0 14px 44px rgba(0,0,0,0.5); }
 
 /* ─── FOOTER ─── */
 #footer {
@@ -1015,6 +1096,40 @@ body {
   </div>
 </section>
 
+<!-- ═══ THE RITUAL ═══ -->
+<section id="ritual">
+  <div class="ritual-media">
+    <img src="assets/ig-ritual.webp" alt="The bukhoor ritual in the SHAMUM majlis — طقس البخور" loading="lazy">
+  </div>
+  <div class="ritual-text">
+    <span class="section-eyebrow reveal" style="color: var(--gold-400);">The House · بيت شاموم</span>
+    <h2 class="ritual-head reveal reveal-delay-1">The ritual is<br><em>the inheritance.</em></h2>
+    <p class="ritual-sub reveal reveal-delay-2">In the majlis, the mabkhara passes from hand to hand — bukhoor smoke rising through the folds of a musar, as it has for generations. SHAMUM begins here: hospitality, patience, and wood that remembers.</p>
+    <div class="ornament reveal reveal-delay-3">
+      <span class="orn-line" style="background: linear-gradient(to right, var(--gold-500), transparent);"></span>
+      <img class="orn-mark" src="assets/logo-mark.png" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EMBER & ESSENCE ═══ -->
+<section id="essence">
+  <figure class="ess-panel">
+    <img src="assets/ig-bukhoor.webp" alt="SHAMUM bukhoor burning — بخور شاموم" loading="lazy">
+    <figcaption>
+      <span class="ess-ar">البخور</span>
+      <span class="ess-en">The Ember</span>
+    </figcaption>
+  </figure>
+  <figure class="ess-panel">
+    <img src="assets/ig-decanter.webp" alt="Pure oud oil beneath the quatrefoil — دهن العود" loading="lazy">
+    <figcaption>
+      <span class="ess-ar">الدهن</span>
+      <span class="ess-en">The Essence</span>
+    </figcaption>
+  </figure>
+</section>
+
 <!-- ═══ PRODUCTS ═══ -->
 <section id="products">
   <div id="products-header">
@@ -1154,13 +1269,15 @@ body {
   </div>
 </section>
 
-<!-- ═══ LOYALTY ═══ -->
+<!-- ═══ GIFTING ═══ -->
 <section id="loyalty">
-  <div class="reveal">
-    <h2 class="loyalty-headline">انضم لعائلة شاموم</h2>
-    <span class="loyalty-sub">Join the House · Private Access · Curated Selections</span>
+  <img class="gift-photo" src="assets/ig-box-open.webp" alt="SHAMUM presentation chest — صندوق الإهداء" loading="lazy">
+  <div class="gift-scrim"></div>
+  <div class="reveal gift-inner">
+    <h2 class="loyalty-headline">فـن الإهــداء</h2>
+    <span class="loyalty-sub">The Art of Gifting · Presentation Chests · Private Selections</span>
     <br>
-    <button class="loyalty-btn magnetic">Join the House</button>
+    <a class="loyalty-btn magnetic" href="https://shamum.com/products" target="_blank" rel="noopener">Explore Gifting · اكتشف</a>
   </div>
 </section>
 

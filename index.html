@@ -43,6 +43,57 @@ body {
 }
 ::selection { background: rgba(174,139,79,0.4); color: var(--sand-50); }
 
+/* ─── ENTRY VEIL ─── */
+#veil {
+  position: fixed; inset: 0; z-index: 5000; background: #0D0704;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), visibility 0.9s;
+}
+#veil img {
+  height: 64px; width: auto; opacity: 0;
+  animation: veilMark 1.1s cubic-bezier(0.16,1,0.3,1) 0.1s forwards;
+}
+@keyframes veilMark {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+#veil.gone { opacity: 0; visibility: hidden; pointer-events: none; }
+
+/* ─── WHATSAPP ─── */
+#wa-btn {
+  position: fixed; right: 26px; bottom: 26px; z-index: 1500;
+  width: 54px; height: 54px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(21,14,8,0.9); color: var(--gold-300);
+  border: 1px solid rgba(201,161,90,0.5);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s, color 0.3s;
+}
+#wa-btn svg { width: 26px; height: 26px; }
+#wa-btn:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #D4BC86, #AE8B4F);
+  color: var(--ink);
+}
+@media (max-width: 768px) {
+  #wa-btn { right: 16px; bottom: 16px; width: 48px; height: 48px; }
+}
+
+/* ─── HERO CHAPTER MARKERS ─── */
+#ch-dots {
+  position: absolute; right: 30px; top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 16px;
+  z-index: 12; opacity: 0; transition: opacity 0.6s;
+}
+.ch-dot {
+  width: 7px; height: 7px; transform: rotate(45deg);
+  border: 1px solid rgba(201,161,90,0.45); background: transparent;
+  transition: background 0.45s, border-color 0.45s;
+}
+.ch-dot.on { background: var(--gold-400); border-color: var(--gold-300); }
+@media (max-width: 768px) { #ch-dots { display: none; } }
+
 /* ─── NAV ─── */
 #nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
@@ -681,12 +732,20 @@ body {
 </head>
 <body>
 
-<!-- CURSOR -->
+<!-- ENTRY VEIL -->
+<div id="veil"><img src="assets/logo-mark.png" alt="SHAMUM"></div>
+
+<!-- WHATSAPP -->
+<a id="wa-btn" href="https://wa.me/96898540321" target="_blank" rel="noopener" aria-label="WhatsApp SHAMUM — واتساب">
+  <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+    <path d="M16.04 4C9.42 4 4.05 9.36 4.05 15.97c0 2.11.55 4.17 1.6 5.99L4 28l6.19-1.62a12 12 0 0 0 5.85 1.49h.01c6.61 0 11.98-5.36 11.98-11.97C28.03 9.36 22.65 4 16.04 4zm0 21.85h-.01a9.9 9.9 0 0 1-5.05-1.38l-.36-.21-3.67.96.98-3.58-.24-.37a9.86 9.86 0 0 1-1.51-5.3c0-5.47 4.45-9.92 9.93-9.92a9.87 9.87 0 0 1 9.92 9.93c0 5.47-4.46 9.87-9.99 9.87zm5.44-7.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/>
+  </svg>
+</a>
 
 <!-- NAV -->
 <nav id="nav">
   <ul class="nav-links">
-    <li><a href="#" class="nav-link">Home</a></li>
+    <li><a href="#top" class="nav-link" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Home</a></li>
     <li><a href="#products" class="nav-link">Collection</a></li>
     <li><a href="#brand-statement" class="nav-link">Our Oud</a></li>
     <li><a href="#footer" class="nav-link">The House</a></li>
@@ -717,6 +776,14 @@ body {
 <div id="hero-spacer">
   <div id="hero-sticky">
     <canvas id="hero-canvas"></canvas>
+
+    <!-- Chapter markers -->
+    <div id="ch-dots" aria-hidden="true">
+      <span class="ch-dot"></span>
+      <span class="ch-dot"></span>
+      <span class="ch-dot"></span>
+      <span class="ch-dot"></span>
+    </div>
 
     <svg id="hero-svg-scene" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -1347,34 +1414,31 @@ body {
     <div>
       <span class="footer-col-title">Maison</span>
       <ul class="footer-links">
-        <li><a href="#">Our Story</a></li>
-        <li><a href="#">The Oud</a></li>
-        <li><a href="#">Craftsmanship</a></li>
-        <li><a href="#">Sustainability</a></li>
-        <li><a href="#">Press</a></li>
-        <li><a href="#">Careers</a></li>
+        <li><a href="#brand-statement">Our Story · قصتنا</a></li>
+        <li><a href="#ritual">The Ritual · الطقس</a></li>
+        <li><a href="#essence">The Two Gifts · عطايا العود</a></li>
+        <li><a href="#products">The Collection · المجموعة</a></li>
+        <li><a href="https://www.instagram.com/shamumofficial" target="_blank" rel="noopener">Instagram · @shamumofficial</a></li>
       </ul>
     </div>
     <div>
       <span class="footer-col-title">Shop</span>
       <ul class="footer-links">
-        <li><a href="#">All Fragrances</a></li>
-        <li><a href="#">Oud Oils</a></li>
-        <li><a href="#">Oud Wood</a></li>
-        <li><a href="#">Limited Edition</a></li>
-        <li><a href="#">Gift Sets</a></li>
-        <li><a href="#">Bespoke</a></li>
+        <li><a href="https://shamum.com/products" target="_blank" rel="noopener">All Products · جميع المنتجات</a></li>
+        <li><a href="https://shamum.com/categories/1006199/البـخـاخـات" target="_blank" rel="noopener">Sprays · البـخـاخـات</a></li>
+        <li><a href="https://shamum.com/categories/1006197/أدهـان-العـود" target="_blank" rel="noopener">Oud Oils · أدهـان العـود</a></li>
+        <li><a href="https://shamum.com/categories/1005686/أخشـاب-العـود" target="_blank" rel="noopener">Oud Wood · أخشـاب العـود</a></li>
+        <li><a href="https://shamum.com/categories/1333233/إصـدار-محـدود" target="_blank" rel="noopener">Limited Edition · إصـدار محـدود</a></li>
       </ul>
     </div>
     <div>
       <span class="footer-col-title">Care</span>
       <ul class="footer-links">
-        <li><a href="#">Fragrance Guide</a></li>
-        <li><a href="#">Shipping &amp; Returns</a></li>
-        <li><a href="#">Authenticity</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Privacy</a></li>
-        <li><a href="#">Terms</a></li>
+        <li><a href="https://shamum.com/shipping-and-payment" target="_blank" rel="noopener">Shipping &amp; Payment</a></li>
+        <li><a href="https://shamum.com/pages/refund-exchange-policy" target="_blank" rel="noopener">Returns &amp; Exchange</a></li>
+        <li><a href="https://shamum.com/pages/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a></li>
+        <li><a href="tel:+96898540321">+968 9854 0321</a></li>
+        <li><a href="https://wa.me/96898540321" target="_blank" rel="noopener">WhatsApp · واتساب</a></li>
       </ul>
     </div>
   </div>
@@ -1449,6 +1513,9 @@ var emberEls = Array.prototype.slice.call(document.querySelectorAll('#f2-embers 
 var moteEls  = Array.prototype.slice.call(document.querySelectorAll('#f3-motes circle'));
 var sparkEls = Array.prototype.slice.call(document.querySelectorAll('#f4-sparks rect'));
 var bokehEls = Array.prototype.slice.call(document.querySelectorAll('#f4-bokeh circle'));
+var chDotWrap = $s('ch-dots');
+var chDotEls  = Array.prototype.slice.call(document.querySelectorAll('.ch-dot'));
+var chDotT    = [0.10, 0.42, 0.66, 0.90];
 sc.f4cap     = $s('f4-cap');
 sc.f4shimmer = $s('f4-shimmer');
 
@@ -1817,6 +1884,10 @@ function heroLoop(ts){
   chReveal(sc.ht4, seg(p, 0.955, 0.99), 0);
   sc.ht4.style.pointerEvents = p > 0.965 ? 'auto' : 'none';
 
+  /* ── Chapter markers ── */
+  chDotWrap.style.opacity = (p > 0.02 && p < 0.995) ? 1 : 0;
+  chDotEls.forEach(function(d, i){ d.classList.toggle('on', p >= chDotT[i]); });
+
   /* ── Ambient dust: bukhoor floor + perfume floor ── */
   var da = Math.sin(seg(p, 0.30, 0.60)*Math.PI)*0.5
          + eOut(seg(p, 0.86, 1))*0.25;
@@ -1897,6 +1968,12 @@ document.querySelectorAll('.add-to-bag').forEach(function(btn){
     setTimeout(function(){ rip.remove(); }, 700);
   });
 });
+
+/* ──────────── ENTRY VEIL ──────────── */
+setTimeout(function(){
+  var v = document.getElementById('veil');
+  if (v) v.classList.add('gone');
+}, 1050);
 
 })();
 </script>

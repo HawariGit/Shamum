@@ -67,9 +67,50 @@ body {
   background: rgba(21,14,8,0.9); color: var(--gold-300);
   border: 1px solid rgba(201,161,90,0.5);
   box-shadow: 0 8px 30px rgba(0,0,0,0.45);
-  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s, color 0.3s;
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s, color 0.3s,
+              bottom 0.45s cubic-bezier(0.16,1,0.3,1);
 }
 #wa-btn svg { width: 26px; height: 26px; }
+body.bar-on #wa-btn { bottom: 88px; }
+
+/* ─── STICKY COLLECTION BAR ─── */
+#sticky-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 1400;
+  background: rgba(16,10,6,0.94);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(201,161,90,0.35);
+  transform: translateY(100%);
+  transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+  padding: 12px 26px;
+}
+#sticky-bar.visible { transform: translateY(0); }
+.sb-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+.sb-brand {
+  display: flex; align-items: center; gap: 12px;
+  font-family: 'Jost', sans-serif; font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--sand-100);
+}
+.sb-brand img { height: 20px; width: auto; }
+.sb-cta {
+  font-family: 'Jost', sans-serif; font-size: 10.5px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink);
+  background: linear-gradient(135deg, #D4BC86, #AE8B4F 55%, #8C6E3A);
+  padding: 10px 24px; text-decoration: none;
+  border: 1px solid var(--gold-600); white-space: nowrap;
+}
+@media (max-width: 640px) {
+  #sticky-bar {
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    background: rgba(16,10,6,0.97);
+  }
+  .sb-brand { display: none; }
+  .sb-inner { justify-content: center; }
+}
 #wa-btn:hover {
   transform: translateY(-3px);
   background: linear-gradient(135deg, #D4BC86, #AE8B4F);
@@ -515,6 +556,17 @@ body {
 }
 .view-all-btn:hover { background: var(--ink); color: var(--gold-300); }
 .product-info { padding: 28px 28px 32px; }
+.product-meta {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 12px; margin-bottom: 10px;
+  font-family: 'Jost', sans-serif; font-size: 9.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+}
+.product-size {
+  color: var(--gold-600); font-weight: 500; white-space: nowrap;
+  border-bottom: 1px solid rgba(140,110,58,0.35); padding-bottom: 2px;
+}
+.product-tags { color: #8B7E66; font-style: italic; text-align: right; letter-spacing: 0.08em; }
 .product-name {
   font-family: 'Cormorant Garamond', serif; font-size: 24px;
   font-weight: 400; color: var(--ink); display: block; line-height: 1.2;
@@ -577,6 +629,55 @@ body {
   font-family: 'Jost', sans-serif; font-size: 11px;
   letter-spacing: 0.25em; text-transform: uppercase;
   color: var(--gold-400); margin-top: 28px; display: block;
+}
+
+/* ─── SCENT LIFE ─── */
+#scent-life {
+  background: #120A06; padding: 110px 48px;
+  border-top: 1px solid rgba(174,139,79,0.1);
+}
+.sl-inner { max-width: 760px; margin: 0 auto; }
+.sl-head { text-align: center; margin-bottom: 54px; }
+.sl-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 3.4vw, 46px);
+  font-weight: 300; color: var(--sand-50);
+  margin-top: 14px; line-height: 1.15;
+}
+.sl-title em { font-style: italic; color: var(--gold-300); }
+.progression-step {
+  border-bottom: 1px solid rgba(212,188,134,0.14);
+  padding: 22px 0;
+}
+.progression-step:first-of-type { border-top: 1px solid rgba(212,188,134,0.14); }
+.progression-step summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: baseline; gap: 18px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px, 2vw, 24px); color: var(--sand-100);
+  transition: color 0.3s;
+}
+.progression-step summary:hover { color: var(--gold-300); }
+.progression-step summary::-webkit-details-marker { display: none; }
+.ps-time {
+  font-family: 'Jost', sans-serif; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold-500); margin-left: auto; white-space: nowrap;
+}
+.progression-step summary::after {
+  content: '+'; color: var(--gold-400);
+  font-family: 'Cormorant Garamond', serif; font-size: 26px;
+  line-height: 1; flex-shrink: 0;
+}
+.progression-step[open] summary::after { content: '−'; }
+.progression-step p {
+  font-family: 'Jost', sans-serif; font-size: 13.5px; font-weight: 300;
+  color: rgba(244,234,210,0.62); line-height: 1.9;
+  padding-top: 14px; max-width: 56ch;
+}
+@media (max-width: 640px) {
+  #scent-life { padding: 80px 24px; }
+  .ps-time { display: none; }
 }
 
 /* ─── TRUST ─── */
@@ -741,6 +842,14 @@ body {
     <path d="M16.04 4C9.42 4 4.05 9.36 4.05 15.97c0 2.11.55 4.17 1.6 5.99L4 28l6.19-1.62a12 12 0 0 0 5.85 1.49h.01c6.61 0 11.98-5.36 11.98-11.97C28.03 9.36 22.65 4 16.04 4zm0 21.85h-.01a9.9 9.9 0 0 1-5.05-1.38l-.36-.21-3.67.96.98-3.58-.24-.37a9.86 9.86 0 0 1-1.51-5.3c0-5.47 4.45-9.92 9.93-9.92a9.87 9.87 0 0 1 9.92 9.93c0 5.47-4.46 9.87-9.99 9.87zm5.44-7.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/>
   </svg>
 </a>
+
+<!-- STICKY COLLECTION BAR -->
+<div id="sticky-bar">
+  <div class="sb-inner">
+    <span class="sb-brand"><img src="assets/logo-mark.png" alt="">المجموعة الكاملة · The Collection</span>
+    <a class="sb-cta" href="https://shamum.com/products" target="_blank" rel="noopener">View All 15 Expressions →</a>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -1268,6 +1377,7 @@ body {
         <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/f03cc94a-5a46-466f-af3f-3dbf9abad89e-thumbnail-500x500.png" alt="Mindali — منــــــدلـي">
       </div>
       <div class="product-info">
+        <div class="product-meta"><span class="product-size">Oud Oil · 3ml</span><span class="product-tags">Rare Aged Ouds · Bukhoor · Floral</span></div>
         <span class="product-name">Mindali</span>
         <span class="product-arabic">منــــــدلـي</span>
         <span class="product-price">240.000 ر.ع</span>
@@ -1281,6 +1391,7 @@ body {
         <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/b60f179d-ccb0-4e01-957f-de7d33ab4d38-thumbnail-500x500-70.jpg" alt="Jawhar — جوهــــر">
       </div>
       <div class="product-info">
+        <div class="product-meta"><span class="product-size">Oud Wood · 12g</span><span class="product-tags">Bicentennial Trees · Woody · Aquatic</span></div>
         <span class="product-name">Jawhar</span>
         <span class="product-arabic">جوهــــر</span>
         <span class="product-price">150.000 ر.ع</span>
@@ -1294,6 +1405,7 @@ body {
         <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/d8f738a5-6aa5-44a8-9625-f991ea15b0ea-thumbnail-500x500.png" alt="Razi II — رازي الثـانـي">
       </div>
       <div class="product-info">
+        <div class="product-meta"><span class="product-size">Oud Oil · 3ml</span><span class="product-tags">The Eldest Formula · 20-Year Oud</span></div>
         <span class="product-name">Razi II</span>
         <span class="product-arabic">رازي الثـانـي</span>
         <span class="product-price">125.000 ر.ع</span>
@@ -1308,6 +1420,7 @@ body {
         <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/eab2ee11-f490-468b-8fee-84eb748e4dd5-thumbnail-500x500-70.jpg" alt="Mindal — منــدل">
       </div>
       <div class="product-info">
+        <div class="product-meta"><span class="product-size">Eau de Parfum</span><span class="product-tags">Saffron · Amber · Bergamot</span></div>
         <span class="product-name">Mindal</span>
         <span class="product-arabic">منــدل</span>
         <span class="product-price">107.000 ر.ع</span>
@@ -1321,6 +1434,7 @@ body {
         <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/8bdb0cc5-740e-4d60-ab75-d296c761fe70-thumbnail-500x500-70.jpg" alt="Zahiya — زاهيـــة">
       </div>
       <div class="product-info">
+        <div class="product-meta"><span class="product-size">Eau de Parfum</span><span class="product-tags">Vanilla · Bitter Almond · Sandalwood</span></div>
         <span class="product-name">Zahiya</span>
         <span class="product-arabic">زاهيـــة</span>
         <span class="product-price">68.000 ر.ع</span>
@@ -1335,6 +1449,7 @@ body {
         <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/baa708cd-6d63-47cb-b334-b1e7d1379c14-thumbnail-500x500-70.jpg" alt="Surra — سُــــرى">
       </div>
       <div class="product-info">
+        <div class="product-meta"><span class="product-size">Limited Edition</span><span class="product-tags">Private Reserve</span></div>
         <span class="product-name">Surra</span>
         <span class="product-arabic">سُــــرى</span>
         <span class="product-price">61.000 ر.ع</span>
@@ -1358,6 +1473,30 @@ body {
     <div class="diamond-divider reveal-scale"></div>
     <p class="quote-arabic reveal-scale reveal-delay-1">"العطر ذاكرة لا تُنسى — وشاموم يكتب ذاكرتك."</p>
     <span class="quote-en reveal-scale reveal-delay-2">Fragrance is unforgettable memory — and SHAMUM writes yours.</span>
+  </div>
+</section>
+
+<!-- ═══ SCENT LIFE ═══ -->
+<section id="scent-life">
+  <div class="sl-inner">
+    <div class="sl-head">
+      <span class="section-eyebrow reveal" style="color: var(--gold-400);">رحلة العطر · The Life of the Scent</span>
+      <h2 class="sl-title reveal reveal-delay-1">Oud does not fade.<br><em>It unfolds.</em></h2>
+    </div>
+    <div class="scent-progression reveal reveal-delay-2">
+      <details class="progression-step" open>
+        <summary>The Opening · المقدمة <span class="ps-time">First 30 Minutes</span></summary>
+        <p>The first smoke — bright, resinous, alive. The wood announces itself before it settles.</p>
+      </details>
+      <details class="progression-step">
+        <summary>The Heart · القلب <span class="ps-time">2 – 4 Hours</span></summary>
+        <p>The heartwood emerges: warm, dense, unmistakably oud, resting close to the skin.</p>
+      </details>
+      <details class="progression-step">
+        <summary>The Drydown · الأثر <span class="ps-time">8+ Hours</span></summary>
+        <p>What remains on the sleeve the next morning — amber warmth, aged wood, memory.</p>
+      </details>
+    </div>
   </div>
 </section>
 
@@ -1462,11 +1601,21 @@ body {
 var nav = document.getElementById('nav');
 var scrollBar = document.getElementById('scroll-bar');
 var heroSpacerForNav = document.getElementById('hero-spacer');
+var stickyBar  = document.getElementById('sticky-bar');
+var prodSecEl  = document.getElementById('products');
+var giftSecEl  = document.getElementById('loyalty');
 window.addEventListener('scroll', function(){
   var sy = window.scrollY;
   var maxS = document.body.scrollHeight - window.innerHeight;
   nav.classList.toggle('scrolled', sy > heroSpacerForNav.offsetHeight - window.innerHeight * 0.6);
   scrollBar.style.transform = 'scaleX(' + (maxS > 0 ? sy/maxS : 0) + ')';
+  // Collection bar: visible while browsing products, gone by the gifting section
+  if (stickyBar && prodSecEl && giftSecEl){
+    var barOn = sy > prodSecEl.offsetTop - window.innerHeight * 0.5
+             && sy < giftSecEl.offsetTop - window.innerHeight * 0.7;
+    stickyBar.classList.toggle('visible', barOn);
+    document.body.classList.toggle('bar-on', barOn);
+  }
 }, {passive:true});
 
 /* ──────────── HERO SETUP ──────────── */
@@ -1919,24 +2068,38 @@ var prodIO = makeIO(0.12, function(el){
 document.querySelectorAll('.product-card').forEach(function(el){ prodIO.observe(el); });
 
 /* ──────────── COUNTERS ──────────── */
+// Interval-based (immune to rAF throttling) + IO with eager threshold
+// + scroll-position fallback so the count-up can never silently fail.
+function runCounter(el){
+  if (el.__counted) return;
+  el.__counted = true;
+  var tgt = parseInt(el.getAttribute('data-target'), 10) || 0;
+  var t0 = Date.now();
+  var timer = setInterval(function(){
+    var prog = Math.min((Date.now() - t0) / 1400, 1);
+    var eas = 1 - Math.pow(1 - prog, 3);
+    el.textContent = Math.floor(eas * tgt);
+    if (prog >= 1){ el.textContent = tgt; clearInterval(timer); }
+  }, 28);
+}
+var counterEls = Array.prototype.slice.call(document.querySelectorAll('.counter'));
+window.__runCounters = function(){ counterEls.forEach(runCounter); };
 var cntIO = new IntersectionObserver(function(entries){
   entries.forEach(function(e){
-    if(!e.isIntersecting) return;
-    var el = e.target;
-    var tgt = parseInt(el.dataset.target, 10);
-    var t0 = null;
-    (function step(ts){
-      if(!t0) t0 = ts;
-      var prog = Math.min((ts-t0)/1200, 1);
-      var eas  = 1-Math.pow(1-prog,3);
-      el.textContent = Math.floor(eas*tgt);
-      if(prog<1) requestAnimationFrame(step);
-      else el.textContent = tgt;
-    })(performance.now());
-    cntIO.unobserve(el);
+    if (e.isIntersecting){ runCounter(e.target); cntIO.unobserve(e.target); }
   });
-}, {threshold:0.5});
-document.querySelectorAll('.counter').forEach(function(el){ cntIO.observe(el); });
+}, { threshold: 0.2 });
+counterEls.forEach(function(el){ cntIO.observe(el); });
+var trustSec = document.getElementById('trust');
+function counterFallback(){
+  if (!trustSec) return;
+  var r = trustSec.getBoundingClientRect();
+  if (r.top < window.innerHeight * 0.85 && r.bottom > 0){
+    window.__runCounters();
+    window.removeEventListener('scroll', counterFallback);
+  }
+}
+window.addEventListener('scroll', counterFallback, {passive: true});
 
 /* ──────────── BRAND PARALLAX ──────────── */
 var brandSec = document.getElementById('brand-statement');

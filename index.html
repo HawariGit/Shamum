@@ -499,6 +499,57 @@ body.bar-on #wa-btn { bottom: 88px; }
 }
 .reveal-scale.visible { opacity: 1; transform: scale(1); filter: blur(0); }
 
+/* ─── MOTION PASS ─── */
+/* living photographs: continuous slow push-in, never a dead frame */
+.brand-photo, .gift-photo {
+  animation: kenburns 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes kenburns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+/* ken-burns entrances: photos settle 1.1 → 1 as they reveal */
+.ess-panel.reveal:not(.visible) .ess-clip img { transform: scale(1.12); }
+.ritual-media.reveal {
+  opacity: 0; transform: none;
+  transition: opacity 1s cubic-bezier(0.16,1,0.3,1);
+}
+.ritual-media.reveal.visible { opacity: 1; transform: none; }
+.ritual-media.reveal:not(.visible) img { transform: scale(1.1); }
+.ritual-media img { transition: transform 1.8s cubic-bezier(0.16,1,0.3,1); }
+/* masked line reveals: title lines rise out of a clipped mask */
+.reveal-lines .lr { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.reveal-lines .lri {
+  display: inline-block; transform: translateY(115%);
+  transition: transform 0.95s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-lines.visible .lri { transform: translateY(0); }
+.reveal-lines .lr:nth-of-type(2) .lri { transition-delay: 0.14s; }
+/* hero scroll cue: traveling gold line */
+#scroll-cue {
+  position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  z-index: 12; font-family: 'Jost', sans-serif; font-size: 9px;
+  letter-spacing: 0.35em; text-transform: uppercase;
+  color: rgba(212,188,134,0.55); transition: opacity 0.4s;
+}
+.cue-track { width: 1px; height: 46px; overflow: hidden; position: relative; background: rgba(212,188,134,0.14); }
+.cue-line {
+  position: absolute; top: 0; left: 0; width: 100%; height: 40%;
+  background: linear-gradient(to bottom, transparent, var(--gold-300));
+  animation: cueTravel 1.6s cubic-bezier(0.4,0,0.6,1) infinite;
+}
+@keyframes cueTravel {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(300%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-photo, .gift-photo { animation: none; }
+  .reveal-lines .lri { transition: none; transform: none; }
+  .cue-line { animation: none; }
+}
+
 /* ─── PRODUCTS ─── */
 #products { background: var(--sand-50); padding: 120px 48px; }
 #products-header { text-align: center; margin-bottom: 80px; }
@@ -525,13 +576,30 @@ body.bar-on #wa-btn { bottom: 88px; }
   background: #fff; border-radius: 2px; overflow: hidden;
   position: relative; cursor: pointer;
   box-shadow: 0 2px 20px rgba(21,16,10,0.06);
-  opacity: 0; transform: translateY(60px);
-  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
-              transform 0.9s cubic-bezier(0.16,1,0.3,1),
+  opacity: 0; transform: translateY(56px) scale(0.95);
+  /* spring entrance: overshoots, settles */
+  transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1),
+              transform 0.65s cubic-bezier(0.34,1.56,0.64,1),
               box-shadow 0.5s cubic-bezier(0.16,1,0.3,1);
 }
-.product-card.visible { opacity: 1; transform: translateY(0); }
-.product-card.visible:hover { transform: translateY(-8px); box-shadow: 0 22px 60px rgba(21,16,10,0.16), 0 0 0 1px rgba(174,139,79,0.5); }
+.product-card.visible { opacity: 1; transform: translateY(0) scale(1); }
+.product-card.visible:hover { transform: translateY(-8px) scale(1); box-shadow: 0 22px 60px rgba(21,16,10,0.16), 0 0 0 1px rgba(174,139,79,0.5); }
+/* cascade: content ripples in after the card lands */
+.product-card .product-meta, .product-card .product-name,
+.product-card .product-arabic, .product-card .product-price {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.product-card .add-to-bag {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1),
+              background 0.4s, color 0.4s;
+}
+.product-card.visible .product-meta   { opacity: 1; transform: none; transition-delay: 0.22s; }
+.product-card.visible .product-name   { opacity: 1; transform: none; transition-delay: 0.28s; }
+.product-card.visible .product-arabic { opacity: 1; transform: none; transition-delay: 0.32s; }
+.product-card.visible .product-price  { opacity: 1; transform: none; transition-delay: 0.38s; }
+.product-card.visible .add-to-bag     { opacity: 1; transform: none; transition-delay: 0.44s, 0.44s, 0s, 0s; }
 .product-card:nth-child(1) { transition-delay: 0s; }
 .product-card:nth-child(2) { transition-delay: 0.15s; }
 .product-card:nth-child(3) { transition-delay: 0.3s; }
@@ -919,6 +987,12 @@ body.bar-on #wa-btn { bottom: 88px; }
 <div id="hero-spacer">
   <div id="hero-sticky">
     <canvas id="hero-canvas"></canvas>
+
+    <!-- Scroll cue -->
+    <div id="scroll-cue" aria-hidden="true">
+      <span>Scroll · اكتشف</span>
+      <div class="cue-track"><div class="cue-line"></div></div>
+    </div>
 
     <!-- Chapter markers -->
     <div id="ch-dots" aria-hidden="true">
@@ -1386,7 +1460,7 @@ body.bar-on #wa-btn { bottom: 88px; }
 
 <!-- ═══ THE RITUAL ═══ -->
 <section id="ritual">
-  <div class="ritual-media">
+  <div class="ritual-media reveal">
     <img src="assets/ig-ritual.webp" alt="The bukhoor ritual in the SHAMUM majlis — طقس البخور" loading="lazy">
     <div class="ritual-stat">
       <span class="rs-num">2010</span>
@@ -1395,7 +1469,7 @@ body.bar-on #wa-btn { bottom: 88px; }
   </div>
   <div class="ritual-text">
     <span class="section-eyebrow reveal" style="color: var(--gold-400);">01 — The House · بيت شاموم</span>
-    <h2 class="ritual-head reveal reveal-delay-1">The ritual is<br><em>the inheritance.</em></h2>
+    <h2 class="ritual-head reveal-lines"><span class="lr"><span class="lri">The ritual is</span></span><br><span class="lr"><span class="lri"><em>the inheritance.</em></span></span></h2>
     <p class="ritual-sub reveal reveal-delay-2">In the majlis, the mabkhara passes from hand to hand — bukhoor smoke rising through the folds of a musar, as it has for generations. SHAMUM begins here: hospitality, patience, and wood that remembers.</p>
     <div class="ornament reveal reveal-delay-3">
       <span class="orn-line" style="background: linear-gradient(to right, var(--gold-500), transparent);"></span>
@@ -1408,7 +1482,7 @@ body.bar-on #wa-btn { bottom: 88px; }
 <section id="essence">
   <div class="ess-head">
     <span class="section-eyebrow reveal" style="color: var(--gold-400);">02 — The Two Gifts of the Wood · عطايا العود</span>
-    <h2 class="ess-title reveal reveal-delay-1">One tree. <em>Two inheritances.</em></h2>
+    <h2 class="ess-title reveal-lines"><span class="lr"><span class="lri">One tree. <em>Two inheritances.</em></span></span></h2>
     <div class="ornament reveal reveal-delay-2">
       <span class="orn-line"></span>
       <img class="orn-mark" src="assets/logo-mark.png" alt="">
@@ -1449,7 +1523,7 @@ body.bar-on #wa-btn { bottom: 88px; }
 <section id="products">
   <div id="products-header">
     <span class="section-eyebrow reveal">03 — The Collection · المجموعة</span>
-    <h2 class="section-title reveal reveal-delay-1">Rare Expressions,<br>Carefully Composed.</h2>
+    <h2 class="section-title reveal-lines"><span class="lr"><span class="lri">Rare Expressions,</span></span><br><span class="lr"><span class="lri">Carefully Composed.</span></span></h2>
     <div class="ornament reveal reveal-delay-2">
       <span class="orn-line"></span>
       <img class="orn-mark" src="assets/logo-mark.png" alt="">
@@ -1569,7 +1643,7 @@ body.bar-on #wa-btn { bottom: 88px; }
   <div class="sl-inner">
     <div class="sl-head">
       <span class="section-eyebrow reveal" style="color: var(--gold-400);">04 — The Life of the Scent · رحلة العطر</span>
-      <h2 class="sl-title reveal reveal-delay-1">Oud does not fade.<br><em>It unfolds.</em></h2>
+      <h2 class="sl-title reveal-lines"><span class="lr"><span class="lri">Oud does not fade.</span></span><br><span class="lr"><span class="lri"><em>It unfolds.</em></span></span></h2>
     </div>
     <div class="scent-progression reveal reveal-delay-2">
       <details class="progression-step" open>
@@ -1712,6 +1786,7 @@ var sPos = 0, sVel = 0, lastT = null, lastCamStr = '';
 
 // Opening logo
 var heroLogo = document.getElementById('hero-logo');
+var scrollCueEl = document.getElementById('scroll-cue');
 
 // Mobile: fewer particles, no parallax near-layer, no camera breathing
 var isMobile = window.matchMedia('(max-width: 768px)').matches;
@@ -1935,6 +2010,7 @@ function heroLoop(ts){
     var t0out = seg(p, 0.095, 0.15);
     heroLogo.style.opacity = eOut(t0in) * (1 - eIn(t0out));
     heroLogo.style.transform = 'translate(-50%,-50%) scale(' + (0.92 + 0.08*eOut(t0in)) + ')';
+    scrollCueEl.style.opacity = 1 - seg(p, 0.02, 0.07);
   }
 
   /* ── Floor 1: only while on/near the tree floor ── */
@@ -2197,7 +2273,7 @@ var revealIO = makeIO(0.15, function(el){
   el.classList.add('visible');
   revealIO.unobserve(el);
 });
-document.querySelectorAll('.reveal,.reveal-scale').forEach(function(el){ revealIO.observe(el); });
+document.querySelectorAll('.reveal,.reveal-scale,.reveal-lines').forEach(function(el){ revealIO.observe(el); });
 
 var prodIO = makeIO(0.12, function(el){
   el.classList.add('visible');

@@ -315,60 +315,50 @@ body.bar-on #wa-btn { bottom: 88px; }
   .hero-cta { flex-direction: column; align-items: center; }
 }
 
-/* ─── THE FILM — scroll-scrubbed photography ─── */
-#brand-statement { position: relative; height: 320vh; background: #0D0704; }
-#film-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; }
-.film-shot {
-  position: absolute; inset: 0; opacity: 0;
-  will-change: transform, opacity;
+/* ─── BRAND STATEMENT — the boutique ─── */
+#brand-statement {
+  position: relative; min-height: 100vh;
+  background: #0D0704;
+  display: flex; align-items: flex-end; justify-content: center;
+  overflow: hidden;
 }
-.film-shot img {
-  width: 100%; height: 100%; object-fit: cover;
-  object-position: center 35%; display: block;
+.brand-photo {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 32%;
 }
-#shot-1 { opacity: 1; }
-.film-scrim {
-  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+.brand-scrim {
+  position: absolute; inset: 0; z-index: 1;
   background:
-    linear-gradient(to bottom, rgba(13,7,4,0.5), rgba(13,7,4,0.08) 30%, rgba(13,7,4,0.12) 62%, rgba(13,7,4,0.78)),
-    radial-gradient(ellipse 130% 100% at 50% 50%, transparent 58%, rgba(13,7,4,0.5) 100%);
+    linear-gradient(to bottom, rgba(13,7,4,0.55) 0%, rgba(13,7,4,0) 26%, rgba(13,7,4,0) 52%, rgba(13,7,4,0.86) 88%),
+    radial-gradient(ellipse 130% 100% at 50% 50%, transparent 60%, rgba(13,7,4,0.5) 100%);
 }
-.film-frame {
-  position: absolute; inset: 26px; z-index: 3; pointer-events: none;
-  border: 1px solid rgba(201,161,90,0.45);
+/* gold inlay pinstripe frame — the boutique paneling motif */
+.brand-frame {
+  position: absolute; inset: 26px; z-index: 2; pointer-events: none;
+  border: 1px solid rgba(201,161,90,0.5);
 }
-.film-frame::after {
+.brand-frame::after {
   content: ''; position: absolute; inset: 6px;
-  border: 1px solid rgba(201,161,90,0.16);
+  border: 1px solid rgba(201,161,90,0.18);
 }
-.film-text {
-  position: absolute; left: 50%; top: 50%;
-  transform: translate(-50%,-50%); z-index: 4;
-  text-align: center; width: min(92vw, 900px);
-  opacity: 0; will-change: transform, opacity, filter;
+.brand-grain {
+  position: absolute; inset: 0; pointer-events: none; z-index: 1; opacity: 0.04;
 }
-.film-eyebrow {
-  font-family: 'Jost', sans-serif; font-size: 10px;
-  letter-spacing: 0.34em; text-transform: uppercase;
-  color: var(--gold-400); display: block; margin-bottom: 16px;
+.brand-text-wrap {
+  position: relative; z-index: 3; text-align: center;
+  padding: 0 48px 96px; will-change: transform;
 }
-.film-ar {
+.brand-headline {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(40px, 6vw, 88px);
-  color: var(--sand-50); direction: rtl; line-height: 1.15;
-  text-shadow: 0 2px 30px rgba(0,0,0,0.5);
+  font-size: clamp(36px, 6vw, 90px);
+  font-weight: 300; color: var(--sand-50);
+  letter-spacing: -0.02em; line-height: 1.08;
 }
-.film-en {
-  font-family: 'Jost', sans-serif;
-  font-size: clamp(11px, 1.2vw, 15px);
-  letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--gold-300); margin-top: 18px; display: block;
-}
-.film-serif {
-  font-family: 'Cormorant Garamond', serif; font-style: italic;
-  font-size: clamp(26px, 3.4vw, 52px);
-  color: var(--sand-50); line-height: 1.35;
-  text-shadow: 0 2px 26px rgba(0,0,0,0.55);
+.brand-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(24px, 3.2vw, 52px);
+  font-style: italic; color: var(--gold-400);
+  margin-top: 20px; letter-spacing: 0.01em;
 }
 .gold-divider {
   width: 1px; height: 60px;
@@ -511,7 +501,7 @@ body.bar-on #wa-btn { bottom: 88px; }
 
 /* ─── MOTION PASS ─── */
 /* living photographs: continuous slow push-in, never a dead frame */
-.gift-photo {
+.brand-photo, .gift-photo {
   animation: kenburns 26s ease-in-out infinite alternate;
   will-change: transform;
 }
@@ -555,7 +545,7 @@ body.bar-on #wa-btn { bottom: 88px; }
   to   { transform: translateY(300%); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .gift-photo { animation: none; }
+  .brand-photo, .gift-photo { animation: none; }
   .reveal-lines .lri { transition: none; transform: none; }
   .cue-line { animation: none; }
 }
@@ -1452,26 +1442,22 @@ body.bar-on #wa-btn { bottom: 88px; }
 
 <!-- ═══ BRAND STATEMENT ═══ -->
 <section id="brand-statement">
-  <div id="film-sticky">
-    <div class="film-shot" id="shot-1">
-      <img src="https://media.zid.store/cdn-cgi/image/w=2220,q=85,f=auto/https://media.zid.store/12495741-3239-4f1c-9472-c6b513a5dbf4/7dc6108b-3abe-4ff8-8db3-18b759a7ee24.jpg" alt="The SHAMUM boutique — مجلس شاموم">
-    </div>
-    <div class="film-shot" id="shot-2">
-      <img src="assets/ig-box-closed.webp" alt="A SHAMUM presentation chest — صندوق شاموم">
-    </div>
-    <div class="film-scrim"></div>
-    <div class="film-frame"></div>
-    <div class="film-text" id="ft-1">
-      <span class="film-eyebrow">Maison SHAMUM · بيت شاموم</span>
-      <div class="film-ar">عبـقُ العطــر الأصيــل</div>
-      <span class="film-en">The Essence of Authentic Fragrance</span>
-    </div>
-    <div class="film-text" id="ft-2">
-      <div class="film-serif">A house that keeps its own time.</div>
-      <span class="film-en">Est. 2010 · Muscat, Sultanate of Oman · مسقط</span>
-    </div>
+  <img class="brand-photo" alt="The SHAMUM boutique — مجلس شاموم"
+       src="https://media.zid.store/cdn-cgi/image/w=2220,q=85,f=auto/https://media.zid.store/12495741-3239-4f1c-9472-c6b513a5dbf4/7dc6108b-3abe-4ff8-8db3-18b759a7ee24.jpg">
+  <div class="brand-scrim"></div>
+  <div class="brand-frame"></div>
+  <svg class="brand-grain" xmlns="http://www.w3.org/2000/svg">
+    <filter id="gf1"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <rect width="100%" height="100%" filter="url(#gf1)"/>
+  </svg>
+  <div class="brand-text-wrap" id="brand-parallax">
+    <div class="gold-divider reveal"></div>
+    <h2 class="brand-headline reveal reveal-delay-1" style="direction:rtl;">عبـقُ العطــر الأصيــل</h2>
+    <p class="brand-sub reveal reveal-delay-2">The essence of authentic fragrance — aged in silence, bottled by hand since 2010.</p>
+    <div class="gold-divider reveal reveal-delay-3"></div>
   </div>
 </section>
+
 <!-- ═══ THE RITUAL ═══ -->
 <section id="ritual">
   <div class="ritual-media reveal">
@@ -2000,52 +1986,14 @@ function chReveal(el, tin, tout){
 
 var heroTime = 0;
 
-/* ── The Film: scroll-scrubbed photography (own spring, runs whenever in view) ── */
-var filmSpacer = document.getElementById('brand-statement');
-var filmShot1  = document.getElementById('shot-1');
-var filmShot2  = document.getElementById('shot-2');
-var ft1 = document.getElementById('ft-1');
-var ft2 = document.getElementById('ft-2');
-var fPos = 0, fVel = 0;
-function ftSet(el, t){
-  if (el.__t !== undefined && Math.abs(el.__t - t) < 0.002) return;
-  el.__t = t;
-  el.style.opacity = t;
-  el.style.filter = 'blur(' + ((1-t)*10) + 'px)';
-  el.style.transform = 'translate(-50%,-50%) translateY(' + ((1-t)*30) + 'px)';
-}
-function filmTick(dt){
-  var fr2 = filmSpacer.getBoundingClientRect();
-  if (fr2.top > window.innerHeight + 120 || fr2.bottom < -120) return;
-  var fH = filmSpacer.offsetHeight - window.innerHeight;
-  var fRaw = fH > 0 ? clamp(-fr2.top / fH, 0, 1) : 0;
-  var fAcc = (fRaw - fPos)*80 - fVel*18;
-  fVel += fAcc*dt; fPos += fVel*dt;
-  if (!isFinite(fPos)) { fPos = fRaw; fVel = 0; }
-  var fp2 = clamp(fPos, 0, 1);
-  // Shot 1 — the boutique: crane settle from above
-  var s1t = sstep(seg(fp2, 0, 0.6));
-  filmShot1.style.transform = 'scale(' + (1.16 - 0.16*s1t).toFixed(4) + ') translateY(' + ((1-s1t)*-2.5).toFixed(2) + '%)';
-  filmShot1.style.opacity = (1 - seg(fp2, 0.52, 0.68)).toFixed(3);
-  // Shot 2 — the chest: slow push-in
-  var s2t = sstep(seg(fp2, 0.5, 1));
-  filmShot2.style.opacity = seg(fp2, 0.52, 0.68).toFixed(3);
-  filmShot2.style.transform = 'scale(' + (1.14 - 0.11*s2t).toFixed(4) + ') translateY(' + (s2t*2 - 2).toFixed(2) + '%)';
-  // Copy beats
-  ftSet(ft1, eOut(seg(fp2, 0.14, 0.28)) * (1 - eIn(seg(fp2, 0.46, 0.58))));
-  ftSet(ft2, eOut(seg(fp2, 0.72, 0.86)));
-}
-
 function heroLoop(ts){
   requestAnimationFrame(heroLoop);
   var dt = lastT ? Math.min(Math.max((ts-lastT)/1000, 0.001), 0.05) : 0.016;
   lastT = ts;
   heroTime += dt;
 
-  filmTick(dt);
-
   var spacerTop = heroSpacer.getBoundingClientRect().top;
-  // Hero fully scrolled past — skip hero scene work (film above still ran)
+  // Hero fully scrolled past — skip all scene work
   if (spacerTop + heroSpacer.offsetHeight < -60) { drawFx(0, 0, 0, 0); return; }
   var spacerH   = heroSpacer.offsetHeight - window.innerHeight;
   var raw = spacerH > 0 ? clamp(-spacerTop / spacerH, 0, 1) : 0;
@@ -2367,7 +2315,14 @@ function counterFallback(){
 }
 window.addEventListener('scroll', counterFallback, {passive: true});
 
-/* (brand parallax removed — that section is now the scroll-scrubbed film) */
+/* ──────────── BRAND PARALLAX ──────────── */
+var brandSec = document.getElementById('brand-statement');
+var brandPx  = document.getElementById('brand-parallax');
+window.addEventListener('scroll', function(){
+  var r = brandSec.getBoundingClientRect();
+  var ratio = -r.top / (window.innerHeight + r.height);
+  brandPx.style.transform = 'translateY('+(ratio*56)+'px)';
+}, {passive:true});
 
 /* ──────────── MAGNETIC BUTTONS ──────────── */
 document.querySelectorAll('.magnetic').forEach(function(btn){

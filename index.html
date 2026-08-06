@@ -216,6 +216,12 @@ body.bar-on #wa-btn { bottom: 88px; }
   .nav-links { display: none; }
   #nav { padding: 12px 14px 0; }
   .nav-pill { padding: 7px 20px; }
+  /* With .nav-links gone, .nav-actions was the only in-flow child, so
+     space-between parked it hard left and the absolutely-centred wordmark
+     landed on top of the icons. The menu button restores the left slot;
+     "Shop" goes because the bag icon and the sticky bar already say it. */
+  .nav-shop-text { display: none; }
+  .nav-actions { gap: 16px; }
 }
 @media (max-width: 768px) {
   /* backdrop blur is expensive on mobile GPUs — solid glass instead */
@@ -223,6 +229,105 @@ body.bar-on #wa-btn { bottom: 88px; }
     backdrop-filter: none; -webkit-backdrop-filter: none;
     background: rgba(16,10,6,0.95);
   }
+}
+
+/* ─── FULL-SCREEN MENU ───
+   .nav-links is hidden below 900px, so the four section links need a home.
+   A full-screen overlay rather than a dropdown: links set large in Cormorant
+   with their Arabic alongside, over the same oud gradient as the footer, so
+   the menu reads as part of the editorial rather than as chrome. */
+.nav-menu-btn {
+  display: none; pointer-events: auto;
+  background: none; border: none; padding: 6px 2px;
+  font-family: 'Jost', sans-serif; font-size: 11px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--sand-100); cursor: pointer; transition: color 0.3s;
+}
+.nav-menu-btn:hover { color: var(--gold-400); }
+@media (max-width: 900px) { .nav-menu-btn { display: block; } }
+
+#menu-overlay {
+  position: fixed; inset: 0; z-index: 3000;
+  background: linear-gradient(165deg, #0D0804 0%, var(--oud-900) 52%, #0D0804 100%);
+  display: flex; flex-direction: column;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), visibility 0.5s;
+  overflow-y: auto; overscroll-behavior: contain;
+}
+#menu-overlay.open { opacity: 1; visibility: visible; }
+body.menu-open { overflow: hidden; }
+
+.menu-top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px; flex-shrink: 0;
+}
+.menu-mark { height: 26px; width: auto; opacity: 0.9; }
+.menu-close {
+  background: none; border: none; cursor: pointer;
+  width: 44px; height: 44px; margin-right: -10px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--sand-100); transition: color 0.3s;
+}
+.menu-close:hover { color: var(--gold-400); }
+.menu-close svg { width: 20px; height: 20px; }
+
+.menu-inner {
+  flex: 1; display: flex; flex-direction: column; justify-content: center;
+  padding: 0 30px 36px; max-width: 620px; width: 100%; margin: 0 auto;
+}
+.menu-links { list-style: none; }
+.menu-links li { border-top: 1px solid rgba(174,139,79,0.16); }
+.menu-links li:last-child { border-bottom: 1px solid rgba(174,139,79,0.16); }
+.menu-links a {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px; padding: 19px 2px; text-decoration: none;
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+              transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+#menu-overlay.open .menu-links a { opacity: 1; transform: none; }
+#menu-overlay.open .menu-links li:nth-child(1) a { transition-delay: 0.10s; }
+#menu-overlay.open .menu-links li:nth-child(2) a { transition-delay: 0.17s; }
+#menu-overlay.open .menu-links li:nth-child(3) a { transition-delay: 0.24s; }
+#menu-overlay.open .menu-links li:nth-child(4) a { transition-delay: 0.31s; }
+.menu-en {
+  font-family: 'Cormorant Garamond', serif; font-size: 33px;
+  font-weight: 400; color: var(--sand-50); letter-spacing: 0.04em;
+  line-height: 1.1; transition: color 0.3s;
+}
+.menu-links a:hover .menu-en { color: var(--gold-300); }
+.menu-ar {
+  font-family: 'Jost', sans-serif; font-size: 13px;
+  color: var(--gold-400); letter-spacing: 0.06em;
+  direction: rtl; white-space: nowrap;
+}
+.menu-foot {
+  margin-top: 40px;
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1) 0.4s,
+              transform 0.7s cubic-bezier(0.16,1,0.3,1) 0.4s;
+}
+#menu-overlay.open .menu-foot { opacity: 1; transform: none; }
+.menu-foot-title {
+  font-family: 'Jost', sans-serif; font-size: 11px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold-400); display: block; margin-bottom: 10px;
+}
+.menu-foot a {
+  display: inline-block; padding: 7px 0;
+  font-family: 'Jost', sans-serif; font-size: 13px;
+  color: rgba(244,234,210,0.6); text-decoration: none;
+  letter-spacing: 0.04em; transition: color 0.3s;
+}
+.menu-foot a:hover { color: var(--gold-300); }
+.menu-foot-row { display: flex; flex-direction: column; align-items: flex-start; }
+@media (max-width: 380px) {
+  .menu-en { font-size: 28px; }
+  .menu-inner { padding: 0 24px 30px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #menu-overlay, .menu-links a, .menu-foot { transition-duration: 0.01s; }
+  .menu-links a, .menu-foot { transform: none; }
 }
 
 /* ─── HERO ─── */
@@ -987,6 +1092,8 @@ body.bar-on #wa-btn { bottom: 88px; }
 <div id="scroll-bar"></div>
 <nav id="nav">
   <div class="nav-pill">
+    <button class="nav-menu-btn" id="menu-open-btn" type="button"
+            aria-expanded="false" aria-controls="menu-overlay">Menu</button>
     <ul class="nav-links">
       <li><a href="#top" class="nav-link" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Home</a></li>
       <li><a href="#products" class="nav-link">Collection</a></li>
@@ -1014,6 +1121,34 @@ body.bar-on #wa-btn { bottom: 88px; }
     </div>
   </div>
 </nav>
+
+<!-- FULL-SCREEN MENU -->
+<div id="menu-overlay" role="dialog" aria-modal="true" aria-label="Menu · القائمة">
+  <div class="menu-top">
+    <img class="menu-mark" src="assets/logo-mark.png" alt="SHAMUM">
+    <button class="menu-close" id="menu-close-btn" type="button" aria-label="Close menu · إغلاق">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+        <line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/>
+      </svg>
+    </button>
+  </div>
+  <div class="menu-inner">
+    <ul class="menu-links">
+      <li><a href="#top" data-menu-top="1"><span class="menu-en">Home</span><span class="menu-ar">الرئيسية</span></a></li>
+      <li><a href="#products"><span class="menu-en">Collection</span><span class="menu-ar">المجموعة</span></a></li>
+      <li><a href="#brand-statement"><span class="menu-en">Our Oud</span><span class="menu-ar">عودنا</span></a></li>
+      <li><a href="#footer"><span class="menu-en">The House</span><span class="menu-ar">بيت شاموم</span></a></li>
+    </ul>
+    <div class="menu-foot">
+      <span class="menu-foot-title">Reach the House · تواصل</span>
+      <div class="menu-foot-row">
+        <a href="https://shamum.com/products" target="_blank" rel="noopener">All Products · جميع المنتجات</a>
+        <a href="https://wa.me/96898540321" target="_blank" rel="noopener">WhatsApp · واتساب</a>
+        <a href="https://instagram.com/shamumofficial" target="_blank" rel="noopener">Instagram · @shamumofficial</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ═══ HERO ═══ -->
 <div id="hero-spacer">
@@ -1811,6 +1946,57 @@ window.addEventListener('scroll', function(){
     document.body.classList.toggle('bar-on', barOn);
   }
 }, {passive:true});
+
+/* ──────────── FULL-SCREEN MENU ──────────── */
+var menuOverlay  = document.getElementById('menu-overlay');
+var menuOpenBtn  = document.getElementById('menu-open-btn');
+var menuCloseBtn = document.getElementById('menu-close-btn');
+if (menuOverlay && menuOpenBtn && menuCloseBtn) {
+  function openMenu(){
+    menuOverlay.classList.add('open');
+    document.body.classList.add('menu-open');
+    menuOpenBtn.setAttribute('aria-expanded', 'true');
+    menuCloseBtn.focus();
+  }
+  function closeMenu(){
+    menuOverlay.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    menuOpenBtn.setAttribute('aria-expanded', 'false');
+    // The overlay is visibility:hidden once closed, so focus must leave it or
+    // the tab order resumes from an invisible element. It was opened from the
+    // Menu button, so that is where focus belongs.
+    menuOpenBtn.focus();
+  }
+
+  menuOpenBtn.addEventListener('click', openMenu);
+  menuCloseBtn.addEventListener('click', closeMenu);
+
+  // Close first, then scroll: body scroll is locked while the menu is open,
+  // so scrolling before the lock lifts would go nowhere.
+  menuOverlay.querySelectorAll('.menu-links a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var toTop  = a.hasAttribute('data-menu-top');
+      var target = toTop ? null : document.querySelector(a.getAttribute('href'));
+      if (!toTop && !target) return;          // unknown anchor — let the browser handle it
+      e.preventDefault();
+      closeMenu();
+      var y = toTop ? 0 : target.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (!menuOverlay.classList.contains('open')) return;
+    if (e.key === 'Escape') { closeMenu(); return; }
+    if (e.key !== 'Tab') return;
+    // hold focus inside the overlay while it is modal
+    var f = menuOverlay.querySelectorAll('a[href], button');
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+}
 
 /* ──────────── HERO SETUP ──────────── */
 var heroSpacer = document.getElementById('hero-spacer');

@@ -1,0 +1,17 @@
+# Files kept in the repo but never published.
+#
+# Vercel serves the repo root as static files, so anything committed here is
+# reachable on the live domain. These were all fetchable at 200 until now —
+# superseded drafts of the site competing with index.html for search results.
+
+# Earlier versions of the site, kept for history.
+SHAMUM Website.html
+index.html.bak
+shamum-website.html
+
+# Project tooling, not web content.
+website/
+
+# Local Blender/Cycles pipeline and its frame output.
+render/
+assets/marwaframes/

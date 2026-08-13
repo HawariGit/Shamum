@@ -886,6 +886,55 @@ body.menu-open { overflow: hidden; }
   .ps-time { display: none; }
 }
 
+/* ─── SCENT TIMELINE ───
+   This was the only content section with no visual, and its subject is
+   time: three phases blooming and receding across eight hours. The curves
+   restate the structure the accordion describes, and carry the timings
+   that .ps-time drops on narrow screens. Each bloom lights with its step.
+   SVG text and strokes scale with the viewBox, so at 375px the graphic is
+   rendered at 0.43x — hence the much larger font-size and stroke-width in
+   the mobile block below, which land back at ~10px and ~1.3px on screen. */
+.sl-curve-wrap { margin: 0 0 44px; }
+.sl-curve { width: 100%; height: auto; display: block; }
+.sl-axis { stroke: rgba(212,188,134,0.18); stroke-width: 1; }
+.sl-tick { stroke: rgba(212,188,134,0.22); stroke-width: 1; }
+.sl-tick-label {
+  font-family: 'Jost', sans-serif; font-size: 11px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  fill: rgba(212,188,134,0.48);
+}
+.sl-phase { transition: opacity 0.45s cubic-bezier(0.16,1,0.3,1); }
+.sl-area {
+  opacity: 0;
+  transition: opacity 1.1s cubic-bezier(0.16,1,0.3,1);
+}
+.sl-line {
+  fill: none; stroke-width: 1.4; stroke-linecap: round;
+  /* pathLength="100" normalises every curve, so one dash rule draws them
+     all at the same rate regardless of their real length. */
+  stroke-dasharray: 100; stroke-dashoffset: 100;
+  transition: stroke-dashoffset 1.6s cubic-bezier(0.16,1,0.3,1);
+}
+.sl-curve-wrap.visible .sl-area { opacity: 1; }
+.sl-curve-wrap.visible .sl-line { stroke-dashoffset: 0; }
+.sl-phase:nth-of-type(2) .sl-line,
+.sl-phase:nth-of-type(2) .sl-area { transition-delay: 0.18s; }
+.sl-phase:nth-of-type(3) .sl-line,
+.sl-phase:nth-of-type(3) .sl-area { transition-delay: 0.36s; }
+/* An open step claims its curve; the others recede. */
+.sl-curve.dim .sl-phase { opacity: 0.26; }
+.sl-curve.dim .sl-phase.on { opacity: 1; }
+@media (max-width: 640px) {
+  .sl-tick-label { font-size: 24px; letter-spacing: 0.1em; }
+  .sl-line { stroke-width: 3; }
+  .sl-axis, .sl-tick { stroke-width: 2; }
+  .sl-curve-wrap { margin-bottom: 34px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sl-line { stroke-dasharray: none; stroke-dashoffset: 0; transition: none; }
+  .sl-area { opacity: 1; transition: none; }
+}
+
 /* ─── TRUST ─── */
 #trust {
   background: var(--oud-900); padding: 100px 48px;
@@ -1813,6 +1862,56 @@ body.menu-open { overflow: hidden; }
       <span class="section-eyebrow reveal" style="color: var(--gold-400);">04 — The Life of the Scent · رحلة العطر</span>
       <h2 class="sl-title reveal-lines"><span class="lr"><span class="lri">Oud does not fade.</span></span><br><span class="lr"><span class="lri"><em>It unfolds.</em></span></span></h2>
     </div>
+    <div class="sl-curve-wrap reveal" aria-hidden="true">
+      <svg class="sl-curve" viewBox="0 0 760 200" preserveAspectRatio="xMidYMid meet" focusable="false">
+        <defs>
+          <linearGradient id="sl-g-opening" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#D4BC86" stop-opacity="0.44"/>
+            <stop offset="100%" stop-color="#D4BC86" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="sl-g-heart" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#C2A368" stop-opacity="0.40"/>
+            <stop offset="100%" stop-color="#C2A368" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="sl-g-drydown" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8C6E3A" stop-opacity="0.46"/>
+            <stop offset="100%" stop-color="#8C6E3A" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <line class="sl-axis" x1="20" y1="150" x2="740" y2="150"/>
+
+        <g class="sl-phase" data-phase="opening">
+          <path class="sl-area" fill="url(#sl-g-opening)"
+                d="M20,150 C58,149 102,48 140,48 C182,48 244,150 322,150 Z"/>
+          <path class="sl-line" pathLength="100" stroke="#D4BC86"
+                d="M20,150 C58,149 102,48 140,48 C182,48 244,150 322,150"/>
+        </g>
+        <g class="sl-phase" data-phase="heart">
+          <path class="sl-area" fill="url(#sl-g-heart)"
+                d="M150,150 C214,149 276,60 352,60 C432,60 512,150 590,150 Z"/>
+          <path class="sl-line" pathLength="100" stroke="#C2A368"
+                d="M150,150 C214,149 276,60 352,60 C432,60 512,150 590,150"/>
+        </g>
+        <g class="sl-phase" data-phase="drydown">
+          <path class="sl-area" fill="url(#sl-g-drydown)"
+                d="M380,150 C452,149 500,99 566,96 C630,93 692,92 740,92 L740,150 Z"/>
+          <path class="sl-line" pathLength="100" stroke="#8C6E3A"
+                d="M380,150 C452,149 500,99 566,96 C630,93 692,92 740,92"/>
+        </g>
+
+        <g class="sl-ticks">
+          <line class="sl-tick" x1="140" y1="150" x2="140" y2="157"/>
+          <line class="sl-tick" x1="310" y1="150" x2="310" y2="157"/>
+          <line class="sl-tick" x1="470" y1="150" x2="470" y2="157"/>
+          <line class="sl-tick" x1="740" y1="150" x2="740" y2="157"/>
+          <text class="sl-tick-label" x="140" y="176" text-anchor="middle">30 min</text>
+          <text class="sl-tick-label" x="310" y="176" text-anchor="middle">2h</text>
+          <text class="sl-tick-label" x="470" y="176" text-anchor="middle">4h</text>
+          <text class="sl-tick-label" x="740" y="176" text-anchor="end">8h+</text>
+        </g>
+      </svg>
+    </div>
     <div class="scent-progression reveal reveal-delay-2">
       <details class="progression-step" open>
         <summary>The Opening · المقدمة <span class="ps-time">First 30 Minutes</span></summary>
@@ -2478,6 +2577,30 @@ function heroLoop(ts){
 }
 requestAnimationFrame(heroLoop);
 window.__heroTick = heroLoop; // manual frame stepping for automated tests
+
+/* ──────────── SCENT TIMELINE ──────────── */
+var slCurve = document.querySelector('.sl-curve');
+var slSteps = Array.prototype.slice.call(
+  document.querySelectorAll('#scent-life .progression-step'));
+if (slCurve && slSteps.length) {
+  var slPhases = ['opening', 'heart', 'drydown'];
+  function syncScentCurve(){
+    var anyOpen = false;
+    slSteps.forEach(function(step, i){
+      var g = slCurve.querySelector('[data-phase="' + slPhases[i] + '"]');
+      if (!g) return;
+      g.classList.toggle('on', step.open);
+      if (step.open) anyOpen = true;
+    });
+    // With nothing open every curve sits at full strength; the dim state
+    // only makes sense when there is something to contrast against.
+    slCurve.classList.toggle('dim', anyOpen);
+  }
+  slSteps.forEach(function(step){
+    step.addEventListener('toggle', syncScentCurve);
+  });
+  syncScentCurve();
+}
 
 /* ──────────── INTERSECTION OBSERVERS ──────────── */
 function makeIO(threshold, callback){

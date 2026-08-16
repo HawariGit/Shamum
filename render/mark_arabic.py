@@ -12,6 +12,14 @@ Only text between > and < is touched, so attribute values (hrefs carrying
 Arabic slugs, alt text, aria-labels) are never rewritten. Script, style and
 title regions are excluded outright.
 
+INSIDE SVG THE WRAPPER MUST BE <tspan>, NOT <span>. This bit hard once:
+<span> is on the HTML parser's foreign-content breakout list, so a <span>
+placed inside an SVG <text> terminates the <svg> element there and every
+following node is re-parsed as inert HTML. Two such spans silently deleted
+the oil vial's cap and the whole perfume bottle from the hero — the elements
+were still in the document, but as HTMLUnknownElements with no geometry
+(tagName came back uppercase and getBBox was missing). Nothing errored.
+
 Idempotent: a run already inside a lang="ar" span is skipped.
 
 Usage: python render/mark_arabic.py [--apply]
@@ -53,40 +61,53 @@ def runs(text):
 
 
 def protected_spans(html):
-    """Regions we must not rewrite: script, style, title, existing ar spans."""
+    """Regions we must not rewrite: script, style, title, existing ar wrappers."""
     spans = []
     for m in re.finditer(r"<script\b.*?</script>|<style\b.*?</style>|<title\b.*?</title>",
                          html, flags=re.S | re.I):
         spans.append(m.span())
-    for m in re.finditer(r'<span lang="ar">.*?</span>', html, flags=re.S):
+    for m in re.finditer(r'<(?:span|tspan) lang="ar">.*?</(?:span|tspan)>', html, flags=re.S):
         spans.append(m.span())
     return spans
+
+
+def svg_regions(html):
+    """Character ranges inside an <svg> element — see the note in the header."""
+    return [m.span() for m in re.finditer(r"<svg\b.*?</svg>", html, flags=re.S | re.I)]
 
 
 def main():
     html = open(SRC, encoding="utf-8").read()
     prot = protected_spans(html)
+    svgs = svg_regions(html)
 
     def guarded(pos):
         return any(a <= pos < b for a, b in prot)
 
+    def in_svg(pos):
+        return any(a <= pos < b for a, b in svgs)
+
     edits = []           # (start, end, replacement)
+    n_tspan = 0
     for m in re.finditer(r">([^<>]+)<", html):
         text = m.group(1)
         base = m.start(1)
         if guarded(base) or not any(is_ar(c) for c in text):
             continue
+        tag = "tspan" if in_svg(base) else "span"
+        if tag == "tspan":
+            n_tspan += 1
         for s, e in runs(text):
             frag = text[s:e]
             edits.append((base + s, base + e,
-                          '<span lang="ar">%s</span>' % frag))
+                          '<%s lang="ar">%s</%s>' % (tag, frag, tag)))
 
     edits.sort(key=lambda t: t[0], reverse=True)
     out = html
     for s, e, rep in edits:
         out = out[:s] + rep + out[e:]
 
-    print("Arabic runs found : %d" % len(edits))
+    print("Arabic runs found : %d  (%d inside SVG -> tspan)" % (len(edits), n_tspan))
     print("bytes %d -> %d" % (len(html), len(out)))
     samples = [rep for _, _, rep in sorted(edits, key=lambda t: t[0])][:8]
     for s in samples:

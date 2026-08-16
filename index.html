@@ -7,6 +7,33 @@
 <meta name="description" content="SHAMUM — عبق العطر الأصيل. A house of oud and fragrance from the Sultanate of Oman, preserving heritage craftsmanship since 2010. From the Aquilaria tree to the mabkhara, the oil, and the perfume.">
 <meta name="theme-color" content="#15100A">
 <link rel="canonical" href="https://shamum.vercel.app/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "SHAMUM",
+  "alternateName": "شاموم",
+  "description": "Omani house of oud and fragrance, preserving heritage craftsmanship since 2010.",
+  "url": "https://shamum.vercel.app/",
+  "logo": "https://shamum.vercel.app/assets/logo-full.png",
+  "foundingDate": "2010",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "OM",
+    "addressRegion": "Sultanate of Oman"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+968-9854-0321",
+    "contactType": "customer service",
+    "availableLanguage": ["ar", "en"]
+  },
+  "sameAs": [
+    "https://shamum.com",
+    "https://www.instagram.com/shamumofficial"
+  ]
+}
+</script>
 <link rel="icon" type="image/png" href="assets/logo-mark.png">
 <link rel="apple-touch-icon" href="assets/logo-mark.png">
 <meta property="og:type" content="website">
@@ -35,6 +62,14 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Arabic runs are wrapped in <span lang="ar"> so screen readers stop voicing
+   them with an English voice. They must not create boxes: inside a flex
+   parent a span is blockified into a flex item, which added the container's
+   18px gap between "The Opening ·" and "المقدمة" and split the sticky bar.
+   display:contents drops the box while leaving the DOM — and so the lang
+   inheritance — untouched. Regenerate with render/mark_arabic.py. */
+span[lang="ar"] { display: contents; }
 html { scroll-behavior: auto; }
 body {
   font-family: 'Jost', sans-serif;
@@ -1210,6 +1245,27 @@ body.menu-open { overflow: hidden; }
   /* payment chips: 7px was unreadable and "APPLE PAY" wrapped */
   .payment-icon           { width: 52px; height: 26px; font-size: 8.5px; }
 }
+
+/* ─── REDUCED MOTION — the gaps ───
+   Five earlier blocks covered the menu, calligraphy, ken-burns photos, haze
+   and scent curves, but the biggest sources were never handled: the .reveal
+   system fires 22 times a page with a 40px slide, .reveal-scale adds a blur,
+   and the photo entrances push 1.1x. Someone who has asked their OS for less
+   motion was still getting nearly all of it. Content is shown outright here
+   rather than merely un-transitioned — a snap-in is not an improvement. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-scale {
+    opacity: 1 !important; transform: none !important;
+    filter: none !important; transition: none !important;
+  }
+  .ess-panel.reveal:not(.visible) .ess-clip img,
+  .ritual-media.reveal:not(.visible) img { transform: none; }
+  .ritual-media img, .ess-clip img { transition: none; }
+  .reveal-lines .lr { overflow: visible; }
+  .sl-phase, .product-card, .add-to-bag { transition: none; }
+  /* JS-driven inline transforms are cleared in the magnetic handler too. */
+  .magnetic { transform: none !important; }
+}
 </style>
 </head>
 <body>
@@ -1227,7 +1283,7 @@ body.menu-open { overflow: hidden; }
 <!-- STICKY COLLECTION BAR -->
 <div id="sticky-bar">
   <div class="sb-inner">
-    <span class="sb-brand"><img src="assets/logo-mark.png" alt="">المجموعة الكاملة · The Collection</span>
+    <span class="sb-brand"><img src="assets/logo-mark.png" alt=""><span lang="ar">المجموعة الكاملة</span> · The Collection</span>
     <a class="sb-cta" href="https://shamum.com/products" target="_blank" rel="noopener">View All 15 Expressions →</a>
   </div>
 </div>
@@ -1278,16 +1334,16 @@ body.menu-open { overflow: hidden; }
   </div>
   <div class="menu-inner">
     <ul class="menu-links">
-      <li><a href="#top" data-menu-top="1"><span class="menu-en">Home</span><span class="menu-ar">الرئيسية</span></a></li>
-      <li><a href="#products"><span class="menu-en">Collection</span><span class="menu-ar">المجموعة</span></a></li>
-      <li><a href="#brand-statement"><span class="menu-en">Our Oud</span><span class="menu-ar">عودنا</span></a></li>
-      <li><a href="#footer"><span class="menu-en">The House</span><span class="menu-ar">بيت شاموم</span></a></li>
+      <li><a href="#top" data-menu-top="1"><span class="menu-en">Home</span><span class="menu-ar"><span lang="ar">الرئيسية</span></span></a></li>
+      <li><a href="#products"><span class="menu-en">Collection</span><span class="menu-ar"><span lang="ar">المجموعة</span></span></a></li>
+      <li><a href="#brand-statement"><span class="menu-en">Our Oud</span><span class="menu-ar"><span lang="ar">عودنا</span></span></a></li>
+      <li><a href="#footer"><span class="menu-en">The House</span><span class="menu-ar"><span lang="ar">بيت شاموم</span></span></a></li>
     </ul>
     <div class="menu-foot">
-      <span class="menu-foot-title">Reach the House · تواصل</span>
+      <span class="menu-foot-title">Reach the House · <span lang="ar">تواصل</span></span>
       <div class="menu-foot-row">
-        <a href="https://shamum.com/products" target="_blank" rel="noopener">All Products · جميع المنتجات</a>
-        <a href="https://wa.me/96898540321" target="_blank" rel="noopener">WhatsApp · واتساب</a>
+        <a href="https://shamum.com/products" target="_blank" rel="noopener">All Products · <span lang="ar">جميع المنتجات</span></a>
+        <a href="https://wa.me/96898540321" target="_blank" rel="noopener">WhatsApp · <span lang="ar">واتساب</span></a>
         <a href="https://instagram.com/shamumofficial" target="_blank" rel="noopener">Instagram · @shamumofficial</a>
       </div>
     </div>
@@ -1301,7 +1357,7 @@ body.menu-open { overflow: hidden; }
 
     <!-- Scroll cue -->
     <div id="scroll-cue" aria-hidden="true">
-      <span>Scroll · اكتشف</span>
+      <span>Scroll · <span lang="ar">اكتشف</span></span>
       <div class="cue-track"><div class="cue-line"></div></div>
     </div>
 
@@ -1621,7 +1677,7 @@ body.menu-open { overflow: hidden; }
                   fill="rgba(255,255,255,0.05)" stroke="rgba(244,234,210,0.48)" stroke-width="1.6"/>
             <path d="M672 2378 Q672 2394 720 2394 Q768 2394 768 2378 L768 2366 Q768 2382 720 2382 Q672 2382 672 2366 Z" fill="rgba(255,255,255,0.08)"/>
             <text x="720" y="2298" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#D4BC86" letter-spacing="2.5" opacity="0.9">SHAMUM</text>
-            <text x="720" y="2316" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#C2A368" opacity="0.85">شاموم</text>
+            <text x="720" y="2316" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#C2A368" opacity="0.85"><span lang="ar">شاموم</span></text>
             <rect x="717" y="2324" width="5" height="5" fill="#AE8B4F" opacity="0.7" transform="rotate(45 719.5 2326.5)"/>
             <rect x="706" y="2198" width="28" height="14" fill="rgba(255,255,255,0.06)" stroke="rgba(244,234,210,0.3)" stroke-width="1"/>
             <g id="f3-cap">
@@ -1690,7 +1746,7 @@ body.menu-open { overflow: hidden; }
             <path d="M668 3060 L668 3310" stroke="rgba(255,255,255,0.06)" stroke-width="10" stroke-linecap="round"/>
             <rect x="664" y="3150" width="112" height="86" fill="rgba(194,163,104,0.06)" stroke="rgba(194,163,104,0.55)" stroke-width="1"/>
             <text x="720" y="3186" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#D4BC86" letter-spacing="4">SHAMUM</text>
-            <text x="720" y="3212" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#C2A368">شاموم</text>
+            <text x="720" y="3212" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#C2A368"><span lang="ar">شاموم</span></text>
             <rect x="717" y="3222" width="6" height="6" fill="#AE8B4F" transform="rotate(45 720 3225)"/>
             <path d="M786 3062 C786 3160 786 3250 786 3314" stroke="rgba(212,188,134,0.4)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
             <rect x="700" y="2922" width="40" height="12" fill="#6E5328"/>
@@ -1728,19 +1784,19 @@ body.menu-open { overflow: hidden; }
     </div>
     <div class="ch-text" id="ht2">
       <span class="ch-eyebrow">Chapter II · The Mabkhara</span>
-      <span class="ch-ar">أخشـاب العـود</span>
+      <span class="ch-ar"><span lang="ar">أخشـاب العـود</span></span>
       <h3 class="ch-head">The Bukhoor</h3>
       <p class="ch-sub">From the cut of the axe, resin-dark heartwood falls to the mabkhara below — burned as it has been for generations.</p>
     </div>
     <div class="ch-text" id="ht3">
       <span class="ch-eyebrow">Chapter III · The Distillation</span>
-      <span class="ch-ar">أدهـان العـود</span>
+      <span class="ch-ar"><span lang="ar">أدهـان العـود</span></span>
       <h3 class="ch-head">The Oil</h3>
       <p class="ch-sub">One drop, drawn by patience. Pure dehn al oud, undiluted.</p>
     </div>
     <div class="ch-text" id="ht4">
       <span class="ch-eyebrow">Chapter IV · The House</span>
-      <span class="ch-ar">البـخـاخـات</span>
+      <span class="ch-ar"><span lang="ar">البـخـاخـات</span></span>
       <h3 class="ch-head">The Perfume</h3>
       <p class="ch-sub">Where the journey of the wood becomes a signature.</p>
       <div class="hero-cta" id="hero-cta">
@@ -1763,8 +1819,8 @@ body.menu-open { overflow: hidden; }
   </svg>
   <div class="brand-text-wrap" id="brand-parallax">
     <div class="gold-divider reveal"></div>
-    <h2 class="brand-headline" style="direction:rtl;"><span class="sr-only">عبـقُ العطــر الأصيــل</span>
-﻿<svg class="arabic-calli ac-brand reveal-lines" viewBox="-1.2 -67.7 469.6 99.4" style="--n:19" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+    <h2 class="brand-headline" style="direction:rtl;"><span class="sr-only"><span lang="ar">عبـقُ العطــر الأصيــل</span></span>
+<span lang="ar">﻿</span><svg class="arabic-calli ac-brand reveal-lines" viewBox="-1.2 -67.7 469.6 99.4" style="--n:19" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
     <path class="ac-g" pathLength="100" style="--i:18" d="M44.1 0.0Q43.2 0.0 42.3 -0.1Q41.5 -0.1 40.7 -0.5Q40.0 -0.8 39.3 -1.4Q38.5 -2.0 37.8 -3.1Q37.4 -3.8 36.9 -4.7Q36.5 -5.7 36.1 -6.8Q36.2 -6.2 36.3 -5.1Q36.4 -4.1 36.5 -2.9Q36.5 -1.8 36.6 -0.6Q36.6 0.6 36.6 1.6Q36.5 3.2 36.2 4.7Q35.9 6.2 35.6 7.2Q35.2 8.6 33.3 10.4Q31.4 12.3 28.7 13.9Q26.0 15.5 22.8 16.6Q19.5 17.7 16.3 17.7Q12.9 17.7 10.7 16.5Q8.5 15.3 7.2 13.4Q5.9 11.5 5.3 9.2Q4.8 6.9 4.8 4.6Q4.8 2.1 5.3 -0.2Q5.9 -2.5 6.5 -4.2Q7.2 -5.9 7.9 -6.9Q8.6 -7.9 8.8 -7.9Q9.1 -7.9 9.1 -7.4Q8.6 -6.1 8.3 -5.0Q8.0 -3.9 7.7 -2.2Q7.4 -0.5 7.4 1.8Q7.4 3.8 8.2 5.6Q9.0 7.4 10.3 8.8Q11.7 10.1 13.5 10.9Q15.3 11.7 17.3 11.7Q20.0 11.7 22.9 10.8Q25.7 9.9 28.1 8.5Q30.5 7.1 32.3 5.5Q34.1 3.9 34.7 2.5Q34.7 1.6 34.7 0.8Q34.7 0.1 34.6 -0.3Q34.4 -2.2 34.1 -5.9Q33.7 -9.5 32.9 -18.5Q32.0 -28.3 31.6 -32.7Q31.2 -37.2 31.0 -40.9Q30.8 -44.5 30.8 -46.5Q31.2 -48.5 31.5 -49.4Q31.8 -50.4 32.6 -51.9Q32.9 -51.9 32.9 -51.7Q33.0 -51.4 33.1 -50.8Q33.2 -50.3 33.2 -49.5Q33.3 -48.7 33.4 -47.5Q33.8 -44.2 34.2 -40.5Q34.6 -36.7 35.0 -32.9Q35.4 -29.0 35.8 -25.2Q36.2 -21.4 36.7 -17.9Q36.9 -16.9 37.1 -15.7Q37.3 -14.6 37.5 -13.4Q37.7 -12.3 38.0 -11.3Q38.3 -10.4 38.6 -9.8Q39.3 -8.3 40.1 -7.4Q41.0 -6.4 42.6 -5.9Q43.7 -5.7 44.2 -5.7Q44.7 -5.6 45.8 -5.6Z"/>
     <path class="ac-g" pathLength="100" style="--i:17" d="M42.2 -2.2Q42.2 -3.5 43.2 -4.5Q44.1 -5.6 45.8 -5.6Q46.4 -5.6 47.3 -5.5Q48.1 -5.4 49.2 -5.3Q50.3 -5.3 51.5 -5.2Q52.7 -5.2 53.9 -5.2Q55.1 -5.2 56.4 -5.2Q57.7 -5.3 59.0 -5.3Q60.4 -5.4 61.6 -5.4Q62.8 -5.5 63.7 -5.6L62.1 0.0Q61.2 0.1 60.1 0.1Q58.9 0.2 57.6 0.3Q56.3 0.3 55.0 0.4Q53.6 0.4 52.2 0.4Q49.8 0.4 47.5 0.2Q45.2 0.1 44.1 0.0Q43.1 -0.1 42.7 -0.8Q42.2 -1.5 42.2 -2.2Z"/>
     <path class="ac-g" pathLength="100" style="--i:16" d="M78.6 -0.8Q77.1 -0.8 75.8 -1.2Q74.5 -1.7 73.4 -2.3Q72.3 -3.0 71.4 -3.9Q70.6 -4.7 69.9 -5.6Q68.7 -3.8 67.7 -2.7Q66.7 -1.7 65.7 -1.0Q64.8 -0.4 63.9 -0.2Q63.0 0.0 62.1 0.0Q60.6 0.0 60.2 -0.9Q59.8 -1.7 59.8 -2.5Q59.8 -3.1 60.1 -3.6Q60.4 -4.2 61.0 -4.6Q61.6 -5.1 62.3 -5.3Q63.0 -5.6 63.7 -5.6Q65.4 -5.6 67.2 -7.3Q69.0 -9.0 70.8 -12.3Q71.6 -13.5 72.1 -14.1Q72.7 -14.6 73.5 -14.6Q73.9 -14.6 74.0 -14.3Q74.1 -13.9 74.1 -13.6Q74.1 -13.3 73.9 -13.0Q73.8 -12.6 73.6 -12.2Q73.5 -11.8 73.2 -11.1Q73.2 -10.8 73.9 -10.1Q74.6 -9.3 75.6 -8.5Q76.7 -7.7 77.9 -7.0Q79.2 -6.4 80.3 -6.4ZM74.6 6.3 79.4 9.7 77.0 14.8 72.1 11.4ZM66.5 7.8 71.4 11.2 68.9 16.3 64.0 12.9Z"/>
@@ -1797,11 +1853,11 @@ body.menu-open { overflow: hidden; }
     <img src="assets/ig-ritual.webp" alt="The bukhoor ritual in the SHAMUM majlis — طقس البخور" loading="lazy">
     <div class="ritual-stat">
       <span class="rs-num">2010</span>
-      <span class="rs-label">The House Founded · التأسيس</span>
+      <span class="rs-label">The House Founded · <span lang="ar">التأسيس</span></span>
     </div>
   </div>
   <div class="ritual-text">
-    <span class="section-eyebrow reveal" style="color: var(--gold-400);">01 — The House · بيت شاموم</span>
+    <span class="section-eyebrow reveal" style="color: var(--gold-400);">01 — The House · <span lang="ar">بيت شاموم</span></span>
     <h2 class="ritual-head reveal-lines"><span class="lr"><span class="lri">The ritual is</span></span><br><span class="lr"><span class="lri"><em>the inheritance.</em></span></span></h2>
     <p class="ritual-sub reveal reveal-delay-2">In the majlis, the mabkhara passes from hand to hand — bukhoor smoke rising through the folds of a musar, as it has for generations. SHAMUM begins here: hospitality, patience, and wood that remembers.</p>
     <div class="ornament reveal reveal-delay-3">
@@ -1814,7 +1870,7 @@ body.menu-open { overflow: hidden; }
 <!-- ═══ EMBER & ESSENCE ═══ -->
 <section id="essence">
   <div class="ess-head">
-    <span class="section-eyebrow reveal" style="color: var(--gold-400);">02 — The Two Gifts of the Wood · عطايا العود</span>
+    <span class="section-eyebrow reveal" style="color: var(--gold-400);">02 — The Two Gifts of the Wood · <span lang="ar">عطايا العود</span></span>
     <h2 class="ess-title reveal-lines"><span class="lr"><span class="lri">One tree. <em>Two inheritances.</em></span></span></h2>
     <div class="ornament reveal reveal-delay-2">
       <span class="orn-line"></span>
@@ -1831,7 +1887,7 @@ body.menu-open { overflow: hidden; }
       </div>
       <figcaption>
         <span class="ess-num">I</span>
-        <span class="ess-ar">البخور</span>
+        <span class="ess-ar"><span lang="ar">البخور</span></span>
         <span class="ess-en">The Ember</span>
         <p class="ess-desc">Resin-dark heartwood over live coal — the scent that opens every majlis.</p>
       </figcaption>
@@ -1844,7 +1900,7 @@ body.menu-open { overflow: hidden; }
       </div>
       <figcaption>
         <span class="ess-num">II</span>
-        <span class="ess-ar">الدهن</span>
+        <span class="ess-ar"><span lang="ar">الدهن</span></span>
         <span class="ess-en">The Essence</span>
         <p class="ess-desc">Pure dehn al oud, decanted after years of rest beneath the quatrefoil.</p>
       </figcaption>
@@ -1855,7 +1911,7 @@ body.menu-open { overflow: hidden; }
 <!-- ═══ PRODUCTS ═══ -->
 <section id="products">
   <div id="products-header">
-    <span class="section-eyebrow reveal">03 — The Collection · المجموعة</span>
+    <span class="section-eyebrow reveal">03 — The Collection · <span lang="ar">المجموعة</span></span>
     <h2 class="section-title reveal-lines"><span class="lr"><span class="lri">Rare Expressions,</span></span><br><span class="lr"><span class="lri">Carefully Composed.</span></span></h2>
     <div class="ornament reveal reveal-delay-2">
       <span class="orn-line"></span>
@@ -1874,9 +1930,9 @@ body.menu-open { overflow: hidden; }
       <div class="product-info">
         <div class="product-meta"><span class="product-size">Oud Oil · 3ml</span><span class="product-tags">Rare Aged Ouds · Bukhoor · Floral</span></div>
         <span class="product-name">Mindali</span>
-        <span class="product-arabic">منــــــدلـي</span>
-        <span class="product-price">240.000 ر.ع</span>
-        <a class="add-to-bag magnetic" href="https://shamum.com/products/منــــــدلـي-1" target="_blank" rel="noopener">View Product · اكتشف</a>
+        <span class="product-arabic"><span lang="ar">منــــــدلـي</span></span>
+        <span class="product-price">240.000 <span lang="ar">ر.ع</span></span>
+        <a class="add-to-bag magnetic" href="https://shamum.com/products/منــــــدلـي-1" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
       </div>
     </div>
 
@@ -1888,9 +1944,9 @@ body.menu-open { overflow: hidden; }
       <div class="product-info">
         <div class="product-meta"><span class="product-size">Oud Wood · 12g</span><span class="product-tags">Bicentennial Trees · Woody · Aquatic</span></div>
         <span class="product-name">Jawhar</span>
-        <span class="product-arabic">جوهــــر</span>
-        <span class="product-price">150.000 ر.ع</span>
-        <a class="add-to-bag magnetic" href="https://shamum.com/products/جوهــــر" target="_blank" rel="noopener">View Product · اكتشف</a>
+        <span class="product-arabic"><span lang="ar">جوهــــر</span></span>
+        <span class="product-price">150.000 <span lang="ar">ر.ع</span></span>
+        <a class="add-to-bag magnetic" href="https://shamum.com/products/جوهــــر" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
       </div>
     </div>
 
@@ -1902,9 +1958,9 @@ body.menu-open { overflow: hidden; }
       <div class="product-info">
         <div class="product-meta"><span class="product-size">Oud Oil · 3ml</span><span class="product-tags">The Eldest Formula · 20-Year Oud</span></div>
         <span class="product-name">Razi II</span>
-        <span class="product-arabic">رازي الثـانـي</span>
-        <span class="product-price">125.000 ر.ع</span>
-        <a class="add-to-bag magnetic" href="https://shamum.com/products/رازي" target="_blank" rel="noopener">View Product · اكتشف</a>
+        <span class="product-arabic"><span lang="ar">رازي الثـانـي</span></span>
+        <span class="product-price">125.000 <span lang="ar">ر.ع</span></span>
+        <a class="add-to-bag magnetic" href="https://shamum.com/products/رازي" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
       </div>
     </div>
 
@@ -1917,9 +1973,9 @@ body.menu-open { overflow: hidden; }
       <div class="product-info">
         <div class="product-meta"><span class="product-size">Eau de Parfum</span><span class="product-tags">Saffron · Amber · Bergamot</span></div>
         <span class="product-name">Mindal</span>
-        <span class="product-arabic">منــدل</span>
-        <span class="product-price">107.000 ر.ع</span>
-        <a class="add-to-bag magnetic" href="https://shamum.com/products/منــدل" target="_blank" rel="noopener">View Product · اكتشف</a>
+        <span class="product-arabic"><span lang="ar">منــدل</span></span>
+        <span class="product-price">107.000 <span lang="ar">ر.ع</span></span>
+        <a class="add-to-bag magnetic" href="https://shamum.com/products/منــدل" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
       </div>
     </div>
 
@@ -1931,9 +1987,9 @@ body.menu-open { overflow: hidden; }
       <div class="product-info">
         <div class="product-meta"><span class="product-size">Eau de Parfum</span><span class="product-tags">Vanilla · Bitter Almond · Sandalwood</span></div>
         <span class="product-name">Zahiya</span>
-        <span class="product-arabic">زاهيـــة</span>
-        <span class="product-price">68.000 ر.ع</span>
-        <a class="add-to-bag magnetic" href="https://shamum.com/products/زاهيـــة" target="_blank" rel="noopener">View Product · اكتشف</a>
+        <span class="product-arabic"><span lang="ar">زاهيـــة</span></span>
+        <span class="product-price">68.000 <span lang="ar">ر.ع</span></span>
+        <a class="add-to-bag magnetic" href="https://shamum.com/products/زاهيـــة" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
       </div>
     </div>
 
@@ -1946,15 +2002,15 @@ body.menu-open { overflow: hidden; }
       <div class="product-info">
         <div class="product-meta"><span class="product-size">Limited Edition</span><span class="product-tags">Private Reserve</span></div>
         <span class="product-name">Surra</span>
-        <span class="product-arabic">سُــــرى</span>
-        <span class="product-price">61.000 ر.ع</span>
-        <a class="add-to-bag magnetic" href="https://shamum.com/products/ســــرى" target="_blank" rel="noopener">View Product · اكتشف</a>
+        <span class="product-arabic"><span lang="ar">سُــــرى</span></span>
+        <span class="product-price">61.000 <span lang="ar">ر.ع</span></span>
+        <a class="add-to-bag magnetic" href="https://shamum.com/products/ســــرى" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
       </div>
     </div>
 
   </div>
   <div class="products-cta reveal">
-    <a class="view-all-btn magnetic" href="https://shamum.com/products" target="_blank" rel="noopener">View All 15 Expressions · جميع المنتجات</a>
+    <a class="view-all-btn magnetic" href="https://shamum.com/products" target="_blank" rel="noopener">View All 15 Expressions · <span lang="ar">جميع المنتجات</span></a>
   </div>
 </section>
 
@@ -1967,7 +2023,7 @@ body.menu-open { overflow: hidden; }
   </svg>
   <div class="quote-inner">
     <div class="diamond-divider reveal-scale"></div>
-    <p class="quote-arabic reveal-scale reveal-delay-1">"العطر ذاكرة لا تُنسى — وشاموم يكتب ذاكرتك."</p>
+    <p class="quote-arabic reveal-scale reveal-delay-1">"<span lang="ar">العطر ذاكرة لا تُنسى — وشاموم يكتب ذاكرتك</span>."</p>
     <span class="quote-en reveal-scale reveal-delay-2">Fragrance is unforgettable memory — and SHAMUM writes yours.</span>
   </div>
 </section>
@@ -1976,7 +2032,7 @@ body.menu-open { overflow: hidden; }
 <section id="scent-life">
   <div class="sl-inner">
     <div class="sl-head">
-      <span class="section-eyebrow reveal" style="color: var(--gold-400);">04 — The Life of the Scent · رحلة العطر</span>
+      <span class="section-eyebrow reveal" style="color: var(--gold-400);">04 — The Life of the Scent · <span lang="ar">رحلة العطر</span></span>
       <h2 class="sl-title reveal-lines"><span class="lr"><span class="lri">Oud does not fade.</span></span><br><span class="lr"><span class="lri"><em>It unfolds.</em></span></span></h2>
     </div>
     <div class="sl-curve-wrap reveal" aria-hidden="true">
@@ -2031,15 +2087,15 @@ body.menu-open { overflow: hidden; }
     </div>
     <div class="scent-progression reveal reveal-delay-2">
       <details class="progression-step" open>
-        <summary>The Opening · المقدمة <span class="ps-time">First 30 Minutes</span></summary>
+        <summary>The Opening · <span lang="ar">المقدمة</span> <span class="ps-time">First 30 Minutes</span></summary>
         <p>The first smoke — bright, resinous, alive. The wood announces itself before it settles.</p>
       </details>
       <details class="progression-step">
-        <summary>The Heart · القلب <span class="ps-time">2 – 4 Hours</span></summary>
+        <summary>The Heart · <span lang="ar">القلب</span> <span class="ps-time">2 – 4 Hours</span></summary>
         <p>The heartwood emerges: warm, dense, unmistakably oud, resting close to the skin.</p>
       </details>
       <details class="progression-step">
-        <summary>The Drydown · الأثر <span class="ps-time">8+ Hours</span></summary>
+        <summary>The Drydown · <span lang="ar">الأثر</span> <span class="ps-time">8+ Hours</span></summary>
         <p>What remains on the sleeve the next morning — amber warmth, aged wood, memory.</p>
       </details>
     </div>
@@ -2052,22 +2108,22 @@ body.menu-open { overflow: hidden; }
     <div class="trust-item reveal">
       <span class="trust-number"><span class="counter" data-target="16">0</span></span>
       <span class="trust-label">Years of Heritage</span>
-      <span class="trust-arabic">منذ ٢٠١٠</span>
+      <span class="trust-arabic"><span lang="ar">منذ ٢٠١٠</span></span>
     </div>
     <div class="trust-item reveal reveal-delay-1">
       <span class="trust-number"><span class="counter" data-target="100">0</span><span class="trust-unit">%</span></span>
       <span class="trust-label">Natural Oud</span>
-      <span class="trust-arabic">عود طبيعي ١٠٠٪</span>
+      <span class="trust-arabic"><span lang="ar">عود طبيعي ١٠٠٪</span></span>
     </div>
     <div class="trust-item reveal reveal-delay-2">
       <span class="trust-number"><span class="counter" data-target="15">0</span></span>
       <span class="trust-label">Signature Expressions</span>
-      <span class="trust-arabic">إصدارات مميزة</span>
+      <span class="trust-arabic"><span lang="ar">إصدارات مميزة</span></span>
     </div>
     <div class="trust-item reveal reveal-delay-3">
       <span class="trust-number"><span class="counter" data-target="4">0</span></span>
       <span class="trust-label">Collections</span>
-      <span class="trust-arabic">مجموعات أصيلة</span>
+      <span class="trust-arabic"><span lang="ar">مجموعات أصيلة</span></span>
     </div>
   </div>
 </section>
@@ -2077,8 +2133,8 @@ body.menu-open { overflow: hidden; }
   <img class="gift-photo" src="assets/ig-box-open.webp" alt="SHAMUM presentation chest — صندوق الإهداء" loading="lazy">
   <div class="gift-scrim"></div>
   <div class="reveal gift-inner">
-    <h2 class="loyalty-headline"><span class="sr-only">فـن الإهــداء</span>
-﻿<svg class="arabic-calli ac-gift reveal-lines" viewBox="-1.1 -59.8 267.7 89.2" style="--n:11" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+    <h2 class="loyalty-headline"><span class="sr-only"><span lang="ar">فـن الإهــداء</span></span>
+<span lang="ar">﻿</span><svg class="arabic-calli ac-gift reveal-lines" viewBox="-1.1 -59.8 267.7 89.2" style="--n:11" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
     <path class="ac-g" pathLength="100" style="--i:10" d="M16.5 -17.7Q17.4 -17.7 18.0 -16.7Q18.6 -15.7 18.6 -14.6Q18.6 -13.1 18.0 -12.0Q17.4 -10.8 16.8 -10.8Q16.3 -10.8 16.1 -11.1Q15.9 -11.4 15.8 -11.7Q15.5 -12.1 15.0 -12.3Q14.4 -12.5 13.8 -12.5Q13.2 -12.5 12.3 -12.1Q11.4 -11.7 10.6 -11.1Q9.8 -10.6 9.2 -9.9Q8.6 -9.3 8.6 -8.8Q8.6 -8.0 9.7 -7.5Q10.9 -7.0 12.4 -6.7Q13.8 -6.3 15.2 -6.2Q16.6 -6.1 16.9 -6.1Q19.3 -7.3 20.6 -8.0Q21.9 -8.7 23.0 -9.4Q24.1 -10.0 24.3 -10.0Q24.9 -10.0 24.9 -9.2Q24.5 -8.2 24.2 -7.4Q23.9 -6.7 23.5 -5.9Q23.1 -5.1 22.7 -4.3Q22.6 -4.2 21.9 -3.7Q21.2 -3.3 20.2 -2.7Q19.1 -2.2 17.9 -1.5Q16.7 -0.9 15.5 -0.2Q14.0 0.5 12.5 1.4Q10.9 2.3 9.6 3.1Q8.3 3.8 6.4 4.8Q6.0 4.8 6.0 4.1Q6.0 3.4 6.7 2.6Q7.3 1.8 8.1 1.1Q8.9 0.4 10.2 -0.9Q8.5 -1.7 7.5 -2.2Q6.5 -2.8 5.7 -3.6Q4.9 -4.4 4.9 -5.6Q4.9 -7.2 6.0 -9.3Q7.2 -11.4 8.9 -13.3Q10.6 -15.1 12.7 -16.4Q14.7 -17.7 16.5 -17.7Z"/>
     <path class="ac-g" pathLength="100" style="--i:9" d="M37.1 -2.5Q37.0 -4.7 36.5 -8.5Q35.9 -12.4 35.0 -17.5Q34.5 -20.2 33.9 -23.4Q33.3 -26.6 32.8 -29.8Q32.3 -33.0 31.9 -36.1Q31.4 -39.3 31.3 -41.9Q31.3 -42.2 31.6 -43.3Q31.8 -44.4 32.2 -45.7Q32.6 -46.9 33.4 -48.8Q33.9 -47.0 34.1 -44.4Q34.8 -37.9 35.6 -32.5Q36.4 -27.1 37.1 -22.6Q37.4 -20.7 37.7 -18.5Q38.0 -16.2 38.3 -13.9Q38.5 -11.7 38.7 -9.6Q38.9 -7.5 38.9 -5.8Q38.9 -5.1 38.7 -4.1Q38.6 -3.1 38.5 -2.1Q38.3 -1.2 38.0 -0.5Q37.7 0.1 37.5 0.1Q37.2 0.1 37.1 -0.5Q37.1 -1.2 37.1 -1.8Z"/>
     <path class="ac-g" pathLength="100" style="--i:8" d="M72.9 0.0Q72.4 0.0 71.8 -0.1Q71.1 -0.2 70.7 -0.3Q69.4 -0.7 68.5 -1.5Q67.6 -2.2 66.6 -3.4Q65.9 -4.3 65.1 -5.7Q64.4 -7.0 63.8 -8.7Q63.7 -7.5 63.4 -6.3Q63.1 -5.1 62.7 -4.5Q61.3 -3.2 59.6 -2.2Q57.8 -1.2 56.0 -0.6Q54.1 0.0 52.3 0.3Q50.5 0.6 49.0 0.6Q46.2 0.6 45.0 -0.0Q43.8 -0.7 43.8 -2.1Q43.8 -2.6 43.9 -3.8Q44.0 -5.0 44.2 -6.2Q44.3 -7.4 44.6 -8.3Q44.9 -9.2 45.2 -9.2Q45.5 -9.0 45.5 -8.6Q45.5 -8.0 45.6 -7.4Q45.8 -6.8 46.2 -6.3Q46.6 -5.9 47.4 -5.5Q48.2 -5.2 49.6 -5.2Q52.4 -5.2 54.9 -5.9Q57.4 -6.5 59.3 -7.3Q61.2 -8.1 62.3 -8.9Q63.3 -9.6 63.3 -9.9Q62.3 -13.5 61.6 -16.0Q61.0 -18.4 60.3 -21.2Q59.7 -24.1 59.4 -26.4Q59.5 -28.2 59.6 -29.1Q59.8 -30.0 60.3 -31.3Q60.6 -31.3 60.8 -30.3Q61.0 -29.3 61.6 -27.2Q61.9 -25.8 62.5 -23.7Q63.2 -21.5 63.9 -19.2Q64.6 -16.9 65.2 -14.9Q65.9 -12.9 66.3 -11.8Q67.1 -9.9 68.1 -8.4Q69.2 -7.0 70.6 -6.2Q70.8 -6.1 71.3 -6.0Q71.8 -5.9 72.4 -5.8Q72.9 -5.7 73.5 -5.6Q74.1 -5.6 74.6 -5.6Z"/>
@@ -2094,7 +2150,7 @@ body.menu-open { overflow: hidden; }
 </h2>
     <span class="loyalty-sub">The Art of Gifting · Presentation Chests · Private Selections</span>
     <br>
-    <a class="loyalty-btn magnetic" href="https://shamum.com/products" target="_blank" rel="noopener">Explore Gifting · اكتشف</a>
+    <a class="loyalty-btn magnetic" href="https://shamum.com/products" target="_blank" rel="noopener">Explore Gifting · <span lang="ar">اكتشف</span></a>
   </div>
 </section>
 
@@ -2104,7 +2160,7 @@ body.menu-open { overflow: hidden; }
     <div>
       <img class="footer-logo" alt="SHAMUM logo" src="assets/logo-full.png">
       <span class="footer-brand-name">SHAMUM</span>
-      <p class="footer-desc">شاموم — عبـقُ العطــر الأصيــل<br><br>We do not chase the season.<br>We wait for the wood.<br><br>A house of oud and fragrance, preserving heritage craftsmanship since 2010.<br><br>Instagram: @shamumofficial<br>+968 9854 0321</p>
+      <p class="footer-desc"><span lang="ar">شاموم — عبـقُ العطــر الأصيــل</span><br><br>We do not chase the season.<br>We wait for the wood.<br><br>A house of oud and fragrance, preserving heritage craftsmanship since 2010.<br><br>Instagram: @shamumofficial<br>+968 9854 0321</p>
       <form class="footer-email-form" onsubmit="return false;">
         <input class="footer-email-input" type="email" placeholder="Your email address">
         <button class="footer-email-submit" type="submit">Subscribe</button>
@@ -2113,21 +2169,21 @@ body.menu-open { overflow: hidden; }
     <div>
       <span class="footer-col-title">Maison</span>
       <ul class="footer-links">
-        <li><a href="#brand-statement">Our Story · قصتنا</a></li>
-        <li><a href="#ritual">The Ritual · الطقس</a></li>
-        <li><a href="#essence">The Two Gifts · عطايا العود</a></li>
-        <li><a href="#products">The Collection · المجموعة</a></li>
+        <li><a href="#brand-statement">Our Story · <span lang="ar">قصتنا</span></a></li>
+        <li><a href="#ritual">The Ritual · <span lang="ar">الطقس</span></a></li>
+        <li><a href="#essence">The Two Gifts · <span lang="ar">عطايا العود</span></a></li>
+        <li><a href="#products">The Collection · <span lang="ar">المجموعة</span></a></li>
         <li><a href="https://www.instagram.com/shamumofficial" target="_blank" rel="noopener">Instagram · @shamumofficial</a></li>
       </ul>
     </div>
     <div>
       <span class="footer-col-title">Shop</span>
       <ul class="footer-links">
-        <li><a href="https://shamum.com/products" target="_blank" rel="noopener">All Products · جميع المنتجات</a></li>
-        <li><a href="https://shamum.com/categories/1006199/البـخـاخـات" target="_blank" rel="noopener">Sprays · البـخـاخـات</a></li>
-        <li><a href="https://shamum.com/categories/1006197/أدهـان-العـود" target="_blank" rel="noopener">Oud Oils · أدهـان العـود</a></li>
-        <li><a href="https://shamum.com/categories/1005686/أخشـاب-العـود" target="_blank" rel="noopener">Oud Wood · أخشـاب العـود</a></li>
-        <li><a href="https://shamum.com/categories/1333233/إصـدار-محـدود" target="_blank" rel="noopener">Limited Edition · إصـدار محـدود</a></li>
+        <li><a href="https://shamum.com/products" target="_blank" rel="noopener">All Products · <span lang="ar">جميع المنتجات</span></a></li>
+        <li><a href="https://shamum.com/categories/1006199/البـخـاخـات" target="_blank" rel="noopener">Sprays · <span lang="ar">البـخـاخـات</span></a></li>
+        <li><a href="https://shamum.com/categories/1006197/أدهـان-العـود" target="_blank" rel="noopener">Oud Oils · <span lang="ar">أدهـان العـود</span></a></li>
+        <li><a href="https://shamum.com/categories/1005686/أخشـاب-العـود" target="_blank" rel="noopener">Oud Wood · <span lang="ar">أخشـاب العـود</span></a></li>
+        <li><a href="https://shamum.com/categories/1333233/إصـدار-محـدود" target="_blank" rel="noopener">Limited Edition · <span lang="ar">إصـدار محـدود</span></a></li>
       </ul>
     </div>
     <div>
@@ -2137,13 +2193,13 @@ body.menu-open { overflow: hidden; }
         <li><a href="https://shamum.com/pages/refund-exchange-policy" target="_blank" rel="noopener">Returns &amp; Exchange</a></li>
         <li><a href="https://shamum.com/pages/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a></li>
         <li><a href="tel:+96898540321">+968 9854 0321</a></li>
-        <li><a href="https://wa.me/96898540321" target="_blank" rel="noopener">WhatsApp · واتساب</a></li>
+        <li><a href="https://wa.me/96898540321" target="_blank" rel="noopener">WhatsApp · <span lang="ar">واتساب</span></a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <span class="footer-copy">© 2026 SHAMUM · شاموم — Est. 2010 · الرقم الضريبي 1100190829</span>
-    <span class="footer-cities">Sultanate of Oman · سلطنة عمان</span>
+    <span class="footer-copy">© 2026 SHAMUM · <span lang="ar">شاموم</span> — Est. 2010 · <span lang="ar">الرقم الضريبي</span> 1100190829</span>
+    <span class="footer-cities">Sultanate of Oman · <span lang="ar">سلطنة عمان</span></span>
     <div class="footer-payments">
       <div class="payment-icon">APPLE PAY</div>
       <div class="payment-icon">VISA</div>
@@ -2851,13 +2907,61 @@ window.addEventListener('scroll', function(){
 }, {passive:true});
 
 /* ──────────── MAGNETIC BUTTONS ──────────── */
-document.querySelectorAll('.magnetic').forEach(function(btn){
-  btn.addEventListener('mousemove', function(e){
-    var r = btn.getBoundingClientRect();
-    btn.style.transform = 'translate('+((e.clientX-r.left-r.width/2)*0.26)+'px,'+((e.clientY-r.top-r.height/2)*0.26)+'px)';
+// Only bind where there is a real pointer that can hover. On a touch screen
+// this was dead weight on eight buttons, and a synthesized mousemove would
+// leave a button translated with no mouseleave ever coming to reset it.
+var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+var wantsMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (canHover && wantsMotion) {
+  document.querySelectorAll('.magnetic').forEach(function(btn){
+    btn.addEventListener('mousemove', function(e){
+      var r = btn.getBoundingClientRect();
+      btn.style.transform = 'translate('+((e.clientX-r.left-r.width/2)*0.26)+'px,'+((e.clientY-r.top-r.height/2)*0.26)+'px)';
+    });
+    btn.addEventListener('mouseleave', function(){ btn.style.transform = ''; });
   });
-  btn.addEventListener('mouseleave', function(){ btn.style.transform = ''; });
-});
+}
+
+/* ──────────── PAUSE OFF-SCREEN LOOPS ──────────── */
+// kenburns runs 26s infinite on two photos and cueTravel 1.6s infinite on the
+// scroll cue, both regardless of visibility — steady compositor work for
+// something four screens away. Pausing off-screen is invisible and free.
+// .brand-photo/.gift-photo also carry will-change:transform, which pins a
+// compositor layer permanently; dropping it while paused releases that too.
+(function(){
+  if (!('IntersectionObserver' in window)) return;
+  // Watch a STABLE container, not the animated element. .cue-line travels
+  // from -100% to 300% inside a 46px overflow:hidden track, so for most of
+  // its cycle it is clipped away entirely — observing it directly made the
+  // observer pause it while off-view, after which it could never travel back
+  // into view to be un-paused. It froze itself permanently.
+  var pairs = new Map();
+  document.querySelectorAll('.brand-photo, .gift-photo').forEach(function(el){
+    pairs.set(el, el);                       // these stay within their own box
+  });
+  document.querySelectorAll('.cue-line').forEach(function(el){
+    var watch = el.closest('#scroll-cue') || el.parentElement;
+    if (watch) pairs.set(watch, el);
+  });
+  if (!pairs.size) return;
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var anim = pairs.get(e.target);
+      if (!anim) return;
+      anim.style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
+      // will-change:transform pins a compositor layer for the whole session;
+      // release it whenever the element is not actually animating.
+      anim.style.willChange = e.isIntersecting ? 'transform' : 'auto';
+    });
+  }, { rootMargin: '120px' });
+
+  // Deliberately NOT pre-paused. The observer's first callback sets the true
+  // state immediately, and if it never arrives the animations simply keep
+  // running as they always did — degrading to the original behaviour rather
+  // than to permanently frozen photographs.
+  pairs.forEach(function(anim, watch){ io.observe(watch); });
+})();
 
 /* ──────────── PRODUCT LINK RIPPLE ──────────── */
 document.querySelectorAll('.add-to-bag').forEach(function(btn){

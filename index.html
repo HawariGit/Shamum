@@ -1220,20 +1220,6 @@ body.menu-open { overflow: hidden; }
   .footer-wa-text { font-size: 13px; }
   .footer-wa-text em { font-size: 11px; letter-spacing: 0.12em; }
 }
-.footer-email-form { display: flex; border-bottom: 1px solid rgba(174,139,79,0.35); }
-.footer-email-input {
-  flex: 1; background: none; border: none;
-  color: var(--sand-100); font-family: 'Jost', sans-serif;
-  font-size: 12px; padding: 10px 0; outline: none; letter-spacing: 0.04em;
-}
-.footer-email-input::placeholder { color: rgba(244,234,210,0.32); }
-.footer-email-submit {
-  background: none; border: none; color: var(--gold-400);
-  font-family: 'Jost', sans-serif; font-size: 10px;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  cursor: pointer; transition: color 0.3s;
-}
-.footer-email-submit:hover { color: var(--teal); }
 .footer-col-title {
   font-family: 'Jost', sans-serif; font-size: 10px;
   letter-spacing: 0.25em; text-transform: uppercase;
@@ -1288,10 +1274,10 @@ body.menu-open { overflow: hidden; }
   .add-to-bag             { font-size: 11.5px; letter-spacing: 0.14em; padding: 15px 20px; }
   .view-all-btn           { font-size: 11.5px; letter-spacing: 0.16em; }
   .sb-cta                 { font-size: 11.5px; letter-spacing: 0.14em; padding: 12px 20px; }
-  .footer-email-submit    { font-size: 11px; letter-spacing: 0.14em; }
 
-  /* iOS Safari zooms the whole page when a focused input is under 16px */
-  .footer-email-input     { font-size: 16px; }
+  /* The page currently has no <input> at all — the newsletter field became a
+     WhatsApp link in 06db7e6. If a form is ever added back it must be set to
+     at least 16px here, or iOS Safari zooms the whole page on focus. */
 
   /* footer links: 19px boxes → 33px targets, same 35px pitch */
   .footer-links li        { margin-bottom: 2px; }

@@ -1165,6 +1165,36 @@ body.menu-open { overflow: hidden; }
   font-family: 'Jost', sans-serif; font-size: 12px;
   line-height: 1.8; color: rgba(244,234,210,0.5); margin-bottom: 24px;
 }
+/* Replaces the dead newsletter field. Styled as a bordered plate rather than
+   a button so it sits as a quiet invitation in the footer, not a CTA
+   competing with the collection links above it. */
+.footer-wa {
+  display: inline-flex; align-items: center; gap: 13px;
+  padding: 13px 20px; text-decoration: none;
+  border: 1px solid rgba(174,139,79,0.42);
+  color: var(--sand-100);
+  transition: border-color 0.35s, background 0.35s, color 0.35s;
+}
+.footer-wa:hover {
+  border-color: var(--gold-400);
+  background: rgba(174,139,79,0.09);
+  color: var(--gold-300);
+}
+.footer-wa svg { width: 22px; height: 22px; flex-shrink: 0; color: var(--gold-400); }
+.footer-wa-text {
+  font-family: 'Jost', sans-serif; font-size: 12.5px;
+  letter-spacing: 0.10em; line-height: 1.35;
+  display: flex; flex-direction: column;
+}
+.footer-wa-text em {
+  font-style: normal; font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold-500); margin-top: 3px;
+}
+@media (max-width: 640px) {
+  .footer-wa { padding: 14px 18px; }
+  .footer-wa-text { font-size: 13px; }
+  .footer-wa-text em { font-size: 11px; letter-spacing: 0.12em; }
+}
 .footer-email-form { display: flex; border-bottom: 1px solid rgba(174,139,79,0.35); }
 .footer-email-input {
   flex: 1; background: none; border: none;
@@ -2300,10 +2330,17 @@ body.menu-open { overflow: hidden; }
       <img class="footer-logo" alt="SHAMUM logo" src="assets/logo-full.png">
       <span class="footer-brand-name">SHAMUM</span>
       <p class="footer-desc"><span lang="ar">شاموم — عبـقُ العطــر الأصيــل</span><br><br>We do not chase the season.<br>We wait for the wood.<br><br>A house of oud and fragrance, preserving heritage craftsmanship since 2010.<br><br>Instagram: @shamumofficial<br>+968 9854 0321</p>
-      <form class="footer-email-form" onsubmit="return false;">
-        <input class="footer-email-input" type="email" placeholder="Your email address">
-        <button class="footer-email-submit" type="submit">Subscribe</button>
-      </form>
+      <!-- Was an email field with onsubmit="return false;" — it captured
+           nothing and gave no feedback, so anyone who typed their address was
+           silently dropped. Replaced with the channel the house actually
+           answers on, which needs no list and no backend. -->
+      <a class="footer-wa" href="https://wa.me/96898540321?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20—%20I%20would%20like%20to%20hear%20from%20SHAMUM"
+         target="_blank" rel="noopener">
+        <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+          <path d="M16.04 4C9.42 4 4.05 9.36 4.05 15.97c0 2.11.55 4.17 1.6 5.99L4 28l6.19-1.62a12 12 0 0 0 5.85 1.49h.01c6.61 0 11.98-5.36 11.98-11.97C28.03 9.36 22.65 4 16.04 4zm0 21.85h-.01a9.9 9.9 0 0 1-5.05-1.38l-.36-.21-3.67.96.98-3.58-.24-.37a9.86 9.86 0 0 1-1.51-5.3c0-5.47 4.45-9.92 9.93-9.92a9.87 9.87 0 0 1 9.92 9.93c0 5.47-4.46 9.87-9.99 9.87zm5.44-7.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/>
+        </svg>
+        <span class="footer-wa-text">Speak to the house<em>WhatsApp · <span lang="ar">واتساب</span></em></span>
+      </a>
     </div>
     <div>
       <span class="footer-col-title">Maison</span>

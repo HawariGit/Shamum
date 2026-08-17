@@ -1345,11 +1345,13 @@ body.menu-open { overflow: hidden; }
       <span class="nav-brand-name">SHAMUM</span>
       <span class="nav-brand-sub">Maison d'Oud</span>
     </div>
-    <!-- These were bare <svg> with no link and no handler: they looked
-         tappable and did nothing. Now wired to the Zid store, using paths
-         verified to exist. The heart is gone — shamum.com/favorites returns
-         404, so a wishlist icon could never be honest; an account link is
-         the real equivalent the store does have. -->
+    <!-- These were bare svg elements with no link and no handler: they
+         looked tappable and did nothing. Now wired to the Zid store, using
+         paths verified to exist. The heart is gone — shamum.com/favorites
+         returns 404, so a wishlist icon could never be honest; an account
+         link is the real equivalent the store does have.
+         (No literal svg start-tag in this comment: check_svg.py would take
+         it for the opening of a real region — which it did, once.) -->
     <div class="nav-actions">
       <a class="nav-shop-text" href="https://shamum.com/products" target="_blank" rel="noopener">Shop</a>
       <a class="nav-icon-link" href="https://shamum.com/products" target="_blank" rel="noopener"

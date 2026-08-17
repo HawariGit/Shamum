@@ -25,7 +25,15 @@ BREAKOUT = {
 }
 
 SRC = "index.html"
-html = open(SRC, encoding="utf-8").read()
+raw = open(SRC, encoding="utf-8").read()
+
+# Blank out HTML comments before scanning, preserving offsets so reported line
+# numbers stay true. A comment that merely mentions an svg start-tag was
+# treated as opening a real region, which then ran through the following
+# markup and reported a <div> as a breakout. The comment was prose.
+html = re.sub(r"<!--.*?-->",
+              lambda m: " " * (m.end() - m.start()),
+              raw, flags=re.S)
 
 regions = [m.span() for m in re.finditer(r"<svg\b.*?</svg>", html, flags=re.S | re.I)]
 print("svg regions found: %d" % len(regions))

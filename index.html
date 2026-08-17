@@ -1514,6 +1514,22 @@ body.menu-open { overflow: hidden; }
             <path d="M700 822 C702 780 698 700 704 640 C706 610 700 580 708 558 L732 558 C740 582 734 612 736 642 C742 702 738 782 740 822 Z" fill="url(#trunkGrad)"/>
             <path id="f1-notch" d="M701 778 L727 789 L701 800 Z" fill="#0A0501" opacity="0"/>
             <path id="f1-notch2" d="M739 784 L715 793 L739 802 Z" fill="#0A0501" opacity="0"/>
+            <!-- The wound. Agarwood forms where the tree is injured — the resin
+                 is the tree's answer to the axe, not something already on show.
+                 So the oud appears here, at the notch, once the cutting starts,
+                 and bleeds down the trunk. -->
+            <g id="f1-wound" opacity="0">
+              <ellipse cx="720" cy="790" rx="36" ry="21" fill="#C9922E" opacity="0.22"/>
+              <ellipse cx="720" cy="790" rx="18" ry="11" fill="#E8B04A" opacity="0.40"/>
+              <path d="M703 780 L726 789 L703 798 Z" fill="#D9A038"/>
+              <path d="M737 786 L717 793 L737 800 Z" fill="#C9922E"/>
+              <path d="M709 798 C707 806 710 814 708 821" stroke="#C9922E" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.85"/>
+              <path d="M724 800 C726 808 723 815 725 822" stroke="#B8821E" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.7"/>
+              <circle cx="708" cy="822" r="2.6" fill="#E0A83C" opacity="0.9"/>
+              <circle cx="725" cy="823" r="2" fill="#D9A038" opacity="0.8"/>
+            </g>
+            <!-- chips thrown off on each strike; populated in JS -->
+            <g id="f1-chips"></g>
             <path d="M712 810 C710 750 714 680 712 604" stroke="#150A02" stroke-width="2.2" fill="none" opacity="0.65"/>
             <path d="M724 812 C727 748 722 690 726 612" stroke="#150A02" stroke-width="1.5" fill="none" opacity="0.5"/>
             <path d="M718 790 C716 760 720 730 717 700" stroke="#0E0701" stroke-width="1.2" fill="none" opacity="0.5"/>
@@ -2441,6 +2457,29 @@ sc.canBack    = $s('can-back');
 sc.canMid     = $s('can-mid');
 sc.canFront   = $s('can-front');
 sc.trunkVeins = $s('trunk-veins');
+sc.wound      = $s('f1-wound');
+
+// Chips thrown off the trunk on each axe strike.
+var chipEls = [];
+(function(){
+  var host = $s('f1-chips');
+  if (!host) return;
+  for (var ci = 0; ci < 8; ci++) {
+    var r = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    r.setAttribute('width',  4.5 + fakeRand(ci*5)*5);
+    r.setAttribute('height', 2.4 + fakeRand(ci*5+1)*2.4);
+    r.setAttribute('rx', 1);
+    r.setAttribute('fill', ['#3A2410', '#241206', '#4A3018'][ci % 3]);
+    r.setAttribute('opacity', 0);
+    host.appendChild(r);
+    chipEls.push({ el: r,
+      dx:  (fakeRand(ci*9) - 0.5) * 2.2,
+      dy:  -(0.45 + fakeRand(ci*19) * 0.95),
+      spd: 30 + fakeRand(ci*11) * 38,
+      rot: (fakeRand(ci*13) - 0.5) * 520,
+      phase: fakeRand(ci*17) });
+  }
+})();
 sc.birds      = $s('f1-birds');
 sc.bird1      = $s('f1-bird1');
 sc.bird2      = $s('f1-bird2');
@@ -2669,8 +2708,30 @@ function heroLoop(ts){
     sc.canMid.setAttribute('transform',   'translate(' + (Math.sin(wt+1.2)*7).toFixed(2) + ',' + (Math.cos(wt*0.8+1)*2.6).toFixed(2) + ')');
     sc.canFront.setAttribute('transform', 'translate(' + (Math.sin(wt+2.2)*10).toFixed(2) + ',' + (Math.cos(wt*0.8+2)*3.4).toFixed(2) + ') rotate(' + (Math.sin(wt+2.2)*1.1).toFixed(2) + ' 720 330)');
 
-    // Resin veins glow — the treasure already inside the trunk
-    op(sc.trunkVeins, treeT * (0.42 + 0.3*Math.sin(heroTime*1.4)));
+    // The wound answers the axe: resin wells in the notch, then the veins
+    // ignite from it. Previously the veins glowed from the moment the tree
+    // faded in — the treasure was on show before the tree had been opened,
+    // which is backwards for a wood that only makes oud once it is injured.
+    var woundT = eOut(seg(p, 0.19, 0.30));
+    op(sc.wound, woundT * (0.82 + 0.18*Math.sin(heroTime*1.9)));
+    op(sc.trunkVeins, woundT * (0.42 + 0.3*Math.sin(heroTime*1.4)));
+
+    // Chips fly on every strike, on the same 2.2/sec beat as the swing
+    if (chopEnv > 0.04) {
+      var beat = (heroTime * 2.2) % 1;
+      chipEls.forEach(function(cp){
+        var life = (beat + cp.phase) % 1;
+        var d = life * cp.spd;
+        var cx2 = 720 + cp.dx * d;
+        var cy2 = 790 + cp.dy * d + life * life * 62;   // gravity pulls them back
+        cp.el.setAttribute('x', cx2);
+        cp.el.setAttribute('y', cy2);
+        cp.el.setAttribute('transform', 'rotate(' + (cp.rot * life).toFixed(1) + ' ' + cx2.toFixed(1) + ' ' + cy2.toFixed(1) + ')');
+        cp.el.setAttribute('opacity', chopEnv * (1 - life) * 0.9);
+      });
+    } else {
+      chipEls.forEach(function(cp){ cp.el.setAttribute('opacity', 0); });
+    }
 
     // Leaves drifting down from the crown
     leafEls.forEach(function(lf, i){

@@ -1880,6 +1880,16 @@ body.menu-open { overflow: hidden; }
             <path d="M786 3062 C786 3160 786 3250 786 3314" stroke="rgba(212,188,134,0.4)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
             <rect x="700" y="2922" width="40" height="12" fill="#6E5328"/>
             <rect id="f4-cap" x="694" y="2848" width="52" height="80" rx="7" fill="url(#goldCap)" stroke="#8C6E3A" stroke-width="0.8"/>
+            <!-- The burst at the nozzle. Without it the atomizer pressed and
+                 nothing left the bottle; the mist simply appeared overhead
+                 later, with no visible source. Rides capDy with the cap. -->
+            <g id="f4-burst" opacity="0">
+              <path d="M720 2848 L686 2782 Q720 2766 754 2782 Z" fill="url(#sunGlow)" opacity="0.5"/>
+              <path d="M718 2844 L700 2798" stroke="rgba(240,217,160,0.55)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M720 2844 L716 2786" stroke="rgba(240,217,160,0.65)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+              <path d="M722 2844 L730 2790" stroke="rgba(240,217,160,0.55)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+              <path d="M724 2844 L742 2800" stroke="rgba(240,217,160,0.4)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            </g>
           </g>
           <path d="M648 3352 C648 3396 660 3420 720 3420 C780 3420 792 3396 792 3352 L792 3346 Q792 3360 720 3360 Q648 3360 648 3346 Z" fill="rgba(194,163,104,0.05)"/>
           <g id="f4-sparks">
@@ -2502,6 +2512,7 @@ var chDotWrap = $s('ch-dots');
 var chDotEls  = Array.prototype.slice.call(document.querySelectorAll('.ch-dot'));
 var chDotT    = [0.10, 0.42, 0.66, 0.90];
 sc.f4cap     = $s('f4-cap');
+sc.f4burst   = $s('f4-burst');
 sc.f4shimmer = $s('f4-shimmer');
 
 // Oud pieces: chopped from the trunk, tumbling down into the mabkhara
@@ -2945,10 +2956,15 @@ function heroLoop(ts){
   // Bottle rises out of the dark and settles
   var bs = 0.94 + 0.06*f4in;
   sc.f4bottle.setAttribute('transform', 'translate(720 3140) scale(' + bs + ') translate(-720 -3140) translate(0,' + ((1-f4in)*80) + ')');
-  // Atomizer press: cap dips as the spray fires
-  var pressT = seg(p, 0.925, 0.94);
+  // Atomizer press. This used to run 0.925–0.94 while the mist did not begin
+  // until 0.96 — the press completed, and only afterwards did a cloud appear
+  // with nothing connecting the two. The press now happens earlier and the
+  // spray leaves the nozzle while the cap is still down.
+  var pressT = seg(p, 0.900, 0.930);
   capDy = Math.sin(pressT*Math.PI)*9;
   sc.f4cap.setAttribute('transform', 'translate(0,' + capDy + ')');
+  sc.f4burst.setAttribute('transform', 'translate(0,' + capDy + ')');
+  op(sc.f4burst, Math.sin(pressT*Math.PI) * 0.95);
   // Light band sweeping through the liquid
   sc.f4shimmer.setAttribute('x', 646 + ((heroTime*55) % 172));
   op(sc.f4shimmer, f4in * 0.9);
@@ -2957,7 +2973,9 @@ function heroLoop(ts){
     b2.setAttribute('cx', [520,930,560,900][i] + Math.cos(heroTime*0.3 + i*2.2)*18);
     b2.setAttribute('opacity', f4in * [0.07,0.09,0.06,0.08][i]);
   });
-  var mistEnv = eOut(seg(p, 0.96, 1));
+  // Mist leaves the nozzle mid-press and hangs afterwards, rather than
+  // starting at 0.96 — two full hundredths of scroll after the press ended.
+  var mistEnv = eOut(seg(p, 0.912, 0.952));
   if (mistEnv > 0.01) {
     mistEls.forEach(function(m, i){
       var tm = (heroTime*0.55 + i*0.0833) % 1;

@@ -241,13 +241,23 @@ body.bar-on #wa-btn { bottom: 88px; }
   font-family: 'Jost', sans-serif; font-size: 11px;
   letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--sand-100); cursor: pointer; transition: color 0.3s;
+  text-decoration: none;
 }
 .nav-shop-text:hover { color: var(--gold-400); }
+.nav-icon-link {
+  position: relative; display: flex; align-items: center;
+  color: var(--sand-100); transition: color 0.3s;
+}
+.nav-icon-link:hover { color: var(--gold-400); }
+/* The glyphs stay 18px, but an absolutely positioned expander lifts the hit
+   area to 38px without widening .nav-actions — padding here would push the
+   cluster left into the centred wordmark, which is the collision that was
+   fixed in e23240c. */
+.nav-icon-link::after { content: ''; position: absolute; inset: -10px; }
 .nav-icon {
-  color: var(--sand-100); cursor: pointer; transition: color 0.3s;
+  cursor: pointer;
   width: 18px; height: 18px;
 }
-.nav-icon:hover { color: var(--gold-400); }
 @media (max-width: 900px) {
   .nav-links { display: none; }
   #nav { padding: 12px 14px 0; }
@@ -1335,19 +1345,33 @@ body.menu-open { overflow: hidden; }
       <span class="nav-brand-name">SHAMUM</span>
       <span class="nav-brand-sub">Maison d'Oud</span>
     </div>
+    <!-- These were bare <svg> with no link and no handler: they looked
+         tappable and did nothing. Now wired to the Zid store, using paths
+         verified to exist. The heart is gone — shamum.com/favorites returns
+         404, so a wishlist icon could never be honest; an account link is
+         the real equivalent the store does have. -->
     <div class="nav-actions">
-      <span class="nav-shop-text">Shop</span>
-      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-      </svg>
-      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-        <line x1="3" y1="6" x2="21" y2="6"/>
-        <path d="M16 10a4 4 0 0 1-8 0"/>
-      </svg>
+      <a class="nav-shop-text" href="https://shamum.com/products" target="_blank" rel="noopener">Shop</a>
+      <a class="nav-icon-link" href="https://shamum.com/products" target="_blank" rel="noopener"
+         aria-label="Search the store · البحث في المتجر">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </a>
+      <a class="nav-icon-link" href="https://shamum.com/account" target="_blank" rel="noopener"
+         aria-label="Your account · حسابك">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+      </a>
+      <a class="nav-icon-link" href="https://shamum.com/cart" target="_blank" rel="noopener"
+         aria-label="Cart · سلة المنتجات">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+      </a>
     </div>
   </div>
 </nav>

@@ -1517,8 +1517,8 @@ body.menu-open { overflow: hidden; }
         <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
           <feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#C2A368" flood-opacity="0.28"/>
         </filter>
-        <!-- Mapped to the cavity (2234–2350). -->
-        <linearGradient id="oilGrad" gradientUnits="userSpaceOnUse" x1="0" y1="2234" x2="0" y2="2350">
+        <!-- Mapped to the cavity (2218–2333). -->
+        <linearGradient id="oilGrad" gradientUnits="userSpaceOnUse" x1="0" y1="2218" x2="0" y2="2333">
           <stop offset="0%" stop-color="#5A2148"/>
           <stop offset="30%" stop-color="#93401A"/>
           <stop offset="65%" stop-color="#D98A28"/>
@@ -1528,16 +1528,23 @@ body.menu-open { overflow: hidden; }
              with a shallow well in the top: the oil sits high and the whole
              lower half is solid clear glass. Clipping the fill to the full
              body made the oil look like it was in a tumbler. -->
+        <!-- Cavity floor at 2329: measured off the product photo, the oud
+             occupies the top 63% of the body and the bottom 37% is clear
+             glass. That ratio is the bottle's signature, so the fill must
+             stop well short of the foot. -->
         <clipPath id="vialClip">
-          <path d="M664 2230 L670 2218 L770 2218 L776 2230 L771 2346 L669 2346 Z"/>
+          <path d="M664 2230 L670 2218 L770 2218 L776 2230 L773 2329 L667 2329 Z"/>
         </clipPath>
+        <!-- Deeper and more saturated than the first attempt, which rendered
+             as pale beige rather than polished gold. -->
         <linearGradient id="capGold" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%"   stop-color="#8C6E3A"/>
-          <stop offset="18%"  stop-color="#F0D9A0"/>
-          <stop offset="38%"  stop-color="#D4BC86"/>
-          <stop offset="62%"  stop-color="#AE8B4F"/>
-          <stop offset="86%"  stop-color="#7A5C2E"/>
-          <stop offset="100%" stop-color="#A5813F"/>
+          <stop offset="0%"   stop-color="#6E5121"/>
+          <stop offset="14%"  stop-color="#F7E3A6"/>
+          <stop offset="32%"  stop-color="#E0BB63"/>
+          <stop offset="52%"  stop-color="#BE9235"/>
+          <stop offset="72%"  stop-color="#8A661F"/>
+          <stop offset="88%"  stop-color="#5E4517"/>
+          <stop offset="100%" stop-color="#A87F31"/>
         </linearGradient>
         <!-- Body of the eau de parfum, for the shimmer sweep. Follows the
              redrawn bottle: shoulders at 3000, foot at 3334. -->
@@ -1875,7 +1882,13 @@ body.menu-open { overflow: hidden; }
                gold cap that is roughly 40% of the whole bottle — the previous
                art had it at 27%, which read as a generic dropper bottle. Face
                carries the mark, then شاموم, then SHAMUM, in that order. -->
-          <g id="f3-vial">
+          <!-- Scaled to 0.68 about its own base. The flacon is a 3ml bottle and
+               was drawn filling a third of the frame, which made it read as a
+               decanter. Scaling the group rather than every coordinate keeps
+               the JS-driven fill, surface and cap transforms correct — they
+               are all inside it. The still's drop target is the one thing
+               outside this group, so it is retimed to the new mouth height. -->
+          <g id="f3-vial" transform="translate(720,2396) scale(0.68) translate(-720,-2396)">
             <ellipse cx="720" cy="2404" rx="104" ry="13" fill="#000000" opacity="0.55"/>
             <!-- Geometry measured off the product PNG's alpha silhouette
                  rather than estimated: cap is 40.6% of total height and 94%
@@ -1903,20 +1916,22 @@ body.menu-open { overflow: hidden; }
             <!-- neck, hidden once the cap seats -->
             <rect x="702" y="2204" width="36" height="12" fill="rgba(255,255,255,0.07)" stroke="rgba(244,234,210,0.28)" stroke-width="1"/>
             <g id="f3-cap">
-              <!-- dome tip, full shoulders by 25% down, waist at 86%, small
-                   flare onto the collar — traced from the measured profile -->
-              <path d="M706 2089 Q683 2092 671 2106 Q665 2114 665 2124 L665 2160
-                       Q666 2176 671 2188 Q674 2194 673 2199 Q670 2207 668 2212
-                       Q668 2216 674 2216 L766 2216 Q772 2216 772 2212
-                       Q770 2207 767 2199 Q766 2194 769 2188 Q774 2176 775 2160
-                       L775 2124 Q775 2114 769 2106 Q757 2092 734 2089 Z"
-                    fill="url(#capGold)" stroke="#7A5C2E" stroke-width="0.9"/>
-              <path d="M700 2096 Q683 2104 676 2118 Q673 2140 675 2162 Q677 2182 684 2196 L692 2210 L700 2210 Q690 2186 688 2160 Q686 2130 694 2106 Z"
-                    fill="#F7E9C4" opacity="0.5"/>
-              <path d="M752 2098 Q766 2110 768 2130 L768 2162 Q766 2186 756 2204 L748 2212 L742 2212 Q754 2190 757 2162 Q759 2132 748 2106 Z"
-                    fill="#6B4E26" opacity="0.45"/>
-              <ellipse cx="720" cy="2094" rx="24" ry="6" fill="#FBF2D8" opacity="0.4"/>
-              <ellipse cx="720" cy="2091" rx="10" ry="3" fill="none" stroke="#8C6E3A" stroke-width="0.9" opacity="0.5"/>
+              <!-- Dome tip, full shoulders, then a single continuous taper to
+                   the collar. NO flare at the foot of the cap: the real one
+                   photographs as though it kicks back out, but that is the
+                   reflection of the shoulder in polished metal, not the
+                   silhouette. Drawing the flare made it look like a stopper. -->
+              <path d="M706 2089 Q683 2092 671 2106 Q665 2114 665 2124 L665 2158
+                       Q666 2178 672 2192 L672 2216 L768 2216 L768 2192
+                       Q774 2178 775 2158 L775 2124 Q775 2114 769 2106
+                       Q757 2092 734 2089 Z"
+                    fill="url(#capGold)" stroke="#6E5121" stroke-width="0.9"/>
+              <path d="M700 2096 Q683 2104 677 2118 Q674 2140 676 2162 Q678 2182 684 2194 L684 2214 L693 2214 L693 2194 Q687 2180 685 2160 Q683 2130 694 2106 Z"
+                    fill="#F7E9C4" opacity="0.34"/>
+              <path d="M752 2098 Q765 2110 767 2130 L767 2160 Q765 2182 757 2194 L757 2214 L748 2214 L748 2194 Q756 2180 758 2160 Q760 2132 748 2106 Z"
+                    fill="#5E4517" opacity="0.5"/>
+              <ellipse cx="720" cy="2094" rx="22" ry="5.5" fill="#FBF2D8" opacity="0.32"/>
+              <ellipse cx="720" cy="2091" rx="10" ry="3" fill="none" stroke="#6E5121" stroke-width="0.9" opacity="0.5"/>
             </g>
             <!-- glass highlights -->
             <path d="M674 2242 Q670 2300 676 2352" stroke="rgba(255,255,255,0.22)" stroke-width="5" fill="none" stroke-linecap="round"/>
@@ -3021,10 +3036,10 @@ function heroLoop(ts){
   // Fill range follows the cavity (2332 floor, ~2246 when full), not the old
   // full-body range — the lower half of this bottle is solid glass.
   var lvT = eOut(seg(p, 0.68, 0.80));
-  var level = 2346 - lvT*102;
+  var level = 2329 - lvT*105;
   var wobble = Math.sin(heroTime*5)*1.6*(lvT>0&&lvT<1?1:0.3);
   sc.f3liquid.setAttribute('y', level + wobble);
-  sc.f3liquid.setAttribute('height', 2350 - level);
+  sc.f3liquid.setAttribute('height', 2333 - level);
   sc.f3surface.setAttribute('cy', level + wobble);
   op(sc.f3surface, lvT > 0.02 ? 0.6 : 0);
   // The still: arrives before the fill, works through it, withdraws as the
@@ -3056,7 +3071,9 @@ function heroLoop(ts){
         dropO = f;
       } else {                                 // falling into the neck
         var g = (cycle - 0.42) / 0.58;
-        dropY = lerp(2143, 2214, eIn(g));
+        // Mouth sits at 2272 now the vial is scaled to 0.68 about its base
+        // (2396 - (2396-2214)*0.68). The drop has further to fall than before.
+        dropY = lerp(2143, 2272, eIn(g));
         dropS = 1;
         dropO = 1 - Math.max(0, (g - 0.82) / 0.18);
       }

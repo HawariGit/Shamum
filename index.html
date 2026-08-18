@@ -1517,8 +1517,8 @@ body.menu-open { overflow: hidden; }
         <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
           <feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#C2A368" flood-opacity="0.28"/>
         </filter>
-        <!-- Mapped to the cavity (2240–2336), not the old full-body range. -->
-        <linearGradient id="oilGrad" gradientUnits="userSpaceOnUse" x1="0" y1="2240" x2="0" y2="2336">
+        <!-- Mapped to the cavity (2234–2350). -->
+        <linearGradient id="oilGrad" gradientUnits="userSpaceOnUse" x1="0" y1="2234" x2="0" y2="2350">
           <stop offset="0%" stop-color="#5A2148"/>
           <stop offset="30%" stop-color="#93401A"/>
           <stop offset="65%" stop-color="#D98A28"/>
@@ -1529,7 +1529,7 @@ body.menu-open { overflow: hidden; }
              lower half is solid clear glass. Clipping the fill to the full
              body made the oil look like it was in a tumbler. -->
         <clipPath id="vialClip">
-          <path d="M668 2238 L682 2220 L758 2220 L772 2238 L772 2332 L668 2332 Z"/>
+          <path d="M664 2230 L670 2218 L770 2218 L776 2230 L771 2346 L669 2346 Z"/>
         </clipPath>
         <linearGradient id="capGold" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%"   stop-color="#8C6E3A"/>
@@ -1877,39 +1877,50 @@ body.menu-open { overflow: hidden; }
                carries the mark, then شاموم, then SHAMUM, in that order. -->
           <g id="f3-vial">
             <ellipse cx="720" cy="2404" rx="104" ry="13" fill="#000000" opacity="0.55"/>
-            <!-- solid clear glass block: the whole lower half of the bottle -->
-            <path d="M666 2300 L774 2300 L774 2350 L778 2356 L778 2390 Q778 2396 772 2396 L668 2396 Q662 2396 662 2390 L662 2356 L666 2350 Z"
-                  fill="rgba(255,255,255,0.11)"/>
-            <rect id="f3-liquid" x="660" y="2330" width="120" height="10" fill="url(#oilGrad)" clip-path="url(#vialClip)"/>
-            <ellipse id="f3-surface" cx="720" cy="2330" rx="50" ry="5" fill="#F0B860" opacity="0.6"/>
-            <!-- body: chamfered shoulders, stepped foot -->
-            <path d="M666 2234 L681 2214 L759 2214 L774 2234 L774 2350 L778 2356 L778 2390 Q778 2396 772 2396 L668 2396 Q662 2396 662 2390 L662 2356 L666 2350 Z"
+            <!-- Geometry measured off the product PNG's alpha silhouette
+                 rather than estimated: cap is 40.6% of total height and 94%
+                 of the body's width, with w/h 0.88 — nearly square. Drawn
+                 narrower it reads as a tall lid on a small bottle. The body
+                 tapers inward and ends on a foot at 71% of its widest, so it
+                 must not be given a flared base. -->
+            <!-- solid clear glass, lower body -->
+            <path d="M669 2330 L771 2330 L769 2358 L762 2362 L762 2392 Q762 2396 757 2396 L683 2396 Q678 2396 678 2392 L678 2362 L671 2358 Z"
+                  fill="rgba(255,255,255,0.12)"/>
+            <rect id="f3-liquid" x="660" y="2346" width="120" height="10" fill="url(#oilGrad)" clip-path="url(#vialClip)"/>
+            <ellipse id="f3-surface" cx="720" cy="2346" rx="52" ry="5" fill="#F0B860" opacity="0.6"/>
+            <!-- body: tapered sides, narrow foot -->
+            <path d="M662 2228 L668 2214 L772 2214 L778 2228 L769 2358 L762 2362 L762 2392 Q762 2396 757 2396 L683 2396 Q678 2396 678 2392 L678 2362 L671 2358 Z"
                   fill="none" stroke="rgba(244,234,210,0.46)" stroke-width="1.5"/>
-            <path d="M666 2350 L774 2350 L778 2356 L778 2390 Q778 2396 772 2396 L668 2396 Q662 2396 662 2390 L662 2356 Z"
-                  fill="rgba(255,255,255,0.13)" stroke="rgba(244,234,210,0.34)" stroke-width="1"/>
-            <!-- chamfer facets down both edges -->
-            <path d="M666 2234 L681 2214 L681 2350 L666 2350 Z" fill="rgba(255,255,255,0.07)"/>
-            <path d="M774 2234 L759 2214 L759 2350 L774 2350 Z" fill="rgba(0,0,0,0.13)"/>
+            <path d="M678 2362 L762 2362 L762 2392 Q762 2396 757 2396 L683 2396 Q678 2396 678 2392 Z"
+                  fill="rgba(255,255,255,0.15)" stroke="rgba(244,234,210,0.34)" stroke-width="1"/>
+            <!-- edge facets -->
+            <path d="M662 2228 L668 2214 L676 2214 L670 2358 L664 2356 Z" fill="rgba(255,255,255,0.08)"/>
+            <path d="M778 2228 L772 2214 L764 2214 L770 2358 L776 2356 Z" fill="rgba(0,0,0,0.14)"/>
             <!-- face: mark, then شاموم, then SHAMUM -->
-            <image href="assets/logo-mark.png" x="701" y="2246" width="38" height="38" opacity="0.94"/>
-            <text x="720" y="2312" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#C2A368" opacity="0.92"><tspan lang="ar">شاموم</tspan></text>
-            <text x="720" y="2332" text-anchor="middle" font-family="Georgia, serif" font-size="10.5" fill="#D4BC86" letter-spacing="2.6" opacity="0.9">SHAMUM</text>
+            <image href="assets/logo-mark.png" x="703" y="2248" width="34" height="34" opacity="0.94"/>
+            <text x="720" y="2310" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#C2A368" opacity="0.92"><tspan lang="ar">شاموم</tspan></text>
+            <text x="720" y="2330" text-anchor="middle" font-family="Georgia, serif" font-size="10.5" fill="#D4BC86" letter-spacing="2.6" opacity="0.9">SHAMUM</text>
             <!-- neck, hidden once the cap seats -->
-            <rect x="700" y="2202" width="40" height="14" fill="rgba(255,255,255,0.07)" stroke="rgba(244,234,210,0.28)" stroke-width="1"/>
+            <rect x="702" y="2204" width="36" height="12" fill="rgba(255,255,255,0.07)" stroke="rgba(244,234,210,0.28)" stroke-width="1"/>
             <g id="f3-cap">
-              <!-- domed top, full shoulders, waisted into a narrow collar -->
-              <path d="M673 2112 Q673 2085 702 2080 L738 2080 Q767 2085 767 2112 L767 2158 Q767 2188 746 2198 L746 2212 Q746 2220 736 2220 L704 2220 Q694 2220 694 2212 L694 2198 Q673 2188 673 2158 Z"
+              <!-- dome tip, full shoulders by 25% down, waist at 86%, small
+                   flare onto the collar — traced from the measured profile -->
+              <path d="M706 2089 Q683 2092 671 2106 Q665 2114 665 2124 L665 2160
+                       Q666 2176 671 2188 Q674 2194 673 2199 Q670 2207 668 2212
+                       Q668 2216 674 2216 L766 2216 Q772 2216 772 2212
+                       Q770 2207 767 2199 Q766 2194 769 2188 Q774 2176 775 2160
+                       L775 2124 Q775 2114 769 2106 Q757 2092 734 2089 Z"
                     fill="url(#capGold)" stroke="#7A5C2E" stroke-width="0.9"/>
-              <path d="M684 2116 Q684 2096 700 2090 L710 2088 L710 2196 Q696 2190 690 2176 Q684 2156 684 2138 Z"
-                    fill="#F7E9C4" opacity="0.55"/>
-              <path d="M752 2098 L760 2104 L760 2160 Q758 2184 744 2194 L744 2110 Z" fill="#6B4E26" opacity="0.5"/>
-              <ellipse cx="720" cy="2087" rx="27" ry="7" fill="#FBF2D8" opacity="0.45"/>
-              <ellipse cx="720" cy="2084" rx="11" ry="3.5" fill="none" stroke="#8C6E3A" stroke-width="0.9" opacity="0.55"/>
-              <path d="M697 2200 Q720 2208 743 2200" stroke="#7A5C2E" stroke-width="1" fill="none" opacity="0.55"/>
+              <path d="M700 2096 Q683 2104 676 2118 Q673 2140 675 2162 Q677 2182 684 2196 L692 2210 L700 2210 Q690 2186 688 2160 Q686 2130 694 2106 Z"
+                    fill="#F7E9C4" opacity="0.5"/>
+              <path d="M752 2098 Q766 2110 768 2130 L768 2162 Q766 2186 756 2204 L748 2212 L742 2212 Q754 2190 757 2162 Q759 2132 748 2106 Z"
+                    fill="#6B4E26" opacity="0.45"/>
+              <ellipse cx="720" cy="2094" rx="24" ry="6" fill="#FBF2D8" opacity="0.4"/>
+              <ellipse cx="720" cy="2091" rx="10" ry="3" fill="none" stroke="#8C6E3A" stroke-width="0.9" opacity="0.5"/>
             </g>
             <!-- glass highlights -->
-            <path d="M672 2246 Q668 2310 674 2356" stroke="rgba(255,255,255,0.22)" stroke-width="5" fill="none" stroke-linecap="round"/>
-            <path d="M768 2248 Q772 2310 768 2354" stroke="rgba(255,255,255,0.30)" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M674 2242 Q670 2300 676 2352" stroke="rgba(255,255,255,0.22)" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M766 2244 Q770 2300 766 2350" stroke="rgba(255,255,255,0.30)" stroke-width="2" fill="none" stroke-linecap="round"/>
           </g>
           <!-- splash -->
           <circle id="f3-ring"  cx="720" cy="2386" r="16" stroke="#E0A030" stroke-width="2.5" fill="none" opacity="0"/>
@@ -3010,10 +3021,10 @@ function heroLoop(ts){
   // Fill range follows the cavity (2332 floor, ~2246 when full), not the old
   // full-body range — the lower half of this bottle is solid glass.
   var lvT = eOut(seg(p, 0.68, 0.80));
-  var level = 2332 - lvT*86;
+  var level = 2346 - lvT*102;
   var wobble = Math.sin(heroTime*5)*1.6*(lvT>0&&lvT<1?1:0.3);
   sc.f3liquid.setAttribute('y', level + wobble);
-  sc.f3liquid.setAttribute('height', 2336 - level);
+  sc.f3liquid.setAttribute('height', 2350 - level);
   sc.f3surface.setAttribute('cy', level + wobble);
   op(sc.f3surface, lvT > 0.02 ? 0.6 : 0);
   // The still: arrives before the fill, works through it, withdraws as the
@@ -3066,7 +3077,7 @@ function heroLoop(ts){
   // it was redrawn to the real flacon, and at -64 its top corner pushed up
   // into the swan neck's lower bend. Rotation origin follows the new centre.
   sc.f3cap.setAttribute('transform',
-    'translate(' + lerp(108, 0, capT) + ',' + lerp(-30, 0, capT) + ') rotate(' + lerp(22, 0, capT) + ' 720 2150)');
+    'translate(' + lerp(120, 0, capT) + ',' + lerp(-30, 0, capT) + ') rotate(' + lerp(22, 0, capT) + ' 720 2152)');
   }
 
   /* ── Floor 4: glow, rays, halo, bottle settle, bokeh, mist (gated) ── */

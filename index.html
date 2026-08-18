@@ -1560,6 +1560,14 @@ body.menu-open { overflow: hidden; }
         <clipPath id="f2JarClip">
           <path d="M656 1436 L784 1436 L784 1524 Q784 1548 720 1548 Q656 1548 656 1524 Z"/>
         </clipPath>
+        <linearGradient id="copper" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#5E3312"/>
+          <stop offset="16%"  stop-color="#C97F3C"/>
+          <stop offset="38%"  stop-color="#E5A366"/>
+          <stop offset="60%"  stop-color="#B06A2C"/>
+          <stop offset="82%"  stop-color="#7A451A"/>
+          <stop offset="100%" stop-color="#A5642A"/>
+        </linearGradient>
         <linearGradient id="jarGloss" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
           <stop offset="22%" stop-color="#FFFFFF" stop-opacity="0.20"/>
@@ -1843,43 +1851,71 @@ body.menu-open { overflow: hidden; }
                light cone, clear of the cap which hovers at x 782–850. Drawn
                before the vial so the falling drop is occluded as it enters. -->
           <g id="f3-still" opacity="0">
-            <!-- heat under the pot -->
-            <ellipse id="f3-heat" cx="720" cy="1994" rx="78" ry="13" fill="#FF7A22" opacity="0.34"/>
-            <ellipse cx="720" cy="1996" rx="44" ry="7" fill="#FFC46A" opacity="0.30"/>
-            <!-- deg: body, dome, collar -->
-            <path d="M652 1918 Q652 1900 672 1898 L768 1898 Q788 1900 788 1918 L784 1968 Q780 1990 720 1990 Q660 1990 656 1968 Z"
-                  fill="rgba(255,255,255,0.05)" stroke="rgba(244,234,210,0.46)" stroke-width="1.6"/>
-            <path d="M658 1898 Q658 1858 720 1854 Q782 1858 782 1898 Z"
-                  fill="rgba(255,255,255,0.04)" stroke="rgba(244,234,210,0.42)" stroke-width="1.5"/>
-            <rect x="648" y="1892" width="144" height="9" rx="4" fill="url(#goldCap)" stroke="#8C6E3A" stroke-width="0.7" opacity="0.9"/>
-            <!-- sight glass: the wood liquor working inside -->
-            <ellipse cx="720" cy="1946" rx="21" ry="13" fill="url(#oilGrad)" opacity="0.5"/>
-            <ellipse cx="720" cy="1946" rx="21" ry="13" fill="none" stroke="rgba(244,234,210,0.35)" stroke-width="1"/>
-            <circle cx="668" cy="1912" r="2" fill="#C2A368" opacity="0.6"/>
-            <circle cx="772" cy="1912" r="2" fill="#C2A368" opacity="0.6"/>
-            <!-- vapour escaping the collar seal -->
+            <!-- Traditional hydro-distillation, not laboratory glass. The
+                 previous version was thin outlined vessels and a coiled worm
+                 condenser, which read as a bunsen rig. This is what it
+                 actually is: agarwood and water in a copper deg over a wood
+                 fire, the vapour carried off through a pipe kept cool under
+                 wet cloth, condensing to oil that falls into the flacon. -->
+
+            <!-- wood fire -->
+            <ellipse id="f3-heat" cx="640" cy="2062" rx="86" ry="17" fill="#FF7A22" opacity="0.34"/>
+            <g id="f3-fire">
+              <path d="M600 2064 L690 2044" stroke="#3A2411" stroke-width="9" stroke-linecap="round"/>
+              <path d="M594 2052 L684 2064" stroke="#2A1A0C" stroke-width="8" stroke-linecap="round"/>
+              <path d="M612 2070 L676 2036" stroke="#43290F" stroke-width="6" stroke-linecap="round"/>
+              <path d="M614 2050 Q606 2028 620 2010 Q626 2028 636 2018 Q640 2038 630 2050 Z" fill="#FF7A1E" opacity="0.85"/>
+              <path d="M646 2050 Q638 2026 652 2006 Q660 2026 670 2016 Q674 2038 662 2050 Z" fill="#FFA33A" opacity="0.8"/>
+              <path d="M630 2050 Q626 2034 636 2022 Q642 2036 648 2030 Q650 2044 644 2050 Z" fill="#FFD98A" opacity="0.75"/>
+              <circle cx="608" cy="2058" r="2.4" fill="#FF8A2A" opacity="0.9"/>
+              <circle cx="668" cy="2056" r="2" fill="#FFB44E" opacity="0.85"/>
+            </g>
+            <!-- trivet -->
+            <path d="M596 2046 L604 2008 M684 2046 L676 2008 M640 2052 L640 2012"
+                  stroke="#2E1D0D" stroke-width="5" stroke-linecap="round"/>
+
+            <!-- copper deg -->
+            <path d="M582 1958 Q582 1930 610 1926 L670 1926 Q698 1930 698 1958
+                     Q698 2004 640 2010 Q582 2004 582 1958 Z"
+                  fill="url(#copper)" stroke="#5E3312" stroke-width="1.6"/>
+            <path d="M596 1944 Q600 1978 616 1998" stroke="#F0C089" stroke-width="4" fill="none" opacity="0.4" stroke-linecap="round"/>
+            <!-- clay-and-cloth seal at the lid joint -->
+            <path d="M576 1912 L704 1912 Q708 1926 700 1930 L580 1930 Q572 1926 576 1912 Z"
+                  fill="#8A6A46" stroke="#5A422A" stroke-width="1"/>
+            <!-- lid -->
+            <path d="M592 1912 Q592 1876 640 1872 Q688 1876 688 1912 Z"
+                  fill="url(#copper)" stroke="#5E3312" stroke-width="1.4"/>
+            <circle cx="600" cy="1920" r="2" fill="#F0C089" opacity="0.55"/>
+            <circle cx="680" cy="1920" r="2" fill="#F0C089" opacity="0.55"/>
+
+            <!-- agarwood charged beside the deg -->
+            <g id="f3-chips" opacity="0.9">
+              <rect x="556" y="2032" width="17" height="7" rx="2" fill="#2E1A0A" transform="rotate(-14 564 2035)"/>
+              <rect x="544" y="2042" width="20" height="7" rx="2" fill="#43290F" transform="rotate(8 554 2045)"/>
+              <rect x="560" y="2046" width="14" height="6" rx="2" fill="#241206" transform="rotate(-6 567 2049)"/>
+            </g>
+
+            <!-- vapour leaving the seal -->
             <g id="f3-vapour" opacity="0.5">
-              <path d="M690 1892 Q682 1868 692 1846 Q700 1828 694 1812" stroke="rgba(244,234,210,0.5)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-              <path d="M748 1892 Q756 1870 746 1850 Q738 1834 744 1818" stroke="rgba(244,234,210,0.4)" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-              <path d="M720 1852 Q714 1834 722 1818" stroke="rgba(244,234,210,0.3)" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+              <path d="M614 1908 Q606 1884 616 1862 Q624 1844 618 1828" stroke="rgba(244,234,210,0.5)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M666 1908 Q674 1886 664 1866 Q656 1850 662 1834" stroke="rgba(244,234,210,0.4)" stroke-width="1.3" fill="none" stroke-linecap="round"/>
             </g>
-            <!-- swan neck out to the condenser -->
-            <path d="M786 1928 Q812 1932 814 1960 L814 2012 Q814 2034 774 2042"
-                  stroke="rgba(244,234,210,0.44)" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <!-- Worm condenser. Kept left of x=776: the cap hovers at x 782–850
-                 for the whole chapter, and the lower loops clipped it. -->
-            <g id="f3-coil" stroke="rgba(244,234,210,0.42)" stroke-width="2.6" fill="none" stroke-linecap="round">
-              <path d="M774 2042 C740 2030 692 2030 660 2044"/>
-              <path d="M660 2044 C694 2058 740 2058 772 2056"/>
-              <path d="M772 2056 C740 2046 692 2046 662 2060"/>
-              <path d="M662 2060 C694 2074 738 2074 768 2070"/>
-              <path d="M768 2070 C736 2062 696 2062 666 2076"/>
-              <path d="M666 2076 C694 2088 732 2090 762 2086"/>
+
+            <!-- condenser pipe: one sweep from the lid to over the flacon,
+                 kept left of x=764 where the cap hovers -->
+            <path d="M640 1874 C640 1834 700 1824 728 1856 C746 1878 744 1922 737 1972
+                     C730 2020 722 2086 721 2146"
+                  stroke="url(#copper)" stroke-width="9" fill="none" stroke-linecap="round"/>
+            <path d="M640 1874 C640 1834 700 1824 728 1856 C746 1878 744 1922 737 1972
+                     C730 2020 722 2086 721 2146"
+                  stroke="#F0C089" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.30"/>
+            <!-- wet cloth cooling the pipe -->
+            <g stroke="#9A8A72" stroke-width="12" stroke-linecap="round" opacity="0.55" fill="none">
+              <path d="M742 1934 L739 1958"/>
+              <path d="M733 2004 L728 2030"/>
+              <path d="M724 2074 L722 2098"/>
             </g>
-            <!-- delivery spout, tipped over the vial mouth -->
-            <path d="M762 2086 Q740 2100 726 2116 L720 2130"
-                  stroke="rgba(244,234,210,0.46)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-            <ellipse id="f3-drop" cx="720" cy="2138" rx="3.6" ry="4.8" fill="url(#oilGrad)" opacity="0"/>
+            <ellipse id="f3-drop" cx="721" cy="2154" rx="3.6" ry="4.8" fill="url(#oilGrad)" opacity="0"/>
           </g>
 
           <!-- vial -->
@@ -3065,7 +3101,7 @@ function heroLoop(ts){
   if (stillOn > 0.01) {
     // fire breathes under the pot
     op(sc.f3heat, (0.26 + Math.sin(heroTime * 1.7) * 0.09) * stillOn);
-    sc.f3heat.setAttribute('rx', 78 + Math.sin(heroTime * 2.3) * 5);
+    sc.f3heat.setAttribute('rx', 86 + Math.sin(heroTime * 2.3) * 6);
     // vapour drifts up and thins
     op(sc.f3vapour, (0.34 + Math.sin(heroTime * 0.9) * 0.16) * stillOn);
     sc.f3vapour.setAttribute('transform',
@@ -3077,16 +3113,16 @@ function heroLoop(ts){
     if (dripWin > 0 && dripWin < 1) {
       var cycle = (heroTime * 0.62) % 1;
       var dropY, dropS, dropO;
-      if (cycle < 0.42) {                      // swelling at the tip
+      if (cycle < 0.42) {                      // swelling at the pipe tip
         var f = cycle / 0.42;
-        dropY = 2138 + f * 5;
+        dropY = 2152 + f * 5;
         dropS = 0.45 + f * 0.55;
         dropO = f;
-      } else {                                 // falling into the neck
+      } else {                                 // falling into the mouth
         var g = (cycle - 0.42) / 0.58;
-        // Mouth sits at 2272 now the vial is scaled to 0.68 about its base
-        // (2396 - (2396-2214)*0.68). The drop has further to fall than before.
-        dropY = lerp(2143, 2272, eIn(g));
+        // Pipe ends at 2146; the mouth sits at 2272 now the vial is scaled to
+        // 0.68 about its base (2396 - (2396-2214)*0.68).
+        dropY = lerp(2157, 2272, eIn(g));
         dropS = 1;
         dropO = 1 - Math.max(0, (g - 0.82) / 0.18);
       }

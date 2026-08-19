@@ -3615,14 +3615,28 @@ function heroLoop(ts){
   });
   }
 
-  /* ── Product strips: clear the scene for them ── */
-  shelfCover = 0;
+  /* ── Product strips: clear the scene for them ──
+     Cover is the fraction of the strip actually inside the frame, so it
+     ramps up as the strip rises AND back down as it leaves. The previous
+     measure was 1 - top/vh, which pinned at 1 for the whole time a strip's
+     top was above the viewport and then dropped to 0 in a single frame the
+     moment its bottom crossed the top edge — the scene snapped back from
+     scale(0.72) to full size with nothing in between. That was the cut. It
+     also meant the scene stayed fully drawn back while a strip covered only
+     the upper half, leaving the lower half of the frame empty. */
+  var vhNow = window.innerHeight;
+  var coverTarget = 0;
   for (var si = 0; si < shelfEls.length; si++) {
     var sr = shelfEls[si].getBoundingClientRect();
-    if (sr.bottom < 0 || sr.top > window.innerHeight) continue;
-    var cov = 1 - Math.min(1, Math.max(0, sr.top / window.innerHeight));
-    if (cov > shelfCover) shelfCover = cov;
+    if (sr.bottom <= 0 || sr.top >= vhNow) continue;
+    var visible = Math.min(vhNow, sr.bottom) - Math.max(0, sr.top);
+    var cov = visible / Math.max(1, Math.min(vhNow, sr.height));
+    if (cov > coverTarget) coverTarget = Math.min(1, cov);
   }
+  // Damped like the scroll spring, so the scene eases aside rather than
+  // tracking the wheel one-to-one.
+  shelfCover += (coverTarget - shelfCover) * Math.min(1, dt * 7.5);
+  if (Math.abs(coverTarget - shelfCover) < 0.001) shelfCover = coverTarget;
   // Ease it so the lift starts gently rather than tracking scroll linearly.
   // Lift alone was not enough: the chapter IV flacon is 584px tall and the
   // frame left above a resting strip is 421px, so raising it far enough to
@@ -3633,13 +3647,21 @@ function heroLoop(ts){
   // pair that clears every heading with nothing running off the top. More
   // lift always clipped the flacon; less shrink always left the mabkhara
   // sitting in the heading.
-  titleMute = eOut(Math.min(1, shelfCover / 0.40));
-  var clearT = eOut(shelfCover);
-  var lift = Math.round(clearT * window.innerHeight * 0.15);
-  var shrink = Math.round((1 - clearT * 0.30) * 1000) / 1000;
-  if (lift !== lastLift) {
-    lastLift = lift;
-    var xf = lift > 0 ? 'translateY(' + (-lift) + 'px) scale(' + shrink + ')' : '';
+  // smoothstep, not eOut: eOut leaves at full speed, so the scene came back
+  // fastest right as the strip cleared the frame — the steepest part of the
+  // move landed on the moment it should be settling. sstep eases both ends.
+  titleMute = sstep(Math.min(1, shelfCover / 0.40));
+  var clearT = sstep(shelfCover);
+  // Sub-pixel, and keyed on the pair. Rounding the lift to whole pixels made
+  // the scene step rather than glide, and gating on the lift alone dropped
+  // the scale the moment the lift rounded to zero.
+  var lift = (clearT * vhNow * 0.15).toFixed(2);
+  var shrink = (1 - clearT * 0.30).toFixed(4);
+  var xf = clearT > 0.0005
+    ? 'translate3d(0,' + (-lift) + 'px,0) scale(' + shrink + ')'
+    : 'translate3d(0,0,0)';
+  if (xf !== lastLift) {
+    lastLift = xf;
     sceneEl.style.transform = xf;
     canvas.style.transform = xf;
   }

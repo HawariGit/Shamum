@@ -501,6 +501,52 @@ body.menu-open { overflow: hidden; }
   .chapter-gap[data-chapter="3"] { height: 165vh; }
   .chapter-products { padding: 62px 24px 64px; }
 }
+
+/* ── prefers-reduced-motion: the journey becomes a page ──
+   Everything the hero does is motion: a pinned frame, a camera panning four
+   floors, a near layer at 1.3x parallax, a scene that lifts and draws back as
+   each strip rides up. A scrub cannot be softened — it either drives the
+   camera or it does not — so under reduce it is switched off entirely rather
+   than slowed. The gaps collapse to nothing, the scene holds one still of the
+   tree, and the four chapter texts, which were overlays on a frame moving past
+   them, become ordinary headings above the shelf each one introduces. Same
+   words, same order, no movement.
+   The switch is a class set from matchMedia in JS, not a media query, so the
+   stylesheet and the animation branch can never disagree about which of the
+   two layouts is on screen. */
+.reduced-hero #hero-sticky { position: relative; }
+.reduced-hero .chapter-gap,
+.reduced-hero .chapter-coda { height: 0; }
+.reduced-hero #scroll-cue,
+.reduced-hero #ch-dots,
+.reduced-hero #hero-canvas { display: none; }
+/* Chips mid-strike and birds mid-flight only read as themselves while they are
+   moving. Held still they are debris hanging in the air, so they are cut from
+   the still rather than frozen into it. */
+.reduced-hero #f1-chips,
+.reduced-hero #f1-birds { display: none; }
+/* The strip was sized to leave the scene showing above it and to hold its row
+   against a horizontal scroll. With nothing behind it to protect, it is just a
+   section: no reserved headroom, and the cards wrap instead of running off the
+   side. */
+.reduced-hero .chapter-products { min-height: 0; padding-bottom: 9vh; }
+.reduced-hero .chapter-products .products-grid {
+  flex-wrap: wrap; overflow-x: visible;
+}
+/* A chapter text once it has left the pinned frame. */
+.ch-text.ch-static {
+  position: static; opacity: 1; pointer-events: auto;
+  transform: none; filter: none; will-change: auto;
+  width: auto; max-width: 820px;
+  margin: 0 auto; padding: 8vh 24px 24px;
+}
+.ch-text.ch-static .hero-cta { pointer-events: auto; }
+.ch-text.ch-static + .chapter-products .pg-en { display: none; }
+.ch-text.ch-static + .chapter-products .pg-head { margin-bottom: 12px; }
+@media (max-width: 640px) {
+  .ch-text.ch-static { padding: 6vh 24px 20px; }
+}
+
 #hero-sticky {
   position: sticky; top: 0; height: 100vh; width: 100%;
   overflow: hidden; background: #0F0805; z-index: 1;
@@ -1502,7 +1548,7 @@ body.menu-open { overflow: hidden; }
     <button class="nav-menu-btn" id="menu-open-btn" type="button"
             aria-expanded="false" aria-controls="menu-overlay">Menu</button>
     <ul class="nav-links">
-      <li><a href="#top" class="nav-link" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Home</a></li>
+      <li><a href="#top" class="nav-link" onclick="shmScrollTo(0);return false;">Home</a></li>
       <li><a href="#shelf-bukhoor" class="nav-link">Collection</a></li>
       <li><a href="#brand-statement" class="nav-link">Our Oud</a></li>
       <li><a href="#footer" class="nav-link">The House</a></li>
@@ -2433,11 +2479,11 @@ body.menu-open { overflow: hidden; }
             <div class="products-grid">
             <div class="product-card">
               <div class="product-image-wrap" data-cursor-image>
-                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/eab2ee11-f490-468b-8fee-84eb748e4dd5-thumbnail-1000x1000-70.jpg" alt="Mindal — منــدل" loading="lazy">
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/eab2ee11-f490-468b-8fee-84eb748e4dd5-thumbnail-1000x1000-70.jpg" alt="Mandle — منــدل" loading="lazy">
               </div>
               <div class="product-info">
                 <div class="product-meta"><span class="product-size">Eau de Parfum</span></div>
-                <span class="product-name">Mindal</span>
+                <span class="product-name">Mandle</span>
                 <span class="product-arabic"><span lang="ar">منــدل</span></span>
                 <span class="product-price">107.000 <span lang="ar">ر.ع</span></span>
                 <a class="add-to-bag magnetic" href="https://shamum.com/products/منــدل" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
@@ -2922,7 +2968,7 @@ if (menuOverlay && menuOpenBtn && menuCloseBtn) {
       e.preventDefault();
       closeMenu();
       var y = toTop ? 0 : target.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      shmScrollTo(y);
     });
   });
 
@@ -2939,8 +2985,37 @@ if (menuOverlay && menuOpenBtn && menuCloseBtn) {
   });
 }
 
+/* Reduced motion is about the page as much as its contents — a smooth scroll
+   animates the entire viewport past the reader. Under reduce, jump instead. */
+function shmScrollTo(y){
+  window.scrollTo({
+    top: y,
+    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                ? 'auto' : 'smooth'
+  });
+}
+// The whole script is one IIFE, so the declaration alone is not reachable from
+// the nav's inline onclick — that resolves against the global scope and would
+// throw. Exposed the same way as __heroTick.
+window.shmScrollTo = shmScrollTo;
+
 /* ──────────── HERO SETUP ──────────── */
 var heroSpacer = document.getElementById('hero-track');
+
+/* Reduced motion: the scroll journey does not run at all. See the .reduced-hero
+   note in the stylesheet. heroStill gates three things below — the rAF loop is
+   never armed, p is pinned to one frame instead of read from scroll, and the
+   spring is bypassed so that frame is exact rather than approached. */
+var heroStill = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (heroStill) document.documentElement.classList.add('reduced-hero');
+/* Chapter I, tree complete: canopy and rays fully in, the wound open, the roots
+   just showing, camera still at floor 1 (camY is 0 below 0.24) and the chapter
+   title at full opacity — it begins to fade at 0.235. */
+var HERO_STILL_P = 0.23;
+/* The axe swing and the trunk shudder are both driven from
+   sin(heroTime * 2.2 * 2PI). 15/4.4 is a zero of it, so the woodcutters are
+   caught between strikes with their arms down, rather than frozen mid-swing. */
+var HERO_STILL_T = 15 / 4.4;
 
 /* ──────────── CHAPTER SCROLL ZONES ────────────
    The camera advances only while a .chapter-gap is passing; it holds still
@@ -2951,6 +3026,7 @@ var heroSpacer = document.getElementById('hero-track');
    because the gaps are sized in vh. */
 var zones = [];
 function measureZones(){
+  if (heroStill) { zones = []; return; }   // nothing scrubs, nothing to measure
   var gaps = Array.prototype.slice.call(document.querySelectorAll('.chapter-gap'));
   if (!gaps.length) { zones = []; return; }
   var sy = window.scrollY || window.pageYOffset;
@@ -3264,21 +3340,28 @@ function chReveal(el, tin, tout){
 var heroTime = 0;
 
 function heroLoop(ts){
-  requestAnimationFrame(heroLoop);
+  if (!heroStill) requestAnimationFrame(heroLoop);
   var dt = lastT ? Math.min(Math.max((ts-lastT)/1000, 0.001), 0.05) : 0.016;
   lastT = ts;
-  heroTime += dt;
+  // The still is drawn at one fixed instant, so the clock does not advance:
+  // every time-driven element resolves to the phase HERO_STILL_T names.
+  if (!heroStill) heroTime += dt;
 
   var spacerTop = heroSpacer.getBoundingClientRect().top;
   // Hero fully scrolled past — skip all scene work
-  if (spacerTop + heroSpacer.offsetHeight < -60) { drawFx(0, 0, 0, 0); return; }
+  if (!heroStill && spacerTop + heroSpacer.offsetHeight < -60) { drawFx(0, 0, 0, 0); return; }
   // Progress comes from the chapter gaps, so the camera pauses on each shelf.
-  var raw = clamp(scrollToP(window.scrollY || window.pageYOffset), 0, 1);
+  var raw = heroStill ? HERO_STILL_P
+                      : clamp(scrollToP(window.scrollY || window.pageYOffset), 0, 1);
 
-  // Spring smoothing (critically damped)
-  var acc = (raw - sPos)*80 - sVel*18;
-  sVel += acc*dt; sPos += sVel*dt;
-  if (!isFinite(sPos)) { sPos = raw; sVel = 0; }
+  // Spring smoothing (critically damped). The still has nothing to catch up
+  // to, and a spring given one frame would stop short of the frame we chose.
+  if (heroStill) { sPos = raw; sVel = 0; }
+  else {
+    var acc = (raw - sPos)*80 - sVel*18;
+    sVel += acc*dt; sPos += sVel*dt;
+    if (!isFinite(sPos)) { sPos = raw; sVel = 0; }
+  }
   var p = clamp(sPos, 0, 1);
 
   /* ── Opening logo: fade + settle in, dissolve out ── */
@@ -3390,8 +3473,10 @@ function heroLoop(ts){
   else if (p < 0.885) camY = 1800;
   else if (p < 0.94) camY = 1800 + sstep(seg(p, 0.885, 0.94)) * 900;
   else               camY = 2700;
-  // Subtle breathing (desktop only — keeps mobile frames cacheable)
-  if (!isMobile) camY += Math.sin(heroTime*0.35) * 2.5;
+  // Subtle breathing (desktop only — keeps mobile frames cacheable). The
+  // still is parked exactly on the floor: the breath is idle motion, and
+  // baking one arbitrary phase of it into the frame only offsets the camera.
+  if (!isMobile && !heroStill) camY += Math.sin(heroTime*0.35) * 2.5;
   var camStr = 'translate(0,' + (-Math.round(camY*10)/10) + ')';
   if (camStr !== lastCamStr) {
     lastCamStr = camStr;
@@ -3683,7 +3768,33 @@ function heroLoop(ts){
   var burstT = seg(p, 0.952, 0.99);
   drawFx(Math.min(da, 0.7), burstT, 720, 2846 - camY - capDy);
 }
-requestAnimationFrame(heroLoop);
+/* The chapter texts are overlays on a frame that travels past them, all four
+   pinned to the same spot near the top. With the camera parked they would pile
+   up on each other, so each is re-homed in the document immediately above the
+   shelf it introduces — II with the bukhoor, III with the oils, IV with the
+   fragrances. Chapter I stays where it is, as the title over the still. The
+   inline styles the one rendered frame left on them are cleared first: they
+   carry that frame's opacity, which for II–IV is zero. */
+function staticChapters(){
+  [['ht2', 'shelf-bukhoor'], ['ht3', 'shelf-oils'], ['ht4', 'shelf-fragrances']]
+    .forEach(function(pair){
+      var el = document.getElementById(pair[0]);
+      var host = document.getElementById(pair[1]);
+      if (!el || !host || !host.parentNode) return;
+      el.style.opacity = ''; el.style.filter = '';
+      el.style.transform = ''; el.style.pointerEvents = '';
+      el.classList.add('ch-static');
+      host.parentNode.insertBefore(el, host);
+    });
+}
+
+if (heroStill) {
+  heroTime = HERO_STILL_T;
+  heroLoop(0);
+  staticChapters();
+} else {
+  requestAnimationFrame(heroLoop);
+}
 window.__heroTick = heroLoop; // manual frame stepping for automated tests
 
 /* ──────────── SCENT TIMELINE ──────────── */

@@ -114,9 +114,15 @@ is what prompted the change.
 The label is a solid plate again. It was a thin gold outline, which read
 cleanly on a black bottle and is gold-on-gold over a light fill; the product
 shot shows a plate anyway. Its width was measured too — the real plate is 126
-of a 245-wide body, 51%; ours was 116 of 144, 81%. Now 94 of 144, 65%: not
-taken to 51% because this body is drawn narrower relative to its height than
-the photographed one.
+of a 245-wide body, 51%. Ours is 106 of 208, the same 51%, once the body was
+widened enough to carry it.
+
+It reads **منــدل / *mandle*** — the actual bottle, at the user's request, not
+the house name. Lowercase italic Cormorant Garamond for the Latin because that
+is what is on the glass; the product *card* still says "Mandle" capitalised,
+which is correct — that is a product name, this is a photograph of a label.
+The Arabic is 18 to the Latin's 17, giving it the primacy it has on the bottle.
+Both must stay in `<tspan lang="ar">`, never `<span>` — see the breakout trap.
 
 **Proportion.** The body is 208 × 334, an aspect of 0.62. It was 144 × 334
 (0.43) and read far slimmer than the real bottle; measured off the product shot

@@ -73,6 +73,7 @@ def main():
                 "0.72" if fill > 0.02 else "0")
 
     html = ("""<!doctype html><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet">
 <style>
   html,body{margin:0;background:#0F0805;}
   #frame{position:relative;width:1440px;height:900px;overflow:hidden;background:#0F0805;}

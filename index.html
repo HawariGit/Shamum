@@ -407,7 +407,7 @@ body.menu-open { overflow: hidden; }
 @media (max-width: 640px) { .chapter-coda { height: 46vh; } }
 .chapter-gap[data-chapter="1"] { height: 400vh; }
 .chapter-gap[data-chapter="2"] { height: 210vh; }
-.chapter-gap[data-chapter="3"] { height: 190vh; }
+.chapter-gap[data-chapter="3"] { height: 260vh; }
 /* The shelf floats IN the scene. Not a cream page, and not a full dark page
    either — both covered the animation completely. It is a short transparent
    band that rides up through the lower part of the frame, so the chapter is
@@ -498,7 +498,7 @@ body.menu-open { overflow: hidden; }
 @media (max-width: 640px) {
   .chapter-gap[data-chapter="1"] { height: 330vh; }
   .chapter-gap[data-chapter="2"] { height: 180vh; }
-  .chapter-gap[data-chapter="3"] { height: 165vh; }
+  .chapter-gap[data-chapter="3"] { height: 225vh; }
   .chapter-products { padding: 62px 24px 64px; }
 }
 
@@ -1681,11 +1681,58 @@ body.menu-open { overflow: hidden; }
           <stop offset="50%" stop-color="#AE8B4F"/>
           <stop offset="100%" stop-color="#8C6E3A"/>
         </linearGradient>
-        <linearGradient id="bottleGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#1A1006"/>
-          <stop offset="50%" stop-color="#100904"/>
-          <stop offset="100%" stop-color="#0A0502"/>
+        <!-- The flacon is CLEAR glass, not a dark block. Horizontal, not
+             diagonal: this is a round bottle, so the light bands run down the
+             cylinder. Nearly invisible through the middle and brightest at the
+             two edges, where the glass is thickest and turns the light back —
+             which is what makes an empty vessel read as empty rather than as a
+             hole in the scene. All the colour comes from the liquid behind. -->
+        <linearGradient id="bottleGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#FFF6E2" stop-opacity="0.20"/>
+          <stop offset="13%"  stop-color="#FFF6E2" stop-opacity="0.07"/>
+          <stop offset="46%"  stop-color="#FFFFFF" stop-opacity="0.035"/>
+          <stop offset="79%"  stop-color="#FFF6E2" stop-opacity="0.08"/>
+          <stop offset="100%" stop-color="#FFF6E2" stop-opacity="0.22"/>
         </linearGradient>
+        <!-- Eau de parfum. Measured off the product shot: #C6A66A where the
+             light passes through it, #8B5000 through the full width of the
+             body, #521F03 in the pool at the base. Pale at the surface where
+             the liquid is thin, deepening down as absorption increases. -->
+        <!-- The collar is a thick disc of clear glass, and the brightest thing
+             on the bottle below the cap. Bright at both edges where it is
+             deepest, and picking up the gold of the cap above it. -->
+        <linearGradient id="collarGlass" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#FFFAF0" stop-opacity="0.30"/>
+          <stop offset="18%"  stop-color="#FFFDF6" stop-opacity="0.62"/>
+          <stop offset="44%"  stop-color="#F6EAD2" stop-opacity="0.34"/>
+          <stop offset="70%"  stop-color="#FFFDF6" stop-opacity="0.56"/>
+          <stop offset="100%" stop-color="#E8D6B0" stop-opacity="0.26"/>
+        </linearGradient>
+        <linearGradient id="flaconLiquid" gradientUnits="userSpaceOnUse"
+                        x1="0" y1="3014" x2="0" y2="3332">
+          <stop offset="0%"   stop-color="#F4E2B4"/>
+          <stop offset="24%"  stop-color="#E5C88A"/>
+          <stop offset="56%"  stop-color="#CBA35A"/>
+          <stop offset="84%"  stop-color="#AC7B2E"/>
+          <stop offset="100%" stop-color="#8A5A14"/>
+        </linearGradient>
+        <!-- The label plate, lighter than the liquid behind it as it is on the
+             real bottle. -->
+        <linearGradient id="platePlate" x1="0" y1="0" x2="0.35" y2="1">
+          <stop offset="0%"   stop-color="#EEDAA6"/>
+          <stop offset="42%"  stop-color="#D3B270"/>
+          <stop offset="100%" stop-color="#B08C40"/>
+        </linearGradient>
+        <!-- logo-mark.png is gold on transparent, which vanished on a gold
+             plate. Knocked down to a dark bronze so it reads as struck into
+             the metal rather than floating over it. -->
+        <filter id="markBronze" x="-5%" y="-5%" width="110%" height="110%">
+          <feColorMatrix type="matrix"
+                         values="0.40 0 0 0 0
+                                 0 0.32 0 0 0
+                                 0 0 0.13 0 0
+                                 0 0 0 1 0"/>
+        </filter>
         <radialGradient id="folA" cx="38%" cy="26%" r="80%">
           <stop offset="0%" stop-color="#33591F"/><stop offset="55%" stop-color="#1E3A14"/><stop offset="100%" stop-color="#0D1B08"/>
         </radialGradient>
@@ -1767,6 +1814,13 @@ body.menu-open { overflow: hidden; }
         <!-- Body of the eau de parfum, for the shimmer sweep. Follows the
              redrawn bottle: shoulders at 3000, foot at 3334. -->
         <clipPath id="bottleClip"><rect x="650" y="3002" width="140" height="330" rx="14"/></clipPath>
+        <!-- Inside face of the flacon, the body path inset by the wall. The
+             liquid is clipped to this so it takes the rounded base and never
+             sits outside the glass. -->
+        <clipPath id="flaconClip">
+          <path d="M654 3042 Q654 3014 681 3006 L759 3006 Q786 3014 786 3042
+                   L786 3300 Q786 3326 759 3328 L681 3328 Q654 3326 654 3300 Z"/>
+        </clipPath>
         <!-- Body of the mabkhara, so the olive-wood chunks can be laid over the
              resin without spilling past the silhouette. -->
         <clipPath id="f2JarClip">
@@ -2249,29 +2303,43 @@ body.menu-open { overflow: hidden; }
             <ellipse cx="720" cy="3342" rx="180" ry="16" fill="#0D0805"/>
             <!-- body -->
             <path d="M648 3040 Q648 3008 678 3000 L762 3000 Q792 3008 792 3040 L792 3302 Q792 3332 762 3334 L678 3334 Q648 3332 648 3302 Z"
-                  fill="url(#bottleGrad)" stroke="rgba(194,163,104,0.5)" stroke-width="1.2"/>
+                  fill="url(#bottleGrad)" stroke="rgba(216,192,140,0.55)" stroke-width="1.2"/>
+            <!-- The fragrance, filling the way the oil vial fills on floor 3:
+                 a rect clipped to the cavity whose top edge is driven down to
+                 up, with a meniscus riding it. Empty in the markup so nothing
+                 flashes before the chapter runs. Under the label, because the
+                 liquid is inside the glass and the label is on the outside. -->
+            <rect id="f4-liquid" x="654" y="3328" width="132" height="0"
+                  fill="url(#flaconLiquid)" fill-opacity="0.93" clip-path="url(#flaconClip)"/>
+            <ellipse id="f4-surface" cx="720" cy="3328" rx="65" ry="5.5"
+                     fill="#F8EAC4" opacity="0"/>
             <rect id="f4-shimmer" x="648" y="3006" width="34" height="322" fill="rgba(255,240,200,0.10)" clip-path="url(#bottleClip)"/>
-            <path d="M670 3040 L670 3300" stroke="rgba(255,255,255,0.07)" stroke-width="11" stroke-linecap="round"/>
+            <path d="M670 3040 L670 3300" stroke="rgba(255,255,255,0.13)" stroke-width="11" stroke-linecap="round"/>
             <path d="M778 3046 C778 3150 778 3240 778 3296" stroke="rgba(212,188,134,0.38)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
 
-            <!-- Label is printed straight onto the glass as a thin double-ruled
-                 outline — not the solid embossed plate drawn before. Mark at
-                 the top, then the Arabic name, then the Latin. -->
-            <rect x="662" y="3108" width="116" height="168" rx="2" fill="none" stroke="#C2A368" stroke-width="1.6" opacity="0.85"/>
-            <rect x="668" y="3114" width="104" height="156" rx="1" fill="none" stroke="#C2A368" stroke-width="0.8" opacity="0.5"/>
-            <image href="assets/logo-mark.png" x="694" y="3128" width="52" height="52" opacity="0.9"/>
-            <text x="720" y="3222" text-anchor="middle" font-family="Georgia, serif" font-size="17" fill="#D4BC86" opacity="0.95"><tspan lang="ar">شاموم</tspan></text>
-            <text x="720" y="3252" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#C2A368" letter-spacing="2" opacity="0.9">SHAMUM</text>
+            <!-- A solid embossed gold plate, which is what the product shot
+                 shows. It was a thin gold outline while the body was black,
+                 where gold on near-black read cleanly — over a light gold fill
+                 that is gold on gold, so it goes back to the plate, with a dark
+                 rule round it to lift it off the liquid behind and the type
+                 struck dark into the metal. -->
+            <rect x="673" y="3112" width="94" height="150" rx="2" fill="url(#platePlate)" stroke="#6E4E16" stroke-width="1.4"/>
+            <rect x="678" y="3117" width="84" height="140" rx="1" fill="none" stroke="#6E4E16" stroke-width="0.7" opacity="0.55"/>
+            <image href="assets/logo-mark.png" x="698" y="3128" width="44" height="44" filter="url(#markBronze)" opacity="0.92"/>
+            <text x="720" y="3210" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#5E4111"><tspan lang="ar">شاموم</tspan></text>
+            <text x="720" y="3238" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#5E4111" letter-spacing="1.6">SHAMUM</text>
 
             <!-- Clear-glass collar, stepped in tiers as on the real bottle:
                  a narrow ring under the cap widening into a heavier disc that
                  meets the shoulder. -->
             <path d="M686 2954 L754 2954 L754 2972 L768 2976 L768 2990 Q768 2999 754 3000 L686 3000 Q672 2999 672 2990 L672 2976 L686 2972 Z"
-                  fill="rgba(255,255,255,0.17)" stroke="rgba(244,234,210,0.52)" stroke-width="1.1"/>
-            <path d="M672 2978 L768 2978" stroke="rgba(255,255,255,0.40)" stroke-width="1.3"/>
-            <path d="M686 2963 L754 2963" stroke="rgba(255,255,255,0.30)" stroke-width="1"/>
-            <path d="M692 2954 L692 3000" stroke="rgba(255,255,255,0.26)" stroke-width="1"/>
-            <path d="M748 2954 L748 3000" stroke="rgba(255,255,255,0.26)" stroke-width="1"/>
+                  fill="url(#collarGlass)" stroke="rgba(255,250,235,0.78)" stroke-width="1.2"/>
+            <path d="M672 2978 L768 2978" stroke="rgba(255,255,255,0.72)" stroke-width="1.4"/>
+            <path d="M686 2963 L754 2963" stroke="rgba(255,255,255,0.52)" stroke-width="1"/>
+            <path d="M692 2954 L692 3000" stroke="rgba(255,255,255,0.46)" stroke-width="1"/>
+            <path d="M748 2954 L748 3000" stroke="rgba(255,255,255,0.46)" stroke-width="1"/>
+            <!-- The one hard specular the glass throws, on its left shoulder. -->
+            <path d="M679 2980 L679 2994" stroke="rgba(255,255,255,0.85)" stroke-width="2.4" stroke-linecap="round"/>
 
             <g id="f4-cap">
               <!-- cap is 61% of the body's width on the real bottle, not 54% -->
@@ -3174,6 +3242,8 @@ var chDotT    = [0.10, 0.42, 0.66, 0.90];
 sc.f4cap     = $s('f4-cap');
 sc.f4burst   = $s('f4-burst');
 sc.f4shimmer = $s('f4-shimmer');
+sc.f4liquid  = $s('f4-liquid');
+sc.f4surface = $s('f4-surface');
 
 // Oud pieces: chopped from the trunk, tumbling down into the mabkhara
 var fpColors = ['#241206','#1A0C04','#38220E','#2E1A0A','#48301A'];
@@ -3471,7 +3541,7 @@ function heroLoop(ts){
   else if (p < 0.63) camY = 900;
   else if (p < 0.71) camY = 900 + sstep(fallT) * 900;
   else if (p < 0.885) camY = 1800;
-  else if (p < 0.94) camY = 1800 + sstep(seg(p, 0.885, 0.94)) * 900;
+  else if (p < 0.918) camY = 1800 + sstep(seg(p, 0.885, 0.918)) * 900;
   else               camY = 2700;
   // Subtle breathing (desktop only — keeps mobile frames cacheable). The
   // still is parked exactly on the floor: the breath is idle motion, and
@@ -3649,7 +3719,7 @@ function heroLoop(ts){
   /* ── Floor 4: glow, rays, halo, bottle settle, bokeh, mist (gated) ── */
   var capDy = 0;
   if (p > 0.86) {
-  var f4in = eOut(seg(p, 0.885, 0.945));
+  var f4in = eOut(seg(p, 0.885, 0.925));
   op(sc.f4glow, f4in);
   op(sc.f4rays, f4in * 0.6);
   sc.f4rays.setAttribute('transform', 'rotate(' + ((heroTime*2.2) % 360) + ' 720 3140)');
@@ -3659,6 +3729,22 @@ function heroLoop(ts){
   // Bottle rises out of the dark and settles
   var bs = 0.94 + 0.06*f4in;
   sc.f4bottle.setAttribute('transform', 'translate(720 3140) scale(' + bs + ') translate(-720 -3140) translate(0,' + ((1-f4in)*80) + ')');
+  /* The flacon fills, the way the vial does on floor 3, and for the same
+     reason on the same terms: the camera reaches floor 4 at 0.918 and the
+     bottle has settled by 0.925, so the fill runs 0.925 to 0.948 on a stopped
+     camera and finishes a beat before the atomizer is pressed at 0.952. Run
+     earlier it played out during the pan, and the flacon arrived already full.
+     Floor is 3328, the inside of the base; full is 290 above it, putting the
+     surface at 3038 - the base of the shoulder, where the product shot has it,
+     and leaving the headspace a filled bottle actually has. */
+  var f4lv = eOut(seg(p, 0.925, 0.948));
+  var f4level = 3328 - f4lv*290;
+  var f4wob = Math.sin(heroTime*4.2)*1.3*(f4lv > 0.01 && f4lv < 0.999 ? 1 : 0.3);
+  sc.f4liquid.setAttribute('y', f4level + f4wob);
+  // 3330, two past the clip floor, so the base never opens a gap under it.
+  sc.f4liquid.setAttribute('height', Math.max(0, 3330 - f4level));
+  sc.f4surface.setAttribute('cy', f4level + f4wob);
+  op(sc.f4surface, f4lv > 0.02 ? 0.72 : 0);
   // Atomizer press. This used to run 0.925–0.94 while the mist did not begin
   // until 0.96 — the press completed, and only afterwards did a cloud appear
   // with nothing connecting the two. The press now happens earlier and the

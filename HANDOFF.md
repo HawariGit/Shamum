@@ -14,11 +14,16 @@ with origin and everything described here is **live on shamum.vercel.app**.
    `render/measure_*` approach below.
 2. **The user has strong visual judgement and is right.** Every "this looks
    off" was a real defect with a findable cause. Don't defend, go measure.
-3. **Screenshots do not work in this environment.** The browser pane never
-   composites; `computer{action:"screenshot"}` always fails. Everything is
-   verified by geometry, timing probes and content checks. The user's
-   screenshots have caught things all instrumentation missed — most notably a
-   deleted cap and perfume bottle that passed every automated check.
+3. **The browser pane cannot screenshot, but headless Chrome can.**
+   `computer{action:"screenshot"}` still always fails — the pane never
+   composites. But `chrome.exe --headless --screenshot` works, and
+   `render/preview_flacon.py` uses it to lift the real scene SVG out of
+   index.html, park the camera on a floor, set the state, and render a PNG you
+   can actually look at. **Use it before claiming any drawing is right.** It
+   caught three things reasoning had missed on the flacon: a collar that read
+   as dark plastic, a fill with no headspace, and a label plate as wide as the
+   bottle. Geometry and timing probes in the pane are still the way to verify
+   *animation*; the renderer is for verifying *appearance*.
 
 ---
 
@@ -69,6 +74,13 @@ gap1 (chapters I–II) → shelf-bukhoor → gap2 (III) → shelf-oils
 ```
 I 0.00–0.30 · II 0.24–0.62 · III 0.62–0.88 · IV 0.88–1.00
 ```
+Within chapter IV: camera reaches floor 4 at 0.918, the bottle settles by
+0.925, the fill runs 0.925–0.948, the atomizer is pressed 0.952–0.976 and the
+mist hangs 0.960–0.988. The camera used to arrive at 0.94 and the fill ran
+0.90–0.948, so the whole fill played out during the pan and the flacon arrived
+already full — measured on the page: camera at −1923 and empty, camera at −2695
+and 99% full. `render/retime_chapter4.py` records that change.
+
 Zone boundaries are pinned to these via `STOPS = [0, 0.62, 0.88, 1]`. Each
 gap finishes its chapter **one viewport early** (`tail`) so the strip never
 covers a running animation. If you retime a chapter, use
@@ -86,6 +98,32 @@ Those two numbers came from sweeping lift × shrink over all three chapters and
 scoring worst-overlap + worst-clipping. **0.15/0.30 is the only pair that
 clears every heading with nothing running off the top.** More lift clips the
 flacon; less shrink leaves the mabkhara in the heading.
+
+### The chapter IV flacon
+Clear glass with a light gold eau de parfum that fills as the chapter plays —
+`f4-liquid` is a rect clipped to `flaconClip` whose top edge is driven up, with
+`f4-surface` riding it as a meniscus. Exactly the mechanism floor 3 uses for
+the oil, and deliberately so.
+
+Colours were measured off the store's product shot, not chosen: lit liquid
+`#C6A66A`, saturated body `#8B5000`, pool at the base `#521F03`. `flaconLiquid`
+runs pale at the surface to deep at the base because that is what absorption
+through more liquid does. The body was `#1A1006 → #0A0502`, near-black, which
+is what prompted the change.
+
+The label is a solid plate again. It was a thin gold outline, which read
+cleanly on a black bottle and is gold-on-gold over a light fill; the product
+shot shows a plate anyway. Its width was measured too — the real plate is 126
+of a 245-wide body, 51%; ours was 116 of 144, 81%. Now 94 of 144, 65%: not
+taken to 51% because this body is drawn narrower relative to its height than
+the photographed one.
+
+**Open:** the body proportion. Measured off the photo the real bottle is
+roughly 0.6–0.8 wide-to-tall; ours is 0.43, so it is drawn noticeably slimmer.
+That measurement is *not* trustworthy — the bottle is tilted in a 3/4 view with
+its base buried in cloth — so nothing was changed. It needs a straight-on
+photograph before anyone touches it. Note the lift/shrink tuning assumes a
+584px-tall flacon.
 
 ### Reduced motion
 `prefers-reduced-motion: reduce` does not soften the journey, it replaces it.
@@ -140,6 +178,8 @@ matter here: the still is drawn by a direct `heroLoop(0)` call.
 | `mark_arabic.py` | Wraps Arabic in `lang="ar"` (`tspan` inside SVG) |
 | `make_svg.py` | Arabic calligraphy → SVG paths via harfbuzz |
 | `make_og.py` | Regenerates `assets/og-image.jpg` |
+| `preview_flacon.py` | Renders the hero scene to a real PNG via headless Chrome. `--fill 0.5` for a part-filled flacon. **The only way to actually see the artwork here.** |
+| `retime_chapter4.py` | Record of the chapter IV retiming that made the fill visible |
 | `preview_reduced.py` | Writes `_rmtest.html` — index with the reduced-motion branch forced on. The only way to see that build without toggling the OS setting. `--rm` deletes it. |
 | `mabkhara.py` | Blender/Cycles still — **not used on the site** |
 
@@ -172,8 +212,10 @@ back on the page** — the user said Marwa was discontinued, the store agrees
    dark, those 8 need re-exporting with transparency (a photo job).
 4. **Analytics** — still none. The user is "showing the boss"; worth one line
    of Vercel Analytics.
-5. **Pacing dial** — gap heights are 400/210/190vh desktop, 330/180/165vh
-   mobile. Independent of timing, safe to tune.
+5. **Pacing dial** — gap heights are 400/210/**260**vh desktop, 330/180/**225**vh
+   mobile. Independent of timing, safe to tune. Note `400vh` here means 400% of
+   the viewport, i.e. **4 viewports**, not 400 of them — the whole hero journey
+   is about 12.4 viewports of scroll, not 1175.
 6. ~~**`prefers-reduced-motion`**~~ — **done**, hero included. See the
    Reduced motion section above.
 7. Marwa 3D files (~3 MB, untracked) can be binned.

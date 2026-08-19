@@ -509,8 +509,12 @@ body.menu-open { overflow: hidden; }
   content: ''; position: absolute; inset: 0; z-index: 5; pointer-events: none;
   background: radial-gradient(ellipse 115% 90% at 50% 44%, transparent 52%, rgba(4,2,0,0.62) 100%);
 }
-#hero-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
-#hero-svg-scene { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+/* Origin sits high so the scene draws back toward its own upper third when a
+   product strip rises, rather than shrinking about the middle of the frame. */
+#hero-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 2;
+               transform-origin: 50% 34%; will-change: transform; }
+#hero-svg-scene { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;
+                  transform-origin: 50% 34%; will-change: transform; }
 
 .footer-logo {
   width: 120px; display: block; margin-bottom: 10px; margin-left: -14px;
@@ -3149,6 +3153,12 @@ function resizeCanvas(){
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas, {passive:true});
 
+// Elements the strip-clearing logic needs. The canvas and the SVG move
+// together so the drawn dust stays registered with the scene beneath it.
+var shelfEls = Array.prototype.slice.call(document.querySelectorAll('.chapter-products'));
+var sceneEl  = document.getElementById('hero-svg-scene');
+var lastLift = null;
+
 function fakeRand(seed){ return ((Math.sin(seed * 127.1 + 311.7) * 43758.5) % 1 + 1) % 1; }
 var pts = [];
 for (var pi2 = 0; pi2 < DUST_N; pi2++) {
@@ -3229,8 +3239,21 @@ function eIn(t){ return t*t; }
 function sstep(t){ t = clamp(t,0,1); return t*t*(3-2*t); }
 function seg(p,a,b){ return clamp((p-a)/(b-a),0,1); }
 // Chapter text reveal: opacity + blur + rise, fully scrub-reversible
+/* How far a product strip has risen into the frame: 0 clear, 1 fully up.
+   The chapter title occupies the same band the strip's own heading arrives
+   in, so with both on screen you got two headings stacked over a bottle cut
+   in half by the cards. The title now retreats as its strip comes up, and
+   the scene lifts so the object clears the strip rather than being sliced. */
+var shelfCover = 0;
+/* shelfCover only reaches about 0.53 at rest, because that is all of the
+   frame a strip covers — so fading the title by (1 - shelfCover) left it
+   sitting at 0.47, still legible behind the strip's own heading. The title
+   is muted on its own curve instead, reaching zero once the strip is 40%
+   up, well before its heading arrives. */
+var titleMute = 0;
+
 function chReveal(el, tin, tout){
-  var t = eOut(tin) * (1 - eIn(tout));
+  var t = eOut(tin) * (1 - eIn(tout)) * (1 - titleMute);
   if (el.__lt !== undefined && Math.abs(el.__lt - t) < 0.002) return;
   el.__lt = t;
   el.style.opacity = t;
@@ -3590,6 +3613,35 @@ function heroLoop(ts){
     s2.setAttribute('opacity', f4env * tw*tw*tw * 0.85);
     s2.setAttribute('transform', 'rotate(45 ' + (+s2.getAttribute('x')+2.5) + ' ' + (+s2.getAttribute('y')+2.5) + ')');
   });
+  }
+
+  /* ── Product strips: clear the scene for them ── */
+  shelfCover = 0;
+  for (var si = 0; si < shelfEls.length; si++) {
+    var sr = shelfEls[si].getBoundingClientRect();
+    if (sr.bottom < 0 || sr.top > window.innerHeight) continue;
+    var cov = 1 - Math.min(1, Math.max(0, sr.top / window.innerHeight));
+    if (cov > shelfCover) shelfCover = cov;
+  }
+  // Ease it so the lift starts gently rather than tracking scroll linearly.
+  // Lift alone was not enough: the chapter IV flacon is 584px tall and the
+  // frame left above a resting strip is 421px, so raising it far enough to
+  // clear the heading pushed its cap off the top. It also draws back a
+  // little, which is what a thing does when it steps aside.
+  // 0.15 / 0.27 chosen by sweeping lift against shrink over all three
+  // chapters and scoring worst overlap plus worst clipping: it is the only
+  // pair that clears every heading with nothing running off the top. More
+  // lift always clipped the flacon; less shrink always left the mabkhara
+  // sitting in the heading.
+  titleMute = eOut(Math.min(1, shelfCover / 0.40));
+  var clearT = eOut(shelfCover);
+  var lift = Math.round(clearT * window.innerHeight * 0.15);
+  var shrink = Math.round((1 - clearT * 0.30) * 1000) / 1000;
+  if (lift !== lastLift) {
+    lastLift = lift;
+    var xf = lift > 0 ? 'translateY(' + (-lift) + 'px) scale(' + shrink + ')' : '';
+    sceneEl.style.transform = xf;
+    canvas.style.transform = xf;
   }
 
   /* ── Chapter text ── */

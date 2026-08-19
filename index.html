@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHAMUM · Maison d'Oud — شاموم · ماسون عود</title>
+<title>SHAMUM · The Scent of an Authentic Perfume — شاموم · عبـقُ العطــر الأصيــل</title>
 <meta name="description" content="SHAMUM — عبق العطر الأصيل. A house of oud and fragrance from the Sultanate of Oman, preserving heritage craftsmanship since 2010. From the Aquilaria tree to the mabkhara, the oil, and the perfume.">
 <meta name="theme-color" content="#15100A">
 <link rel="canonical" href="https://shamum.vercel.app/">
@@ -37,7 +37,7 @@
 <link rel="icon" type="image/png" href="assets/logo-mark.png">
 <link rel="apple-touch-icon" href="assets/logo-mark.png">
 <meta property="og:type" content="website">
-<meta property="og:title" content="SHAMUM · Maison d'Oud — شاموم">
+<meta property="og:title" content="SHAMUM · The Scent of an Authentic Perfume — شاموم">
 <meta property="og:description" content="عبق العطر الأصيل — The essence of authentic fragrance. Omani oud house, est. 2010.">
 <!-- Previously a media.zid.store URL: every shared link's preview depended on
      a path the house does not control. Now a card we own, built by
@@ -47,16 +47,16 @@
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="SHAMUM · Maison d'Oud — عبـقُ العطــر الأصيــل — Sultanate of Oman, est. 2010">
+<meta property="og:image:alt" content="SHAMUM · The Scent of an Authentic Perfume — عبـقُ العطــر الأصيــل — Sultanate of Oman, est. 2010">
 <meta property="og:url" content="https://shamum.vercel.app/">
 <meta property="og:site_name" content="SHAMUM">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="ar_OM">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="SHAMUM · Maison d'Oud — شاموم">
+<meta name="twitter:title" content="SHAMUM · The Scent of an Authentic Perfume — شاموم">
 <meta name="twitter:description" content="عبق العطر الأصيل — The essence of authentic fragrance. Omani oud house, est. 2010.">
 <meta name="twitter:image" content="https://shamum.vercel.app/assets/og-image.jpg">
-<meta name="twitter:image:alt" content="SHAMUM · Maison d'Oud — Sultanate of Oman, est. 2010">
+<meta name="twitter:image:alt" content="SHAMUM · The Scent of an Authentic Perfume — Sultanate of Oman, est. 2010">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
@@ -382,6 +382,7 @@ body.menu-open { overflow: hidden; }
 }
 .menu-foot a:hover { color: var(--gold-300); }
 .menu-foot-row { display: flex; flex-direction: column; align-items: flex-start; }
+@media (max-width: 470px) { .nav-brand-sub { display: none; } }
 @media (max-width: 380px) {
   .menu-en { font-size: 28px; }
   .menu-inner { padding: 0 24px 30px; }
@@ -1377,7 +1378,13 @@ body.menu-open { overflow: hidden; }
   .footer-col-title       { font-size: 11px; letter-spacing: 0.18em; }
   .product-size, .product-tags, .rs-label { font-size: 11px; }
   .product-badge          { font-size: 10px; }
-  .nav-brand-sub          { font-size: 9.5px; }
+  /* "The Scent of an Authentic Perfume" is nearly three times the width of
+     the old "Maison d'Oud". At 375 it pushed the centred wordmark 19px into
+     the icon cluster — the same collision fixed in e23240c — and wrapped to
+     two lines. Tightened here, and dropped entirely on the narrowest phones
+     where no legible size fits between the Menu button and the icons. The
+     tagline still carries in the hero, the footer and the share card. */
+  .nav-brand-sub          { font-size: 8px; letter-spacing: 0.12em; }
   #scroll-cue             { font-size: 10.5px; letter-spacing: 0.28em; }
 
   /* CTAs: readable, and tall enough to hit */
@@ -1454,7 +1461,7 @@ body.menu-open { overflow: hidden; }
     <div class="nav-brand">
       <img class="nav-mark" src="assets/logo-mark.png" alt="">
       <span class="nav-brand-name">SHAMUM</span>
-      <span class="nav-brand-sub">Maison d'Oud</span>
+      <span class="nav-brand-sub">The Scent of an Authentic Perfume</span>
     </div>
     <!-- These were bare svg elements with no link and no handler: they
          looked tappable and did nothing. Now wired to the Zid store, using
@@ -3434,24 +3441,32 @@ function heroLoop(ts){
     // to the same window as the liquid rise so the level and the drip agree.
     var dripWin = seg(p, 0.695, 0.80);
     if (dripWin > 0 && dripWin < 1) {
-      var cycle = (heroTime * 0.62) % 1;
+      // Cadence, not fall speed, was what made this look hurried: at 0.62 a
+      // drop left the spout every 1.6s with only 42% of that spent forming,
+      // which is a steady drip and reads nothing like "drawn by patience".
+      // Now one drop every ~4.5s, three quarters of it swelling at the tip.
+      var DRIP_RATE  = 0.22;   // cycles per second — lower is more patient
+      var DRIP_SWELL = 0.74;   // share of the cycle spent hanging and growing
+      var cycle = (heroTime * DRIP_RATE) % 1;
       var dropY, dropS, dropO;
-      if (cycle < 0.42) {                      // swelling at the pipe tip
-        var f = cycle / 0.42;
+      if (cycle < DRIP_SWELL) {                // swelling at the pipe tip
+        var f = cycle / DRIP_SWELL;
         dropY = 2152 + f * 5;
-        dropS = 0.45 + f * 0.55;
-        dropO = f;
+        // holds small for most of the swell, then rounds out just before it
+        // lets go, so the eye is drawn to the release rather than the growth
+        dropS = 0.34 + Math.pow(f, 1.7) * 0.66;
+        dropO = Math.min(1, f * 3);
       } else {                                 // falling into the mouth
-        var g = (cycle - 0.42) / 0.58;
+        var g = (cycle - DRIP_SWELL) / (1 - DRIP_SWELL);
         // Pipe ends at 2146; the mouth sits at 2272 now the vial is scaled to
         // 0.68 about its base (2396 - (2396-2214)*0.68).
         dropY = lerp(2157, 2272, eIn(g));
         dropS = 1;
-        dropO = 1 - Math.max(0, (g - 0.82) / 0.18);
+        dropO = 1 - Math.max(0, (g - 0.84) / 0.16);
       }
       sc.f3drop.setAttribute('cy', dropY);
       sc.f3drop.setAttribute('transform',
-        'translate(720,' + dropY + ') scale(' + dropS + ',' + (dropS * (cycle < 0.42 ? 1 : 1.5)) + ') translate(-720,' + (-dropY) + ')');
+        'translate(720,' + dropY + ') scale(' + dropS + ',' + (dropS * (cycle < DRIP_SWELL ? 1 : 1.5)) + ') translate(-720,' + (-dropY) + ')');
       op(sc.f3drop, dropO * stillOn);
     } else {
       op(sc.f3drop, 0);

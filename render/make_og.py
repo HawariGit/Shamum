@@ -195,7 +195,7 @@ def main():
             x += w + tracking
 
     centred("SHAMUM", f_name, 196, SAND_50, tracking=13)
-    centred("MAISON D'OUD", f_sub, 300, GOLD_400, tracking=7)
+    centred("THE SCENT OF AN AUTHENTIC PERFUME", f_sub, 300, GOLD_400, tracking=4)
 
     # gold rule
     d.line([(W / 2 - 150, 348), (W / 2 + 150, 348)], fill=GOLD_500, width=1)

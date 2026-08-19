@@ -401,36 +401,70 @@ body.menu-open { overflow: hidden; }
    animation feel like it pauses to let you look at the shelf. */
 #hero-track { position: relative; }
 .chapter-gap { position: relative; z-index: 0; pointer-events: none; }
+/* A breath between two strips. Deliberately NOT .chapter-gap — measureZones
+   only counts gaps, so this adds scroll without advancing the animation. */
+.chapter-coda { position: relative; z-index: 0; height: 62vh; pointer-events: none; }
+@media (max-width: 640px) { .chapter-coda { height: 46vh; } }
 .chapter-gap[data-chapter="1"] { height: 400vh; }
 .chapter-gap[data-chapter="2"] { height: 210vh; }
 .chapter-gap[data-chapter="3"] { height: 190vh; }
-/* The shelf sits ON the scene, not over it. A full-bleed cream panel read as
-   a separate page dropping in front of the animation; what belongs here is
-   just the products, on the same dark ground, directly under the chapter
-   they came from. Background stays the hero's ink so nothing cuts across. */
+/* The shelf floats IN the scene. Not a cream page, and not a full dark page
+   either — both covered the animation completely. It is a short transparent
+   band that rides up through the lower part of the frame, so the chapter is
+   still on screen above it while its products drift in underneath. */
 .chapter-products {
   position: relative; z-index: 3;
-  background: #0F0805;
-  padding: 96px 48px 92px;
+  background: transparent;
+  padding: 0 40px 7vh;
+  min-height: 52vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  pointer-events: none;            /* the scene keeps the empty space */
 }
+.chapter-products > * { pointer-events: auto; }
+/* the page-level collection title belongs to a full section, not a strip */
+.chapter-products #products-header { display: none; }
 
 /* ── cards on dark ──
    The photos keep a lit plate: 8 of the 15 store images are JPEGs with a
    white background baked in, so dropping them straight onto the ink would
    give half the grid white boxes. The plate makes every product read the
    same whatever it was shot against. Everything around it goes dark. */
+/* one row, small tiles, glass over the scene rather than a grid of panels */
+.chapter-products .product-group { margin-bottom: 0; }
+.chapter-products .pg-head { margin-bottom: 16px; }
+.chapter-products .pg-ar { font-size: 17px; }
+.chapter-products .pg-en { font-size: 21px; margin-top: 0; }
+.chapter-products .pg-blurb { display: none; }
+.chapter-products .products-grid {
+  display: flex; flex-wrap: nowrap; gap: 14px;
+  justify-content: center; max-width: none;
+  overflow-x: auto; overflow-y: hidden;
+  padding-bottom: 6px; scrollbar-width: none;
+}
+.chapter-products .products-grid::-webkit-scrollbar { display: none; }
 .chapter-products .product-card {
-  background: rgba(255,255,255,0.035);
-  border: 1px solid rgba(174,139,79,0.20);
-  box-shadow: 0 18px 46px rgba(0,0,0,0.5);
+  flex: 0 0 156px; width: 156px;
+  background: rgba(12,7,4,0.55);
+  border: 1px solid rgba(174,139,79,0.22);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.55);
+  backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px);
 }
-.chapter-products .product-card:hover { border-color: rgba(194,163,104,0.5); }
+.chapter-products .product-card:hover { border-color: rgba(194,163,104,0.55); }
 .chapter-products .product-image-wrap {
-  height: 306px; padding: 26px;
-  background: linear-gradient(155deg, #f4ecdc 0%, #e2d7c0 100%);
+  height: 148px; padding: 12px;
+  background: linear-gradient(155deg, #f2e9d8 0%, #ded2b9 100%);
 }
-.chapter-products .product-info { padding: 22px 22px 26px; }
-.chapter-products .product-name { color: var(--sand-50); font-size: 22px; }
+.chapter-products .product-info { padding: 12px 12px 14px; }
+.chapter-products .product-name { color: var(--sand-50); font-size: 16px; }
+.chapter-products .product-meta { margin-bottom: 4px; }
+.chapter-products .product-tags { display: none; }
+.chapter-products .product-size { font-size: 8.5px; }
+.chapter-products .product-arabic { font-size: 12px; }
+.chapter-products .product-price { font-size: 12px; }
+.chapter-products .add-to-bag {
+  font-size: 8.5px; letter-spacing: 0.1em; padding: 8px 6px; margin-top: 10px;
+}
+.chapter-products .pg-more { margin-top: 18px; font-size: 10px; }
 .chapter-products .product-arabic { color: var(--gold-400); }
 .chapter-products .product-size,
 .chapter-products .product-tags { color: rgba(244,234,210,0.5); }
@@ -447,7 +481,18 @@ body.menu-open { overflow: hidden; }
 .chapter-products .pg-more { color: var(--gold-400); border-bottom-color: rgba(174,139,79,0.4); }
 .chapter-products .pg-more:hover { color: var(--gold-300); border-bottom-color: var(--gold-400); }
 @media (max-width: 640px) {
-  .chapter-products .product-image-wrap { height: 260px; padding: 20px; }
+  /* the row scrolls sideways rather than shrinking to nothing */
+  .chapter-products { padding: 0 0 6vh; min-height: 46vh; }
+  .chapter-products .pg-head { padding: 0 24px; }
+  .chapter-products .products-grid {
+    justify-content: flex-start; padding: 0 24px 6px; gap: 12px;
+  }
+  .chapter-products .product-card { flex: 0 0 138px; width: 138px; }
+  .chapter-products .product-image-wrap { height: 116px; padding: 9px; }
+  .chapter-products .product-info { padding: 10px 10px 11px; }
+  .chapter-products .product-name { font-size: 15px; }
+  .chapter-products .add-to-bag { margin-top: 8px; padding: 7px 5px; }
+  .chapter-products .pg-more { margin-left: 24px; margin-right: 24px; margin-top: 12px; }
 }
 .chapter-products .product-group:last-of-type { margin-bottom: 0; }
 @media (max-width: 640px) {
@@ -2421,6 +2466,15 @@ body.menu-open { overflow: hidden; }
             </div>
             <a class="pg-more" href="https://shamum.com/categories/1006199/البـخـاخـات" target="_blank" rel="noopener">All Sprays →</a>
           </div>
+  </section>
+
+  <!-- Limited editions get their own band rather than stacking under the
+       fragrances: two groups in one strip made it 99% of the viewport, which
+       is the full-page cover this layout exists to avoid. The coda is not a
+       .chapter-gap, so it adds no scroll progress — the camera simply holds
+       on the finished chapter IV while this drifts up. -->
+  <div class="chapter-coda" aria-hidden="true"></div>
+  <section class="chapter-products" id="shelf-limited">
     <div class="product-group" id="group-limited">
             <div class="pg-head reveal">
               <span class="pg-ar" lang="ar">إصـدار محـدود</span>

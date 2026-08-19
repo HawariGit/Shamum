@@ -391,11 +391,34 @@ body.menu-open { overflow: hidden; }
   .menu-links a, .menu-foot { transform: none; }
 }
 
-/* ─── HERO ─── */
-#hero-spacer { height: 800vh; }
+/* ─── HERO ───
+   The journey is no longer one 800vh run with the whole collection dumped
+   after it. The hero stays pinned for the length of #hero-track while
+   opaque product panels scroll up over it, so each chapter is followed by
+   the products it is about. The camera advances only through .chapter-gap;
+   it holds while a panel covers the screen, which is what makes the
+   animation feel like it pauses to let you look at the shelf. */
+#hero-track { position: relative; }
+.chapter-gap { position: relative; z-index: 0; pointer-events: none; }
+.chapter-gap[data-chapter="1"] { height: 400vh; }
+.chapter-gap[data-chapter="2"] { height: 210vh; }
+.chapter-gap[data-chapter="3"] { height: 190vh; }
+.chapter-products {
+  position: relative; z-index: 3;
+  background: var(--sand-50);
+  padding: 104px 48px 116px;
+  box-shadow: 0 -40px 90px rgba(0,0,0,0.55);
+}
+.chapter-products .product-group:last-of-type { margin-bottom: 0; }
+@media (max-width: 640px) {
+  .chapter-gap[data-chapter="1"] { height: 330vh; }
+  .chapter-gap[data-chapter="2"] { height: 180vh; }
+  .chapter-gap[data-chapter="3"] { height: 165vh; }
+  .chapter-products { padding: 68px 24px 76px; }
+}
 #hero-sticky {
   position: sticky; top: 0; height: 100vh; width: 100%;
-  overflow: hidden; background: #0F0805;
+  overflow: hidden; background: #0F0805; z-index: 1;
 }
 #hero-sticky::after {
   content: ''; position: absolute; inset: 0; z-index: 5; pointer-events: none;
@@ -1385,7 +1408,7 @@ body.menu-open { overflow: hidden; }
             aria-expanded="false" aria-controls="menu-overlay">Menu</button>
     <ul class="nav-links">
       <li><a href="#top" class="nav-link" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Home</a></li>
-      <li><a href="#products" class="nav-link">Collection</a></li>
+      <li><a href="#shelf-bukhoor" class="nav-link">Collection</a></li>
       <li><a href="#brand-statement" class="nav-link">Our Oud</a></li>
       <li><a href="#footer" class="nav-link">The House</a></li>
     </ul>
@@ -1440,7 +1463,7 @@ body.menu-open { overflow: hidden; }
   <div class="menu-inner">
     <ul class="menu-links">
       <li><a href="#top" data-menu-top="1"><span class="menu-en">Home</span><span class="menu-ar"><span lang="ar">الرئيسية</span></span></a></li>
-      <li><a href="#products"><span class="menu-en">Collection</span><span class="menu-ar"><span lang="ar">المجموعة</span></span></a></li>
+      <li><a href="#shelf-bukhoor"><span class="menu-en">Collection</span><span class="menu-ar"><span lang="ar">المجموعة</span></span></a></li>
       <li><a href="#brand-statement"><span class="menu-en">Our Oud</span><span class="menu-ar"><span lang="ar">عودنا</span></span></a></li>
       <li><a href="#footer"><span class="menu-en">The House</span><span class="menu-ar"><span lang="ar">بيت شاموم</span></span></a></li>
     </ul>
@@ -1456,7 +1479,7 @@ body.menu-open { overflow: hidden; }
 </div>
 
 <!-- ═══ HERO ═══ -->
-<div id="hero-spacer">
+<div id="hero-track">
   <div id="hero-sticky">
     <canvas id="hero-canvas"></canvas>
 
@@ -2176,11 +2199,258 @@ body.menu-open { overflow: hidden; }
       <h3 class="ch-head">The Perfume</h3>
       <p class="ch-sub">Where the journey of the wood becomes a signature.</p>
       <div class="hero-cta" id="hero-cta">
-        <a href="#products" class="btn-hero-gold">Discover the Collection</a>
+        <a href="#shelf-bukhoor" class="btn-hero-gold">Discover the Collection</a>
         <a href="#brand-statement" class="btn-hero-ghost">Our Story</a>
       </div>
     </div>
   </div>
+
+  <div class="chapter-gap" data-chapter="1" aria-hidden="true"></div>
+  <section class="chapter-products" id="shelf-bukhoor">
+    <div id="products-header">
+        <span class="section-eyebrow reveal">03 — The Collection · <span lang="ar">المجموعة</span></span>
+        <h2 class="section-title reveal-lines"><span class="lr"><span class="lri">Rare Expressions,</span></span><br><span class="lr"><span class="lri">Carefully Composed.</span></span></h2>
+        <div class="ornament reveal reveal-delay-2">
+          <span class="orn-line"></span>
+          <img class="orn-mark" src="assets/logo-mark.png" alt="">
+          <span class="orn-line"></span>
+        </div>
+      </div>
+    <div class="product-group" id="group-bukhoor">
+            <div class="pg-head reveal">
+              <span class="pg-ar" lang="ar">البخــور</span>
+              <h3 class="pg-en">The Bukhoor</h3>
+              <p class="pg-blurb">Wood cut for the mabkhara — what the majlis actually burns.</p>
+            </div>
+            <div class="products-grid">
+            <div class="product-card">
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/d5b2c7fb-babb-4bfb-a2e5-f92484a8cc74-thumbnail-1000x1000-70.jpg" alt="Ghandi — غانـــدي" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Oud Wood</span></div>
+                <span class="product-name">Ghandi</span>
+                <span class="product-arabic"><span lang="ar">غانـــدي</span></span>
+                <span class="product-price">52.000 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/غانـــدي" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/b60f179d-ccb0-4e01-957f-de7d33ab4d38-thumbnail-1000x1000-70.jpg" alt="Jawhar — جوهــــر" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Oud Wood</span></div>
+                <span class="product-name">Jawhar</span>
+                <span class="product-arabic"><span lang="ar">جوهــــر</span></span>
+                <span class="product-price">150.000 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/جوهــــر" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            </div>
+            <a class="pg-more" href="https://shamum.com/categories/1005686/أخشـاب-العـود" target="_blank" rel="noopener">All Oud Wood →</a>
+          </div>
+  </section>
+
+  <div class="chapter-gap" data-chapter="2" aria-hidden="true"></div>
+  <section class="chapter-products" id="shelf-oils">
+    <div class="product-group" id="group-oils">
+            <div class="pg-head reveal">
+              <span class="pg-ar" lang="ar">أدهــان العــود</span>
+              <h3 class="pg-en">The Oils</h3>
+              <p class="pg-blurb">Dehn al oud, drawn a drop at a time and left undiluted.</p>
+            </div>
+            <div class="products-grid">
+            <div class="product-card">
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/1034b1c0-2506-4221-8b58-42aaa8f522c9-thumbnail-1000x1000.png" alt="Bayrun IV — بيـــرون الرابـع" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Oud Oil · 3ml</span></div>
+                <span class="product-name">Bayrun IV</span>
+                <span class="product-arabic"><span lang="ar">بيـــرون الرابـع</span></span>
+                <span class="product-price">75.000 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/بيـــرون-الثانــي" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            <div class="product-card is-sold-out">
+              <div class="product-badge sold">Sold out</div>
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/b7763935-a88c-4890-9e8a-fc3a4c56d0c5-thumbnail-1000x1000.png" alt="Farahid — فـراهيــــــد" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Oud Oil · 3ml</span></div>
+                <span class="product-name">Farahid</span>
+                <span class="product-arabic"><span lang="ar">فـراهيــــــد</span></span>
+                <span class="product-price">68.000 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/فـراهيــــــد" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/866632a7-cee6-4540-99eb-8031286e1da7-thumbnail-1000x1000.png" alt="Sina IV — سينـــا الرابـع" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Oud Oil · 3ml</span></div>
+                <span class="product-name">Sina IV</span>
+                <span class="product-arabic"><span lang="ar">سينـــا الرابـع</span></span>
+                <span class="product-price">48.000 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/سينـــا-1" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/d8f738a5-6aa5-44a8-9625-f991ea15b0ea-thumbnail-1000x1000.png" alt="Razi II — رازي الثـانـي" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Oud Oil · 3ml</span></div>
+                <span class="product-name">Razi II</span>
+                <span class="product-arabic"><span lang="ar">رازي الثـانـي</span></span>
+                <span class="product-price">125.000 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/رازي" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/f03cc94a-5a46-466f-af3f-3dbf9abad89e-thumbnail-1000x1000.png" alt="Mindali — منــــــدلـي" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Oud Oil · 3ml</span></div>
+                <span class="product-name">Mindali</span>
+                <span class="product-arabic"><span lang="ar">منــــــدلـي</span></span>
+                <span class="product-price">240.000 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/منــــــدلـي-1" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            </div>
+            <a class="pg-more" href="https://shamum.com/categories/1006197/أدهـان-العـود" target="_blank" rel="noopener">All Oud Oils →</a>
+          </div>
+  </section>
+
+  <div class="chapter-gap" data-chapter="3" aria-hidden="true"></div>
+  <section class="chapter-products" id="shelf-fragrances">
+    <div class="product-group" id="group-fragrances">
+            <div class="pg-head reveal">
+              <span class="pg-ar" lang="ar">العطــور</span>
+              <h3 class="pg-en">The Fragrances</h3>
+              <p class="pg-blurb">Eau de parfum composed on that oil.</p>
+            </div>
+            <div class="products-grid">
+            <div class="product-card">
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/eab2ee11-f490-468b-8fee-84eb748e4dd5-thumbnail-1000x1000-70.jpg" alt="Mindal — منــدل" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Eau de Parfum</span></div>
+                <span class="product-name">Mindal</span>
+                <span class="product-arabic"><span lang="ar">منــدل</span></span>
+                <span class="product-price">107.000 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/منــدل" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/8bdb0cc5-740e-4d60-ab75-d296c761fe70-thumbnail-1000x1000-70.jpg" alt="Zahiya — زاهيـــة" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Eau de Parfum</span></div>
+                <span class="product-name">Zahiya</span>
+                <span class="product-arabic"><span lang="ar">زاهيـــة</span></span>
+                <span class="product-price">68.000 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/زاهيـــة" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/29fe8127-0906-4549-8aeb-6979353f16bf-thumbnail-1000x1000-70.jpg" alt="Flower Gardens — حدائــق الأزهــــار" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Eau de Parfum</span></div>
+                <span class="product-name">Flower Gardens</span>
+                <span class="product-arabic"><span lang="ar">حدائــق الأزهــــار</span></span>
+                <span class="product-price">75.000 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/حدائــق-الأزهــــار" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            </div>
+            <a class="pg-more" href="https://shamum.com/categories/1006199/البـخـاخـات" target="_blank" rel="noopener">All Sprays →</a>
+          </div>
+    <div class="product-group" id="group-limited">
+            <div class="pg-head reveal">
+              <span class="pg-ar" lang="ar">إصـدار محـدود</span>
+              <h3 class="pg-en">Limited Editions</h3>
+              <p class="pg-blurb">Released once, in small number, and not repeated.</p>
+            </div>
+            <div class="products-grid">
+            <div class="product-card is-sold-out">
+              <div class="product-badge sold">Sold out</div>
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/46c1de05-4709-48c6-bad1-39a0e29e9a3f-thumbnail-1000x1000.png" alt="Al-Marwa II — المــروى الثاني" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Limited Edition</span></div>
+                <span class="product-name">Al-Marwa II</span>
+                <span class="product-arabic"><span lang="ar">المــروى الثاني</span></span>
+                <span class="product-price">54.000 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/المـــــروى-1" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            <div class="product-card is-sold-out">
+              <div class="product-badge sold">Sold out</div>
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/baa708cd-6d63-47cb-b334-b1e7d1379c14-thumbnail-1000x1000-70.jpg" alt="Surra — سُــــرى" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Limited Edition</span></div>
+                <span class="product-name">Surra</span>
+                <span class="product-arabic"><span lang="ar">سُــــرى</span></span>
+                <span class="product-price">61.000 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/ســــرى" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/0465a40c-c6d4-4241-a1b2-9dda4e0b2d5d-thumbnail-1000x1000-70.jpg" alt="Sarmad Collection — مجمـوعـة سـرمــد" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Limited Edition</span></div>
+                <span class="product-name">Sarmad Collection</span>
+                <span class="product-arabic"><span lang="ar">مجمـوعـة سـرمــد</span></span>
+                <span class="product-price">66.700 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/مجمـوعـة-سـرمــد" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            <div class="product-card is-sold-out">
+              <div class="product-badge sold">Sold out</div>
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/cb50b56f-4296-483c-a556-1a127a9a58cf-thumbnail-1000x1000.png" alt="Special Edition — إصـدار خـاص" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Limited Edition</span></div>
+                <span class="product-name">Special Edition</span>
+                <span class="product-arabic"><span lang="ar">إصـدار خـاص</span></span>
+                <span class="product-price">43.000 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/إصـدار-خـاص" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            <div class="product-card is-sold-out">
+              <div class="product-badge sold">Sold out</div>
+              <div class="product-image-wrap" data-cursor-image>
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/69da6502-b284-4d4f-ae45-45473a8b1bf3-thumbnail-1000x1000-70.jpg" alt="Al-Marwa — المـــــروى" loading="lazy">
+              </div>
+              <div class="product-info">
+                <div class="product-meta"><span class="product-size">Limited Edition</span></div>
+                <span class="product-name">Al-Marwa</span>
+                <span class="product-arabic"><span lang="ar">المـــــروى</span></span>
+                <span class="product-price">48.000 <span lang="ar">ر.ع</span></span>
+                <a class="add-to-bag magnetic" href="https://shamum.com/products/المـــــروى" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
+              </div>
+            </div>
+            </div>
+            <a class="pg-more" href="https://shamum.com/categories/1333233/إصـدار-محـدود" target="_blank" rel="noopener">All Limited Edition →</a>
+          </div>
+  </section>
+
 </div>
 
 <!-- ═══ BRAND STATEMENT ═══ -->
@@ -2285,245 +2555,6 @@ body.menu-open { overflow: hidden; }
 </section>
 
 <!-- ═══ PRODUCTS ═══ -->
-<section id="products">
-  <div id="products-header">
-    <span class="section-eyebrow reveal">03 — The Collection · <span lang="ar">المجموعة</span></span>
-    <h2 class="section-title reveal-lines"><span class="lr"><span class="lri">Rare Expressions,</span></span><br><span class="lr"><span class="lri">Carefully Composed.</span></span></h2>
-    <div class="ornament reveal reveal-delay-2">
-      <span class="orn-line"></span>
-      <img class="orn-mark" src="assets/logo-mark.png" alt="">
-      <span class="orn-line"></span>
-    </div>
-  </div>
-      <div class="product-group" id="group-bukhoor">
-        <div class="pg-head reveal">
-          <span class="pg-ar" lang="ar">البخــور</span>
-          <h3 class="pg-en">The Bukhoor</h3>
-          <p class="pg-blurb">Wood cut for the mabkhara — what the majlis actually burns.</p>
-        </div>
-        <div class="products-grid">
-        <div class="product-card">
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/d5b2c7fb-babb-4bfb-a2e5-f92484a8cc74-thumbnail-1000x1000-70.jpg" alt="Ghandi — غانـــدي" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Oud Wood</span></div>
-            <span class="product-name">Ghandi</span>
-            <span class="product-arabic"><span lang="ar">غانـــدي</span></span>
-            <span class="product-price">52.000 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/غانـــدي" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/b60f179d-ccb0-4e01-957f-de7d33ab4d38-thumbnail-1000x1000-70.jpg" alt="Jawhar — جوهــــر" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Oud Wood</span></div>
-            <span class="product-name">Jawhar</span>
-            <span class="product-arabic"><span lang="ar">جوهــــر</span></span>
-            <span class="product-price">150.000 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/جوهــــر" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        </div>
-        <a class="pg-more" href="https://shamum.com/categories/1005686/أخشـاب-العـود" target="_blank" rel="noopener">All Oud Wood →</a>
-      </div>
-      <div class="product-group" id="group-oils">
-        <div class="pg-head reveal">
-          <span class="pg-ar" lang="ar">أدهــان العــود</span>
-          <h3 class="pg-en">The Oils</h3>
-          <p class="pg-blurb">Dehn al oud, drawn a drop at a time and left undiluted.</p>
-        </div>
-        <div class="products-grid">
-        <div class="product-card">
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/1034b1c0-2506-4221-8b58-42aaa8f522c9-thumbnail-1000x1000.png" alt="Bayrun IV — بيـــرون الرابـع" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Oud Oil · 3ml</span></div>
-            <span class="product-name">Bayrun IV</span>
-            <span class="product-arabic"><span lang="ar">بيـــرون الرابـع</span></span>
-            <span class="product-price">75.000 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/بيـــرون-الثانــي" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        <div class="product-card is-sold-out">
-          <div class="product-badge sold">Sold out</div>
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/b7763935-a88c-4890-9e8a-fc3a4c56d0c5-thumbnail-1000x1000.png" alt="Farahid — فـراهيــــــد" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Oud Oil · 3ml</span></div>
-            <span class="product-name">Farahid</span>
-            <span class="product-arabic"><span lang="ar">فـراهيــــــد</span></span>
-            <span class="product-price">68.000 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/فـراهيــــــد" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/866632a7-cee6-4540-99eb-8031286e1da7-thumbnail-1000x1000.png" alt="Sina IV — سينـــا الرابـع" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Oud Oil · 3ml</span></div>
-            <span class="product-name">Sina IV</span>
-            <span class="product-arabic"><span lang="ar">سينـــا الرابـع</span></span>
-            <span class="product-price">48.000 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/سينـــا-1" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/d8f738a5-6aa5-44a8-9625-f991ea15b0ea-thumbnail-1000x1000.png" alt="Razi II — رازي الثـانـي" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Oud Oil · 3ml</span></div>
-            <span class="product-name">Razi II</span>
-            <span class="product-arabic"><span lang="ar">رازي الثـانـي</span></span>
-            <span class="product-price">125.000 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/رازي" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/f03cc94a-5a46-466f-af3f-3dbf9abad89e-thumbnail-1000x1000.png" alt="Mindali — منــــــدلـي" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Oud Oil · 3ml</span></div>
-            <span class="product-name">Mindali</span>
-            <span class="product-arabic"><span lang="ar">منــــــدلـي</span></span>
-            <span class="product-price">240.000 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/منــــــدلـي-1" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        </div>
-        <a class="pg-more" href="https://shamum.com/categories/1006197/أدهـان-العـود" target="_blank" rel="noopener">All Oud Oils →</a>
-      </div>
-      <div class="product-group" id="group-fragrances">
-        <div class="pg-head reveal">
-          <span class="pg-ar" lang="ar">العطــور</span>
-          <h3 class="pg-en">The Fragrances</h3>
-          <p class="pg-blurb">Eau de parfum composed on that oil.</p>
-        </div>
-        <div class="products-grid">
-        <div class="product-card">
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/eab2ee11-f490-468b-8fee-84eb748e4dd5-thumbnail-1000x1000-70.jpg" alt="Mindal — منــدل" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Eau de Parfum</span></div>
-            <span class="product-name">Mindal</span>
-            <span class="product-arabic"><span lang="ar">منــدل</span></span>
-            <span class="product-price">107.000 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/منــدل" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/8bdb0cc5-740e-4d60-ab75-d296c761fe70-thumbnail-1000x1000-70.jpg" alt="Zahiya — زاهيـــة" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Eau de Parfum</span></div>
-            <span class="product-name">Zahiya</span>
-            <span class="product-arabic"><span lang="ar">زاهيـــة</span></span>
-            <span class="product-price">68.000 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/زاهيـــة" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/29fe8127-0906-4549-8aeb-6979353f16bf-thumbnail-1000x1000-70.jpg" alt="Flower Gardens — حدائــق الأزهــــار" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Eau de Parfum</span></div>
-            <span class="product-name">Flower Gardens</span>
-            <span class="product-arabic"><span lang="ar">حدائــق الأزهــــار</span></span>
-            <span class="product-price">75.000 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/حدائــق-الأزهــــار" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        </div>
-        <a class="pg-more" href="https://shamum.com/categories/1006199/البـخـاخـات" target="_blank" rel="noopener">All Sprays →</a>
-      </div>
-      <div class="product-group" id="group-limited">
-        <div class="pg-head reveal">
-          <span class="pg-ar" lang="ar">إصـدار محـدود</span>
-          <h3 class="pg-en">Limited Editions</h3>
-          <p class="pg-blurb">Released once, in small number, and not repeated.</p>
-        </div>
-        <div class="products-grid">
-        <div class="product-card is-sold-out">
-          <div class="product-badge sold">Sold out</div>
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/46c1de05-4709-48c6-bad1-39a0e29e9a3f-thumbnail-1000x1000.png" alt="Al-Marwa II — المــروى الثاني" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Limited Edition</span></div>
-            <span class="product-name">Al-Marwa II</span>
-            <span class="product-arabic"><span lang="ar">المــروى الثاني</span></span>
-            <span class="product-price">54.000 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/المـــــروى-1" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        <div class="product-card is-sold-out">
-          <div class="product-badge sold">Sold out</div>
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/baa708cd-6d63-47cb-b334-b1e7d1379c14-thumbnail-1000x1000-70.jpg" alt="Surra — سُــــرى" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Limited Edition</span></div>
-            <span class="product-name">Surra</span>
-            <span class="product-arabic"><span lang="ar">سُــــرى</span></span>
-            <span class="product-price">61.000 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/ســــرى" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/0465a40c-c6d4-4241-a1b2-9dda4e0b2d5d-thumbnail-1000x1000-70.jpg" alt="Sarmad Collection — مجمـوعـة سـرمــد" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Limited Edition</span></div>
-            <span class="product-name">Sarmad Collection</span>
-            <span class="product-arabic"><span lang="ar">مجمـوعـة سـرمــد</span></span>
-            <span class="product-price">66.700 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/مجمـوعـة-سـرمــد" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        <div class="product-card is-sold-out">
-          <div class="product-badge sold">Sold out</div>
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/cb50b56f-4296-483c-a556-1a127a9a58cf-thumbnail-1000x1000.png" alt="Special Edition — إصـدار خـاص" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Limited Edition</span></div>
-            <span class="product-name">Special Edition</span>
-            <span class="product-arabic"><span lang="ar">إصـدار خـاص</span></span>
-            <span class="product-price">43.000 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/إصـدار-خـاص" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        <div class="product-card is-sold-out">
-          <div class="product-badge sold">Sold out</div>
-          <div class="product-image-wrap" data-cursor-image>
-            <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/69da6502-b284-4d4f-ae45-45473a8b1bf3-thumbnail-1000x1000-70.jpg" alt="Al-Marwa — المـــــروى" loading="lazy">
-          </div>
-          <div class="product-info">
-            <div class="product-meta"><span class="product-size">Limited Edition</span></div>
-            <span class="product-name">Al-Marwa</span>
-            <span class="product-arabic"><span lang="ar">المـــــروى</span></span>
-            <span class="product-price">48.000 <span lang="ar">ر.ع</span></span>
-            <a class="add-to-bag magnetic" href="https://shamum.com/products/المـــــروى" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
-          </div>
-        </div>
-        </div>
-        <a class="pg-more" href="https://shamum.com/categories/1333233/إصـدار-محـدود" target="_blank" rel="noopener">All Limited Edition →</a>
-      </div>
-    <a class="view-all-btn magnetic" href="https://shamum.com/products" target="_blank" rel="noopener">View All 15 Expressions · <span lang="ar">جميع المنتجات</span></a>
-  </div>
-</section>
-
 <!-- ═══ QUOTE ═══ -->
 <section id="quote-section">
   <div class="quote-haze" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -2689,7 +2720,7 @@ body.menu-open { overflow: hidden; }
         <li><a href="#brand-statement">Our Story · <span lang="ar">قصتنا</span></a></li>
         <li><a href="#ritual">The Ritual · <span lang="ar">الطقس</span></a></li>
         <li><a href="#essence">The Two Gifts · <span lang="ar">عطايا العود</span></a></li>
-        <li><a href="#products">The Collection · <span lang="ar">المجموعة</span></a></li>
+        <li><a href="#shelf-bukhoor">The Collection · <span lang="ar">المجموعة</span></a></li>
         <li><a href="https://www.instagram.com/shamumofficial" target="_blank" rel="noopener">Instagram · @shamumofficial</a></li>
       </ul>
     </div>
@@ -2733,9 +2764,11 @@ body.menu-open { overflow: hidden; }
 /* ──────────── NAV ──────────── */
 var nav = document.getElementById('nav');
 var scrollBar = document.getElementById('scroll-bar');
-var heroSpacerForNav = document.getElementById('hero-spacer');
+var heroSpacerForNav = document.getElementById('hero-track');
 var stickyBar  = document.getElementById('sticky-bar');
-var prodSecEl  = document.getElementById('products');
+// The single #products section became three interleaved shelves; the bar
+// should ride from the first shelf to the gifting section as before.
+var prodSecEl  = document.getElementById('shelf-bukhoor');
 var giftSecEl  = document.getElementById('loyalty');
 window.addEventListener('scroll', function(){
   var sy = window.scrollY;
@@ -2803,7 +2836,51 @@ if (menuOverlay && menuOpenBtn && menuCloseBtn) {
 }
 
 /* ──────────── HERO SETUP ──────────── */
-var heroSpacer = document.getElementById('hero-spacer');
+var heroSpacer = document.getElementById('hero-track');
+
+/* ──────────── CHAPTER SCROLL ZONES ────────────
+   The camera advances only while a .chapter-gap is passing; it holds still
+   while a .chapter-products panel is covering the screen. So the journey
+   plays a chapter, stops to show you that chapter's shelf, then resumes —
+   rather than running all four chapters and dropping the whole catalogue at
+   the end. Measured from layout, not hard-coded, and re-measured on resize
+   because the gaps are sized in vh. */
+var zones = [];
+function measureZones(){
+  var gaps = Array.prototype.slice.call(document.querySelectorAll('.chapter-gap'));
+  if (!gaps.length) { zones = []; return; }
+  var sy = window.scrollY || window.pageYOffset;
+  var spans = [];
+  // The pinned hero itself is the first zone: one viewport of scroll before
+  // the first gap begins.
+  var trackTop = heroSpacer.getBoundingClientRect().top + sy;
+  spans.push({ top: trackTop, h: window.innerHeight });
+  gaps.forEach(function(g){
+    var r = g.getBoundingClientRect();
+    spans.push({ top: r.top + sy, h: g.offsetHeight });
+  });
+  var total = spans.reduce(function(a, s){ return a + s.h; }, 0) || 1;
+  var acc = 0;
+  zones = spans.map(function(s){
+    var z = { top: s.top, h: s.h, from: acc / total, to: (acc + s.h) / total };
+    acc += s.h;
+    return z;
+  });
+}
+function scrollToP(sy){
+  if (!zones.length) return 0;
+  for (var i = 0; i < zones.length; i++) {
+    var z = zones[i];
+    if (sy < z.top) return z.from;                 // still above this zone
+    if (sy <= z.top + z.h) {                       // inside it
+      return z.from + ((sy - z.top) / z.h) * (z.to - z.from);
+    }
+  }
+  return 1;                                        // past the last gap
+}
+measureZones();
+window.addEventListener('resize', measureZones, { passive: true });
+window.addEventListener('load', measureZones);
 var sPos = 0, sVel = 0, lastT = null, lastCamStr = '';
 
 // Opening logo
@@ -3047,8 +3124,8 @@ function heroLoop(ts){
   var spacerTop = heroSpacer.getBoundingClientRect().top;
   // Hero fully scrolled past — skip all scene work
   if (spacerTop + heroSpacer.offsetHeight < -60) { drawFx(0, 0, 0, 0); return; }
-  var spacerH   = heroSpacer.offsetHeight - window.innerHeight;
-  var raw = spacerH > 0 ? clamp(-spacerTop / spacerH, 0, 1) : 0;
+  // Progress comes from the chapter gaps, so the camera pauses on each shelf.
+  var raw = clamp(scrollToP(window.scrollY || window.pageYOffset), 0, 1);
 
   // Spring smoothing (critically damped)
   var acc = (raw - sPos)*80 - sVel*18;

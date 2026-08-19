@@ -65,10 +65,11 @@ def main():
   S('f4-liquid').setAttribute('y', %.1f);
   S('f4-liquid').setAttribute('height', %.1f);
   S('f4-surface').setAttribute('cy', %.1f);
+  S('f4-surface').setAttribute('rx', Math.max(70, 96 - 26*Math.max(0,Math.min(1,(3064-%.1f)/58))));
   S('f4-surface').setAttribute('opacity', %s);
   S('f4-shimmer').setAttribute('opacity', 0.9);
   S('f4-shimmer').setAttribute('x', 700);
-</script>""" % (CAM, level, max(0.0, 3330.0 - level), level,
+</script>""" % (CAM, level, max(0.0, 3330.0 - level), level, level,
                 "0.72" if fill > 0.02 else "0")
 
     html = ("""<!doctype html><meta charset="utf-8">

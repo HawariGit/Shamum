@@ -118,12 +118,26 @@ of a 245-wide body, 51%; ours was 116 of 144, 81%. Now 94 of 144, 65%: not
 taken to 51% because this body is drawn narrower relative to its height than
 the photographed one.
 
-**Open:** the body proportion. Measured off the photo the real bottle is
-roughly 0.6–0.8 wide-to-tall; ours is 0.43, so it is drawn noticeably slimmer.
-That measurement is *not* trustworthy — the bottle is tilted in a 3/4 view with
-its base buried in cloth — so nothing was changed. It needs a straight-on
-photograph before anyone touches it. Note the lift/shrink tuning assumes a
-584px-tall flacon.
+**Proportion.** The body is 208 × 334, an aspect of 0.62. It was 144 × 334
+(0.43) and read far slimmer than the real bottle; measured off the product shot
+with the base in frame, the real body is about 273 × 310. 0.62 is deliberately
+conservative against that, because the photograph is a tilted 3/4 view that
+foreshortens the height.
+
+**Only the width changed.** The scene-clearing tune (lift 0.15, shrink 0.30)
+was chosen against a 584px-tall flacon and clips it if anything grows upward,
+so every height is exactly as it was and that tuning still holds. The cap and
+collar also kept their width: on the real bottle they sit on a narrow neck and
+the shoulder flares hard to a much wider body, and that flare is most of what
+makes it read as *this* bottle. The shoulder is a cubic so the flare from an
+84-wide neck to a 208-wide body is a curve, not a corner.
+
+Widening it moved four things that are easy to forget: `bottleClip`, the spark
+positions (they sat where the glass now is), the base shadow ellipse and floor
+glow, and the shimmer sweep range. The meniscus `rx` is now driven too — the
+bottle is not a tube, so a fixed `rx` poked through the glass once the level
+climbed into the shoulder. Checked on mobile: at 375px the slice shows world x
+512–928 and the bottle spans 616–824, so it still fits with margin.
 
 ### Reduced motion
 `prefers-reduced-motion: reduce` does not soften the journey, it replaces it.

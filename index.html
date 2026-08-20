@@ -1876,6 +1876,15 @@ body.menu-open { overflow: hidden; }
           <stop offset="82%"  stop-color="#7A451A"/>
           <stop offset="100%" stop-color="#A5642A"/>
         </linearGradient>
+        <!-- The mabkhara's resin. It was one flat #083D23; the real cast is
+             deep at the edges and translucent jade where light gets into it. -->
+        <linearGradient id="resinGreen" x1="0.12" y1="0" x2="0.88" y2="1">
+          <stop offset="0%"   stop-color="#16744A"/>
+          <stop offset="26%"  stop-color="#0C5732"/>
+          <stop offset="58%"  stop-color="#083F23"/>
+          <stop offset="82%"  stop-color="#052C18"/>
+          <stop offset="100%" stop-color="#031C10"/>
+        </linearGradient>
         <linearGradient id="jarGloss" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
           <stop offset="22%" stop-color="#FFFFFF" stop-opacity="0.20"/>
@@ -2081,25 +2090,77 @@ body.menu-open { overflow: hidden; }
 
             <!-- body: resin ground, then the wood mosaic clipped to it -->
             <g clip-path="url(#f2JarClip)">
-              <rect x="650" y="1430" width="140" height="124" fill="#083D23"/>
-              <path d="M656 1470 Q700 1452 784 1466 L784 1500 Q712 1486 656 1504 Z" fill="#0C5730" opacity="0.75"/>
+              <rect x="650" y="1430" width="140" height="124" fill="url(#resinGreen)"/>
+              <!-- pearl: the resin is translucent and catches light in bands
+                   rather than being one flat green -->
+              <path d="M654 1449 Q698 1436 790 1455" stroke="#3FD693" stroke-width="6"
+                    fill="none" opacity="0.38" stroke-linecap="round"/>
+              <path d="M652 1489 Q706 1473 790 1495" stroke="#2AA46B" stroke-width="4"
+                    fill="none" opacity="0.24" stroke-linecap="round"/>
+              <path d="M654 1521 Q700 1509 788 1527" stroke="#0A3A22" stroke-width="10"
+                    fill="none" opacity="0.45" stroke-linecap="round"/>
+              <!-- Eleven chunks tiled tight. The pieces carry the surface and
+                   the resin is the vein between them, about a quarter of the
+                   face; the previous pass had them floating on a green ground
+                   that took nearly half. Two small fillers break the grid. -->
               <g id="f2-wood">
-                <polygon points="658,1444 700,1437 713,1470 677,1483 656,1467" fill="#D8C089"/>
-                <polygon points="718,1440 753,1445 759,1473 725,1479 711,1462" fill="#C9A96E"/>
-                <polygon points="761,1449 784,1457 784,1491 763,1497 755,1471" fill="#E0CB9A"/>
-                <polygon points="662,1491 695,1485 707,1513 675,1523 660,1507" fill="#C9A96E"/>
-                <polygon points="711,1487 743,1483 751,1515 717,1521 707,1503" fill="#D8C089"/>
-                <polygon points="757,1503 784,1499 784,1529 761,1533" fill="#BE9C5E"/>
-                <polygon points="664,1529 701,1523 709,1545 677,1548 662,1539" fill="#D2B47E"/>
-                <polygon points="715,1527 749,1523 753,1546 719,1548" fill="#C9A96E"/>
-                <polygon points="697,1463 715,1459 721,1485 701,1489" fill="#E0CB9A"/>
-                <polygon points="737,1477 759,1473 761,1501 741,1505" fill="#D2B47E"/>
-                <!-- grain: a few dark figure lines across the chunks -->
-                <path d="M668 1452 Q686 1458 702 1452" stroke="#8A6A3C" stroke-width="1.2" fill="none" opacity="0.55"/>
-                <path d="M724 1452 Q740 1458 752 1453" stroke="#8A6A3C" stroke-width="1.1" fill="none" opacity="0.5"/>
-                <path d="M668 1499 Q686 1505 700 1498" stroke="#8A6A3C" stroke-width="1.2" fill="none" opacity="0.5"/>
-                <path d="M718 1495 Q734 1501 746 1494" stroke="#8A6A3C" stroke-width="1.1" fill="none" opacity="0.45"/>
-                <path d="M670 1535 Q688 1540 700 1534" stroke="#8A6A3C" stroke-width="1" fill="none" opacity="0.4"/>
+                <g>
+                  <polygon points="656,1438 693,1436 705,1459 698,1477 660,1472" fill="#E0CDA0" stroke="#33210C" stroke-width="1.3" stroke-linejoin="round"/>
+                  <path d="M661 1447 C672 1442 686 1443 700 1451" stroke="#7A5828" stroke-width="1.2" fill="none" opacity="0.72" stroke-linecap="round"/>
+                  <path d="M660 1457 C673 1451 688 1453 702 1462" stroke="#7A5828" stroke-width="1.1" fill="none" opacity="0.63" stroke-linecap="round"/>
+                  <path d="M663 1466 C674 1461 686 1462 697 1469" stroke="#7A5828" stroke-width="0.9" fill="none" opacity="0.54" stroke-linecap="round"/>
+                </g>
+                <g>
+                  <polygon points="700,1436 739,1438 745,1463 730,1479 704,1470" fill="#B98B47" stroke="#33210C" stroke-width="1.3" stroke-linejoin="round"/>
+                  <path d="M705 1446 C716 1441 730 1442 741 1450" stroke="#5A3A12" stroke-width="1.2" fill="none" opacity="0.72" stroke-linecap="round"/>
+                  <path d="M704 1456 C716 1450 731 1452 743 1460" stroke="#5A3A12" stroke-width="1.1" fill="none" opacity="0.63" stroke-linecap="round"/>
+                  <path d="M708 1466 C718 1461 729 1462 738 1470" stroke="#5A3A12" stroke-width="0.9" fill="none" opacity="0.54" stroke-linecap="round"/>
+                </g>
+                <g>
+                  <polygon points="744,1437 784,1443 784,1475 755,1479 742,1459" fill="#D8C08A" stroke="#33210C" stroke-width="1.3" stroke-linejoin="round"/>
+                  <path d="M747 1448 C759 1443 772 1444 783 1451" stroke="#7A5828" stroke-width="1.2" fill="none" opacity="0.72" stroke-linecap="round"/>
+                  <path d="M746 1459 C759 1454 772 1455 784 1462" stroke="#7A5828" stroke-width="1.1" fill="none" opacity="0.63" stroke-linecap="round"/>
+                  <path d="M750 1469 C761 1465 771 1466 781 1472" stroke="#7A5828" stroke-width="0.9" fill="none" opacity="0.54" stroke-linecap="round"/>
+                </g>
+                <g>
+                  <polygon points="656,1479 691,1481 701,1503 693,1519 658,1515" fill="#9E7534" stroke="#33210C" stroke-width="1.3" stroke-linejoin="round"/>
+                  <path d="M659 1488 C670 1483 683 1484 695 1492" stroke="#4E3210" stroke-width="1.2" fill="none" opacity="0.72" stroke-linecap="round"/>
+                  <path d="M658 1499 C670 1494 684 1495 697 1503" stroke="#4E3210" stroke-width="1.1" fill="none" opacity="0.63" stroke-linecap="round"/>
+                  <path d="M661 1509 C672 1505 683 1506 692 1513" stroke="#4E3210" stroke-width="0.9" fill="none" opacity="0.54" stroke-linecap="round"/>
+                </g>
+                <g>
+                  <polygon points="696,1483 737,1481 749,1505 737,1523 700,1519" fill="#E8DCB4" stroke="#33210C" stroke-width="1.3" stroke-linejoin="round"/>
+                  <path d="M701 1492 C713 1486 729 1487 743 1496" stroke="#7A5828" stroke-width="1.2" fill="none" opacity="0.72" stroke-linecap="round"/>
+                  <path d="M700 1503 C713 1497 730 1498 746 1507" stroke="#7A5828" stroke-width="1.1" fill="none" opacity="0.63" stroke-linecap="round"/>
+                  <path d="M704 1513 C716 1508 729 1509 741 1517" stroke="#7A5828" stroke-width="0.9" fill="none" opacity="0.54" stroke-linecap="round"/>
+                </g>
+                <g>
+                  <polygon points="752,1483 784,1481 784,1515 763,1519 750,1501" fill="#C0995A" stroke="#33210C" stroke-width="1.3" stroke-linejoin="round"/>
+                  <path d="M754 1492 C765 1487 776 1488 784 1494" stroke="#5A3A12" stroke-width="1.2" fill="none" opacity="0.72" stroke-linecap="round"/>
+                  <path d="M753 1503 C765 1498 776 1499 784 1506" stroke="#5A3A12" stroke-width="1.1" fill="none" opacity="0.63" stroke-linecap="round"/>
+                  <path d="M757 1512 C767 1508 776 1509 783 1514" stroke="#5A3A12" stroke-width="0.9" fill="none" opacity="0.54" stroke-linecap="round"/>
+                </g>
+                <g>
+                  <polygon points="656,1519 691,1523 699,1547 662,1548 656,1541" fill="#D2B87E" stroke="#33210C" stroke-width="1.3" stroke-linejoin="round"/>
+                  <path d="M659 1528 C670 1524 682 1525 694 1532" stroke="#7A5828" stroke-width="1.2" fill="none" opacity="0.72" stroke-linecap="round"/>
+                  <path d="M659 1538 C670 1534 683 1535 696 1542" stroke="#7A5828" stroke-width="1.1" fill="none" opacity="0.63" stroke-linecap="round"/>
+                </g>
+                <g>
+                  <polygon points="700,1523 741,1521 747,1547 704,1548" fill="#A87F3E" stroke="#33210C" stroke-width="1.3" stroke-linejoin="round"/>
+                  <path d="M704 1530 C716 1526 731 1527 744 1533" stroke="#4E3210" stroke-width="1.2" fill="none" opacity="0.72" stroke-linecap="round"/>
+                  <path d="M704 1540 C717 1536 732 1537 745 1543" stroke="#4E3210" stroke-width="1.1" fill="none" opacity="0.63" stroke-linecap="round"/>
+                </g>
+                <g>
+                  <polygon points="751,1521 784,1519 784,1547 757,1548" fill="#DCC894" stroke="#33210C" stroke-width="1.3" stroke-linejoin="round"/>
+                  <path d="M754 1529 C765 1525 776 1526 784 1531" stroke="#7A5828" stroke-width="1.2" fill="none" opacity="0.72" stroke-linecap="round"/>
+                  <path d="M754 1539 C766 1535 776 1536 784 1541" stroke="#7A5828" stroke-width="1.1" fill="none" opacity="0.63" stroke-linecap="round"/>
+                </g>
+                <g>
+                  <polygon points="694,1470 706,1466 710,1480 697,1482" fill="#8E6A2E" stroke="#33210C" stroke-width="1.3" stroke-linejoin="round"/>
+                </g>
+                <g>
+                  <polygon points="740,1476 752,1472 754,1486 743,1488" fill="#B8974F" stroke="#33210C" stroke-width="1.3" stroke-linejoin="round"/>
+                </g>
               </g>
               <!-- poured-resin gloss across the whole body -->
               <rect x="650" y="1430" width="140" height="124" fill="url(#jarGloss)"/>
@@ -2112,14 +2173,20 @@ body.menu-open { overflow: hidden; }
             <ellipse cx="720" cy="1542" rx="58" ry="7" fill="#141416"/>
 
             <!-- dark metal cup set into the top -->
-            <ellipse cx="720" cy="1430" rx="66" ry="16" fill="#1A1A1C"/>
-            <ellipse cx="720" cy="1430" rx="66" ry="16" fill="none" stroke="#3A3A3E" stroke-width="1.3"/>
-            <ellipse cx="720" cy="1433" rx="52" ry="12" fill="#0B0B0C"/>
-            <ellipse cx="720" cy="1426" rx="66" ry="16" fill="none" stroke="rgba(240,217,160,0.28)" stroke-width="1.2"/>
+            <!-- It sits proud of the wood and has real thickness: an underside,
+                 a side band and a top face. One thin ellipse read as paint. -->
+            <ellipse cx="720" cy="1438" rx="68" ry="17" fill="#0C0C0E"/>
+            <rect x="652" y="1428" width="136" height="10" fill="#151518"/>
+            <ellipse cx="720" cy="1428" rx="68" ry="17" fill="#2A2A2E"/>
+            <ellipse cx="720" cy="1428" rx="68" ry="17" fill="none" stroke="#4E4E55" stroke-width="1.1"/>
+            <ellipse cx="720" cy="1430" rx="50" ry="12" fill="#0A0A0C"/>
+            <ellipse cx="720" cy="1430" rx="50" ry="12" fill="none" stroke="#3C3C42" stroke-width="0.9"/>
+            <path d="M664 1423 Q720 1413 776 1423" stroke="rgba(240,217,160,0.24)"
+                  stroke-width="1.4" fill="none"/>
             <!-- white charcoal tablet, ashed over -->
-            <ellipse cx="720" cy="1434" rx="27" ry="7.5" fill="#B9B3AA"/>
-            <ellipse cx="720" cy="1432" rx="27" ry="7.5" fill="#D8D3CA"/>
-            <ellipse cx="720" cy="1431" rx="18" ry="4.6" fill="#9A938A" opacity="0.7"/>
+            <ellipse cx="720" cy="1433" rx="26" ry="7" fill="#9E978D"/>
+            <ellipse cx="720" cy="1431" rx="26" ry="7" fill="#DCD7CE"/>
+            <ellipse cx="720" cy="1430" rx="17" ry="4.4" fill="#A8A199" opacity="0.75"/>
           </g>
 
           <!-- a dish of oud chips beside it, as it sits in the majlis -->

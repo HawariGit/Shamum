@@ -99,6 +99,38 @@ scoring worst-overlap + worst-clipping. **0.15/0.30 is the only pair that
 clears every heading with nothing running off the top.** More lift clips the
 flacon; less shrink leaves the mabkhara in the heading.
 
+### The mabkhara
+Olive-wood chunks cast in emerald resin, a blackened metal cup recessed in the
+top, black foot. Redrawn from the user's photographs after the first version
+read as *paper cards on flat green*. Three faults, all worth remembering
+because they apply to any inlay material:
+
+- **The pieces must carry the surface, not float on it.** The resin is the
+  *vein between* the chunks — about a quarter of the face. The first pass had it
+  at nearly half and the pieces read as confetti. There are **11 chunks tiling
+  656–784 × 1436–1548 exactly**, with two small fillers so the veins do not read
+  as a grid.
+- **Dark bark edge on every piece.** Without a `#33210C` stroke separating wood
+  from resin, the chunks look like paper laid on top.
+- **Grain is the whole character of olive wood.** Cubic S-curves, 2–3 per chunk,
+  24 in total. The first version had five straight strokes for the entire jar.
+
+Tonal range matters as much as the shapes: pale cream through golden tan to dark
+amber (`#E8DCB4` down to `#9E7534`). Nine near-identical creams read as one flat
+sheet however well they are drawn.
+
+The emerald was overshot **in both directions** — first a flat mid-green, then
+nearly black — before landing at `resinGreen` (`#16744A` → `#031C10`) with two
+narrow pearl bands. Judge it against a photo, not in isolation.
+
+The cup is a **thick ring with an underside, a side band and a top face**. One
+thin ellipse read as paint on the wood.
+
+`f2-wood` carries **no JS** — only the group's opacity is animated — so its
+interior is free to redraw. The bounds are not: the cup mouth is held at y 1428
+because the falling oud pieces are aimed at 1412–1424, and the foot and shelf
+sit immediately under 1548.
+
 ### Chapter IV — the perfumer's bench
 Chapter IV was an effect with no cause, and then briefly a cause with no
 source: the bottle filled, and once a drop was added the drop itself appeared

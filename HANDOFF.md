@@ -271,7 +271,8 @@ matter here: the still is drawn by a direct `heroLoop(0)` call.
 | `make_og.py` | Regenerates `assets/og-image.jpg` |
 | `preview_flacon.py` | Renders the hero scene to a real PNG via headless Chrome. `--fill 0.5` for a part-filled flacon. **The only way to actually see the artwork here.** |
 | `retime_chapter4.py` | Record of the chapter IV retiming that made the fill visible |
-| `preview_chapter4.py` | Renders chapter IV's beats through the real `heroLoop`. `--p 0.95` for one frame, `--strip a,b,c` for a sequence. Uses `_rmtest.html` as its scratch page. |
+| `preview_chapter4.py` | Renders chapter IV's beats through the real `heroLoop`. `--p 0.95` for one frame, `--strip a,b,c` for a sequence, `--gif` for the whole chapter. Uses `_rmtest.html` as its scratch page. |
+| `watch_video.py` | Turns a video into frames the model can actually see — video never reaches it as video. `--n`, `--from/--to`, `--scan` (finds where the picture changes). Needs `imageio` + `imageio-ffmpeg`, both installed; the ffmpeg binary lives in site-packages, **not** on the system PATH, so plain `ffmpeg` on the command line still does not exist. Use `plugin="FFMPEG"` — `pyav` is a different backend and is not installed. |
 | `preview_reduced.py` | Writes `_rmtest.html` — index with the reduced-motion branch forced on. The only way to see that build without toggling the OS setting. `--rm` deletes it. |
 | `mabkhara.py` | Blender/Cycles still — **not used on the site** |
 

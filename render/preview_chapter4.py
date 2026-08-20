@@ -100,8 +100,8 @@ def main():
         tiles = []
         for p in ps:
             d = os.path.join(OUT, "p_%s.png" % p.replace(".", "_"))
-            shot(p, d)
-            im = Image.open(d).convert("RGB").crop((450, 90, 990, 810))
+            shot(p, d, 3.4091)
+            im = Image.open(d).convert("RGB").crop((330, 60, 1110, 830))
             dr = ImageDraw.Draw(im)
             dr.rectangle([0, 0, 96, 26], fill=(0, 0, 0))
             dr.text((8, 8), "p " + p, fill=(240, 210, 140))
@@ -117,10 +117,10 @@ def main():
     elif "--gif" in sys.argv:
         from PIL import Image
         n = int(sys.argv[sys.argv.index("--frames") + 1]) if "--frames" in sys.argv else 72
-        p0, p1 = 0.884, 0.999
+        p0, p1 = 0.882, 0.999
         fps = 18.0
-        crop = (470, 55, 970, 835)
-        scale = 0.70
+        crop = (395, 60, 1045, 830)
+        scale = 0.64
         frames = []
         for i in range(n):
             p = p0 + (p1 - p0) * i / float(n - 1)
@@ -157,7 +157,7 @@ def main():
     else:
         p = sys.argv[sys.argv.index("--p") + 1] if "--p" in sys.argv else "0.95"
         dest = os.path.join(OUT, "chapter4.png")
-        shot(p, dest)
+        shot(p, dest, 3.4091)
         print("wrote %s at p=%s" % (dest, p))
 
     if os.path.exists(TMP):

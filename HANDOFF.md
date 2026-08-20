@@ -99,51 +99,76 @@ scoring worst-overlap + worst-clipping. **0.15/0.30 is the only pair that
 clears every heading with nothing running off the top.** More lift clips the
 flacon; less shrink leaves the mabkhara in the heading.
 
-### Chapter IV's story
-The chapter used to be an effect with no cause: the bottle simply filled. Every
-other chapter shows what does the work — the axe opens the tree, the wood falls
-into the mabkhara, the still drips into the vial — and the chapter's own text
-promises "where the journey of the wood becomes a signature", which nothing on
-screen delivered. It now runs chapter III's grammar (cause → impact → effect)
-with its own material:
+### Chapter IV — the perfumer's bench
+Chapter IV was an effect with no cause, and then briefly a cause with no
+source: the bottle filled, and once a drop was added the drop itself appeared
+out of clear air. Every other chapter has **a place and an apparatus** —
+
+- I a forest, and two men swinging axes on a 2.2/sec beat
+- II a majlis, a mabkhara, coals that pulse
+- III a copper deg over a wood fire and a cloth-cooled condenser pipe
+
+This is chapter IV's. **Chapter III's own vial stands on the bench**, still
+holding the oil that chapter spent itself making, and a pipette draws from
+*that* and doses the flacon. `f4-vialfill` drops as `f4-pipfill` rises, so the
+oil is **moved rather than created** — without that the hole just relocates to
+the pipette.
 
 | p | beat |
 |---|---|
-| 0.885–0.925 | flacon rises and settles; the cap waits 96 above the collar |
-| 0.900–0.918 | the oud drop forms at the open neck |
-| 0.918–0.936 | it falls, `eIn`, to the base |
-| 0.934–0.950 | impact: two rings open at the base |
-| 0.934–0.966 | the liquid climbs |
-| 0.946–0.970 | `f4-oud` fades → **the liquid lightens from oud-dark to gold** |
-| 0.962–0.978 | the cap comes down and seats |
-| 0.978–0.990 | the press |
-| 0.982–0.998 | the mist |
+| 0.885–0.918 | bench, organ, blotters and the vial fade in |
+| 0.894–0.921 | the flacon's cap lifts, then is set down on the counter |
+| 0.904–0.922 | the pipette goes into the vial's open neck |
+| 0.920–0.934 | it draws; **the vial's level falls as it does** |
+| 0.932–0.948 | it carries across to over the flacon |
+| 0.946–0.964 | the drop leaves its tip and falls |
+| 0.958–0.978 | the liquid climbs |
+| 0.968–0.984 | `f4-oud` fades → **oud-dark lightens to gold** |
+| 0.970–0.984 | the cap comes back and seats |
+| 0.984–0.999 | the press, then the mist |
 
 **The colour change is the story.** Chapter III's drop only ever made more of
 the same dark oil; here that oil *becomes* something else, which is what "eau
-de parfum composed on that oil" means. It is a second rect (`f4-oud`,
-`oudInFlacon` gradient) tracking `f4-liquid` exactly with only its opacity
-animated — SVG will not interpolate gradient stops without SMIL, so do not try.
+de parfum composed on that oil" means. `f4-oud` tracks `f4-liquid` exactly with
+only its opacity animated — SVG will not interpolate gradient stops without
+SMIL, so do not try.
 
-**Raising the cap is what makes any of it possible.** With the cap on, nothing
-can enter, which is half of why the fill read as arriving from nowhere. It
-rides the same `capDy` as the press, so the burst still tracks it.
+**The cap goes off in two moves, and sits down.** One diagonal drags it through
+the shoulder of the bottle it is coming off, so it lifts straight up (−70) and
+*then* goes across and down (+150, +456), landing its foot exactly on the
+counter at 3340. It used to rise straight up, which put it precisely where the
+pipette has to be and read as levitation. Only `pressBob` is passed to the
+burst and to `drawFx` — pass the aside offset and the spray comes out of
+wherever the cap is parked.
 
-The drop *forms* during the last of the camera pan (which finishes at p 0.94)
-and *falls* once the camera is parked — deliberate; at p 0.915 the bottle's
-base is still below the fold, so nothing that matters happens down there yet.
+**Mobile decides the layout.** At 375px the scene slices to world x 512–928, so
+everything that carries the story lives inside it: vial at 530–598, flacon at
+616–824, pipette travelling 566→720, cap resting at 826–914. The organ
+(292–496 and 928–1132) and the blotters (978–1038) are outside it *on purpose* —
+atmosphere on desktop, cropped away on mobile with nothing lost. The vial's own
+lying cap at 468–524 is the one detail mobile clips, knowingly.
 
-Clipping was checked against the pre-change build, because raising the cap
-makes the flacon taller than the lift/shrink tune assumes. Desktop worst top
-overhang went 172px → 168px, mobile 121px → 121px. **That overhang is
-pre-existing** — it is the scene stepping aside as the strip rises at the very
-end of the chapter, not a new defect. Measure it by navigating to each build
-directly; an iframe reports nonsense here (it gave −1628px against a real
-−121px, because its `scrollTo` does not drive the pinned layout).
+Two traps this cost:
 
-Render the beats with `render/preview_chapter4.py --strip 0.9,0.93,0.95,...`,
-which drives the **real** `heroLoop` via the reduced-motion still rather than
-reimplementing the animation maths.
+- **The vial was drawn capped** while the pipette dipped straight through its
+  gold cap. It is open now, with a ground-glass neck and its cap lying on the
+  counter. Anything that is dipped into must be open.
+- **The seed tab goes stale.** After `preview_start`, probing gave every beat
+  frozen at its end state at every scroll position. It was an old page; an
+  explicit `navigate` to `/index.html` fixed it. Always navigate before
+  measuring, and distrust a probe where nothing changes.
+
+Clipping is checked against the previous build each time, because moving the
+cap changes the flacon's extent and the lift/shrink tune is set against it.
+Desktop worst top overhang: 172px baseline → 168px (cap up) → **128px** (cap
+down on the bench). Mobile 121px throughout. That overhang is **pre-existing** —
+the scene stepping aside as the strip rises at the chapter's end. Measure it by
+navigating to each build directly; an iframe reports nonsense (it gave −1628px
+against a real −121px, because its `scrollTo` does not drive the pinned layout).
+
+Render it with `render/preview_chapter4.py` — `--strip a,b,c` for beats, `--p x`
+for one frame, `--gif` for the whole chapter. All three drive the **real**
+`heroLoop` through the reduced-motion still rather than reimplementing it.
 
 ### The chapter IV flacon
 Clear glass with a light gold eau de parfum that fills as the chapter plays —

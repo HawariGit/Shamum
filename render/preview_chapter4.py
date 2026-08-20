@@ -21,6 +21,8 @@ import re
 import subprocess
 import sys
 
+from PIL import Image, ImageDraw, ImageStat
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 OUT = os.path.join(HERE, "out")
@@ -32,6 +34,8 @@ EDGE = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 FLAG = "var heroStill = window.matchMedia('(prefers-reduced-motion: reduce)').matches;"
 STILL_P = re.compile(r"var HERO_STILL_P = [\d.]+;")
 STILL_T = re.compile(r"var HERO_STILL_T = [^;]+;")
+MAC = re.compile(r"var CH4_MAC = [\d.]+;")
+MAC_VAL = None
 
 
 # Injected for sequence renders only. The nav is page chrome, not part of the
@@ -77,6 +81,10 @@ def shot(p, dest, t=None):
             print("ABORT: no </head> to inject the recording styles into")
             sys.exit(1)
         src = src.replace("</head>", CLEAN, 1)
+    if MAC_VAL is not None:
+        if not MAC.search(src):
+            print("ABORT: CH4_MAC not found"); sys.exit(1)
+        src = MAC.sub("var CH4_MAC = %s;" % MAC_VAL, src, count=1)
     io.open(TMP, "w", encoding="utf-8", newline="").write(src)
 
     subprocess.run([
@@ -90,23 +98,50 @@ def shot(p, dest, t=None):
         sys.exit(1)
 
 
+def shot_guarded(p, dest, t, prev_lum, crop):
+    """A capture that fires before the page paints comes back near-black.
+
+    It is not the scene: the same p and heroTime re-render correctly and
+    deterministically. It happens roughly once in seventy and it has twice
+    nearly been read as a bug in the animation, so every capture is checked.
+    Adjacent frames of this chapter move about 4 luminance, so 10 catches the
+    misfire without tripping on real motion; after three tries the frame is
+    accepted regardless, which is what the one genuine large step - the camera
+    arriving - needs.
+    """
+    im = lum = None
+    for _ in range(3):
+        shot(p, dest, t)
+        im = Image.open(dest).convert("RGB").crop(crop)
+        lum = ImageStat.Stat(im.convert("L")).mean[0]
+        os.remove(dest)
+        if prev_lum is None or abs(lum - prev_lum) <= 10:
+            break
+        print("    re-shot p=%s: lum %.1f vs %.1f" % (p, lum, prev_lum))
+        sys.stdout.flush()
+    return im, lum
+
+
 def main():
+    global MAC_VAL
+    if "--mac" in sys.argv:
+        MAC_VAL = sys.argv[sys.argv.index("--mac") + 1]
+    if "--out" in sys.argv:
+        globals()["GIF_NAME"] = sys.argv[sys.argv.index("--out") + 1]
     if not os.path.isdir(OUT):
         os.makedirs(OUT)
 
     if "--strip" in sys.argv:
         ps = [s.strip() for s in sys.argv[sys.argv.index("--strip") + 1].split(",")]
-        from PIL import Image, ImageDraw
         tiles = []
+        prev = None
         for p in ps:
             d = os.path.join(OUT, "p_%s.png" % p.replace(".", "_"))
-            shot(p, d, 3.4091)
-            im = Image.open(d).convert("RGB").crop((330, 60, 1110, 830))
+            im, prev = shot_guarded(p, d, 3.4091, prev, (330, 60, 1110, 830))
             dr = ImageDraw.Draw(im)
             dr.rectangle([0, 0, 96, 26], fill=(0, 0, 0))
             dr.text((8, 8), "p " + p, fill=(240, 210, 140))
             tiles.append(im)
-            os.remove(d)
         w, h = tiles[0].size
         strip = Image.new("RGB", (w * len(tiles) + 8 * (len(tiles) - 1), h), (14, 8, 5))
         for i, t in enumerate(tiles):
@@ -115,13 +150,11 @@ def main():
         strip.save(dest)
         print("wrote %s  (%d frames)" % (dest, len(tiles)))
     elif "--gif" in sys.argv:
-        from PIL import Image
         n = int(sys.argv[sys.argv.index("--frames") + 1]) if "--frames" in sys.argv else 72
         p0, p1 = 0.882, 0.999
         fps = 18.0
         crop = (395, 60, 1045, 830)
         scale = 0.64
-        from PIL import ImageStat
         frames = []
         prev_lum = None
         for i in range(n):
@@ -136,15 +169,7 @@ def main():
             # is simply taken again. Adjacent frames of this animation never
             # move more than about 4 luminance, so 10 catches the misfire
             # without ever tripping on real motion.
-            for attempt in range(3):
-                shot("%.5f" % p, d, t)
-                im = Image.open(d).convert("RGB").crop(crop)
-                lum = ImageStat.Stat(im.convert("L")).mean[0]
-                os.remove(d)
-                if prev_lum is None or abs(lum - prev_lum) <= 10:
-                    break
-                print("    frame %d re-shot: lum %.1f vs %.1f" % (i, lum, prev_lum))
-                sys.stdout.flush()
+            im, lum = shot_guarded("%.5f" % p, d, t, prev_lum, crop)
             prev_lum = lum
             im = im.resize((int(im.width * scale), int(im.height * scale)), Image.LANCZOS)
             frames.append(im)
@@ -166,7 +191,7 @@ def main():
         durs = [int(1000 / fps)] * len(out)
         durs[-1] = 1100          # hold on the finished bottle before looping
         durs[0] = 700
-        dest = os.path.join(OUT, "chapter4.gif")
+        dest = os.path.join(OUT, globals().get("GIF_NAME", "chapter4.gif"))
         out[0].save(dest, save_all=True, append_images=out[1:], loop=0,
                     duration=durs, optimize=True, disposal=1)
         print("wrote %s  (%d frames, %.1f MB)"

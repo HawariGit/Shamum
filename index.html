@@ -2475,6 +2475,39 @@ body.menu-open { overflow: hidden; }
           <!-- The pipette. Tip at its own origin so one translate places it;
                it is drawn after the flacon because it passes in front of both
                the vial it draws from and the bottle it doses. -->
+          <!-- Saffron, rose and iris: the companions the film names. They stand
+               left of the oud vial, outside the mobile crop, and their drops
+               arc up and inward so the arrival reads at 375px even though the
+               source does not. -->
+          <g id="f4-comps" opacity="0">
+            <g>
+              <ellipse cx="437" cy="3341" rx="17" ry="4" fill="#000000" opacity="0.45"/>
+              <rect x="424" y="3286" width="26" height="54" rx="3"
+                    fill="rgba(255,255,255,0.07)" stroke="rgba(216,192,140,0.34)" stroke-width="0.9"/>
+              <rect x="427" y="3300" width="20" height="38" fill="#C4551A" opacity="0.8"/>
+              <rect x="432" y="3278" width="10" height="9" rx="2" fill="#8A6A2E"/>
+              <title>saffron</title>
+            </g>
+            <g>
+              <ellipse cx="473" cy="3341" rx="17" ry="4" fill="#000000" opacity="0.45"/>
+              <rect x="460" y="3286" width="26" height="54" rx="3"
+                    fill="rgba(255,255,255,0.07)" stroke="rgba(216,192,140,0.34)" stroke-width="0.9"/>
+              <rect x="463" y="3300" width="20" height="38" fill="#B03E5C" opacity="0.8"/>
+              <rect x="468" y="3278" width="10" height="9" rx="2" fill="#8A6A2E"/>
+              <title>rose</title>
+            </g>
+            <g>
+              <ellipse cx="509" cy="3341" rx="17" ry="4" fill="#000000" opacity="0.45"/>
+              <rect x="496" y="3286" width="26" height="54" rx="3"
+                    fill="rgba(255,255,255,0.07)" stroke="rgba(216,192,140,0.34)" stroke-width="0.9"/>
+              <rect x="499" y="3300" width="20" height="38" fill="#6F5A9E" opacity="0.8"/>
+              <rect x="504" y="3278" width="10" height="9" rx="2" fill="#8A6A2E"/>
+              <title>iris</title>
+            </g>
+          </g>
+          <g id="f4-c1" opacity="0"><path d="M0 -13 C 1.3 -8.5 4.3 -5.2 5.7 -1 A 5.9 5.9 0 1 1 -5.7 -1 C -4.3 -5.2 -1.3 -8.5 0 -13 Z" fill="#D9541E"/><ellipse cx="-1.9" cy="0.5" rx="1.7" ry="2.5" fill="#FFF3D0" opacity="0.5"/></g>
+          <g id="f4-c2" opacity="0"><path d="M0 -13 C 1.3 -8.5 4.3 -5.2 5.7 -1 A 5.9 5.9 0 1 1 -5.7 -1 C -4.3 -5.2 -1.3 -8.5 0 -13 Z" fill="#C0405F"/><ellipse cx="-1.9" cy="0.5" rx="1.7" ry="2.5" fill="#FFF3D0" opacity="0.5"/></g>
+          <g id="f4-c3" opacity="0"><path d="M0 -13 C 1.3 -8.5 4.3 -5.2 5.7 -1 A 5.9 5.9 0 1 1 -5.7 -1 C -4.3 -5.2 -1.3 -8.5 0 -13 Z" fill="#7E62A8"/><ellipse cx="-1.9" cy="0.5" rx="1.7" ry="2.5" fill="#FFF3D0" opacity="0.5"/></g>
           <g id="f4-pipette" opacity="0">
             <ellipse cx="0" cy="-118" rx="14" ry="18" fill="rgba(52,34,20,0.9)"
                      stroke="rgba(244,234,210,0.4)" stroke-width="1.2"/>
@@ -3371,6 +3404,10 @@ sc.f4bench   = $s('f4-bench');
 sc.f4oudvial = $s('f4-oudvial');
 sc.f4pipette = $s('f4-pipette');
 sc.f4pipfill = $s('f4-pipfill');
+sc.f4comps   = $s('f4-comps');
+sc.f4c1      = $s('f4-c1');
+sc.f4c2      = $s('f4-c2');
+sc.f4c3      = $s('f4-c3');
 sc.f4vialfill= $s('f4-vialfill');
 sc.f4vialsurf= $s('f4-vialsurf');
 sc.f4drop    = $s('f4-drop');
@@ -3874,7 +3911,7 @@ function heroLoop(ts){
      has the liquid. The meniscus narrows with it: the bottle is not a tube, so
      a fixed rx was right against the straight sides and stuck out through the
      glass once the level climbed into the shoulder curve. */
-  var f4lv = eOut(seg(p, 0.958, 0.978));
+  var f4lv = eOut(seg(p, 0.936, 0.949));
   var f4level = 3328 - f4lv*290;
   var f4wob = Math.sin(heroTime*4.2)*1.3*(f4lv > 0.01 && f4lv < 0.999 ? 1 : 0.3);
   sc.f4liquid.setAttribute('y', f4level + f4wob);
@@ -3890,17 +3927,17 @@ function heroLoop(ts){
      drifting down at a constant rate. */
   /* The pipette goes to chapter III's vial, draws, carries it over and doses.
      One translate places the whole thing because its tip is its own origin. */
-  var pipIn   = eOut(seg(p, 0.904, 0.922));
-  var pipDraw = eOut(seg(p, 0.920, 0.934));
-  var pipMove = sstep(seg(p, 0.932, 0.948));
-  var pipOut  = eOut(seg(p, 0.958, 0.976));
+  var pipIn   = eOut(seg(p, 0.898, 0.913));
+  var pipDraw = eOut(seg(p, 0.911, 0.923));
+  var pipMove = sstep(seg(p, 0.921, 0.933));
+  var pipOut  = eOut(seg(p, 0.940, 0.953));
   var pipX = lerp(566, 720, pipMove);
   var pipY = lerp(lerp(3150, 3276, pipIn), 2952, pipMove) - pipOut*170;
   sc.f4pipette.setAttribute('transform',
     'translate(' + pipX.toFixed(1) + ',' + pipY.toFixed(1) + ') scale(1.35)');
   op(sc.f4pipette, eOut(seg(p, 0.898, 0.912)) * (1 - pipOut));
   // Fills as it draws, empties as it doses.
-  var pipH = pipDraw * 82 * (1 - eOut(seg(p, 0.948, 0.956)));
+  var pipH = pipDraw * 82 * (1 - eOut(seg(p, 0.933, 0.941)));
   sc.f4pipfill.setAttribute('y', (-16 - pipH).toFixed(1));
   sc.f4pipfill.setAttribute('height', pipH.toFixed(1));
   /* The vial gives up what the pipette takes. Without this the oil is created
@@ -3911,9 +3948,9 @@ function heroLoop(ts){
   sc.f4vialsurf.setAttribute('cy', vialLv.toFixed(1));
   op(sc.f4vialsurf, 0.55);
 
-  var f4form = seg(p, 0.946, 0.953);
-  var f4fall = seg(p, 0.953, 0.964);
-  if (p > 0.942 && p < 0.968) {
+  var f4form = seg(p, 0.930, 0.937);
+  var f4fall = seg(p, 0.937, 0.948);
+  if (p > 0.926 && p < 0.953) {
     var dScale, dY;
     if (f4fall <= 0) {
       dScale = eOut(f4form);
@@ -3925,13 +3962,48 @@ function heroLoop(ts){
       sc.f4drop.setAttribute('transform', 'translate(720,' + dY.toFixed(1) +
         ') scale(1,' + (1 + f4fall*(1-f4fall)*1.1).toFixed(3) + ')');
     }
-    op(sc.f4drop, Math.min(1, f4form*2.5) * (1 - seg(p, 0.960, 0.965)));
+    op(sc.f4drop, Math.min(1, f4form*2.5) * (1 - seg(p, 0.945, 0.950)));
   } else {
     op(sc.f4drop, 0);
   }
 
   // The base answers the landing.
-  var f4imp = seg(p, 0.960, 0.974);
+  /* Each companion arcs from its own vial on the bench up and over the neck,
+     then falls in. sstep across the arc and eIn down it, so it leaves slowly,
+     travels, and drops. */
+  op(sc.f4comps, eOut(seg(p, 0.888, 0.918)));
+  function companion(el, t, mx){
+    if (t <= 0 || t >= 1) { op(el, 0); return; }
+    var up = clamp(t / 0.58, 0, 1), dn = clamp((t - 0.58) / 0.42, 0, 1);
+    var cx, cy;
+    if (dn <= 0) {
+      cx = lerp(mx, 720, sstep(up));
+      cy = lerp(3282, 2958, sstep(up)) - Math.sin(up * Math.PI) * 96;
+    } else {
+      cx = 720;
+      cy = lerp(2958, 3108, eIn(dn));
+    }
+    el.setAttribute('transform', 'translate(' + cx.toFixed(1) + ',' + cy.toFixed(1) + ')');
+    op(el, Math.min(1, t * 7) * (1 - clamp((t - 0.90) / 0.10, 0, 1)));
+  }
+  companion(sc.f4c1, seg(p, 0.948, 0.960), 437);
+  companion(sc.f4c2, seg(p, 0.953, 0.965), 473);
+  companion(sc.f4c3, seg(p, 0.958, 0.970), 509);
+
+  /* "Time itself is the key ingredient." The blend turns over in the glass:
+     the surface swells and settles before the colour turns. This beat is paid
+     for by pulling the companions earlier, NOT by pushing the tail later - the
+     first attempt offset everything after it by +0.012, which put the press at
+     1.002 and the mist at an inverted 1.003-1.000 so neither ever fired, and
+     left the cap seating only 80% of the way. Nothing here may exceed p 1. */
+  var macT = seg(p, 0.968, 0.980);
+  if (macT > 0 && macT < 1) {
+    var sw = Math.sin(macT * Math.PI);
+    sc.f4surface.setAttribute('ry', (6.5 + sw * 5).toFixed(2));
+    op(sc.f4surface, 0.7 + sw * 0.25);
+  }
+
+  var f4imp = seg(p, 0.938, 0.948);
   if (f4imp > 0 && f4imp < 1) {
     sc.f4iring1.setAttribute('rx', 20 + f4imp*62);
     sc.f4iring1.setAttribute('ry', 5 + f4imp*13);
@@ -3947,7 +4019,9 @@ function heroLoop(ts){
      liquid lightens as it climbs instead of switching colour in a frame. */
   sc.f4oud.setAttribute('y', f4level + f4wob);
   sc.f4oud.setAttribute('height', Math.max(0, 3330 - f4level));
-  op(sc.f4oud, 1 - eOut(seg(p, 0.968, 0.984)));
+  /* The blend only turns once the companions are in - the whole point of the
+     ordering is that the oud sits alone first. */
+  op(sc.f4oud, 1 - eOut(seg(p, 0.974, 0.986)));
   op(sc.f4surface, f4lv > 0.02 ? 0.72 : 0);
   // Atomizer press. This used to run 0.925–0.94 while the mist did not begin
   // until 0.96 — the press completed, and only afterwards did a cloud appear
@@ -3964,10 +4038,10 @@ function heroLoop(ts){
      flacon - 386 puts its foot exactly on 3340 - rather than hanging in the
      air, which is what a cap lifted and held looked like. x lands at 826-914,
      inside the 512-928 the mobile crop keeps, so it is not lost there. */
-  var capBack  = sstep(seg(p, 0.970, 0.984));
+  var capBack  = sstep(seg(p, 0.980, 0.988));
   var capLift  = eOut(seg(p, 0.894, 0.906)) * (1 - capBack);
   var capSet   = sstep(seg(p, 0.903, 0.921)) * (1 - capBack);
-  var pressT   = seg(p, 0.984, 0.992);
+  var pressT   = seg(p, 0.988, 0.994);
   var pressBob = Math.sin(pressT*Math.PI)*9;
   sc.f4cap.setAttribute('transform',
     'translate(' + (capSet*150).toFixed(1) + ',' +
@@ -3987,7 +4061,7 @@ function heroLoop(ts){
   });
   // Mist leaves the nozzle mid-press and hangs afterwards, rather than
   // starting at 0.96 — two full hundredths of scroll after the press ended.
-  var mistEnv = eOut(seg(p, 0.986, 0.999));
+  var mistEnv = eOut(seg(p, 0.990, 1.0));
   if (mistEnv > 0.01) {
     mistEls.forEach(function(m, i){
       var tm = (heroTime*0.55 + i*0.0833) % 1;

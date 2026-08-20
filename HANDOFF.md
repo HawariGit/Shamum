@@ -114,18 +114,41 @@ holding the oil that chapter spent itself making, and a pipette draws from
 oil is **moved rather than created** — without that the hole just relocates to
 the pipette.
 
+It also tells **the brand's own story**, taken from SHAMUM's film (a copy is
+not in the repo; the narration is transcribed here). "Natural oud carries a
+royal, commanding presence. It **refuses to share the stage with others** in the
+same composition… we discovered that **saffron, rose, and iris** flowers are the
+finest companions… and let's not forget, **time itself** is the key ingredient."
+
+That ordering is the whole point: the oud must fill and **sit alone** before
+anything joins it. Companions after, never with.
+
 | p | beat |
 |---|---|
-| 0.885–0.918 | bench, organ, blotters and the vial fade in |
+| 0.885–0.918 | bench, organ, blotters, the oud vial and the three companion vials fade in |
 | 0.894–0.921 | the flacon's cap lifts, then is set down on the counter |
-| 0.904–0.922 | the pipette goes into the vial's open neck |
-| 0.920–0.934 | it draws; **the vial's level falls as it does** |
-| 0.932–0.948 | it carries across to over the flacon |
-| 0.946–0.964 | the drop leaves its tip and falls |
-| 0.958–0.978 | the liquid climbs |
-| 0.968–0.984 | `f4-oud` fades → **oud-dark lightens to gold** |
-| 0.970–0.984 | the cap comes back and seats |
-| 0.984–0.999 | the press, then the mist |
+| 0.898–0.923 | the pipette goes into the vial and draws; **the vial's level falls** |
+| 0.921–0.933 | it carries across to over the flacon |
+| 0.930–0.946 | the oud drop leaves its tip and falls |
+| 0.936–0.949 | the oud climbs — **alone** |
+| 0.948–0.970 | saffron, rose, iris arc in from their own vials, staggered |
+| 0.968–0.980 | maceration: the surface swells and settles — *"time itself"* |
+| 0.974–0.986 | `f4-oud` fades → **oud-dark lightens to gold** |
+| 0.980–0.988 | the cap comes back and seats |
+| 0.988–1.000 | the press, then the mist |
+
+**Nothing in chapter IV may exceed p 1.** The maceration was first paid for by
+offsetting everything after it by +0.012, which put the press at 1.002–1.008 and
+the mist at an inverted 1.003–1.000 — so **neither ever fired**, and the cap
+seated only 80% of the way. It rendered and looked plausible; the arithmetic is
+what caught it. The beat is paid for by pulling the companions *earlier*
+instead. Check any retime with `seg(1.0, a, b) == 1` for every tail window.
+
+The companion vials sit at x 420–526, outside the 512–928 mobile crop, and that
+is deliberate — their drops arc up and inward, travelling x 520→720, so the
+arrival reads at 375px even though the source does not. Putting the sources
+above the flacon instead collides with the chapter title, which sits at world
+y ≈ 2800 on this floor.
 
 **The colour change is the story.** Chapter III's drop only ever made more of
 the same dark oil; here that oil *becomes* something else, which is what "eau

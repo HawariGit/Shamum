@@ -225,13 +225,15 @@ bottle, and contrast-boosting blows the glass out before an edge appears. **Do
 not claim to have measured it.** If it needs changing again, change it on the
 user's judgement and say so.
 
-The one thing that *is* measurable in that frame is the label plate, whose
-borders are dark against the glass: **295 × 410, aspect 0.72**, against our
-106 × 152 at 0.70 — so the plate's own shape is right. Its width against the
-body reads small next to the reference (ours 56%, the frame suggests nearer
-70%), and that is **flagged, not changed** — narrowing the body already moved
-it 51% → 56%, and altering the plate in the same pass would make the next round
-of feedback impossible to attribute.
+**The label plate is the one thing that *is* measurable** in that frame — its
+borders are dark against the glass, unlike the glass edges themselves:
+**295 × 410, aspect 0.72**. The plate is now **132 × 183 on a 188 body — 70%**,
+matching that ratio, with its aspect held at the measured 0.72 so height follows
+width. It was 106 × 152 (56%) and sat too small on the bottle.
+
+It was changed in a **separate pass** from the narrowing, on purpose: two
+proportion changes at once make the next round of feedback impossible to
+attribute to either. Do the same if this comes round again.
 
 Clear glass with a light gold eau de parfum that fills as the chapter plays —
 `f4-liquid` is a rect clipped to `flaconClip` whose top edge is driven up, with

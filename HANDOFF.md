@@ -194,6 +194,33 @@ for one frame, `--gif` for the whole chapter. All three drive the **real**
 `heroLoop` through the reduced-motion still rather than reimplementing it.
 
 ### The chapter IV flacon
+**Drawn from the film's straight-on frames (t 33.1s and 34.6s)** — the first
+head-on reference this bottle has ever had; everything before was a tilted
+three-quarter view in a box. Three things were wrong until then:
+
+- **The cap is polished metal, not gold.** Polished metal has no colour of its
+  own: it is near-black where it reflects the room and blown out where it
+  reflects the light, and the jump between the two is *abrupt*. It was a gentle
+  gold ramp, which reads as anodised plastic. `capMirror` has the hard stops;
+  `capGold` is untouched because floor 3's oil vial still uses it. It sits on a
+  brass ring (`capBrass`) and is nearly square, 206×215 in frame.
+- **There is a slab of clear glass under the liquid**, about a tenth of the
+  body. The liquid floor is **3300, not 3328** — the last 28px of a 334px body
+  is glass. It is most of why the real one reads as heavy glass rather than as
+  a coloured container.
+- **The atomiser's dip tube** runs neck to base through the liquid and is in
+  every reference frame. `f4-tube`, drawn before the label so the plate covers
+  its middle, as the real plate does from outside the glass.
+
+`collarGlass` was near-neutral white, which over this dark floor read as a
+machined steel ferrule. Clear glass takes the colour of what is around it, so
+the stops are warm now with a wide gap between flare and shade.
+
+**Width was deliberately not re-measured.** The reference is backlit
+gold-on-gold and a gradient scan of it returns nonsense — scanline widths of
+93, 354, 51, 43, 140, 180 and 410 down the same bottle. There is no measurement
+there worth trusting. 208×334 stands.
+
 Clear glass with a light gold eau de parfum that fills as the chapter plays —
 `f4-liquid` is a rect clipped to `flaconClip` whose top edge is driven up, with
 `f4-surface` riding it as a meniscus. Exactly the mechanism floor 3 uses for

@@ -1701,12 +1701,19 @@ body.menu-open { overflow: hidden; }
         <!-- The collar is a thick disc of clear glass, and the brightest thing
              on the bottle below the cap. Bright at both edges where it is
              deepest, and picking up the gold of the cap above it. -->
+        <!-- Clear glass takes the colour of what is around it. These stops were
+             near-neutral whites, which over this dark floor read as brushed
+             steel rather than glass — the collar looked like a machined ferrule.
+             Warming them and widening the gap between the flare and the shade
+             is what makes it read as the chunky glass shoulder in the
+             reference, where it sits against gold and glows. -->
         <linearGradient id="collarGlass" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%"   stop-color="#FFFAF0" stop-opacity="0.30"/>
-          <stop offset="18%"  stop-color="#FFFDF6" stop-opacity="0.62"/>
-          <stop offset="44%"  stop-color="#F6EAD2" stop-opacity="0.34"/>
-          <stop offset="70%"  stop-color="#FFFDF6" stop-opacity="0.56"/>
-          <stop offset="100%" stop-color="#E8D6B0" stop-opacity="0.26"/>
+          <stop offset="0%"   stop-color="#C9A362" stop-opacity="0.34"/>
+          <stop offset="17%"  stop-color="#FFF7E0" stop-opacity="0.66"/>
+          <stop offset="37%"  stop-color="#A8813C" stop-opacity="0.22"/>
+          <stop offset="60%"  stop-color="#FBEFCF" stop-opacity="0.52"/>
+          <stop offset="83%"  stop-color="#8A6B2E" stop-opacity="0.26"/>
+          <stop offset="100%" stop-color="#E8D29C" stop-opacity="0.48"/>
         </linearGradient>
         <!-- The oud as it enters the flacon: chapter III's oil, in floor 4's
              coordinates. It rides over flaconLiquid and fades out as the fill
@@ -1812,6 +1819,30 @@ body.menu-open { overflow: hidden; }
         </clipPath>
         <!-- Deeper and more saturated than the first attempt, which rendered
              as pale beige rather than polished gold. -->
+        <!-- The flacon's cap. Polished metal has no colour of its own: it is
+             dark where it reflects the room and blown out where it reflects the
+             light, and the jump between them is abrupt. A gentle ramp - which
+             is what capGold is, and what this used - reads as anodised plastic.
+             capGold is left alone; the oil vial on floor 3 still uses it. -->
+        <linearGradient id="capMirror" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#17110B"/>
+          <stop offset="12%"  stop-color="#2A1F14"/>
+          <stop offset="19%"  stop-color="#E8DCC6"/>
+          <stop offset="30%"  stop-color="#FFFBF2"/>
+          <stop offset="41%"  stop-color="#D8C8A6"/>
+          <stop offset="48%"  stop-color="#3A2A18"/>
+          <stop offset="66%"  stop-color="#120D08"/>
+          <stop offset="82%"  stop-color="#5A4526"/>
+          <stop offset="92%"  stop-color="#A98B4E"/>
+          <stop offset="100%" stop-color="#2A1F12"/>
+        </linearGradient>
+        <linearGradient id="capBrass" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#6E5121"/>
+          <stop offset="22%"  stop-color="#F2DFA8"/>
+          <stop offset="46%"  stop-color="#C8A054"/>
+          <stop offset="72%"  stop-color="#7A5A24"/>
+          <stop offset="100%" stop-color="#A88A44"/>
+        </linearGradient>
         <linearGradient id="capGold" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%"   stop-color="#6E5121"/>
           <stop offset="14%"  stop-color="#F7E3A6"/>
@@ -2413,9 +2444,9 @@ body.menu-open { overflow: hidden; }
                  the collar and cap occlude it on the way in, which is what
                  makes it read as going down the neck rather than past it. -->
             <g id="f4-impact" opacity="0">
-              <ellipse id="f4-iring1" cx="720" cy="3310" rx="20" ry="5" fill="none"
+              <ellipse id="f4-iring1" cx="720" cy="3288" rx="20" ry="5" fill="none"
                        stroke="#D9A445" stroke-width="2.2"/>
-              <ellipse id="f4-iring2" cx="720" cy="3310" rx="11" ry="3" fill="none"
+              <ellipse id="f4-iring2" cx="720" cy="3288" rx="11" ry="3" fill="none"
                        stroke="#F0C878" stroke-width="1.4"/>
             </g>
             <g id="f4-drop" opacity="0">
@@ -2423,6 +2454,23 @@ body.menu-open { overflow: hidden; }
               <path d="M0 -20 C 2 -13 6.6 -8 8.7 -1.6 A 9 9 0 1 1 -8.7 -1.6 C -6.6 -8 -2 -13 0 -20 Z"
                     fill="url(#dropGrad)"/>
               <ellipse cx="-2.9" cy="0.8" rx="2.6" ry="3.8" fill="#FFF3D0" opacity="0.55"/>
+            </g>
+            <!-- The solid glass base. Its top edge is where the liquid ends, so
+                 it is drawn after the liquid and catches a highlight of its own;
+                 without it the bottle read as a coloured container rather than
+                 as heavy glass. -->
+            <path d="M622 3298 L818 3298 L818 3298 Q818 3326 790 3328 L650 3328
+                     Q622 3326 622 3298 Z"
+                  fill="rgba(255,250,238,0.10)" clip-path="url(#flaconClip)"/>
+            <path d="M624 3300 L816 3300" stroke="rgba(255,246,224,0.45)" stroke-width="1.6"/>
+            <ellipse cx="720" cy="3322" rx="78" ry="7" fill="rgba(255,246,224,0.10)"/>
+            <!-- The atomiser's dip tube, neck to base. It is in every reference
+                 frame and nothing was drawn; the label covers its middle, as on
+                 the real bottle where the plate sits on the outside of the glass. -->
+            <g id="f4-tube">
+              <rect x="712" y="3012" width="16" height="284" rx="7" fill="#EFE6D2" opacity="0.72"/>
+              <rect x="715" y="3012" width="5" height="284" fill="#FFFFFF" opacity="0.5"/>
+              <ellipse cx="720" cy="3294" rx="8" ry="3.4" fill="#DCD0B6" opacity="0.75"/>
             </g>
             <rect id="f4-shimmer" x="618" y="3006" width="48" height="322" fill="rgba(255,240,200,0.10)" clip-path="url(#bottleClip)"/>
             <path d="M648 3068 L648 3300" stroke="rgba(255,255,255,0.13)" stroke-width="16" stroke-linecap="round"/>
@@ -2445,20 +2493,31 @@ body.menu-open { overflow: hidden; }
                  meets the shoulder. -->
             <path d="M686 2954 L754 2954 L754 2972 L768 2976 L768 2990 Q768 2999 754 3000 L686 3000 Q672 2999 672 2990 L672 2976 L686 2972 Z"
                   fill="url(#collarGlass)" stroke="rgba(255,250,235,0.78)" stroke-width="1.2"/>
-            <path d="M672 2978 L768 2978" stroke="rgba(255,255,255,0.72)" stroke-width="1.4"/>
-            <path d="M686 2963 L754 2963" stroke="rgba(255,255,255,0.52)" stroke-width="1"/>
-            <path d="M692 2954 L692 3000" stroke="rgba(255,255,255,0.46)" stroke-width="1"/>
-            <path d="M748 2954 L748 3000" stroke="rgba(255,255,255,0.46)" stroke-width="1"/>
+            <path d="M672 2978 L768 2978" stroke="rgba(255,247,222,0.72)" stroke-width="1.4"/>
+            <path d="M686 2963 L754 2963" stroke="rgba(255,247,222,0.50)" stroke-width="1"/>
+            <path d="M692 2954 L692 3000" stroke="rgba(255,250,232,0.55)" stroke-width="1"/>
+            <path d="M748 2954 L748 3000" stroke="rgba(168,129,60,0.50)" stroke-width="1"/>
+            <path d="M700 2956 L705 2956 L705 2998 L700 2998 Z" fill="#FFFBEE" opacity="0.42"/>
             <!-- The one hard specular the glass throws, on its left shoulder. -->
             <path d="M679 2980 L679 2994" stroke="rgba(255,255,255,0.85)" stroke-width="2.4" stroke-linecap="round"/>
 
             <g id="f4-cap">
               <!-- cap is 61% of the body's width on the real bottle, not 54% -->
-              <rect x="676" y="2848" width="88" height="106" rx="5" fill="url(#capGold)" stroke="#6E5121" stroke-width="0.9"/>
-              <path d="M686 2856 L697 2854 L697 2946 L686 2944 Z" fill="#F7E9C4" opacity="0.42"/>
-              <path d="M747 2854 L756 2856 L756 2944 L747 2946 Z" fill="#5E4517" opacity="0.5"/>
-              <rect x="676" y="2848" width="88" height="9" rx="4" fill="#F0D9A0" opacity="0.35"/>
-              <path d="M678 2944 L762 2944" stroke="#6E5121" stroke-width="1" opacity="0.5"/>
+              <!-- Rounded at the top, square at the foot, and nearly square
+                   overall (206x215 in the reference), sitting on a brass ring. -->
+              <path d="M676 2872 Q676 2842 720 2842 Q764 2842 764 2872 L764 2938 L676 2938 Z"
+                    fill="url(#capMirror)"/>
+              <!-- The specular band is a hard-edged shape, not a soft stop: on a
+                   mirror the reflected highlight has an edge. -->
+              <path d="M692 2874 Q692 2854 706 2853 Q718 2854 718 2874 L718 2932 Q706 2935 692 2932 Z"
+                    fill="#FFFDF6" opacity="0.9"/>
+              <path d="M721 2856 L727 2855 L727 2934 L721 2935 Z" fill="#F4E7C8" opacity="0.35"/>
+              <path d="M676 2872 Q676 2842 720 2842 Q764 2842 764 2872 L764 2880
+                       Q740 2868 720 2868 Q700 2868 676 2880 Z"
+                    fill="#F6EBD2" opacity="0.16"/>
+              <rect x="674" y="2936" width="92" height="18" rx="3" fill="url(#capBrass)"
+                    stroke="#5E4517" stroke-width="0.8"/>
+              <path d="M676 2940 L764 2940" stroke="#FBF0D4" stroke-width="1.1" opacity="0.4"/>
             </g>
             <!-- The burst at the nozzle. Without it the atomizer pressed and
                  nothing left the bottle; the mist simply appeared overhead
@@ -3912,11 +3971,13 @@ function heroLoop(ts){
      a fixed rx was right against the straight sides and stuck out through the
      glass once the level climbed into the shoulder curve. */
   var f4lv = eOut(seg(p, 0.936, 0.949));
-  var f4level = 3328 - f4lv*290;
+  /* 3300, not 3328: the last 34 units of the body are the solid glass base the
+     real bottle stands on, so the liquid stops above it. */
+  var f4level = 3300 - f4lv*262;
   var f4wob = Math.sin(heroTime*4.2)*1.3*(f4lv > 0.01 && f4lv < 0.999 ? 1 : 0.3);
   sc.f4liquid.setAttribute('y', f4level + f4wob);
   // 3330, two past the clip floor, so the base never opens a gap under it.
-  sc.f4liquid.setAttribute('height', Math.max(0, 3330 - f4level));
+  sc.f4liquid.setAttribute('height', Math.max(0, 3302 - f4level));
   sc.f4surface.setAttribute('cy', f4level + f4wob);
   // 96 is the half-width of the straight part; the cavity closes to about 70
   // across the 58 units of shoulder above 3064.
@@ -3958,7 +4019,7 @@ function heroLoop(ts){
       sc.f4drop.setAttribute('transform', 'translate(720,' + dY.toFixed(1) + ') scale(' +
         dScale.toFixed(3) + ',' + (dScale*(1 + f4form*0.12)).toFixed(3) + ')');
     } else {
-      dY = lerp(2961, 3300, eIn(f4fall));
+      dY = lerp(2961, 3286, eIn(f4fall));
       sc.f4drop.setAttribute('transform', 'translate(720,' + dY.toFixed(1) +
         ') scale(1,' + (1 + f4fall*(1-f4fall)*1.1).toFixed(3) + ')');
     }
@@ -4018,7 +4079,7 @@ function heroLoop(ts){
      layer tracks the gold one exactly and fades as the bottle fills, so the
      liquid lightens as it climbs instead of switching colour in a frame. */
   sc.f4oud.setAttribute('y', f4level + f4wob);
-  sc.f4oud.setAttribute('height', Math.max(0, 3330 - f4level));
+  sc.f4oud.setAttribute('height', Math.max(0, 3302 - f4level));
   /* The blend only turns once the companions are in - the whole point of the
      ordering is that the oud sits alone first. */
   op(sc.f4oud, 1 - eOut(seg(p, 0.974, 0.986)));

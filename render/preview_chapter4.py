@@ -121,19 +121,37 @@ def main():
         fps = 18.0
         crop = (395, 60, 1045, 830)
         scale = 0.64
+        from PIL import ImageStat
         frames = []
+        prev_lum = None
         for i in range(n):
             p = p0 + (p1 - p0) * i / float(n - 1)
             # heroTime advances at real playback rate, offset from the still's
             # own base so floor 4 is not caught on the axe-swing zero.
             t = 3.4091 + i / fps
             d = os.path.join(OUT, "_gif_%03d.png" % i)
-            shot("%.5f" % p, d, t)
-            im = Image.open(d).convert("RGB").crop(crop)
+            # One screenshot in ~70 fires before the page has painted and comes
+            # back near-black. It is not a bug in the scene - the same p and
+            # heroTime re-render correctly and deterministically - so the frame
+            # is simply taken again. Adjacent frames of this animation never
+            # move more than about 4 luminance, so 10 catches the misfire
+            # without ever tripping on real motion.
+            for attempt in range(3):
+                shot("%.5f" % p, d, t)
+                im = Image.open(d).convert("RGB").crop(crop)
+                lum = ImageStat.Stat(im.convert("L")).mean[0]
+                os.remove(d)
+                if prev_lum is None or abs(lum - prev_lum) <= 10:
+                    break
+                print("    frame %d re-shot: lum %.1f vs %.1f" % (i, lum, prev_lum))
+                sys.stdout.flush()
+            prev_lum = lum
             im = im.resize((int(im.width * scale), int(im.height * scale)), Image.LANCZOS)
             frames.append(im)
-            os.remove(d)
-            print("  frame %2d/%d  p=%.4f" % (i + 1, n, p))
+            # flush: stdout is a pipe when this runs in the background, so
+            # without it 4 minutes of progress buffers and the run looks dead
+            print("  frame %2d/%d  p=%.4f  lum=%.1f" % (i + 1, n, p, lum))
+            sys.stdout.flush()
 
         # One palette for the whole sequence. Quantising each frame on its own
         # gives every frame a slightly different set of browns, and the scene is

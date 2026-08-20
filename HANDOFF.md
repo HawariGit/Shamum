@@ -216,10 +216,22 @@ three-quarter view in a box. Three things were wrong until then:
 machined steel ferrule. Clear glass takes the colour of what is around it, so
 the stops are warm now with a wide gap between flare and shade.
 
-**Width was deliberately not re-measured.** The reference is backlit
-gold-on-gold and a gradient scan of it returns nonsense — scanline widths of
-93, 354, 51, 43, 140, 180 and 410 down the same bottle. There is no measurement
-there worth trusting. 208×334 stands.
+**Width is 188×334, aspect 0.56, and it is the user's eye, not a measurement.**
+This dimension has been corrected in *both* directions — 144 was too narrow,
+208 was too wide — so be clear about what it rests on. The reference is backlit
+gold against gold silk and the glass edges cannot be found in it: a gradient
+scan returns scanline widths of 93, 354, 51, 43, 140, 180 and 410 down the same
+bottle, and contrast-boosting blows the glass out before an edge appears. **Do
+not claim to have measured it.** If it needs changing again, change it on the
+user's judgement and say so.
+
+The one thing that *is* measurable in that frame is the label plate, whose
+borders are dark against the glass: **295 × 410, aspect 0.72**, against our
+106 × 152 at 0.70 — so the plate's own shape is right. Its width against the
+body reads small next to the reference (ours 56%, the frame suggests nearer
+70%), and that is **flagged, not changed** — narrowing the body already moved
+it 51% → 56%, and altering the plate in the same pass would make the next round
+of feedback impossible to attribute.
 
 Clear glass with a light gold eau de parfum that fills as the chapter plays —
 `f4-liquid` is a rect clipped to `flaconClip` whose top edge is driven up, with

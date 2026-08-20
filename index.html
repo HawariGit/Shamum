@@ -1854,14 +1854,14 @@ body.menu-open { overflow: hidden; }
         </linearGradient>
         <!-- Body of the eau de parfum, for the shimmer sweep. Follows the
              redrawn bottle: shoulders at 3000, foot at 3334. -->
-        <clipPath id="bottleClip"><rect x="618" y="3002" width="204" height="330" rx="20"/></clipPath>
+        <clipPath id="bottleClip"><rect x="628" y="3002" width="184" height="330" rx="20"/></clipPath>
         <!-- Inside face of the flacon, the body path inset by the wall. The
              liquid is clipped to this so it takes the rounded base and never
              sits outside the glass. -->
         <clipPath id="flaconClip">
-          <path d="M622 3064 C622 3028 646 3008 681 3006 L759 3006
-                   C794 3008 818 3028 818 3064
-                   L818 3298 Q818 3326 790 3328 L650 3328 Q622 3326 622 3298 Z"/>
+          <path d="M632 3064 C632 3028 654 3008 681 3006 L759 3006
+                   C786 3008 808 3028 808 3064
+                   L808 3298 Q808 3326 781 3328 L659 3328 Q632 3326 632 3298 Z"/>
         </clipPath>
         <!-- Body of the mabkhara, so the olive-wood chunks can be laid over the
              resin without spilling past the silhouette. -->
@@ -2424,21 +2424,21 @@ body.menu-open { overflow: hidden; }
                  CLEAR GLASS COLLAR between cap and body which is the most
                  distinctive part of this bottle, and the front carries an
                  embossed gold plate rather than type printed on glass. -->
-            <ellipse cx="720" cy="3342" rx="250" ry="18" fill="#0D0805"/>
+            <ellipse cx="720" cy="3342" rx="226" ry="18" fill="#0D0805"/>
             <!-- body -->
-            <path d="M616 3062 C616 3024 642 3002 678 3000 L762 3000 C798 3002 824 3024 824 3062 L824 3300 Q824 3332 792 3334 L648 3334 Q616 3332 616 3300 Z"
+            <path d="M626 3062 C626 3024 651 3002 678 3000 L762 3000 C789 3002 814 3024 814 3062 L814 3300 Q814 3332 785 3334 L655 3334 Q626 3332 626 3300 Z"
                   fill="url(#bottleGrad)" stroke="rgba(216,192,140,0.55)" stroke-width="1.2"/>
             <!-- The fragrance, filling the way the oil vial fills on floor 3:
                  a rect clipped to the cavity whose top edge is driven down to
                  up, with a meniscus riding it. Empty in the markup so nothing
                  flashes before the chapter runs. Under the label, because the
                  liquid is inside the glass and the label is on the outside. -->
-            <rect id="f4-liquid" x="622" y="3328" width="196" height="0"
+            <rect id="f4-liquid" x="632" y="3328" width="176" height="0"
                   fill="url(#flaconLiquid)" fill-opacity="0.93" clip-path="url(#flaconClip)"/>
             <!-- Tracks f4-liquid exactly; only its opacity is animated. -->
-            <rect id="f4-oud" x="622" y="3328" width="196" height="0"
+            <rect id="f4-oud" x="632" y="3328" width="176" height="0"
                   fill="url(#oudInFlacon)" clip-path="url(#flaconClip)" opacity="0"/>
-            <ellipse id="f4-surface" cx="720" cy="3328" rx="96" ry="6.5"
+            <ellipse id="f4-surface" cx="720" cy="3328" rx="88" ry="6.5"
                      fill="#F8EAC4" opacity="0"/>
             <!-- The drop lands and the base answers. Drawn inside the bottle so
                  the collar and cap occlude it on the way in, which is what
@@ -2459,11 +2459,11 @@ body.menu-open { overflow: hidden; }
                  it is drawn after the liquid and catches a highlight of its own;
                  without it the bottle read as a coloured container rather than
                  as heavy glass. -->
-            <path d="M622 3298 L818 3298 L818 3298 Q818 3326 790 3328 L650 3328
-                     Q622 3326 622 3298 Z"
+            <path d="M632 3298 L808 3298 Q808 3326 781 3328 L659 3328
+                     Q632 3326 632 3298 Z"
                   fill="rgba(255,250,238,0.10)" clip-path="url(#flaconClip)"/>
-            <path d="M624 3300 L816 3300" stroke="rgba(255,246,224,0.45)" stroke-width="1.6"/>
-            <ellipse cx="720" cy="3322" rx="78" ry="7" fill="rgba(255,246,224,0.10)"/>
+            <path d="M634 3300 L806 3300" stroke="rgba(255,246,224,0.45)" stroke-width="1.6"/>
+            <ellipse cx="720" cy="3322" rx="70" ry="7" fill="rgba(255,246,224,0.10)"/>
             <!-- The atomiser's dip tube, neck to base. It is in every reference
                  frame and nothing was drawn; the label covers its middle, as on
                  the real bottle where the plate sits on the outside of the glass. -->
@@ -2472,9 +2472,9 @@ body.menu-open { overflow: hidden; }
               <rect x="715" y="3012" width="5" height="284" fill="#FFFFFF" opacity="0.5"/>
               <ellipse cx="720" cy="3294" rx="8" ry="3.4" fill="#DCD0B6" opacity="0.75"/>
             </g>
-            <rect id="f4-shimmer" x="618" y="3006" width="48" height="322" fill="rgba(255,240,200,0.10)" clip-path="url(#bottleClip)"/>
-            <path d="M648 3068 L648 3300" stroke="rgba(255,255,255,0.13)" stroke-width="16" stroke-linecap="round"/>
-            <path d="M804 3070 C804 3150 804 3240 804 3296" stroke="rgba(212,188,134,0.38)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+            <rect id="f4-shimmer" x="628" y="3006" width="44" height="322" fill="rgba(255,240,200,0.10)" clip-path="url(#bottleClip)"/>
+            <path d="M655 3068 L655 3300" stroke="rgba(255,255,255,0.13)" stroke-width="14" stroke-linecap="round"/>
+            <path d="M796 3070 C796 3150 796 3240 796 3296" stroke="rgba(212,188,134,0.38)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
 
             <!-- A solid embossed gold plate, which is what the product shot
                  shows. It was a thin gold outline while the body was black,
@@ -2530,7 +2530,7 @@ body.menu-open { overflow: hidden; }
               <path d="M724 2844 L742 2800" stroke="rgba(240,217,160,0.4)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
             </g>
           </g>
-          <path d="M616 3352 C616 3396 633 3420 720 3420 C807 3420 824 3396 824 3352 L824 3346 Q824 3360 720 3360 Q616 3360 616 3346 Z" fill="rgba(194,163,104,0.05)"/>
+          <path d="M626 3352 C626 3396 648 3420 720 3420 C792 3420 814 3396 814 3352 L814 3346 Q814 3360 720 3360 Q626 3360 626 3346 Z" fill="rgba(194,163,104,0.05)"/>
           <!-- The pipette. Tip at its own origin so one translate places it;
                it is drawn after the flacon because it passes in front of both
                the vial it draws from and the bottle it doses. -->
@@ -3981,7 +3981,7 @@ function heroLoop(ts){
   sc.f4surface.setAttribute('cy', f4level + f4wob);
   // 96 is the half-width of the straight part; the cavity closes to about 70
   // across the 58 units of shoulder above 3064.
-  sc.f4surface.setAttribute('rx', 96 - 26*clamp((3064 - f4level)/58, 0, 1));
+  sc.f4surface.setAttribute('rx', 88 - 24*clamp((3064 - f4level)/58, 0, 1));
 
   /* The oud arrives. It hangs and swells at the open neck, then falls to the
      base - eIn, so it accelerates the way chapter III's does rather than
@@ -4113,7 +4113,7 @@ function heroLoop(ts){
   op(sc.f4oudvial, eOut(seg(p, 0.888, 0.920)));
   op(sc.f4burst, Math.sin(pressT*Math.PI) * 0.95);
   // Light band sweeping through the liquid
-  sc.f4shimmer.setAttribute('x', 614 + ((heroTime*55) % 248));
+  sc.f4shimmer.setAttribute('x', 624 + ((heroTime*55) % 224));
   op(sc.f4shimmer, f4in * 0.9);
   bokehEls.forEach(function(b2, i){
     b2.setAttribute('cy', [3000,3080,3260,3290][i] + Math.sin(heroTime*0.4 + i*1.6)*24);

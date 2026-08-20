@@ -1,2 +1,6 @@
 .vercel
 _rmtest.html
+
+# Render artifacts: PNG stills, beat strips, the chapter IV gif.
+# Multi-megabyte and all reproducible from render/*.py.
+render/out/

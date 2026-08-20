@@ -31,6 +31,18 @@ EDGE = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 
 FLAG = "var heroStill = window.matchMedia('(prefers-reduced-motion: reduce)').matches;"
 STILL_P = re.compile(r"var HERO_STILL_P = [\d.]+;")
+STILL_T = re.compile(r"var HERO_STILL_T = [^;]+;")
+
+
+# Injected for sequence renders only. The nav is page chrome, not part of the
+# chapter, and in a tall crop it lands right across the raised cap. The particle
+# canvas is hidden by the reduced-motion branch but wanted here, and it is safe
+# because heroTime advances per frame in this mode.
+CLEAN = """<style>
+  #nav, #menu-overlay, #scroll-cue, #ch-dots { display: none !important; }
+  .reduced-hero #hero-canvas { display: block !important; }
+</style>
+</head>"""
 
 
 def browser():
@@ -41,7 +53,7 @@ def browser():
     sys.exit(1)
 
 
-def shot(p, dest):
+def shot(p, dest, t=None):
     src = io.open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
     if src.count(FLAG) != 1:
         print("ABORT: heroStill declaration moved; update FLAG")
@@ -51,6 +63,20 @@ def shot(p, dest):
         print("ABORT: HERO_STILL_P not found")
         sys.exit(1)
     src = STILL_P.sub("var HERO_STILL_P = %s;" % p, src, count=1)
+    # A still pins heroTime, so without this every frame of a sequence would
+    # share one instant and anything time-driven - the mist drifting, the light
+    # band crossing the glass, the surface wobble - would sit perfectly still
+    # while only the scroll-driven beats moved. Advancing it per frame is what
+    # makes the recording look like the page rather than a slideshow.
+    if t is not None:
+        if not STILL_T.search(src):
+            print("ABORT: HERO_STILL_T not found")
+            sys.exit(1)
+        src = STILL_T.sub("var HERO_STILL_T = %.4f;" % t, src, count=1)
+        if "</head>" not in src:
+            print("ABORT: no </head> to inject the recording styles into")
+            sys.exit(1)
+        src = src.replace("</head>", CLEAN, 1)
     io.open(TMP, "w", encoding="utf-8", newline="").write(src)
 
     subprocess.run([
@@ -88,6 +114,46 @@ def main():
         dest = os.path.join(OUT, "chapter4_beats.png")
         strip.save(dest)
         print("wrote %s  (%d frames)" % (dest, len(tiles)))
+    elif "--gif" in sys.argv:
+        from PIL import Image
+        n = int(sys.argv[sys.argv.index("--frames") + 1]) if "--frames" in sys.argv else 72
+        p0, p1 = 0.884, 0.999
+        fps = 18.0
+        crop = (470, 55, 970, 835)
+        scale = 0.70
+        frames = []
+        for i in range(n):
+            p = p0 + (p1 - p0) * i / float(n - 1)
+            # heroTime advances at real playback rate, offset from the still's
+            # own base so floor 4 is not caught on the axe-swing zero.
+            t = 3.4091 + i / fps
+            d = os.path.join(OUT, "_gif_%03d.png" % i)
+            shot("%.5f" % p, d, t)
+            im = Image.open(d).convert("RGB").crop(crop)
+            im = im.resize((int(im.width * scale), int(im.height * scale)), Image.LANCZOS)
+            frames.append(im)
+            os.remove(d)
+            print("  frame %2d/%d  p=%.4f" % (i + 1, n, p))
+
+        # One palette for the whole sequence. Quantising each frame on its own
+        # gives every frame a slightly different set of browns, and the scene is
+        # almost entirely browns - the result flickers.
+        step = max(1, len(frames) // 8)
+        sample = frames[::step]
+        mont = Image.new("RGB", (frames[0].width * len(sample), frames[0].height))
+        for i, f in enumerate(sample):
+            mont.paste(f, (i * frames[0].width, 0))
+        master = mont.quantize(colors=255, method=Image.MEDIANCUT)
+        out = [f.quantize(palette=master, dither=Image.FLOYDSTEINBERG) for f in frames]
+        durs = [int(1000 / fps)] * len(out)
+        durs[-1] = 1100          # hold on the finished bottle before looping
+        durs[0] = 700
+        dest = os.path.join(OUT, "chapter4.gif")
+        out[0].save(dest, save_all=True, append_images=out[1:], loop=0,
+                    duration=durs, optimize=True, disposal=1)
+        print("wrote %s  (%d frames, %.1f MB)"
+              % (dest, len(out), os.path.getsize(dest) / 1048576.0))
+
     else:
         p = sys.argv[sys.argv.index("--p") + 1] if "--p" in sys.argv else "0.95"
         dest = os.path.join(OUT, "chapter4.png")

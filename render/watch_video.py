@@ -56,34 +56,47 @@ def main():
     t1 = arg("--to", float, dur if dur else None)
     n = arg("--n", int, 12)
 
-    # Read the whole thing once; these clips are short and seeking per frame is
-    # far slower than a single linear decode.
-    frames = []
+    # STREAM, do not accumulate. A 42s 1080x1920 phone clip is 7.8 GB of raw
+    # RGB, so holding every frame in order to pick twelve of them exhausts
+    # memory. The wanted indices are worked out from the duration up front, and
+    # every other frame is measured for --scan and dropped on the same pass.
+    lo = int(round(t0 * fps))
+    hi = int(round((t1 if t1 is not None else dur) * fps))
+    span = max(1, hi - lo)
+    want = {lo + int(round(k * (span - 1) / float(max(1, n - 1)))) for k in range(n)}
+
+    kept, lums = [], []
     for i, fr in enumerate(iio.imiter(src, plugin="FFMPEG")):
-        t = i / fps
-        if t1 is not None and t > t1:
+        if i > hi:
             break
-        if t >= t0:
-            frames.append((t, fr))
-    if not frames:
+        if i < lo:
+            continue
+        im = Image.fromarray(fr)
+        if "--scan" in sys.argv:
+            small = im.convert("L")
+            small.thumbnail((160, 160), Image.NEAREST)
+            lums.append((i / fps, ImageStat.Stat(small).mean[0]))
+        if i in want:
+            kept.append((i / fps, im.convert("RGB").copy()))
+        del im
+    if not kept:
         print("ABORT: decoded no frames in that range")
         sys.exit(1)
-    print("  decoded %d frames, %dx%d" % (len(frames), frames[0][1].shape[1], frames[0][1].shape[0]))
+    print("  kept %d of ~%d frames in range, %dx%d"
+          % (len(kept), span, kept[0][1].width, kept[0][1].height))
 
-    if "--scan" in sys.argv:
-        # Where does the picture actually change? Useful for finding the moment
-        # something happens without eyeballing every frame.
+    if lums:
+        # Where does the picture actually change? Finds the moment something
+        # happens without stepping through everything.
         print("\n  biggest changes between consecutive frames:")
-        lums = [(t, ImageStat.Stat(Image.fromarray(f).convert("L")).mean[0]) for t, f in frames]
-        d = sorted(((abs(lums[i + 1][1] - lums[i][1]), lums[i][0]) for i in range(len(lums) - 1)),
+        d = sorted(((abs(lums[j + 1][1] - lums[j][1]), lums[j][0]) for j in range(len(lums) - 1)),
                    reverse=True)[:8]
         for v, t in d:
             print("    t=%6.2fs  delta %.1f" % (t, v))
 
-    pick = [frames[round(i * (len(frames) - 1) / float(max(1, n - 1)))] for i in range(n)]
+    pick = kept
     thumbs = []
-    for k, (t, fr) in enumerate(pick):
-        im = Image.fromarray(fr).convert("RGB")
+    for k, (t, im) in enumerate(pick):
         p = os.path.join(OUT, "f%02d_%06.2fs.png" % (k, t))
         im.save(p)
         th = im.copy()

@@ -407,7 +407,7 @@ body.menu-open { overflow: hidden; }
 @media (max-width: 640px) { .chapter-coda { height: 46vh; } }
 .chapter-gap[data-chapter="1"] { height: 400vh; }
 .chapter-gap[data-chapter="2"] { height: 210vh; }
-.chapter-gap[data-chapter="3"] { height: 260vh; }
+.chapter-gap[data-chapter="3"] { height: 320vh; }
 /* The shelf floats IN the scene. Not a cream page, and not a full dark page
    either — both covered the animation completely. It is a short transparent
    band that rides up through the lower part of the frame, so the chapter is
@@ -498,7 +498,7 @@ body.menu-open { overflow: hidden; }
 @media (max-width: 640px) {
   .chapter-gap[data-chapter="1"] { height: 330vh; }
   .chapter-gap[data-chapter="2"] { height: 180vh; }
-  .chapter-gap[data-chapter="3"] { height: 225vh; }
+  .chapter-gap[data-chapter="3"] { height: 275vh; }
   .chapter-products { padding: 62px 24px 64px; }
 }
 
@@ -1708,6 +1708,16 @@ body.menu-open { overflow: hidden; }
           <stop offset="70%"  stop-color="#FFFDF6" stop-opacity="0.56"/>
           <stop offset="100%" stop-color="#E8D6B0" stop-opacity="0.26"/>
         </linearGradient>
+        <!-- The oud as it enters the flacon: chapter III's oil, in floor 4's
+             coordinates. It rides over flaconLiquid and fades out as the fill
+             completes, which is how the liquid lightens from oud-dark to the
+             finished gold without animating gradient stops. -->
+        <linearGradient id="oudInFlacon" gradientUnits="userSpaceOnUse"
+                        x1="0" y1="3014" x2="0" y2="3332">
+          <stop offset="0%"   stop-color="#8A4718"/>
+          <stop offset="38%"  stop-color="#632B0B"/>
+          <stop offset="100%" stop-color="#37150A"/>
+        </linearGradient>
         <linearGradient id="flaconLiquid" gradientUnits="userSpaceOnUse"
                         x1="0" y1="3014" x2="0" y2="3332">
           <stop offset="0%"   stop-color="#F4E2B4"/>
@@ -2312,8 +2322,26 @@ body.menu-open { overflow: hidden; }
                  liquid is inside the glass and the label is on the outside. -->
             <rect id="f4-liquid" x="622" y="3328" width="196" height="0"
                   fill="url(#flaconLiquid)" fill-opacity="0.93" clip-path="url(#flaconClip)"/>
+            <!-- Tracks f4-liquid exactly; only its opacity is animated. -->
+            <rect id="f4-oud" x="622" y="3328" width="196" height="0"
+                  fill="url(#oudInFlacon)" clip-path="url(#flaconClip)" opacity="0"/>
             <ellipse id="f4-surface" cx="720" cy="3328" rx="96" ry="6.5"
                      fill="#F8EAC4" opacity="0"/>
+            <!-- The drop lands and the base answers. Drawn inside the bottle so
+                 the collar and cap occlude it on the way in, which is what
+                 makes it read as going down the neck rather than past it. -->
+            <g id="f4-impact" opacity="0">
+              <ellipse id="f4-iring1" cx="720" cy="3310" rx="20" ry="5" fill="none"
+                       stroke="#D9A445" stroke-width="2.2"/>
+              <ellipse id="f4-iring2" cx="720" cy="3310" rx="11" ry="3" fill="none"
+                       stroke="#F0C878" stroke-width="1.4"/>
+            </g>
+            <g id="f4-drop" opacity="0">
+              <circle cx="0" cy="2" r="26" fill="url(#dropHalo)"/>
+              <path d="M0 -20 C 2 -13 6.6 -8 8.7 -1.6 A 9 9 0 1 1 -8.7 -1.6 C -6.6 -8 -2 -13 0 -20 Z"
+                    fill="url(#dropGrad)"/>
+              <ellipse cx="-2.9" cy="0.8" rx="2.6" ry="3.8" fill="#FFF3D0" opacity="0.55"/>
+            </g>
             <rect id="f4-shimmer" x="618" y="3006" width="48" height="322" fill="rgba(255,240,200,0.10)" clip-path="url(#bottleClip)"/>
             <path d="M648 3068 L648 3300" stroke="rgba(255,255,255,0.13)" stroke-width="16" stroke-linecap="round"/>
             <path d="M804 3070 C804 3150 804 3240 804 3296" stroke="rgba(212,188,134,0.38)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
@@ -3243,6 +3271,11 @@ var chDotT    = [0.10, 0.42, 0.66, 0.90];
 sc.f4cap     = $s('f4-cap');
 sc.f4burst   = $s('f4-burst');
 sc.f4shimmer = $s('f4-shimmer');
+sc.f4oud     = $s('f4-oud');
+sc.f4drop    = $s('f4-drop');
+sc.f4impact  = $s('f4-impact');
+sc.f4iring1  = $s('f4-iring1');
+sc.f4iring2  = $s('f4-iring2');
 sc.f4liquid  = $s('f4-liquid');
 sc.f4surface = $s('f4-surface');
 
@@ -3740,7 +3773,7 @@ function heroLoop(ts){
      has the liquid. The meniscus narrows with it: the bottle is not a tube, so
      a fixed rx was right against the straight sides and stuck out through the
      glass once the level climbed into the shoulder curve. */
-  var f4lv = eOut(seg(p, 0.925, 0.948));
+  var f4lv = eOut(seg(p, 0.934, 0.966));
   var f4level = 3328 - f4lv*290;
   var f4wob = Math.sin(heroTime*4.2)*1.3*(f4lv > 0.01 && f4lv < 0.999 ? 1 : 0.3);
   sc.f4liquid.setAttribute('y', f4level + f4wob);
@@ -3750,13 +3783,60 @@ function heroLoop(ts){
   // 96 is the half-width of the straight part; the cavity closes to about 70
   // across the 58 units of shoulder above 3064.
   sc.f4surface.setAttribute('rx', 96 - 26*clamp((3064 - f4level)/58, 0, 1));
+
+  /* The oud arrives. It hangs and swells at the open neck, then falls to the
+     base - eIn, so it accelerates the way chapter III's does rather than
+     drifting down at a constant rate. */
+  var f4form = seg(p, 0.900, 0.918);
+  var f4fall = seg(p, 0.918, 0.936);
+  if (p > 0.896 && p < 0.940) {
+    var dScale, dY;
+    if (f4fall <= 0) {
+      dScale = eOut(f4form);
+      dY = 2872 + eOut(f4form)*5;
+      sc.f4drop.setAttribute('transform', 'translate(720,' + dY.toFixed(1) + ') scale(' +
+        dScale.toFixed(3) + ',' + (dScale*(1 + f4form*0.12)).toFixed(3) + ')');
+    } else {
+      dY = lerp(2877, 3300, eIn(f4fall));
+      sc.f4drop.setAttribute('transform', 'translate(720,' + dY.toFixed(1) +
+        ') scale(1,' + (1 + f4fall*(1-f4fall)*1.1).toFixed(3) + ')');
+    }
+    op(sc.f4drop, Math.min(1, f4form*2.5) * (1 - seg(p, 0.932, 0.937)));
+  } else {
+    op(sc.f4drop, 0);
+  }
+
+  // The base answers the landing.
+  var f4imp = seg(p, 0.934, 0.950);
+  if (f4imp > 0 && f4imp < 1) {
+    sc.f4iring1.setAttribute('rx', 20 + f4imp*62);
+    sc.f4iring1.setAttribute('ry', 5 + f4imp*13);
+    sc.f4iring2.setAttribute('rx', 11 + f4imp*38);
+    sc.f4iring2.setAttribute('ry', 3 + f4imp*8);
+    op(sc.f4impact, Math.sin(f4imp*Math.PI)*0.85);
+  } else {
+    op(sc.f4impact, 0);
+  }
+
+  /* What went in was oud and what is in there now is the perfume. The dark
+     layer tracks the gold one exactly and fades as the bottle fills, so the
+     liquid lightens as it climbs instead of switching colour in a frame. */
+  sc.f4oud.setAttribute('y', f4level + f4wob);
+  sc.f4oud.setAttribute('height', Math.max(0, 3330 - f4level));
+  op(sc.f4oud, 1 - eOut(seg(p, 0.946, 0.970)));
   op(sc.f4surface, f4lv > 0.02 ? 0.72 : 0);
   // Atomizer press. This used to run 0.925–0.94 while the mist did not begin
   // until 0.96 — the press completed, and only afterwards did a cloud appear
   // with nothing connecting the two. The press now happens earlier and the
   // spray leaves the nozzle while the cap is still down.
-  var pressT = seg(p, 0.952, 0.976);
-  capDy = Math.sin(pressT*Math.PI)*9;
+  /* The cap waits 96 above the collar while the flacon is open, then comes
+     down and seats. Raising it is what lets the drop enter at all - with the
+     cap on, anything falling in has nowhere to go, which is half of why the
+     fill read as arriving from nowhere. It rides the same capDy as the press,
+     so the burst still tracks it. */
+  var capSeat = 1 - eOut(seg(p, 0.962, 0.978));
+  var pressT = seg(p, 0.978, 0.990);
+  capDy = capSeat*-96 + Math.sin(pressT*Math.PI)*9;
   sc.f4cap.setAttribute('transform', 'translate(0,' + capDy + ')');
   sc.f4burst.setAttribute('transform', 'translate(0,' + capDy + ')');
   op(sc.f4burst, Math.sin(pressT*Math.PI) * 0.95);
@@ -3770,7 +3850,7 @@ function heroLoop(ts){
   });
   // Mist leaves the nozzle mid-press and hangs afterwards, rather than
   // starting at 0.96 — two full hundredths of scroll after the press ended.
-  var mistEnv = eOut(seg(p, 0.960, 0.988));
+  var mistEnv = eOut(seg(p, 0.982, 0.998));
   if (mistEnv > 0.01) {
     mistEls.forEach(function(m, i){
       var tm = (heroTime*0.55 + i*0.0833) % 1;

@@ -99,6 +99,52 @@ scoring worst-overlap + worst-clipping. **0.15/0.30 is the only pair that
 clears every heading with nothing running off the top.** More lift clips the
 flacon; less shrink leaves the mabkhara in the heading.
 
+### Chapter IV's story
+The chapter used to be an effect with no cause: the bottle simply filled. Every
+other chapter shows what does the work — the axe opens the tree, the wood falls
+into the mabkhara, the still drips into the vial — and the chapter's own text
+promises "where the journey of the wood becomes a signature", which nothing on
+screen delivered. It now runs chapter III's grammar (cause → impact → effect)
+with its own material:
+
+| p | beat |
+|---|---|
+| 0.885–0.925 | flacon rises and settles; the cap waits 96 above the collar |
+| 0.900–0.918 | the oud drop forms at the open neck |
+| 0.918–0.936 | it falls, `eIn`, to the base |
+| 0.934–0.950 | impact: two rings open at the base |
+| 0.934–0.966 | the liquid climbs |
+| 0.946–0.970 | `f4-oud` fades → **the liquid lightens from oud-dark to gold** |
+| 0.962–0.978 | the cap comes down and seats |
+| 0.978–0.990 | the press |
+| 0.982–0.998 | the mist |
+
+**The colour change is the story.** Chapter III's drop only ever made more of
+the same dark oil; here that oil *becomes* something else, which is what "eau
+de parfum composed on that oil" means. It is a second rect (`f4-oud`,
+`oudInFlacon` gradient) tracking `f4-liquid` exactly with only its opacity
+animated — SVG will not interpolate gradient stops without SMIL, so do not try.
+
+**Raising the cap is what makes any of it possible.** With the cap on, nothing
+can enter, which is half of why the fill read as arriving from nowhere. It
+rides the same `capDy` as the press, so the burst still tracks it.
+
+The drop *forms* during the last of the camera pan (which finishes at p 0.94)
+and *falls* once the camera is parked — deliberate; at p 0.915 the bottle's
+base is still below the fold, so nothing that matters happens down there yet.
+
+Clipping was checked against the pre-change build, because raising the cap
+makes the flacon taller than the lift/shrink tune assumes. Desktop worst top
+overhang went 172px → 168px, mobile 121px → 121px. **That overhang is
+pre-existing** — it is the scene stepping aside as the strip rises at the very
+end of the chapter, not a new defect. Measure it by navigating to each build
+directly; an iframe reports nonsense here (it gave −1628px against a real
+−121px, because its `scrollTo` does not drive the pinned layout).
+
+Render the beats with `render/preview_chapter4.py --strip 0.9,0.93,0.95,...`,
+which drives the **real** `heroLoop` via the reduced-motion still rather than
+reimplementing the animation maths.
+
 ### The chapter IV flacon
 Clear glass with a light gold eau de parfum that fills as the chapter plays —
 `f4-liquid` is a rect clipped to `flaconClip` whose top edge is driven up, with
@@ -200,6 +246,7 @@ matter here: the still is drawn by a direct `heroLoop(0)` call.
 | `make_og.py` | Regenerates `assets/og-image.jpg` |
 | `preview_flacon.py` | Renders the hero scene to a real PNG via headless Chrome. `--fill 0.5` for a part-filled flacon. **The only way to actually see the artwork here.** |
 | `retime_chapter4.py` | Record of the chapter IV retiming that made the fill visible |
+| `preview_chapter4.py` | Renders chapter IV's beats through the real `heroLoop`. `--p 0.95` for one frame, `--strip a,b,c` for a sequence. Uses `_rmtest.html` as its scratch page. |
 | `preview_reduced.py` | Writes `_rmtest.html` — index with the reduced-motion branch forced on. The only way to see that build without toggling the OS setting. `--rm` deletes it. |
 | `mabkhara.py` | Blender/Cycles still — **not used on the site** |
 

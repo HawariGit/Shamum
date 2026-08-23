@@ -233,8 +233,12 @@ three-quarter view in a box. Three things were wrong until then:
 - **The cap is polished metal, not gold.** Polished metal has no colour of its
   own: it is near-black where it reflects the room and blown out where it
   reflects the light, and the jump between the two is *abrupt*. It was a gentle
-  gold ramp, which reads as anodised plastic. `capMirror` has the hard stops;
-  `capGold` is untouched because floor 3's oil vial still uses it. It sits on a
+  gold ramp, which reads as anodised plastic. `capMirror` has the hard stops.
+  **`capGold` has since had the same treatment** — the oil bottles' caps, on
+  floor 3's vial and its twin on the chapter IV bench, sampled off the product
+  shot: a broad flat plateau at `#E5B852` with two speculars in it, falling to
+  `#433117` within a few pixels at each edge. Same principle, opposite lighting:
+  the flacon's cap reflects a dark room, the oil caps are lit. It sits on a
   brass ring (`capBrass`) and is nearly square, 206×215 in frame.
 - **There is a slab of clear glass under the liquid**, about a tenth of the
   body. The liquid floor is **3300, not 3328** — the last 28px of a 334px body

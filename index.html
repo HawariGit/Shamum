@@ -1843,14 +1843,26 @@ body.menu-open { overflow: hidden; }
           <stop offset="72%"  stop-color="#7A5A24"/>
           <stop offset="100%" stop-color="#A88A44"/>
         </linearGradient>
+        <!-- The oil bottles' cap: polished gold, sampled off the product shot
+             rather than invented. Across the real cap the tone is a broad flat
+             plateau at #E5B852 with two bright speculars in it, and it falls off
+             to #433117 in the space of a few pixels at each edge. The stops were
+             a smooth seven-step ramp, which is what made it read as a soft
+             painted cylinder instead of a mirror — polished metal has hard
+             edges between its reflections. Same principle as capMirror on the
+             flacon, but gold: that one reflects a dark room, this one is lit. -->
         <linearGradient id="capGold" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%"   stop-color="#6E5121"/>
-          <stop offset="14%"  stop-color="#F7E3A6"/>
-          <stop offset="32%"  stop-color="#E0BB63"/>
-          <stop offset="52%"  stop-color="#BE9235"/>
-          <stop offset="72%"  stop-color="#8A661F"/>
-          <stop offset="88%"  stop-color="#5E4517"/>
-          <stop offset="100%" stop-color="#A87F31"/>
+          <stop offset="0%"   stop-color="#3A2A12"/>
+          <stop offset="6%"   stop-color="#5E4517"/>
+          <stop offset="11%"  stop-color="#C89939"/>
+          <stop offset="17%"  stop-color="#E1B350"/>
+          <stop offset="28%"  stop-color="#F6E3A8"/>
+          <stop offset="38%"  stop-color="#E8BC55"/>
+          <stop offset="56%"  stop-color="#E5B852"/>
+          <stop offset="70%"  stop-color="#F2D68C"/>
+          <stop offset="80%"  stop-color="#CE9E3C"/>
+          <stop offset="90%"  stop-color="#7A5A20"/>
+          <stop offset="100%" stop-color="#3A2A12"/>
         </linearGradient>
         <!-- Body of the eau de parfum, for the shimmer sweep. Follows the
              redrawn bottle: shoulders at 3000, foot at 3334. -->
@@ -2347,10 +2359,12 @@ body.menu-open { overflow: hidden; }
                        Q757 2092 734 2089 Z"
                     fill="url(#capGold)" stroke="#6E5121" stroke-width="0.9"/>
               <path d="M700 2096 Q683 2104 677 2118 Q674 2140 676 2162 Q678 2182 684 2194 L684 2214 L693 2214 L693 2194 Q687 2180 685 2160 Q683 2130 694 2106 Z"
-                    fill="#F7E9C4" opacity="0.34"/>
+                    fill="#FFF8E2" opacity="0.5"/>
               <path d="M752 2098 Q765 2110 767 2130 L767 2160 Q765 2182 757 2194 L757 2214 L748 2214 L748 2194 Q756 2180 758 2160 Q760 2132 748 2106 Z"
-                    fill="#5E4517" opacity="0.5"/>
-              <ellipse cx="720" cy="2094" rx="22" ry="5.5" fill="#FBF2D8" opacity="0.32"/>
+                    fill="#3A2A12" opacity="0.62"/>
+              <ellipse cx="720" cy="2094" rx="22" ry="5.5" fill="#FFF8E2" opacity="0.5"/>
+              <path d="M702 2092 Q720 2086 738 2092" stroke="#FFFDF2" stroke-width="1.5"
+                    fill="none" opacity="0.6"/>
               <ellipse cx="720" cy="2091" rx="10" ry="3" fill="none" stroke="#6E5121" stroke-width="0.9" opacity="0.5"/>
             </g>
             <!-- glass highlights -->

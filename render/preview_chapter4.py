@@ -36,6 +36,7 @@ STILL_P = re.compile(r"var HERO_STILL_P = [\d.]+;")
 STILL_T = re.compile(r"var HERO_STILL_T = [^;]+;")
 MAC = re.compile(r"var CH4_MAC = [\d.]+;")
 MAC_VAL = None
+ZOOM_ON = False
 
 
 # Injected for sequence renders only. The nav is page chrome, not part of the
@@ -81,6 +82,15 @@ def shot(p, dest, t=None):
             print("ABORT: no </head> to inject the recording styles into")
             sys.exit(1)
         src = src.replace("</head>", CLEAN, 1)
+    # The camera push-in is switched off in the still on purpose, so the
+    # reduced-motion frame stays the composed one that was approved. That also
+    # hides it from every preview render, hence this: --zoom neutralises the
+    # guard so the beat can actually be looked at.
+    if ZOOM_ON:
+        g = "var zoomT = heroStill ? 0"
+        if g not in src:
+            print("ABORT: zoom guard not found"); sys.exit(1)
+        src = src.replace(g, "var zoomT = false ? 0", 1)
     if MAC_VAL is not None:
         if not MAC.search(src):
             print("ABORT: CH4_MAC not found"); sys.exit(1)
@@ -123,7 +133,9 @@ def shot_guarded(p, dest, t, prev_lum, crop):
 
 
 def main():
-    global MAC_VAL
+    global MAC_VAL, ZOOM_ON
+    if "--zoom" in sys.argv:
+        ZOOM_ON = True
     if "--mac" in sys.argv:
         MAC_VAL = sys.argv[sys.argv.index("--mac") + 1]
     if "--out" in sys.argv:

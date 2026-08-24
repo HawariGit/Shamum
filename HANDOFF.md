@@ -87,6 +87,40 @@ covers a running animation. If you retime a chapter, use
 `render/retime_chapters.py` — it refuses to run unless every threshold
 matches exactly once.
 
+### The push-in — chapter I's big moment
+The camera panned the entire journey at **one scale**. Every floor framed
+identically, nothing ever near or far — which is why the hero read as competent
+rather than big. A sequence needs shot sizes.
+
+It now pushes in once, hard, on the thing the whole story turns on: **the wound
+at (720,790)**, where the axe opens the trunk and the resin wells out.
+
+| p | |
+|---|---|
+| 0.182–0.214 | push in, 1.0 → **2.6** about the wound |
+| 0.206–0.268 | **`#f1-bloom`** — the resin catches and floods the notch with light |
+| 0.258–0.292 | release, as the camera starts down to the mabkhara |
+
+- `zoomY` lifts the wound from y 790 toward the middle of the frame as it closes
+  in; without it the push centres on the lower third and reads as a crop.
+- The near layer goes to **2.84** against the world's 2.6 — pushing in should
+  open the parallax up, not flatten it.
+- Chapter I's title fades out across the same beat (0.235–0.275), so the type
+  clears the frame just as the frame closes in. That was luck, but keep it.
+- The bloom uses `sin(t·π)` so it rises *and* falls on one term — no second
+  threshold to keep in sync.
+- **Free in SVG.** The world is vector, so 2.6× costs nothing and loses nothing.
+
+⚠️ **Both are disabled when `heroStill` is set**, so the reduced-motion frame
+stays the composed tree that was approved. p 0.23 sits *inside* the bloom
+window, so without that guard the still shows a glowing blob on an un-zoomed
+tree. That also means neither is visible in any `preview_chapter4.py` render —
+**use `--zoom`**, which neutralises the guard so the beat can be looked at.
+
+Spans about **0.6vh of scroll**. Slowing it further means lengthening gap1,
+which also slows chapters I and II generally — they were not the complaint.
+On mobile it crops to world x 640–800: trunk and wound both fully in frame.
+
 ### Scene clearing
 `shelfCover` = fraction of a strip inside the frame (ramps **both** ways —
 an earlier `1 - top/vh` pinned at 1 then dropped to 0 in one frame, which was

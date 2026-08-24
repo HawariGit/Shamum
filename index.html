@@ -2017,6 +2017,15 @@ body.menu-open { overflow: hidden; }
             <path d="M724 812 C727 748 722 690 726 612" stroke="#150A02" stroke-width="1.5" fill="none" opacity="0.5"/>
             <path d="M718 790 C716 760 720 730 717 700" stroke="#0E0701" stroke-width="1.2" fill="none" opacity="0.5"/>
             <path d="M735 800 C737 740 733 700 736 632" stroke="#C2A368" stroke-width="1.8" fill="none" opacity="0.16"/>
+            <!-- The ignition. The push-in gave the moment a shot size; this gives
+                 it an event. The resin catches and floods the notch with light at
+                 the top of the move, then settles back to the wound's own glow. -->
+            <g id="f1-bloom" opacity="0">
+              <ellipse cx="720" cy="790" rx="150" ry="112" fill="url(#sunGlow)"/>
+              <ellipse cx="720" cy="790" rx="74" ry="52" fill="#F0C061" opacity="0.30"/>
+              <ellipse cx="720" cy="790" rx="34" ry="23" fill="#FFE9AE" opacity="0.55"/>
+              <ellipse cx="720" cy="790" rx="15" ry="10" fill="#FFF8E0" opacity="0.8"/>
+            </g>
             <g id="trunk-veins" opacity="0">
               <path d="M714 800 C712 742 716 692 713 644" stroke="#C9922E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
               <path d="M727 795 C729 747 725 702 728 658" stroke="#B8821E" stroke-width="1.1" fill="none" stroke-linecap="round" opacity="0.8"/>
@@ -3571,6 +3580,7 @@ sc.canMid     = $s('can-mid');
 sc.canFront   = $s('can-front');
 sc.trunkVeins = $s('trunk-veins');
 sc.wound      = $s('f1-wound');
+sc.f1bloom    = $s('f1-bloom');
 
 // Chips thrown off the trunk on each axe strike.
 var chipEls = [];
@@ -3871,6 +3881,11 @@ function heroLoop(ts){
     // which is backwards for a wood that only makes oud once it is injured.
     var woundT = eOut(seg(p, 0.19, 0.30));
     op(sc.wound, woundT * (0.82 + 0.18*Math.sin(heroTime*1.9)));
+    /* Flares at the top of the push-in and settles. sin gives it a rise and a
+       fall in one term, so it blooms and dies without a second threshold. */
+    var bloomT = heroStill ? 0 : seg(p, 0.206, 0.268);
+    op(sc.f1bloom, bloomT > 0 && bloomT < 1
+      ? Math.pow(Math.sin(bloomT*Math.PI), 1.4) * 0.95 : 0);
     op(sc.trunkVeins, woundT * (0.42 + 0.3*Math.sin(heroTime*1.4)));
 
     // Chips fly on every strike, on the same 2.2/sec beat as the swing
@@ -3937,12 +3952,38 @@ function heroLoop(ts){
   // still is parked exactly on the floor: the breath is idle motion, and
   // baking one arbitrary phase of it into the frame only offsets the camera.
   if (!isMobile && !heroStill) camY += Math.sin(heroTime*0.35) * 2.5;
-  var camStr = 'translate(0,' + (-Math.round(camY*10)/10) + ')';
+  /* ── The push-in ──
+     The camera panned the whole journey at ONE scale. Every floor framed
+     identically, nothing ever near or far — which is why the hero read as
+     competent rather than big. A sequence needs shot sizes.
+     So it pushes in once, hard, on the one thing the whole story turns on: the
+     wound at (720,790), where the axe opens the trunk and the resin the house is
+     built on wells out. 1.0 → 2.2 about that point, held while the wound fills
+     and the veins ignite beneath it, released as the camera starts down to the
+     mabkhara. The chapter I title is fading out across the same beat, so the
+     type clears the frame just as the frame closes in.
+     Free in SVG: the world is vector, so 2.2x costs nothing and loses nothing.
+     The near layer goes to 2.38 rather than 2.2 — pushing in should open the
+     parallax up, not flatten it. */
+  var zoomT = heroStill ? 0
+            : sstep(seg(p, 0.182, 0.214)) * (1 - sstep(seg(p, 0.258, 0.292)));
+  var zoom  = 1 + zoomT * 1.6;
+  // Lifts the wound from y 790 toward the middle of the frame as it closes in;
+  // without it the push-in centres on the lower third and reads as a crop.
+  var zoomY = -310 * zoomT;
+
+  var camStr = zoomT > 0.0004
+    ? 'translate(0,' + (-Math.round((camY - zoomY)*10)/10) + ') translate(720,790) scale('
+      + zoom.toFixed(4) + ') translate(-720,-790)'
+    : 'translate(0,' + (-Math.round(camY*10)/10) + ')';
   if (camStr !== lastCamStr) {
     lastCamStr = camStr;
     sc.world.setAttribute('transform', camStr);
     // Near layer moves 1.3x faster — parallax depth during pans
-    if (!isMobile) sc.worldNear.setAttribute('transform', 'translate(0,' + (-Math.round(camY*13)/10) + ')');
+    if (!isMobile) sc.worldNear.setAttribute('transform', zoomT > 0.0004
+      ? 'translate(0,' + (-Math.round((camY*1.3 - zoomY*1.18)*10)/10) + ') translate(720,790) scale('
+        + (1 + zoomT*1.84).toFixed(4) + ') translate(-720,-790)'
+      : 'translate(0,' + (-Math.round(camY*13)/10) + ')');
   }
 
   /* ── Floor 2: mabkhara + falling oud + smoke (gated) ── */

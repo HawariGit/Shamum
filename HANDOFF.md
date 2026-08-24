@@ -131,6 +131,47 @@ interior is free to redraw. The bounds are not: the cup mouth is held at y 1428
 because the falling oud pieces are aimed at 1412–1424, and the foot and shelf
 sit immediately under 1548.
 
+### Chapter IV's layout — text vs the flacon
+The chapter title used to sit **across the bottle**, buttons and all. Measured
+worst overlap between each chapter's text block and its subject:
+
+| | ht1 tree | ht2 mabkhara | ht3 vial | ht4 flacon |
+|---|---|---|---|---|
+| before | 165px | 0 | 0 | **282px** |
+| after | 69px | 0 | 0 | **0 (111px clear)** |
+
+**Cause, and it is structural.** The flacon is the tallest subject *and* began a
+third of the way down its floor (world y 3000 of 2700–3600). The mabkhara — which
+never collides — begins three fifths down. Chapter IV was simply drawn too high
+and too big for a title to sit above it.
+
+**Fix one: `#f4` carries a transform.**
+`translate(0,115) translate(720,3334) scale(0.76) translate(-720,-3334)` — scaled
+about the flacon's own base, so the bench, vial, pipette, companions and every
+drop path keep the relationships they had. Only the group moves.
+
+⚠️ **The canvas is outside that group.** `drawFx` draws the nozzle burst on
+`#hero-canvas`, which is not in the SVG, so it must be mapped by hand:
+`F4_SCALE` / `F4_DROP` / `F4_ORIGIN` and `f4y()` mirror the group's transform and
+the drawFx call goes through them. **Keep the two in step** — the group's
+transform is the source of truth. Nothing else on floor 4 crosses the boundary.
+
+**Fix two: the type had no height response at all.** Every chapter-text size is
+clamped against `vw`, so on a short *wide* window the block renders at its
+largest exactly when there is least room — 275px of a 640px viewport, 43%. A
+`@media (max-height: 780px)` step-down takes it to 219px. Both fixes were needed:
+the transform alone left only **13px** of clearance at 1280×640; with the type
+rule it is **89px**. At 1440×900 the rule is correctly inactive.
+
+**Measure the body path, not `#f4-bottle`.** The group's bbox is polluted by
+zero-opacity elements parked at their default coordinates — it reported a top of
+−1806 while the visible glass was at 493. Use
+`#f4-bottle path[fill="url(#bottleGrad)"]` plus `#f4-cap`.
+
+Note the press is a *blink* on mobile — burst peaks 0.95 across about 0.06vh,
+some 50px of scroll. Sampling at 0.1vh straddles it and reports zero; that is the
+probe, not the animation.
+
 ### Chapter IV — the perfumer's bench
 Chapter IV was an effect with no cause, and then briefly a cause with no
 source: the bottle filled, and once a drop was added the drop itself appeared

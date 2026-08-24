@@ -617,6 +617,23 @@ body.menu-open { overflow: hidden; }
   margin: 16px auto 0; line-height: 1.8; max-width: 470px;
 }
 .hero-cta { margin-top: 28px; display: flex; gap: 14px; justify-content: center; }
+
+/* Short viewports. Every size above is clamped against `vw`, so on a short wide
+   window the chapter block renders at its LARGEST exactly when there is least
+   room for it — at 1280x640 it took 275px, 43% of the viewport, and the scene
+   got what was left. Nothing here responds to height until now.
+   This is the second half of the chapter IV fix; the first was moving floor 4's
+   composition down and in. Both were needed: the transform alone left only 13px
+   between the block and the flacon at 1280x640. */
+@media (max-height: 780px) {
+  .ch-text  { top: 8%; }
+  .ch-eyebrow { font-size: 9px; letter-spacing: 0.28em; margin-bottom: 8px; }
+  .ch-ar    { font-size: clamp(24px, 3.2vw, 40px); line-height: 1.2; }
+  .ch-head  { font-size: clamp(28px, 3.8vw, 46px); line-height: 1.06; margin-top: 3px; }
+  .ch-sub   { font-size: 12px; line-height: 1.6; margin-top: 12px; max-width: 430px; }
+  .hero-cta { margin-top: 18px; gap: 10px; }
+  .btn-hero-gold, .btn-hero-ghost { padding: 12px 28px; font-size: 10px; }
+}
 .btn-hero-gold {
   font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500;
   letter-spacing: 0.24em; text-transform: uppercase;
@@ -2391,7 +2408,18 @@ body.menu-open { overflow: hidden; }
         </g>
 
         <!-- FLOOR 4 · THE PERFUME (y 2700–3600) -->
-        <g id="f4">
+        <!-- Floor 4's whole composition sits lower and smaller than it was
+             drawn. The flacon is by far the tallest subject and began a third of
+             the way down its floor, while the mabkhara — which never collides
+             with anything — begins three fifths down. That is why chapter IV's
+             title landed across the bottle while the other three cleared theirs:
+             measured overlap was 282px against 165 / 0 / 0.
+             Scaled about the flacon's own base so the bench, the vial, the
+             pipette, the companions and the drop paths keep every relationship
+             they had; only the group moves. See F4_SCALE/F4_DROP/F4_ORIGIN in
+             the script — the canvas nozzle is outside this group and must be
+             mapped through the same numbers by hand. -->
+        <g id="f4" transform="translate(0,115) translate(720,3334) scale(0.76) translate(-720,-3334)">
           <ellipse id="f4-glow" cx="720" cy="3140" rx="520" ry="340" fill="url(#sunGlow)" opacity="0"/>
           <g id="f4-rays" opacity="0">
             <polygon points="720,3140 700,2770 740,2770" fill="url(#rayGrad)" opacity="0.3"/>
@@ -3381,6 +3409,12 @@ var HERO_STILL_P = 0.23;
    sin(heroTime * 2.2 * 2PI). 15/4.4 is a zero of it, so the woodcutters are
    caught between strikes with their arms down, rather than frozen mid-swing. */
 var HERO_STILL_T = 15 / 4.4;
+/* Floor 4's composition transform, mirrored from the #f4 group's own transform.
+   Anything drawn for floor 4 OUTSIDE that group — which is only the canvas
+   nozzle — must be mapped through these or it detaches from the scene. Keep the
+   two in step: the group's transform is the source of truth. */
+var F4_SCALE = 0.76, F4_DROP = 115, F4_ORIGIN = 3334;
+function f4y(worldY){ return F4_ORIGIN + F4_SCALE*(worldY - F4_ORIGIN) + F4_DROP; }
 
 /* ──────────── CHAPTER SCROLL ZONES ────────────
    The camera advances only while a .chapter-gap is passing; it holds still
@@ -4300,7 +4334,7 @@ function heroLoop(ts){
   var da = Math.sin(seg(p, 0.30, 0.60)*Math.PI)*0.5
          + eOut(seg(p, 0.885, 1))*0.25;
   var burstT = seg(p, 0.952, 0.99);
-  drawFx(Math.min(da, 0.7), burstT, 720, 2846 - camY - capDy);
+  drawFx(Math.min(da, 0.7), burstT, 720, f4y(2846) - camY - capDy*F4_SCALE);
 }
 /* The chapter texts are overlays on a frame that travels past them, all four
    pinned to the same spot near the top. With the camera parked they would pile

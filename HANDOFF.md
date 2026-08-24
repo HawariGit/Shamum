@@ -121,6 +121,57 @@ Spans about **0.6vh of scroll**. Slowing it further means lengthening gap1,
 which also slows chapters I and II generally — they were not the complaint.
 On mobile it crops to world x 640–800: trunk and wound both fully in frame.
 
+### The finale — the pull-back
+The journey built four chapters and then stopped into a product strip; nothing
+collected it. `.chapter-finale` is transparent scroll **after the last shelf but
+still inside the pinned track**, during which the camera retreats to `scale
+0.25` — all 3600 of the world in the 900 frame — and the four stages become one
+column. Deliberately **not** a `.chapter-gap`: `measureZones` counts only those,
+so it adds scroll without advancing `p`, exactly like the coda. `p` had no
+headroom left; this needed its own room.
+
+⚠️ **The journey puts each chapter out as it passes.** By p 1, floors 1–3 are
+dark, so the first pull-back revealed three empty rooms and one lit bottle. The
+**relight** block brings the whole world back up across the retreat — not to its
+chapter state, but to a still, evenly lit elevation. It runs *last* in
+`heroLoop`, after every per-floor block, all of which are gated on `p` and have
+stopped running by then. That ordering is the whole trick.
+
+`finaleT` completes across the **first 60%** of the zone, not all of it. Using
+the whole zone put `finaleT = 1` at the same instant the hero unpinned — the
+assembled view existed for one frame and scrolled away. The remaining 40% is
+hold: ~1.9vh desktop, 1.8vh mobile.
+
+The four subjects sit at different heights within their own floors, so a plain
+0.25 scale stacks them 238 / 157 / 298px apart. `#f2` and `#f3` get a finale-only
+translate to put all four on a 231px pitch; `#f4` is left alone because it already
+carries the layout transform. Both are `removeAttribute`'d when the finale
+releases — without that they stay nudged on the way back up.
+
+Preview it with `preview_chapter4.py --fin 1`; it is driven by a live
+`getBoundingClientRect` and disabled in the still, so no render can reach it
+otherwise.
+
+### The pan veil and the chapter tint
+Two **screen-space** overlays, outside `#world` so the camera does not carry
+them, and under the chapter type (which is HTML alongside the svg) so neither
+ever tints the words.
+
+- **`#pan-veil`** — every chapter change was the same move, four identical
+  vertical pans. The mabkhara's own smoke motivates one of them, so the descent
+  to the still now passes *through* it. Peaks 0.45 on `sin(fallT·π)`, the same
+  0.63–0.71 the camera drops on. First attempt peaked at 0.9 and white-outed
+  the frame.
+- **`#chapter-tint`** — one warm dark ran the whole journey. Each chapter now
+  has its own air: cool green forest, warm majlis, smoky blue still, gold bench,
+  lerped between chapter centres rather than switched at boundaries. Only the
+  outer stop's colour is animated.
+
+⚠️ **The tint is a vignette, not a flat wash.** A flat rect was tried first and
+is wrong on a dark scene: alpha-compositing a mid-tone over near-black lifts the
+whole frame and flattens the contrast the hero depends on. Shaped as a vignette
+it colours the air and leaves the subject clean.
+
 ### Scene clearing
 `shelfCover` = fraction of a strip inside the frame (ramps **both** ways —
 an earlier `1 - top/vh` pinned at 1 then dropped to 0 in one frame, which was

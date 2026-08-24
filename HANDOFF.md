@@ -99,6 +99,33 @@ scoring worst-overlap + worst-clipping. **0.15/0.30 is the only pair that
 clears every heading with nothing running off the top.** More lift clips the
 flacon; less shrink leaves the mabkhara in the heading.
 
+### The collection cards, and the page's atmosphere
+Two changes made when the user asked for "more pazzaz and wow" across the whole
+site — after screenshotting every section, because `.reveal`, `.reveal-scale`,
+`.reveal-lines` and the image scale-ins **already exist**, so "add entrance
+animation" was not the gap.
+
+**The cards.** Every product sat on a pale plate, which against this page read as
+fifteen bright rectangles — the weakest thing on the page and the commercial
+heart of it. The plate cannot simply be darkened (see open item 3), so its edges
+are blended into the card instead: `.product-image-wrap::after` carries an inset
+vignette, turning each card from a sticker on dark into a lit alcove. The ground
+is also warmed toward the house palette, and because it *multiplies*, that
+warmth reaches all fifteen photos identically — the only grade that touches every
+one of them however it was shot.
+
+**`#page-ambient`.** The hero breathes and everything below it was static. One
+fixed layer of three faint warm radials over the whole page, z-index 4 — above
+the sections, under the nav at 1000. `pointer-events: none`, so it cannot block
+anything by construction. Transform-only drift, and it holds still under
+`prefers-reduced-motion`.
+
+⚠️ **It deliberately carries no `mix-blend-mode`.** Screen-blending was tried and
+is visually indistinguishable over near-black, but a blended fixed layer forces
+the entire page beneath it to recomposite every frame — which this page, with a
+scroll-driven animation, cannot spare. It also stops the photographs washing out.
+If you are tempted to add a blend mode here, this is why it is not there.
+
 ### The mabkhara
 Olive-wood chunks cast in emerald resin, a blackened metal cup recessed in the
 top, black foot. Redrawn from the user's photographs after the first version
@@ -453,9 +480,23 @@ back on the page** — the user said Marwa was discontinued, the store agrees
    romanises مندل as *mandle*, مندلي is probably *Mandli*; ask before changing.
 2. ~~**Marwa**~~ — **decided: leave as-is.** Both stay listed, badged and
    dimmed with the other three sold-out items.
-3. **Product photo backgrounds** — 8 of 15 are JPEGs with white baked in, so
-   cards keep a lit plate. If the user wants bottles floating directly on the
-   dark, those 8 need re-exporting with transparency (a photo job).
+3. ~~**Product photo backgrounds**~~ — **this description was wrong.** The 8
+   JPEGs are *not* product shots with white baked in; they are **lifestyle
+   photographs** — Ghandi is a presentation box of oud chips, Mandle is the
+   bottle in a wooden case with a painting behind it. **They cannot be cut
+   out**: there is no isolated product to key. The 7 PNGs already carry
+   transparency.
+   The plate is therefore **structural, not a workaround to remove**: the images
+   composite with `mix-blend-mode: multiply`, which needs a light ground for
+   their backgrounds to dissolve into. Darken the plate and every photo becomes
+   a bright rectangle inside a dark frame. Handled instead by blending the
+   plate's *edges* — see the card treatment below.
+   **Still open, and it is a photo job:** consistent product photography would
+   fix this properly. Nothing in CSS will.
+4. **`Jawhar`'s card image is a poster, not a photo** — it carries Arabic body
+   copy *and the price* (`١٥٠ ريال عماني`) printed into the image. If the price
+   changes the card is silently wrong. **Flagged at the user's instruction and
+   deliberately not changed.** Fixing it needs a different asset from the store.
 4. **Analytics** — still none. The user is "showing the boss"; worth one line
    of Vercel Analytics.
 5. **Pacing dial** — gap heights are 400/210/**260**vh desktop, 330/180/**225**vh

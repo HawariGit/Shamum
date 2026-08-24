@@ -452,7 +452,7 @@ body.menu-open { overflow: hidden; }
 .chapter-products .product-card:hover { border-color: rgba(194,163,104,0.55); }
 .chapter-products .product-image-wrap {
   height: 148px; padding: 12px;
-  background: linear-gradient(155deg, #f2e9d8 0%, #ded2b9 100%);
+  background: linear-gradient(155deg, #EFE0C2 0%, #D6C09B 100%);
 }
 .chapter-products .product-info { padding: 12px 12px 14px; }
 .chapter-products .product-name { color: var(--sand-50); font-size: 16px; }
@@ -546,6 +546,21 @@ body.menu-open { overflow: hidden; }
 @media (max-width: 640px) {
   .ch-text.ch-static { padding: 6vh 24px 20px; }
 }
+
+#page-ambient {
+  position: fixed; inset: -12%; pointer-events: none; z-index: 4;
+  opacity: 0.85; will-change: transform;
+  background:
+    radial-gradient(36% 28% at 20% 16%, rgba(198,152,74,0.10), transparent 70%),
+    radial-gradient(30% 24% at 84% 58%, rgba(154,106,44,0.09), transparent 72%),
+    radial-gradient(44% 32% at 48% 104%, rgba(124,82,34,0.08), transparent 70%);
+  animation: ambientDrift 46s ease-in-out infinite alternate;
+}
+@keyframes ambientDrift {
+  from { transform: translate3d(-1.6%, -1.2%, 0) scale(1.02); }
+  to   { transform: translate3d(1.6%,  1.4%, 0) scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce) { #page-ambient { animation: none; } }
 
 #hero-sticky {
   position: sticky; top: 0; height: 100vh; width: 100%;
@@ -1012,10 +1027,27 @@ body.menu-open { overflow: hidden; }
 .product-badge.new { background: var(--gold-500); color: #fff; }
 .product-badge.limited { background: var(--teal-deep); color: var(--sand-50); }
 
+/* The plate cannot be dark. The photos are lifestyle shots with their own light
+   backgrounds and they are composited with mix-blend-mode: multiply, which needs
+   a light ground for those backgrounds to dissolve into — darken the plate and
+   every photo becomes a bright rectangle inside a dark frame.
+   So the plate stays light and its EDGES are blended into the card instead: an
+   inset vignette over the image turns each card from a pale sticker on dark into
+   a lit alcove. The ground is also warmed toward the house palette, and because
+   it multiplies, that warmth is applied identically to all fifteen photos — the
+   one grade that reaches every one of them however they were shot. */
 .product-image-wrap {
+  position: relative;
   height: 420px; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(155deg, #f9f5ed 0%, #ede5d3 100%); overflow: hidden;
+  background: linear-gradient(155deg, #F4E7CC 0%, #DECBA6 100%); overflow: hidden;
   padding: 36px;
+}
+.product-image-wrap::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 76% 68% at 50% 42%, transparent 44%, rgba(44,26,11,0.34) 100%),
+    linear-gradient(to bottom, rgba(44,26,11,0.12) 0%, transparent 26%,
+                    transparent 70%, rgba(24,13,6,0.26) 100%);
 }
 .product-image-wrap svg {
   height: 340px; width: auto;
@@ -1539,6 +1571,18 @@ body.menu-open { overflow: hidden; }
 </style>
 </head>
 <body>
+<!-- The hero breathes — smoke, dust, a warm glow — and all of it stopped dead at
+     the hero, leaving everything below as static photo/heading/text. This is one
+     continuous layer over the whole page so the site reads as a single world.
+     Fixed above the sections but under the nav (1000), and deliberately faint:
+     the gradients peak around 0.10 alpha, so the effective tint on any pixel is
+     a few percent — atmosphere across large dark areas, nothing measurable on
+     text. NO mix-blend-mode: over near-black, screen blending is all but
+     identical to plain alpha, and a blended fixed layer forces the whole page
+     beneath it to recomposite every frame — which this page, with its scroll
+     animation, cannot spare. It also stops the photographs washing out. Transform-only animation so it stays on the GPU,
+     and it holds still for anyone who asked for less motion. -->
+<div id="page-ambient" aria-hidden="true"></div>
 
 <!-- ENTRY VEIL -->
 <div id="veil"><img src="assets/logo-mark.png" alt="SHAMUM"></div>

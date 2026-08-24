@@ -169,6 +169,18 @@ anything joins it. Companions after, never with.
 | 0.980–0.988 | the cap comes back and seats |
 | 0.988–1.000 | the press, then the mist |
 
+**The title used to never clear.** `chReveal(sc.ht4, ..., 0)` passed a literal
+`0` for the out-threshold rather than a `seg()` call, so unlike I–III the
+heading stayed at full opacity through the entire rest of the chapter — CTA
+text sitting directly on the flacon's own label as it filled and turned gold.
+Now fades out over **0.948–0.962**, clearing before the companions arrive
+(0.948) rather than matching I–III's 0.04-wide fade, because chapter IV's whole
+band is only 0.12 wide and there is no room to spare before the story's payoff.
+Costs nothing: Collection and Our Story are also in the nav, the mobile menu,
+and the footer. `pointerEvents` is now derived from the opacity `chReveal` just
+set rather than a second hardcoded threshold (`p > 0.915`) that had to be kept
+in sync by hand.
+
 **Nothing in chapter IV may exceed p 1.** The maceration was first paid for by
 offsetting everything after it by +0.012, which put the press at 1.002–1.008 and
 the mist at an inverted 1.003–1.000 — so **neither ever fired**, and the cap

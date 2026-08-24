@@ -4280,8 +4280,17 @@ function heroLoop(ts){
   chReveal(sc.ht1, seg(p, 0.13, 0.18), seg(p, 0.235, 0.275));
   chReveal(sc.ht2, seg(p, 0.40, 0.45), seg(p, 0.545, 0.585));
   chReveal(sc.ht3, seg(p, 0.665, 0.715), seg(p, 0.815, 0.855));
-  chReveal(sc.ht4, seg(p, 0.90, 0.94), 0);
-  sc.ht4.style.pointerEvents = p > 0.915 ? 'auto' : 'none';
+  /* Unlike I-III, this had no out-threshold (a literal 0, not a seg()), so
+     it never cleared - I-III each flash and fade before their floor's payoff;
+     this one sat at full opacity through the fill, the companions, and the
+     turn to gold, with the CTA text landing directly on the bottle's own
+     label. Faded out before the companions arrive (0.948) rather than
+     matching the others' 0.04-wide fade, because chapter IV's whole p-band is
+     only 0.12 wide and there is no room to spare before the story's payoff.
+     Costs nothing: Collection and Our Story are also in the nav, the mobile
+     menu, and the footer. */
+  chReveal(sc.ht4, seg(p, 0.90, 0.94), seg(p, 0.948, 0.962));
+  sc.ht4.style.pointerEvents = (parseFloat(sc.ht4.style.opacity) > 0.05) ? 'auto' : 'none';
 
   /* ── Chapter markers ── */
   chDotWrap.style.opacity = (p > 0.02 && p < 0.995) ? 1 : 0;

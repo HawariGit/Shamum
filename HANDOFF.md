@@ -121,37 +121,6 @@ Spans about **0.6vh of scroll**. Slowing it further means lengthening gap1,
 which also slows chapters I and II generally — they were not the complaint.
 On mobile it crops to world x 640–800: trunk and wound both fully in frame.
 
-### The finale — the pull-back
-The journey built four chapters and then stopped into a product strip; nothing
-collected it. `.chapter-finale` is transparent scroll **after the last shelf but
-still inside the pinned track**, during which the camera retreats to `scale
-0.25` — all 3600 of the world in the 900 frame — and the four stages become one
-column. Deliberately **not** a `.chapter-gap`: `measureZones` counts only those,
-so it adds scroll without advancing `p`, exactly like the coda. `p` had no
-headroom left; this needed its own room.
-
-⚠️ **The journey puts each chapter out as it passes.** By p 1, floors 1–3 are
-dark, so the first pull-back revealed three empty rooms and one lit bottle. The
-**relight** block brings the whole world back up across the retreat — not to its
-chapter state, but to a still, evenly lit elevation. It runs *last* in
-`heroLoop`, after every per-floor block, all of which are gated on `p` and have
-stopped running by then. That ordering is the whole trick.
-
-`finaleT` completes across the **first 60%** of the zone, not all of it. Using
-the whole zone put `finaleT = 1` at the same instant the hero unpinned — the
-assembled view existed for one frame and scrolled away. The remaining 40% is
-hold: ~1.9vh desktop, 1.8vh mobile.
-
-The four subjects sit at different heights within their own floors, so a plain
-0.25 scale stacks them 238 / 157 / 298px apart. `#f2` and `#f3` get a finale-only
-translate to put all four on a 231px pitch; `#f4` is left alone because it already
-carries the layout transform. Both are `removeAttribute`'d when the finale
-releases — without that they stay nudged on the way back up.
-
-Preview it with `preview_chapter4.py --fin 1`; it is driven by a live
-`getBoundingClientRect` and disabled in the still, so no render can reach it
-otherwise.
-
 ### The pan veil and the chapter tint
 Two **screen-space** overlays, outside `#world` so the camera does not carry
 them, and under the chapter type (which is HTML alongside the svg) so neither
@@ -172,17 +141,37 @@ is wrong on a dark scene: alpha-compositing a mid-tone over near-black lifts the
 whole frame and flattens the contrast the hero depends on. Shaped as a vignette
 it colours the air and leaves the subject clean.
 
-### Scene clearing
+### Scene clearing — the scene DIMS, it never scales
 `shelfCover` = fraction of a strip inside the frame (ramps **both** ways —
 an earlier `1 - top/vh` pinned at 1 then dropped to 0 in one frame, which was
 a visible cut). Damped at `dt * 7.5`, eased with `sstep`. Drives:
 - `titleMute` — chapter title fades out by 40% cover
-- scene `translate3d` lift 0.15·vh + `scale` 1 − 0.30
+- scene `translate3d` lift **0.10·vh**, and **opacity down to 0.45**
 
-Those two numbers came from sweeping lift × shrink over all three chapters and
-scoring worst-overlap + worst-clipping. **0.15/0.30 is the only pair that
-clears every heading with nothing running off the top.** More lift clips the
-flacon; less shrink leaves the mabkhara in the heading.
+⚠️ **Do not reintroduce a scale here.** It used to shrink to 0.70, and shrinking
+a full-bleed element exposes its own bounding box: a hard-edged rectangle of
+scene sitting on the page, with the sticky's `::after` vignette — which does
+*not* shrink with it — no longer aligned to anything. The user called it the
+worst-looking moment on the site and was right.
+
+There is no version of it that works. You cannot scale an element down and still
+have it cover the frame, and enlarging it to compensate only zooms the world,
+because `#hero-svg-scene` is `preserveAspectRatio="slice"` and a bigger box crops
+harder. Dimming solves it with no geometry at all.
+
+The old 0.15/0.30 pair was tuned by a proper sweep for worst-overlap and
+worst-clipping. The sweep was sound; it just optimised a technique that could not
+work. Lift is 0.10 now because there is no shrink left to help clear the heading
+and more lift starts pushing the flacon's cap off the top.
+
+The strip's heading still overlaps its subject by ~49px on all three chapters.
+That is fine, and is the point: at 45% the scene is tonally subordinate, so type
+sits over it cleanly. It read badly before because the bottle behind it was at
+full brightness.
+
+**Look at this state with `preview_chapter4.py --cover 0.53`.** It is damped from
+live `getBoundingClientRect` calls on the strips, so a still can never reach it —
+which is much of why the broken version shipped.
 
 ### The collection cards, and the page's atmosphere
 Two changes made when the user asked for "more pazzaz and wow" across the whole

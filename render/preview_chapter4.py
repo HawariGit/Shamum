@@ -37,7 +37,7 @@ STILL_T = re.compile(r"var HERO_STILL_T = [^;]+;")
 MAC = re.compile(r"var CH4_MAC = [\d.]+;")
 MAC_VAL = None
 ZOOM_ON = False
-FIN_VAL = None
+COVER_VAL = None
 
 
 # Injected for sequence renders only. The nav is page chrome, not part of the
@@ -92,14 +92,14 @@ def shot(p, dest, t=None):
         if g not in src:
             print("ABORT: zoom guard not found"); sys.exit(1)
         src = src.replace(g, "var zoomT = false ? 0", 1)
-    # The finale pull-back is driven by a live getBoundingClientRect and is
-    # switched off in the still, so a preview render can never reach it. --fin
-    # pins it to a value instead.
-    if FIN_VAL is not None:
-        if "var finaleT = 0;" not in src or "if (finaleEl && !heroStill) {" not in src:
-            print("ABORT: finale hooks not found"); sys.exit(1)
-        src = src.replace("var finaleT = 0;", "var finaleT = %s;" % FIN_VAL, 1)
-        src = src.replace("if (finaleEl && !heroStill) {", "if (false) {", 1)
+    # shelfCover is damped from live getBoundingClientRect calls on the strips,
+    # so a still can never reach the state where a product strip is covering the
+    # scene. --cover pins it, which is the only way to look at that transition.
+    if COVER_VAL is not None:
+        hook = "  shelfCover += (coverTarget - shelfCover) * Math.min(1, dt * 7.5);"
+        if hook not in src:
+            print("ABORT: shelfCover hook not found"); sys.exit(1)
+        src = src.replace(hook, "  shelfCover = %s;" % COVER_VAL, 1)
     if MAC_VAL is not None:
         if not MAC.search(src):
             print("ABORT: CH4_MAC not found"); sys.exit(1)
@@ -143,9 +143,9 @@ def shot_guarded(p, dest, t, prev_lum, crop):
 
 def main():
     global MAC_VAL, ZOOM_ON
-    global FIN_VAL
-    if "--fin" in sys.argv:
-        FIN_VAL = sys.argv[sys.argv.index("--fin") + 1]
+    global COVER_VAL
+    if "--cover" in sys.argv:
+        COVER_VAL = sys.argv[sys.argv.index("--cover") + 1]
     if "--zoom" in sys.argv:
         ZOOM_ON = True
     if "--mac" in sys.argv:

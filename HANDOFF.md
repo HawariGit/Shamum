@@ -87,6 +87,42 @@ covers a running animation. If you retime a chapter, use
 `render/retime_chapters.py` — it refuses to run unless every threshold
 matches exactly once.
 
+### The woodcutters
+They were literally stacked rounded rectangles — two leg rects, a torso rect, a
+head ellipse — which was survivable at wide framing and became indefensible once
+the push-in zoomed to 2.6× straight at them.
+
+They are backlit silhouettes now: a dishdasha in two tones, a masar with its tail
+down the back, a rim light on the +x side because the sun is behind the tree.
+**No interior detail** — against the light, detail only muddies them.
+
+Four things learned the hard way, all of them size or tone rather than shape:
+
+- **The robe was a bell.** 56 wide against a 158 height reads as a cloak; a
+  dishdasha is nearer 42.
+- **The arm has to be a step lighter than the robe.** Matched to it, the haft
+  appears to come straight out of the chest.
+- **The rim light must be broken.** One unbroken stroke down the full height
+  reads as a pole leaning against the figure.
+- **The axe took three passes and every one was a size problem, not a shape
+  problem.** A pale trapezoid read as a paddle; a curved shape read as a mitten.
+  Both were ~23×22 against a 158-tall figure — an enormous axe. A real head is
+  about an eighth of a person's height and narrow. It is 15×10 now, dark, with
+  only the cutting edge lit.
+
+The arm pivots at the **shoulder (4,−124)**, not the old mid-torso (0,−96).
+Swing verified at ±34°.
+
+⚠️ **`HERO_STILL_T` is a zero of the swing sine**, so previews always catch the
+arms at rest — the swing cannot be checked from a still, only from a live tick
+loop.
+
+**Still the weakest thing in the scene.** They read as flat cut-outs, the axes
+never touch the trunk, and the two figures are exact mirrors of each other, which
+looks artificial. If they come up again the better move is probably structural —
+drop the figures and let an axe swing in from off-frame — rather than a fifth
+pass at drawing them.
+
 ### The push-in — chapter I's big moment
 The camera panned the entire journey at **one scale**. Every floor framed
 identically, nothing ever near or far — which is why the hero read as competent

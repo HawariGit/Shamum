@@ -50,7 +50,14 @@ COVER_VAL = None
 # air - but this renders a SEQUENCE, where they are the whole point. Leaving
 # them out cost an afternoon once: the strike was being tuned against renders
 # in which the renderer was drawing none of it.
+# #veil is the page's entry curtain: a full-screen #0D0704 panel with the logo,
+# faded out 0.9s after load. Under --virtual-time-budget it sometimes has not
+# finished going, and the capture comes back as a near-black frame with the mark
+# on it. shot_guarded does not catch these - a veil frame is dark but not black
+# enough to trip the >10 luminance jump - so two of them landed in a 54-frame
+# gif before this. Cutting it makes sequence renders deterministic.
 CLEAN = """<style>
+  #veil { display: none !important; }
   #nav, #menu-overlay, #scroll-cue, #ch-dots { display: none !important; }
   .reduced-hero #hero-canvas,
   .reduced-hero #f1-chips,

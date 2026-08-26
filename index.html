@@ -520,10 +520,17 @@ body.menu-open { overflow: hidden; }
 .reduced-hero #scroll-cue,
 .reduced-hero #ch-dots,
 .reduced-hero #hero-canvas { display: none; }
-/* Chips mid-strike and birds mid-flight only read as themselves while they are
-   moving. Held still they are debris hanging in the air, so they are cut from
-   the still rather than frozen into it. */
+/* Chips mid-strike, bark dust mid-burst and birds mid-flight only read as
+   themselves while they are moving. Held still they are debris hanging in the
+   air and a brown smudge on the trunk, so they are cut from the still rather
+   than frozen into it.
+   NOTE for anyone previewing: render/preview_chapter4.py renders through this
+   same reduced-motion branch, so these are invisible in every still it takes.
+   Its CLEAN block forces them back on for sequence renders — if you add another
+   moving part here, add it there too, or you will spend an afternoon tuning
+   something the renderer is not drawing. */
 .reduced-hero #f1-chips,
+.reduced-hero #f1-dust,
 .reduced-hero #f1-birds { display: none; }
 /* The strip was sized to leave the scene showing above it and to hold its row
    against a horizontal scroll. With nothing behind it to protect, it is just a
@@ -2025,6 +2032,13 @@ body.menu-open { overflow: hidden; }
               <circle cx="708" cy="822" r="2.6" fill="#E0A83C" opacity="0.9"/>
               <circle cx="725" cy="823" r="2" fill="#D9A038" opacity="0.8"/>
             </g>
+            <!-- Bark dust off the notch on each strike. Sits under the chips
+                 so they fly out of it rather than over a flat puff. -->
+            <g id="f1-dust" opacity="0">
+              <ellipse cx="706" cy="789" rx="9"   ry="6"   fill="#6B4A24"/>
+              <ellipse cx="699" cy="782" rx="6.5" ry="4.5" fill="#8A6134"/>
+              <ellipse cx="711" cy="796" rx="7.5" ry="5"   fill="#553A1C"/>
+            </g>
             <!-- chips thrown off on each strike; populated in JS -->
             <g id="f1-chips"></g>
             <path d="M712 810 C710 750 714 680 712 604" stroke="#150A02" stroke-width="2.2" fill="none" opacity="0.65"/>
@@ -2105,105 +2119,6 @@ body.menu-open { overflow: hidden; }
             <path id="f1-bird2" d="M-7 0 Q-3 -5 0 0 Q3 -5 7 0" stroke="#DFCFA6" stroke-width="2.1" fill="none" stroke-linecap="round"/>
           </g>
 
-          <!-- Workers felling the tree -->
-          <g id="f1-workers" opacity="0">
-            <g id="f1-wl" transform="translate(628,816)">
-              <ellipse cx="2" cy="4" rx="21" ry="4.5" fill="#000000" opacity="0.55"/>
-              <!-- The dishdasha, in two tones. A single flat fill with a bright
-                   outline read as a cut-out with a rod down one side; the sun is
-                   behind the tree and to +x, so the near edge carries a warmer
-                   band and the figure gets some form. -->
-              <path d="M0 -128 C-9 -128 -15 -123 -17 -114
-                       C-19 -88 -21 -48 -21 -4 L21 -4
-                       C21 -48 19 -88 17 -114 C15 -123 9 -128 0 -128 Z" fill="#120C06"/>
-              <path d="M6 -127 C12 -125 15 -120 17 -114
-                       C19 -88 21 -48 21 -4 L11 -4
-                       C11 -48 10 -90 8 -116 Z" fill="#241A0C"/>
-              <path d="M-21 -4 L21 -4" stroke="#6E5121" stroke-width="1.3" opacity="0.35"/>
-              <path d="M-11 -118 C-15 -100 -17 -84 -15 -70 L-9 -70
-                       C-10 -86 -9 -102 -6 -116 Z" fill="#0D0804"/>
-              <path d="M-4 -132 L4 -132 L4 -139 L-4 -139 Z" fill="#120C06"/>
-              <ellipse cx="0" cy="-146" rx="9.5" ry="11" fill="#120C06"/>
-              <path d="M-11 -150 C-11 -160 11 -160 11 -150 C11 -145 -11 -145 -11 -150 Z" fill="#221709"/>
-              <path d="M-10 -150 C-14 -142 -15 -133 -13 -125 L-9 -127
-                       C-11 -134 -10 -142 -8 -147 Z" fill="#221709"/>
-              <!-- Rim light. Broken into two runs rather than one straight edge —
-                   an unbroken stroke down the full height read as a pole. -->
-              <path d="M18 -110 C20 -92 21 -70 21 -52" stroke="#C9922E" stroke-width="1.4"
-                    fill="none" opacity="0.4"/>
-              <path d="M21 -30 L21 -6" stroke="#C9922E" stroke-width="1.3"
-                    fill="none" opacity="0.3"/>
-              <path d="M7 -155 C11 -152 11 -148 9 -145" stroke="#C9922E" stroke-width="1.1"
-                    fill="none" opacity="0.32"/>
-              <g id="f1-wl-arm">
-                <!-- The arm is a step lighter than the robe. Matched to it, the
-                     haft appeared to come straight out of the chest. -->
-                <path d="M2 -126 C13 -125 21 -113 27 -95 L17 -89
-                         C12 -105 6 -116 0 -122 Z" fill="#2E2211"/>
-                <path d="M4 -124 C13 -122 19 -111 25 -95" stroke="#C9922E" stroke-width="1"
-                      fill="none" opacity="0.3"/>
-                <path d="M21 -93 L48 -74" stroke="#3E2A12" stroke-width="4.5" stroke-linecap="round"/>
-                <path d="M21 -93 L48 -74" stroke="#8A6A3C" stroke-width="1.2"
-                      stroke-linecap="round" opacity="0.35"/>
-                <!-- Slim, and small. Three passes were spent on this: a pale
-                     trapezoid read as a paddle, then a curved shape read as a
-                     mitten. Both were the wrong SIZE — 23x22 against a 158-tall
-                     figure is an enormous axe. A real head is about an eighth of
-                     a person's height and narrow, so this is 15x10 and dark, with
-                     only the cutting edge catching the sun. -->
-                <path d="M43 -81 L57 -77 L55 -67 L41 -71 Z" fill="#2B2B31"/>
-                <path d="M57 -77 L55 -67 L60 -68 L61 -76 Z" fill="#C0C0C7" opacity="0.8"/>
-              </g>
-            </g>
-            <g id="f1-wr" transform="translate(812,816) scale(-1,1)">
-              <ellipse cx="2" cy="4" rx="21" ry="4.5" fill="#000000" opacity="0.55"/>
-              <!-- The dishdasha, in two tones. A single flat fill with a bright
-                   outline read as a cut-out with a rod down one side; the sun is
-                   behind the tree and to +x, so the near edge carries a warmer
-                   band and the figure gets some form. -->
-              <path d="M0 -128 C-9 -128 -15 -123 -17 -114
-                       C-19 -88 -21 -48 -21 -4 L21 -4
-                       C21 -48 19 -88 17 -114 C15 -123 9 -128 0 -128 Z" fill="#120C06"/>
-              <path d="M6 -127 C12 -125 15 -120 17 -114
-                       C19 -88 21 -48 21 -4 L11 -4
-                       C11 -48 10 -90 8 -116 Z" fill="#241A0C"/>
-              <path d="M-21 -4 L21 -4" stroke="#6E5121" stroke-width="1.3" opacity="0.35"/>
-              <path d="M-11 -118 C-15 -100 -17 -84 -15 -70 L-9 -70
-                       C-10 -86 -9 -102 -6 -116 Z" fill="#0D0804"/>
-              <path d="M-4 -132 L4 -132 L4 -139 L-4 -139 Z" fill="#120C06"/>
-              <ellipse cx="0" cy="-146" rx="9.5" ry="11" fill="#120C06"/>
-              <path d="M-11 -150 C-11 -160 11 -160 11 -150 C11 -145 -11 -145 -11 -150 Z" fill="#221709"/>
-              <path d="M-10 -150 C-14 -142 -15 -133 -13 -125 L-9 -127
-                       C-11 -134 -10 -142 -8 -147 Z" fill="#221709"/>
-              <!-- Rim light. Broken into two runs rather than one straight edge —
-                   an unbroken stroke down the full height read as a pole. -->
-              <path d="M18 -110 C20 -92 21 -70 21 -52" stroke="#C9922E" stroke-width="1.4"
-                    fill="none" opacity="0.4"/>
-              <path d="M21 -30 L21 -6" stroke="#C9922E" stroke-width="1.3"
-                    fill="none" opacity="0.3"/>
-              <path d="M7 -155 C11 -152 11 -148 9 -145" stroke="#C9922E" stroke-width="1.1"
-                    fill="none" opacity="0.32"/>
-              <g id="f1-wr-arm">
-                <!-- The arm is a step lighter than the robe. Matched to it, the
-                     haft appeared to come straight out of the chest. -->
-                <path d="M2 -126 C13 -125 21 -113 27 -95 L17 -89
-                         C12 -105 6 -116 0 -122 Z" fill="#2E2211"/>
-                <path d="M4 -124 C13 -122 19 -111 25 -95" stroke="#C9922E" stroke-width="1"
-                      fill="none" opacity="0.3"/>
-                <path d="M21 -93 L48 -74" stroke="#3E2A12" stroke-width="4.5" stroke-linecap="round"/>
-                <path d="M21 -93 L48 -74" stroke="#8A6A3C" stroke-width="1.2"
-                      stroke-linecap="round" opacity="0.35"/>
-                <!-- Slim, and small. Three passes were spent on this: a pale
-                     trapezoid read as a paddle, then a curved shape read as a
-                     mitten. Both were the wrong SIZE — 23x22 against a 158-tall
-                     figure is an enormous axe. A real head is about an eighth of
-                     a person's height and narrow, so this is 15x10 and dark, with
-                     only the cutting edge catching the sun. -->
-                <path d="M43 -81 L57 -77 L55 -67 L41 -71 Z" fill="#2B2B31"/>
-                <path d="M57 -77 L55 -67 L60 -68 L61 -76 Z" fill="#C0C0C7" opacity="0.8"/>
-              </g>
-            </g>
-          </g>
           <!-- Roots reaching down into floor 2 -->
           <g id="f1-roots" opacity="0">
             <path d="M700 822 Q680 900 640 1000 Q620 1070 630 1140" stroke="#1E1206" stroke-width="12" fill="none" stroke-linecap="round"/>
@@ -3556,9 +3471,13 @@ if (heroStill) document.documentElement.classList.add('reduced-hero');
    just showing, camera still at floor 1 (camY is 0 below 0.24) and the chapter
    title at full opacity — it begins to fade at 0.235. */
 var HERO_STILL_P = 0.23;
-/* The axe swing and the trunk shudder are both driven from
-   sin(heroTime * 2.2 * 2PI). 15/4.4 is a zero of it, so the woodcutters are
-   caught between strikes with their arms down, rather than frozen mid-swing. */
+/* 15/4.4 puts the strike cycle at beat 0.5 — the trunk's ring has decayed to
+   about a fifth of a pixel, so the still catches it between blows and square
+   rather than frozen mid-knock. It was chosen when the woodcutters were still
+   drawn (it is a zero of the swing sine that drove their arms); they are gone,
+   but the reason to keep this exact value is that every other time-driven
+   element on floor 1 — the wind phase, the leaf positions, the fireflies — was
+   composed at it. Changing it recomposes the still. */
 var HERO_STILL_T = 15 / 4.4;
 /* Floor 4's composition transform, mirrored from the #f4 group's own transform.
    Anything drawn for floor 4 OUTSIDE that group — which is only the canvas
@@ -3666,11 +3585,7 @@ var sc = {
 };
 sc.worldNear = $s('world-near');
 if (isMobile) sc.worldNear.style.display = 'none';
-sc.workers = $s('f1-workers');
-sc.wl      = $s('f1-wl');
-sc.wr      = $s('f1-wr');
-sc.wlArm   = $s('f1-wl-arm');
-sc.wrArm   = $s('f1-wr-arm');
+sc.dust    = $s('f1-dust');
 sc.notch   = $s('f1-notch');
 sc.notch2  = $s('f1-notch2');
 sc.canBack    = $s('can-back');
@@ -3693,13 +3608,29 @@ var chipEls = [];
     r.setAttribute('width',  4.5 + fakeRand(ci*5)*5);
     r.setAttribute('height', 2.4 + fakeRand(ci*5+1)*2.4);
     r.setAttribute('rx', 1);
-    r.setAttribute('fill', ['#3A2410', '#241206', '#4A3018'][ci % 3]);
+    /* Freshly split heartwood, not bark. The old three — #3A2410, #241206,
+       #4A3018 — were the trunk gradient's own values (#281805..#3C230E) over a
+       ground of #1C1209..#0A0704, so the chips were invisible against both the
+       thing they came off and the thing they fell on. It did not matter while
+       two figures were swinging; now that the strike is off-frame, these are
+       most of what says it happened. Pale inside, and the sun is behind the
+       tree, so the mix runs from a lit edge down to one still in shadow. */
+    r.setAttribute('fill', ['#8A6134', '#B98A4C', '#5E4020'][ci % 3]);
     r.setAttribute('opacity', 0);
     host.appendChild(r);
     chipEls.push({ el: r,
-      dx:  (fakeRand(ci*9) - 0.5) * 2.2,
+      // Biased downwind of the blow. The notch is cut into the trunk's LEFT
+      // face (701-727 against a trunk of 700-740), so the axe comes from the
+      // left and the chips leave to the right — which is also where the sun
+      // is, so they catch the backlight instead of vanishing into it.
+      dx:  0.25 + (fakeRand(ci*9) - 0.5) * 1.9,
       dy:  -(0.45 + fakeRand(ci*19) * 0.95),
-      spd: 30 + fakeRand(ci*11) * 38,
+      /* They have to clear the wound to be seen at all. The resin glow around
+         the notch is ~72x56 and the soft ellipse over it is wider still; at the
+         old 30-68 even the fastest chip rose 33px against the life^2 fall, so
+         every one of them lived and died inside the brightest patch in the
+         frame. Doubled, they get out into the dark where they read. */
+      spd: 70 + fakeRand(ci*11) * 70,
       rot: (fakeRand(ci*13) - 0.5) * 520,
       phase: fakeRand(ci*17) });
   }
@@ -3956,20 +3887,47 @@ function heroLoop(ts){
     op(sc.f1tree, treeT);
     op(sc.f1roots, eOut(seg(p, 0.22, 0.30)));
 
-    // Workers arrive and swing at a steady 2.2 strikes/sec (time-based)
-    var wIn = eOut(seg(p, 0.14, 0.20));
-    op(sc.workers, wIn);
-    sc.wl.setAttribute('transform', 'translate(' + (628 - (1-wIn)*130) + ',816)');
-    sc.wr.setAttribute('transform', 'translate(' + (812 + (1-wIn)*130) + ',816) scale(-1,1)');
+    /* The feller is off-frame, and stays there. Two silhouettes used to stand
+       either side of the trunk: exact mirrors of each other, flat, and with
+       axe heads that stopped 11px short of the bark they were supposedly
+       biting. The push-in shows them 2.6x, head to foot, which is what finally
+       made it unarguable.
+       Swinging an axe in from off-frame instead does not work here and the
+       numbers are worth writing down so it is not tried again: at full push-in
+       the visible world is x 443-997, and the trunk is at 700-740 — dead centre
+       in the close-up exactly as it is in the wide shot. A figure is 166 world
+       px for a whole person, so a world px is about a centimetre and a real
+       haft is ~80 of them. Reaching the notch from the nearest frame edge
+       needs 262 — a 2.6 metre axe. There is no edge near enough to swing from.
+       So nothing swings. The blow lands off-frame and only its consequences are
+       drawn: the trunk is knocked and rings back, bark dust bursts from the
+       notch, chips are thrown, the birds go. An unseen cause is a normal and
+       much older device than a badly drawn one. */
     var chopEnv = seg(p, 0.17, 0.22) * (1 - eIn(seg(p, 0.44, 0.52)));
-    var swing = Math.sin(heroTime*2.2*Math.PI*2) * 34 * chopEnv;
-    sc.wlArm.setAttribute('transform', 'rotate(' + swing + ' 4 -124)');
-    sc.wrArm.setAttribute('transform', 'rotate(' + swing + ' 4 -124)');
-    // notch deepens, trunk shudders on each strike
+    // One beat of the 2.2-strikes/sec cycle. Shared by the ring, the dust and
+    // the chips so all three fire off the same impact rather than drifting.
+    var beat = (heroTime * 2.2) % 1;
+    // notch deepens, trunk rings on each strike
     op(sc.notch,  seg(p, 0.18, 0.26));
     op(sc.notch2, seg(p, 0.21, 0.28));
-    var shudder = Math.max(0, Math.sin(heroTime*2.2*Math.PI*2)) * 2.4 * chopEnv;
+    /* An axe blow is a transient, not a wobble. max(0,sin) gave a smooth
+       symmetric hump with no attack — the profile of a tree swaying, not one
+       being struck. This is a knock and a decaying ring: peak displacement
+       ~47ms after the beat, dead by half a beat, so the trunk is visibly still
+       between blows and the next one reads as an event. */
+    var ring = Math.sin(beat * Math.PI * 2 * 2.4) * Math.exp(-beat * 7);
+    var shudder = (ring * 7.0 * chopEnv).toFixed(2);
     sc.f1tree.setAttribute('transform', 'translate(' + shudder + ',' + (1-treeT)*60 + ')');
+    /* Bark dust off the notch. Expands and thins on the same impact — the
+       cheapest thing in the frame that says something hit it hard. */
+    if (chopEnv > 0.04 && beat < 0.55) {
+      var du = beat / 0.55;
+      sc.dust.setAttribute('transform',
+        'translate(706,789) scale(' + (0.5 + du*1.9).toFixed(3) + ') translate(-706,-789)');
+      op(sc.dust, chopEnv * (1-du) * (1-du) * 0.7);
+    } else {
+      op(sc.dust, 0);
+    }
 
     // Wind: canopy layers sway at staggered phases — the tree breathes
     var wt = heroTime * 0.8;
@@ -3990,18 +3948,30 @@ function heroLoop(ts){
       ? Math.pow(Math.sin(bloomT*Math.PI), 1.4) * 0.95 : 0);
     op(sc.trunkVeins, woundT * (0.42 + 0.3*Math.sin(heroTime*1.4)));
 
-    // Chips fly on every strike, on the same 2.2/sec beat as the swing
+    /* Chips burst on the strike. They used to carry a per-chip phase offset,
+       which spread them evenly around the beat: at any instant some were
+       leaving and others landing, so it read as a continuous spray from a
+       trunk that happened to be shedding — not as eight pieces leaving at
+       once because something hit it. They now share the beat, with only a
+       few percent of launch stagger, and are hidden until they go. */
     if (chopEnv > 0.04) {
-      var beat = (heroTime * 2.2) % 1;
       chipEls.forEach(function(cp){
-        var life = (beat + cp.phase) % 1;
+        var life = beat - cp.phase * 0.07;
+        if (life < 0) { cp.el.setAttribute('opacity', 0); return; }
         var d = life * cp.spd;
         var cx2 = 720 + cp.dx * d;
         var cy2 = 790 + cp.dy * d + life * life * 62;   // gravity pulls them back
         cp.el.setAttribute('x', cx2);
         cp.el.setAttribute('y', cy2);
         cp.el.setAttribute('transform', 'rotate(' + (cp.rot * life).toFixed(1) + ' ' + cx2.toFixed(1) + ' ' + cy2.toFixed(1) + ')');
-        cp.el.setAttribute('opacity', chopEnv * (1 - life) * 0.9);
+        /* Held bright, then dropped — not faded linearly from the moment they
+           leave. A linear fade spends the chip's opacity exactly where it is
+           least use: while it is still inside the resin glow it was born in.
+           By the time it crossed into the dark where it could be seen it was
+           down to 45% of a mid-brown over near-black, which is nothing. This
+           holds full opacity through the first ~58% of the flight and takes it
+           out quickly at the end. */
+        cp.el.setAttribute('opacity', chopEnv * Math.min(1, (1 - life) * 2.4));
       });
     } else {
       chipEls.forEach(function(cp){ cp.el.setAttribute('opacity', 0); });

@@ -44,9 +44,18 @@ COVER_VAL = None
 # chapter, and in a tall crop it lands right across the raised cap. The particle
 # canvas is hidden by the reduced-motion branch but wanted here, and it is safe
 # because heroTime advances per frame in this mode.
+#
+# The same goes for chapter I's chips, bark dust and birds. The stylesheet cuts
+# all three from the still on purpose - frozen, they are debris hanging in the
+# air - but this renders a SEQUENCE, where they are the whole point. Leaving
+# them out cost an afternoon once: the strike was being tuned against renders
+# in which the renderer was drawing none of it.
 CLEAN = """<style>
   #nav, #menu-overlay, #scroll-cue, #ch-dots { display: none !important; }
-  .reduced-hero #hero-canvas { display: block !important; }
+  .reduced-hero #hero-canvas,
+  .reduced-hero #f1-chips,
+  .reduced-hero #f1-dust,
+  .reduced-hero #f1-birds { display: block !important; }
 </style>
 </head>"""
 

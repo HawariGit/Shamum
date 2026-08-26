@@ -1,7 +1,7 @@
 # SHAMUM — session handoff
 
-Current as of `6b361ae`. `main` is in sync with origin and everything here is
-**live on shamum.vercel.app**.
+Current as of the woodcutter removal. `main` is in sync with origin and
+everything here is **live on shamum.vercel.app**.
 
 ---
 
@@ -49,6 +49,7 @@ Verify live with PowerShell `Invoke-WebRequest` or `curl`, not the browser pane.
 | **Never measure layout in an iframe** | It reported −1628px against a real −121px; its `scrollTo` does not drive the pinned layout. Navigate to each build directly. |
 | **`#f4-bottle`'s bbox is useless** | Polluted by zero-opacity elements parked at default coordinates — reported a top of −1806 while the visible glass was at 493. Measure `#f4-bottle path[fill="url(#bottleGrad)"]` plus `#f4-cap`. |
 | **PowerShell mangles quotes** | No heredocs; `<`, `>`, `"` break `-m`. Write commit messages to a file and use `git commit -F`. |
+| **The renderer hides the moving parts** | `preview_chapter4.py` renders through the reduced-motion branch, and `.reduced-hero` sets `display:none` on `#f1-chips`, `#f1-dust`, `#f1-birds`. A whole strike was tuned against renders that were drawing none of it — the DOM said opacity 1 while `getBoundingClientRect` returned all zeros, which is what `display:none` looks like from JS. Its `CLEAN` block force-shows them; keep that list current. |
 | **Coarse sampling straddles narrow beats** | The chapter IV press peaks across ~0.06vh. A 0.1vh sweep reports it never fires. |
 | **Cyrillic lookalikes** | Nearly shipped `#А5642A` with a Cyrillic А. Grep `[Ѐ-ӿ]` if a colour looks wrong. |
 
@@ -207,24 +208,53 @@ in frame, aspect 0.72. Ours is 132 × 183 — **70% of body width**, matching.
   says "Mandle" capitalised, which is correct: that's a product name, this is a
   photograph of a label. Arabic in `<tspan lang="ar">`, never `<span>`.
 
-### The woodcutters
-Backlit silhouettes — dishdasha in two tones, masar with its tail, rim light on
-the +x side. **No interior detail**; against the light it only muddies them.
-They were stacked rectangles until the push-in zoomed 2.6× at them.
+### The feller is off-frame — and there is no way to bring him back
+Two backlit silhouettes used to stand either side of the trunk. They were
+**removed**, not redrawn a fifth time. They were exact mirrors of each other,
+flat, and their axe heads stopped **11px short** of the bark — the figure's
+local bbox ends at world x 689 and the trunk's left face is at 700. The push-in
+shows them 2.6×, head to foot, which is what made it unarguable.
 
-Four lessons, all **size or tone, never shape**: the robe at 56 wide on a 158
-height read as a bell (42 now); the arm must be a step lighter than the robe or
-the haft appears to come out of the chest; the rim light must be broken or it
-reads as a pole; the axe head at 23×22 was simply enormous — a real one is about
-an eighth of a person's height and narrow (15×10 now).
+⚠️ **Do not try "an axe swings in from off-frame" — the geometry forbids it.**
+At full push-in the visible world is **x 443–997, y 605–951**; the trunk is at
+**700–740**, dead centre in the close-up exactly as it is in the wide shot. A
+whole figure was 166 world px, so a world px is about a centimetre and a real
+haft is ~80 of them. Reaching the notch from the nearest frame edge needs
+**262 — a 2.6 metre axe**. There is no edge near enough to swing from at either
+scale. This was worked out with numbers before anything was drawn; redo the
+arithmetic before overriding it.
 
-Arm pivots at the **shoulder (4,−124)**. ⚠️ `HERO_STILL_T` is a zero of the
-swing sine, so previews always catch the arms at rest.
+So nothing swings. The blow lands off-frame and only its **consequences** are
+drawn. An unseen cause is a normal and much older device than a badly drawn one.
 
-**Still the weakest thing in the scene** — flat cut-outs, axes never touch the
-trunk, two exact mirrors. If it comes up again the better move is structural:
-drop the figures and let an axe swing in from off-frame. The cutting is already
-carried by the notch, the chips, the shudder and the fleeing birds.
+| beat | |
+|---|---|
+| ring | trunk knocked **+3.74px**, rebounds **−0.87**, dead by half a beat |
+| dust | `#f1-dust` expands 0.5→2.4 about (706,789), peak opacity 0.70 |
+| chips | 8 pieces burst from the notch together, biased right |
+
+- **The ring is an impulse, not a wave.** It was `max(0,sin)` × 2.4 — a smooth
+  symmetric hump with no attack, which is the profile of a tree *swaying*.
+  It is now `sin(beat·2π·2.4)·e^(−7·beat)`: peak ~47ms after the beat, then
+  genuinely **still** between blows, so the next one reads as an event.
+- **The chips had to be rebuilt to be visible at all**, and both faults are the
+  kind that hide in a dark scene:
+  - their fills were `#3A2410 / #241206 / #4A3018` — *the trunk gradient's own
+    values* (`#281805`..`#3C230E`) over a ground of `#1C1209`..`#0A0704`. They
+    were invisible against both the thing they came off and the thing they fell
+    on. Now `#8A6134 / #B98A4C / #5E4020`.
+  - at `spd` 30–68 against the `life²·62` fall, the fastest chip rose 33px —
+    every one lived and died **inside the resin glow it was born in**. Now
+    70–140.
+  - opacity is **held** at full through ~58% of flight (`min(1,(1−life)·2.4)`),
+    not faded linearly from launch, which spent it while they were still in the
+    glow.
+- They used to carry a per-chip phase offset, which spread them evenly around
+  the beat — a continuous spray from a tree that happened to be shedding. They
+  now share the beat with a few percent of launch stagger.
+- The notch is cut into the trunk's **left** face (701–727 against 700–740), so
+  the blow comes from the left and the chips are biased right — which is also
+  where the sun is, so they catch the backlight rather than vanish into it.
 
 ---
 
@@ -238,8 +268,17 @@ JS reads the query once into **`heroStill`** and puts **`.reduced-hero`** on
 (0.23 — chapter I, tree complete, camera still on floor 1), the spring is
 bypassed, and **the push-in and bloom are switched off** (0.23 sits inside the
 bloom window; without the guard the still is a glowing blob on an un-zoomed
-tree). `heroTime` is pinned to `HERO_STILL_T = 15/4.4`, a zero of the axe-swing
-sine, so the woodcutters are caught between strikes.
+tree). `heroTime` is pinned to `HERO_STILL_T = 15/4.4`, which puts the strike
+cycle at beat 0.5 — the trunk's ring has decayed to about **0.2px**, so the
+still catches it square rather than mid-knock. ⚠️ **Keep that exact value.** It
+was originally chosen as a zero of the swing sine that drove the woodcutters'
+arms and they are gone, but every other time-driven element on floor 1 — the
+wind phase, the leaf positions, the fireflies — was composed at it. Changing it
+recomposes the still.
+
+**The still also cuts the moving parts entirely**: `#f1-chips`, `#f1-dust` and
+`#f1-birds` are `display:none` under `.reduced-hero`. Frozen, they are debris
+hanging in the air and a brown smudge on the trunk.
 
 Gaps and coda collapse to 0. `staticChapters()` re-homes ht2/ht3/ht4 above the
 shelf each introduces and clears the inline styles the one rendered frame left
@@ -275,7 +314,7 @@ a scroll-driven page cannot spare — and it washes the photographs out.
 | Script | Purpose |
 |---|---|
 | `check_svg.py` | **Run before every commit.** Scans SVG regions for HTML breakout tags. |
-| `preview_chapter4.py` | Renders the scene through the **real** `heroLoop`. `--p 0.95`, `--strip a,b,c`, `--gif`. **Flags exist because these states are unreachable in a still:** `--zoom` (push-in, off when `heroStill`), `--cover 0.53` (strip transition, damped from live rects). |
+| `preview_chapter4.py` | Renders the scene through the **real** `heroLoop`. `--p 0.95`, `--strip a,b,c`, `--gif`. **Flags exist because these states are unreachable in a still:** `--zoom` (push-in, off when `heroStill`), `--cover 0.53` (strip transition, damped from live rects). ⚠️ It renders through the **reduced-motion branch**, so anything the stylesheet hides there is invisible in every shot it takes — its `CLEAN` block force-shows `#hero-canvas`, `#f1-chips`, `#f1-dust`, `#f1-birds`. **Add any new moving part to that list.** Note `--p` also injects `CLEAN`, so it is *not* a faithful still — use `preview_reduced.py` for that. |
 | `preview_reduced.py` | Writes `_rmtest.html` with the reduced-motion branch forced on. `--rm` deletes it. |
 | `preview_flacon.py` | Single flacon still, `--fill 0.5`. |
 | `page_shots.py` | Screenshots every section below the hero. Isolates one section per shot — injected `scrollTo` never lands here. |
@@ -320,7 +359,8 @@ names are hand-supplied**. Five are out of stock, badged and dimmed.
 5. **A pre-existing ~126px top overhang** as the scene steps aside at chapter
    IV's end. It predates all recent work and got smaller, not larger. The old
    claim that the lift tuning "clears everything" was never quite true.
-6. **The woodcutters** — see above. Structural change, not a fifth redraw.
+6. ~~The woodcutters~~ — **done.** Removed; the strike is carried by the trunk's
+   ring, bark dust and chips. See *The feller is off-frame*.
 7. Marwa 3D files (~3 MB, untracked) can be binned.
 
 ---

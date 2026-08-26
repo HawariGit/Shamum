@@ -4,3 +4,7 @@ _rmtest.html
 # Render artifacts: PNG stills, beat strips, the chapter IV gif.
 # Multi-megabyte and all reproducible from render/*.py.
 render/out/
+
+# Bytecode, created the first time render/*.py is imported as a module
+# rather than run as a script.
+render/__pycache__/

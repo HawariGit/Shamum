@@ -3,6 +3,15 @@
 Current as of the woodcutter removal. `main` is in sync with origin and
 everything here is **live on shamum.vercel.app**.
 
+⚠️ **This is a sketch.** The user, 2026-08-27: *"this is all still considered a
+sketch, no way this is gonna be the final site, this isnt even the first
+prototype."* Read the whole document through that. Nothing shipped is precious,
+big structural swings are cheap and welcome, and pixel-level agonising over one
+small element is usually misplaced effort — see **Tried and didn't land**, which
+is a record of what went wrong, not a list of bans. What stays worth the rigour
+at any stage is the **silent-failure** class in **Environment traps**: those cost
+hours whether the thing is a sketch or finished.
+
 ---
 
 ## Read this first
@@ -365,13 +374,53 @@ names are hand-supplied**. Five are out of stock, badged and dimmed.
 
 ---
 
-## Rejected — do not retry without new information
+## Tried and didn't land
 
-- **The finale pull-back** — the camera retreating to show all four floors as
-  one column. Built and reverted: *"that zoomout wasnt good i didnt like it."*
-- **Scaling the scene for the product strips** — see Scene clearing.
-- EEVEE 3D of the flacon — "looks like a Jimmy Neutron animation"
-- Synthesising an empty bottle from a product photo — "looks fake"
-- The Cycles mabkhara still — the SVG version was preferred
-- A cream product panel over the animation — "a whole different page"
-- A full-dark product panel — same problem, still covered the scene
+⚠️ **This is not a ban list.** The site is a sketch — the user's own framing,
+2026-08-27: *"no way this is gonna be the final site, this isnt even the first
+prototype."* Almost everything below is a verdict on **one execution**, not on
+the idea. Recorded so a second attempt starts informed, not so it never happens.
+Where a diagnosis is inferred rather than something the user said, it says so.
+
+### Structural — these genuinely cannot work
+
+- **Scaling the scene for the product strips.** Not taste; geometry. You cannot
+  scale a full-bleed element down and still have it cover the frame, and the
+  sticky's `::after` vignette does not scale with it, so a hard-edged rectangle
+  of scene appears on the page with the vignette aligned to nothing. Enlarging
+  to compensate only zooms the world, because the svg is `preserveAspectRatio`
+  slice. See **Scene clearing**. The scene dims instead.
+- **An axe swung in from off-frame in chapter I.** Needs a 2.6 metre haft. The
+  arithmetic is in *The feller is off-frame*.
+- **An opaque panel of any colour over the animation.** Tried cream (*"a whole
+  different page"*) and full-dark (*"same problem, still covered the scene"*).
+  Two treatments at opposite ends of the value range failing the same way is
+  strong evidence the fault is the **panel**, not its colour. What replaced it —
+  transparent strips scrolling over a dimmed scene — came out of these two
+  failures and is the load-bearing idea behind the whole strip system.
+
+### Taste calls on one execution — a better attempt is open
+
+- **The finale pull-back** — camera retreating to show all four floors as one
+  column. Built and reverted: *"that zoomout wasnt good i didnt like it."*
+  *(Inferred, not stated:)* two things are suspect. It ends the story by making
+  the product small and far away at the moment it should be closest; and four
+  floors in a column is a **diagram of the page's construction**, not an image
+  of the brand — it reveals the scaffolding. A retreat that lands on something
+  is a different proposal from one that reveals the rig.
+- **EEVEE 3D of the flacon** — *"looks like a Jimmy Neutron animation."* That
+  is a diagnosis, not a dismissal: EEVEE's soft shading, plastic speculars,
+  screen-space reflections and absent caustics are exactly the early-2000s CG
+  look. The complaint is about the **renderer and the lighting**, not about 3D.
+  Cycles with real glass IOR, caustics and an HDRI is an untested proposition.
+- **The Cycles mabkhara still** — the SVG version was preferred. ⚠️ **Do not
+  read this as "SVG beats ray tracing here."** It is evidence about an
+  **opaque matte** object, where flat vector shapes lose very little. Glass with
+  liquid in it is the opposite case — refraction and caustics are precisely what
+  vector cannot fake and what ray tracing is for. The mabkhara verdict does not
+  transfer to the flacon.
+- **Synthesising an empty bottle from a product photo** — *"looks fake."* This
+  one probably is a dead end, for a specific reason: emptying a bottle changes
+  what the glass refracts, so erasing the liquid leaves refraction belonging to
+  a bottle that is still full. No amount of better inpainting fixes that. It
+  needs a photograph of an actually empty bottle.

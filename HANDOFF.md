@@ -370,7 +370,11 @@ names are hand-supplied**. Five are out of stock, badged and dimmed.
    claim that the lift tuning "clears everything" was never quite true.
 6. ~~The woodcutters~~ — **done.** Removed; the strike is carried by the trunk's
    ring, bark dust and chips. See *The feller is off-frame*.
-7. Marwa 3D files (~3 MB, untracked) can be binned.
+7. ~~Marwa 3D files~~ — **deleted 2026-08-27** (3.3 MB): the Cycles flacon
+   script, its scrub page, `assets/marwaframes/` (60 webp) and two reference
+   images. Nothing referenced them. `.vercelignore` still carries the
+   `assets/marwaframes/` rule on purpose — `assets/` is deployed, so the rule
+   is the guard if frames are ever rendered there again.
 
 ---
 

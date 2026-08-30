@@ -22,7 +22,3 @@ assets/marwaframes/
 
 # Local preview of the reduced-motion build (render/preview_reduced.py).
 _rmtest.html
-
-# Art-direction prototype (render/make_photo_hero.py). Lives in the repo so it
-# is reviewable, but it is a sketch and must not be reachable on the live domain.
-proto-photo.html

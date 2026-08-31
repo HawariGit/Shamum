@@ -596,8 +596,13 @@ body.menu-open { overflow: hidden; }
 #hero-photo { position: absolute; inset: 0; z-index: 0; overflow: hidden;
               transform-origin: 50% 34%; will-change: transform, opacity; }
 .hp { position: absolute; inset: 0; opacity: 0; will-change: opacity, transform; }
+/* Blur and saturation are shared; EXPOSURE IS PER PLATE, set inline. These
+   photographs are not lit alike and one shared brightness cannot serve them:
+   0.34 is right for the bukhoor's bright smoke plume and turns the oud bottle —
+   dark oil in glass against a dark ground — into a black rectangle. Graded
+   individually, the way a colourist would. */
 .hp img { width: 100%; height: 100%; object-fit: cover; display: block;
-          filter: brightness(0.34) saturate(0.55) blur(9px); }
+          filter: saturate(0.55) blur(9px); }
 
 /* Film grain over the whole frame. The single cheapest thing that stops flat
    vector reading as clip-art: it gives every surface the same photographic
@@ -1735,9 +1740,9 @@ body.menu-open { overflow: hidden; }
          figure survives blurring and reads as a person no matter how far back
          you hold it. -->
     <div id="hero-photo" aria-hidden="true">
-      <div class="hp" data-ch="2"><img src="assets/ig-bukhoor.webp"  alt="" decoding="async"></div>
-      <div class="hp" data-ch="3"><img src="assets/ig-decanter.webp" alt="" decoding="async"></div>
-      <div class="hp" data-ch="4"><img src="assets/ig-box-open.webp" alt="" decoding="async"></div>
+      <div class="hp" data-ch="2"><img src="assets/ig-bukhoor.webp"  alt="" style="filter:brightness(0.34) saturate(0.55) blur(9px)" decoding="async"></div>
+      <div class="hp" data-ch="3"><img src="assets/oud-oil.webp"    alt="" style="filter:brightness(0.82) saturate(0.55) blur(18px)" decoding="async"></div>
+      <div class="hp" data-ch="4"><img src="assets/ig-box-open.webp" alt="" style="filter:brightness(0.40) saturate(0.55) blur(9px)" decoding="async"></div>
     </div>
     <canvas id="hero-canvas"></canvas>
     <div id="hero-grain" aria-hidden="true"></div>

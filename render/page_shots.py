@@ -57,13 +57,32 @@ def shot(dest, by_id):
     # does not fire here; its CSS fallback sits behind the real
     # prefers-reduced-motion media query, which headless does not report however
     # heroStill is set. Without that override every shot is an empty dark frame.
+    # Isolation used to be `body > *{display:none} body > #id{display:block}`,
+    # which silently produced an empty frame for anything NOT a direct child of
+    # body. The product strips live inside #hero-track, so shelf-bukhoor was in
+    # SECTIONS returning a blank 5KB shot on every run. This walks up from the
+    # target instead, hiding siblings at each level, so any depth works.
     inject = ("<style>"
-              "body > *{display:none!important}"
-              "body > #%s{display:block!important}"
               ".reveal,.reveal-scale{opacity:1!important;transform:none!important;"
               "filter:none!important;transition:none!important}"
               ".word{opacity:1!important;filter:none!important;transform:none!important}"
-              "</style>") % by_id
+              "#veil,#nav,#menu-overlay,#scroll-cue,#ch-dots{display:none!important}"
+              "</style>"
+              "<script>(function(){"
+              "var t=document.getElementById(%r);"
+              "if(!t){document.title='ABSENT';return;}"
+              "var n=t;"
+              "while(n&&n!==document.body){"
+              "  var pa=n.parentNode;"
+              "  for(var i=0;i<pa.children.length;i++){"
+              "    if(pa.children[i]!==n) pa.children[i].style.display='none';"
+              "  }"
+              "  n.style.display='block';"
+              "  n.style.position='static';"   # a sticky ancestor would still offset it
+              "  n.style.height='auto';"
+              "  n=pa;"
+              "}"
+              "})();</script>") % by_id
     if "</body>" not in src:
         print("ABORT: no </body>")
         sys.exit(1)

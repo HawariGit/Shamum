@@ -81,9 +81,28 @@ gap1 (chapters I–II) → shelf-bukhoor → gap2 (III) → shelf-oils
   `p`. Use this pattern if you ever need room after `p` saturates.
 - **`.chapter-products`** — transparent strip, one horizontal row of glass cards.
 
-**Gap heights** (the pacing dial — independent of timing, safe to tune):
-desktop `400 / 210 / 320vh`, mobile `330 / 180 / 275vh`, coda `62 / 46vh`.
-`400vh` means 4 viewports. The whole journey is ~14 viewports of scroll.
+**Gap heights** (the pacing dial): desktop `300 / 190 / 300vh`, mobile
+`285 / 180 / 275vh`, coda `40 / 36vh`. `300vh` means 3 viewports. The journey is
+**11.4 viewports** desktop, 11.3 mobile, and the first product strip is 4.0
+viewports down (it was 13.0 and 5.0 before 2026-09-02).
+
+⚠️ **They are not "safe to tune" — that was wrong and is now corrected.** Gap
+height divided by a chapter's p-band is how many PIXELS each beat gets, so
+shortening a gap compresses every beat inside it. Run **`render/pacing.py`**
+before touching these: it reproduces `measureZones`/`scrollToP` and prints px
+per beat for both viewports. Two binding constraints:
+
+- **Chapter IV's cap seating** is the narrowest beat on the site at `dp 0.008`.
+  Desktop gives it 120px; **mobile gives it 95px**, which is the tightest thing
+  anywhere and why mobile `gap3` was left uncut. At `260vh` mobile it drops to
+  87px and stops registering.
+- **Chapter I's push-in** spans only `dp 0.032`, and `gap1` is all that protects
+  it. Below ~`280vh` desktop it reads as a jolt rather than a camera move.
+
+Phones scroll by flicks covering several hundred pixels, so a short beat there
+is skipped outright rather than merely rushed — **mobile wants more room per
+beat than desktop, not less**. Always confirm `camY` still reaches 2700 after a
+change; if it does not, chapter IV no longer completes.
 
 ### Chapter bands (`p`)
 `I 0.00–0.30 · II 0.24–0.62 · III 0.62–0.88 · IV 0.88–1.00`, pinned via
@@ -330,6 +349,7 @@ a scroll-driven page cannot spare — and it washes the photographs out.
 | `page_shots.py` | Screenshots every section below the hero. Isolates one section per shot — injected `scrollTo` never lands here. |
 | `watch_video.py` | Turns a video into frames. Streams; do not accumulate (a 42s 1080×1920 clip is 7.8GB raw). Use `plugin="FFMPEG"` — `pyav` is a different backend and is not installed. |
 | `fetch_catalogue.py` / `fetch_categories.py` / `build_catalogue.py` | Pull the 15 products from the store and rebuild the cards. **Use `fetch_categories`, don't infer from descriptions.** |
+| `pacing.py` | **Run before changing any gap height.** Reproduces `measureZones`/`scrollToP` and prints pixels-per-beat for desktop and mobile, flagging any beat under 120px. The gap heights are a pacing dial that silently starves narrow beats. |
 | `retime_chapters.py` / `retime_chapter4.py` | Threshold retiming, all-or-nothing. |
 | `mark_arabic.py`, `make_svg.py`, `make_og.py`, `group_products.py`, `interleave_products.py` | One-shot / asset tooling. |
 

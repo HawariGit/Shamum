@@ -403,11 +403,23 @@ body.menu-open { overflow: hidden; }
 .chapter-gap { position: relative; z-index: 0; pointer-events: none; }
 /* A breath between two strips. Deliberately NOT .chapter-gap — measureZones
    only counts gaps, so this adds scroll without advancing the animation. */
-.chapter-coda { position: relative; z-index: 0; height: 62vh; pointer-events: none; }
-@media (max-width: 640px) { .chapter-coda { height: 46vh; } }
-.chapter-gap[data-chapter="1"] { height: 400vh; }
-.chapter-gap[data-chapter="2"] { height: 210vh; }
-.chapter-gap[data-chapter="3"] { height: 320vh; }
+.chapter-coda { position: relative; z-index: 0; height: 40vh; pointer-events: none; }
+@media (max-width: 640px) { .chapter-coda { height: 36vh; } }
+/* THE PACING DIAL. Gap height is scroll distance, and scroll distance divided
+   by a chapter's p-band is how many PIXELS each beat gets. Shortening a gap
+   compresses every beat inside it, so these cannot be chosen by feel — the
+   binding constraint is chapter IV's cap seating, which is the narrowest beat
+   on the page at dp 0.008.
+   Was 400/210/320: a 13.0-viewport journey with the first product strip five
+   viewports down, which is a long way to scroll before a visitor sees anything
+   they can buy. Now 11.4 viewports with the strip at 4.0, and no beat is worse
+   than the tightest one that already shipped — the cap still seats over 120px.
+   Chapter I's push-in is the other thing to watch: it spans only dp 0.032, so
+   gap1 is what protects it. Below about 280vh it starts to read as a jolt
+   rather than a camera move. */
+.chapter-gap[data-chapter="1"] { height: 300vh; }
+.chapter-gap[data-chapter="2"] { height: 190vh; }
+.chapter-gap[data-chapter="3"] { height: 300vh; }
 /* The shelf floats IN the scene. Not a cream page, and not a full dark page
    either — both covered the animation completely. It is a short transparent
    band that rides up through the lower part of the frame, so the chapter is
@@ -496,7 +508,13 @@ body.menu-open { overflow: hidden; }
 }
 .chapter-products .product-group:last-of-type { margin-bottom: 0; }
 @media (max-width: 640px) {
-  .chapter-gap[data-chapter="1"] { height: 330vh; }
+  /* Cut more gently than desktop, and gap3 is NOT cut at all: at a 812px
+     viewport the cap already seats over just 95px, the tightest beat anywhere
+     on the site as shipped. Taking gap3 to 260 puts it at 87px, past the point
+     it registers. Phones also scroll by flicks covering several hundred pixels
+     at once, so a short beat is skipped outright rather than merely rushed —
+     mobile wants MORE room per beat than desktop, not less. */
+  .chapter-gap[data-chapter="1"] { height: 285vh; }
   .chapter-gap[data-chapter="2"] { height: 180vh; }
   .chapter-gap[data-chapter="3"] { height: 275vh; }
   .chapter-products { padding: 62px 24px 64px; }

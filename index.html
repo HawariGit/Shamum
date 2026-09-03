@@ -3491,7 +3491,15 @@ var stickyBar  = document.getElementById('sticky-bar');
 // should ride from the first shelf to the gifting section as before.
 var prodSecEl  = document.getElementById('shelf-bukhoor');
 var giftSecEl  = document.getElementById('loyalty');
-window.addEventListener('scroll', function(){
+/* rAF-coalesced. Scroll events fire more often than frames, and this handler
+   reads document.body.scrollHeight and two offsetTops - three forced layout
+   reads - then writes a transform, which invalidates layout for the next read.
+   Running it per event was repeated layout thrashing on the one page that
+   cannot afford it. Running it once per frame reads the same values and
+   changes no behaviour. */
+var navTick = false;
+function navScroll(){
+  navTick = false;
   var sy = window.scrollY;
   var maxS = document.body.scrollHeight - window.innerHeight;
   nav.classList.toggle('scrolled', sy > 60);
@@ -3503,7 +3511,11 @@ window.addEventListener('scroll', function(){
     stickyBar.classList.toggle('visible', barOn);
     document.body.classList.toggle('bar-on', barOn);
   }
+}
+window.addEventListener('scroll', function(){
+  if (!navTick){ navTick = true; requestAnimationFrame(navScroll); }
 }, {passive:true});
+navScroll();
 
 /* ──────────── FULL-SCREEN MENU ──────────── */
 var menuOverlay  = document.getElementById('menu-overlay');
@@ -4833,10 +4845,18 @@ window.addEventListener('scroll', counterFallback, {passive: true});
 /* ──────────── BRAND PARALLAX ──────────── */
 var brandSec = document.getElementById('brand-statement');
 var brandPx  = document.getElementById('brand-parallax');
-window.addEventListener('scroll', function(){
+/* Same treatment: a getBoundingClientRect per scroll EVENT is a forced
+   synchronous layout, and the transform written straight after invalidates it
+   again. Once per frame is all a parallax can show anyway. */
+var brandTick = false;
+function brandScroll(){
+  brandTick = false;
   var r = brandSec.getBoundingClientRect();
   var ratio = -r.top / (window.innerHeight + r.height);
   brandPx.style.transform = 'translateY('+(ratio*56)+'px)';
+}
+window.addEventListener('scroll', function(){
+  if (!brandTick){ brandTick = true; requestAnimationFrame(brandScroll); }
 }, {passive:true});
 
 /* ──────────── MAGNETIC BUTTONS ──────────── */

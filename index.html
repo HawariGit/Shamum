@@ -587,6 +587,44 @@ body.menu-open { overflow: hidden; }
 }
 @media (prefers-reduced-motion: reduce) { #page-ambient { animation: none; } }
 
+/* ─── KEYBOARD ACCESS ───
+   The page had 58 interactive elements and not one focus style. Focus was
+   never suppressed, it was simply never defined, so keyboard users got the
+   browser default drawn over a near-black ground — which on the gold-on-black
+   sections is close to invisible. :focus-visible (not :focus) so a mouse click
+   never draws the ring, only keyboard traversal does. The ring is the house
+   gold with a dark outer halo, so it reads on both the dark hero and the light
+   product plate. */
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--gold-300);
+  outline-offset: 3px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 5px rgba(8, 4, 2, 0.72);
+}
+/* Skip link. The hero is ~11 viewports of non-interactive scene; without this
+   a keyboard user tabs the whole nav before reaching anything. Visible only
+   when focused. */
+#skip-link {
+  position: fixed; top: 10px; left: 50%; transform: translate(-50%, -160%);
+  z-index: 6000; padding: 11px 20px;   /* above #veil at 5000 */
+  background: var(--ink); color: var(--sand-50);
+  border: 1px solid var(--gold-500); border-radius: 3px;
+  font-family: 'Jost', sans-serif; font-size: 12px;
+  letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none;
+  transition: transform 0.22s cubic-bezier(0.16,1,0.3,1);
+}
+#skip-link:focus { transform: translate(-50%, 0); }
+
+/* Prices sit in a row of cards and are read against each other, so the digits
+   need to line up. */
+.product-price, .pg-more, .counter { font-variant-numeric: tabular-nums; }
+
+/* Stops the one-word last line on the display faces. Only where the type is
+   large enough for a ragged edge to be visible. */
+.ch-head, .ch-sub, .pg-en, .ess-title, .sec-title, .product-name {
+  text-wrap: balance;
+}
+
 #hero-sticky {
   position: sticky; top: 0; height: 100vh; width: 100%;
   overflow: hidden; background: #0F0805; z-index: 1;
@@ -1627,6 +1665,7 @@ body.menu-open { overflow: hidden; }
 </style>
 </head>
 <body>
+<a id="skip-link" href="#brand-statement">Skip to content</a>
 <!-- The hero breathes — smoke, dust, a warm glow — and all of it stopped dead at
      the hero, leaving everything below as static photo/heading/text. This is one
      continuous layer over the whole page so the site reads as a single world.

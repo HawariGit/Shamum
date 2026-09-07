@@ -61,11 +61,15 @@ cool/warm mixing.
 | `--sand-100` | `#F4EAD2` | Secondary text |
 | `--sand-50` | `#FBF6EA` | Primary text and display type |
 
-### Dead tokens — do not build on these
-`--teal` (`#8FB5AC`) has **zero uses**. `--teal-deep` (`#2E4A43`) has **one**. They were
-sampled from the sage velvet chairs in the boutique photography. Either commit to sage
-as a real secondary accent across the whole page, or delete both. Leaving them declared
-invites a future session to introduce a second accent by accident.
+### Gold is the only colour
+Two sage tokens were sampled from the boutique's velvet chairs and never landed:
+`--teal` (`#8FB5AC`) had zero uses, and `--teal-deep` (`#2E4A43`) styled
+`.product-badge.limited` — a class **no element on the page carries** (only `.sold`
+exists, five times). Both the tokens and that rule were removed on 2026-09-07.
+
+**The page now has exactly one colour family: the gold ramp, over warm neutrals.**
+Do not reintroduce a second accent casually. If sage is ever wanted, it needs to appear
+in more than one place and be documented here first.
 
 ### On the palette bans in generic checklists
 Automated taste rules ban "warm cream + brass + espresso" as an AI default for premium

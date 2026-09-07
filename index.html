@@ -72,8 +72,11 @@
   --gold-300: #D4BC86;
   --sand-100: #F4EAD2;
   --sand-50: #FBF6EA;
-  --teal: #8FB5AC;      /* sage velvet from the boutique chairs */
-  --teal-deep: #2E4A43;
+  /* Sage was sampled from the boutique's velvet chairs and never landed:
+     --teal (#8FB5AC) had zero uses, and --teal-deep (#2E4A43) styled
+     .product-badge.limited, a class no element on the page carries. Both are
+     gone along with that rule, so GOLD IS NOW THE ONLY COLOUR ON THE PAGE
+     besides the warm neutrals. Do not reintroduce a second accent casually. */
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1120,7 +1123,6 @@ body.menu-open { overflow: hidden; }
   padding: 5px 10px;
 }
 .product-badge.new { background: var(--gold-500); color: #fff; }
-.product-badge.limited { background: var(--teal-deep); color: var(--sand-50); }
 
 /* The plate cannot be dark. The photos are lifestyle shots with their own light
    backgrounds and they are composited with mix-blend-mode: multiply, which needs
@@ -2929,7 +2931,7 @@ body.menu-open { overflow: hidden; }
   <div class="chapter-gap" data-chapter="1" aria-hidden="true"></div>
   <section class="chapter-products" id="shelf-bukhoor">
     <div id="products-header">
-        <span class="section-eyebrow reveal">03 — The Collection · <span lang="ar">المجموعة</span></span>
+        <span class="section-eyebrow reveal">The Collection · <span lang="ar">المجموعة</span></span>
         <h2 class="section-title reveal-lines"><span class="lr"><span class="lri">Rare Expressions,</span></span><br><span class="lr"><span class="lri">Carefully Composed.</span></span></h2>
         <div class="ornament reveal reveal-delay-2">
           <span class="orn-line"></span>
@@ -3233,7 +3235,7 @@ body.menu-open { overflow: hidden; }
     </div>
   </div>
   <div class="ritual-text">
-    <span class="section-eyebrow reveal" style="color: var(--gold-400);">01 — The House · <span lang="ar">بيت شاموم</span></span>
+    <span class="section-eyebrow reveal" style="color: var(--gold-400);">The House · <span lang="ar">بيت شاموم</span></span>
     <h2 class="ritual-head reveal-lines"><span class="lr"><span class="lri">The ritual is</span></span><br><span class="lr"><span class="lri"><em>the inheritance.</em></span></span></h2>
     <p class="ritual-sub reveal reveal-delay-2">In the majlis, the mabkhara passes from hand to hand — bukhoor smoke rising through the folds of a musar, as it has for generations. SHAMUM begins here: hospitality, patience, and wood that remembers.</p>
     <div class="ornament reveal reveal-delay-3">
@@ -3246,7 +3248,7 @@ body.menu-open { overflow: hidden; }
 <!-- ═══ EMBER & ESSENCE ═══ -->
 <section id="essence">
   <div class="ess-head">
-    <span class="section-eyebrow reveal" style="color: var(--gold-400);">02 — The Two Gifts of the Wood · <span lang="ar">عطايا العود</span></span>
+    <span class="section-eyebrow reveal" style="color: var(--gold-400);">The Two Gifts of the Wood · <span lang="ar">عطايا العود</span></span>
     <h2 class="ess-title reveal-lines"><span class="lr"><span class="lri">One tree. <em>Two inheritances.</em></span></span></h2>
     <div class="ornament reveal reveal-delay-2">
       <span class="orn-line"></span>
@@ -3303,7 +3305,7 @@ body.menu-open { overflow: hidden; }
 <section id="scent-life">
   <div class="sl-inner">
     <div class="sl-head">
-      <span class="section-eyebrow reveal" style="color: var(--gold-400);">04 — The Life of the Scent · <span lang="ar">رحلة العطر</span></span>
+      <span class="section-eyebrow reveal" style="color: var(--gold-400);">The Life of the Scent · <span lang="ar">رحلة العطر</span></span>
       <h2 class="sl-title reveal-lines"><span class="lr"><span class="lri">Oud does not fade.</span></span><br><span class="lr"><span class="lri"><em>It unfolds.</em></span></span></h2>
     </div>
     <div class="sl-curve-wrap reveal" aria-hidden="true">

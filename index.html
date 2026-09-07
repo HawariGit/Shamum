@@ -547,6 +547,7 @@ body.menu-open { overflow: hidden; }
    Its CLEAN block forces them back on for sequence renders — if you add another
    moving part here, add it there too, or you will spend an afternoon tuning
    something the renderer is not drawing. */
+.reduced-hero #hp-open,
 .reduced-hero #f1-chips,
 .reduced-hero #f1-dust,
 .reduced-hero #f1-birds { display: none; }
@@ -1797,6 +1798,14 @@ body.menu-open { overflow: hidden; }
          figure survives blurring and reads as a person no matter how far back
          you hold it. -->
     <div id="hero-photo" aria-hidden="true">
+      <!-- Opening plate. NOT part of the camY set below - it is gated on p and
+           lives only under the logo, fading out as the tree fades in. Chapter I
+           still opens on black; this is the frame BEFORE chapter I, where there
+           was previously nothing at all behind the wordmark.
+           ig-box-closed because it is warm, dark, and carries no competing mark:
+           ig-decanter would put the monogram wall behind the monogram logo, and
+           ig-ritual has a person, who survives blurring. -->
+      <div class="hp" id="hp-open"><img src="assets/ig-box-closed.webp" alt="" decoding="async" style="filter:brightness(0.58) saturate(0.6) blur(15px)"></div>
       <div class="hp" data-ch="2"><img src="assets/ig-bukhoor.webp"  alt="" style="filter:brightness(0.34) saturate(0.55) blur(9px)" decoding="async"></div>
       <div class="hp" data-ch="3"><img src="assets/oud-oil.webp"    alt="" style="filter:brightness(0.82) saturate(0.55) blur(18px)" decoding="async"></div>
       <div class="hp" data-ch="4"><img src="assets/ig-box-open.webp" alt="" style="filter:brightness(0.40) saturate(0.55) blur(9px)" decoding="async"></div>
@@ -3860,11 +3869,15 @@ window.addEventListener('resize', resizeCanvas, {passive:true});
 var shelfEls = Array.prototype.slice.call(document.querySelectorAll('.chapter-products'));
 var sceneEl  = document.getElementById('hero-svg-scene');
 var photoEl  = document.getElementById('hero-photo');
+var openPlate = document.getElementById('hp-open');
 /* The photographic ground cross-fades with the CAMERA, not with the chapter
    text — it is the room the camera is in, so it has to change when the camera
    changes floor, not when the copy does. Each plate is keyed to the camY its
    floor sits at and fades over one floor's travel either side. */
-var photoPlates = Array.prototype.slice.call(document.querySelectorAll('#hero-photo .hp'))
+var photoPlates = Array.prototype.slice.call(document.querySelectorAll('#hero-photo .hp[data-ch]'))  /* [data-ch] REQUIRED: the opening plate is a .hp in the same container but
+     is driven by p, not by the camera. Without the attribute filter it was
+     picked up here, computed a camY of -900 from a missing data-ch, and had
+     its opacity overwritten to 0 one block after being set. */
   .map(function(el){ return { el: el, camY: (+el.getAttribute('data-ch') - 1) * 900, last: -1 }; });
 var lastDim = '1';
 var lastLift = null;
@@ -4010,9 +4023,15 @@ function heroLoop(ts){
   if (p < 0.22) {
     var t0out = seg(p, 0.095, 0.15);
     heroLogo.style.opacity = 1 - eIn(t0out);
+    // The opening ground leaves slightly ahead of the wordmark, so the frame is
+    // already clearing as the forest arrives rather than two things dissolving
+    // on the same beat.
+    if (openPlate) openPlate.style.opacity = (0.62 * (1 - eIn(seg(p, 0.07, 0.13)))).toFixed(3);
     heroLogo.style.transform = 'translate(-50%,-50%) scale(' + (1 - 0.05*eIn(t0out)) + ')';
     scrollCueEl.style.opacity = 1 - seg(p, 0.02, 0.07);
   }
+
+  if (openPlate && p >= 0.22) openPlate.style.opacity = 0;
 
   /* ── Floor 1: only while on/near the tree floor ── */
   if (p < 0.56) {

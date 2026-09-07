@@ -3998,12 +3998,19 @@ function heroLoop(ts){
   }
   var p = clamp(sPos, 0, 1);
 
-  /* ── Opening logo: fade + settle in, dissolve out ── */
+  /* ── Opening logo: present on arrival, dissolves as the journey starts ──
+     It used to fade IN across seg(p, 0, 0.07), which meant that at p = 0 - the
+     state every visitor actually lands on - its opacity was 0 and the tree had
+     not begun either. The entry veil faded and handed off to an empty black
+     frame with a nav and the word SCROLL on it. Nothing identified the brand
+     until you scrolled.
+     It now starts at full and only dissolves. The scale settle is kept but
+     inverted: it arrives at rest and drifts very slightly as it leaves, so the
+     veil hands off to a composed frame rather than to nothing. */
   if (p < 0.22) {
-    var t0in  = seg(p, 0, 0.07);
     var t0out = seg(p, 0.095, 0.15);
-    heroLogo.style.opacity = eOut(t0in) * (1 - eIn(t0out));
-    heroLogo.style.transform = 'translate(-50%,-50%) scale(' + (0.92 + 0.08*eOut(t0in)) + ')';
+    heroLogo.style.opacity = 1 - eIn(t0out);
+    heroLogo.style.transform = 'translate(-50%,-50%) scale(' + (1 - 0.05*eIn(t0out)) + ')';
     scrollCueEl.style.opacity = 1 - seg(p, 0.02, 0.07);
   }
 

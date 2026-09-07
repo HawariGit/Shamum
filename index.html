@@ -3368,7 +3368,7 @@ body.menu-open { overflow: hidden; }
 <section id="trust">
   <div class="trust-grid">
     <div class="trust-item reveal">
-      <span class="trust-number"><span class="counter" data-target="16">0</span></span>
+      <span class="trust-number"><span class="counter" data-since="2010" data-target="16">0</span></span>
       <span class="trust-label">Years of Heritage</span>
       <span class="trust-arabic"><span lang="ar">منذ ٢٠١٠</span></span>
     </div>
@@ -4831,6 +4831,15 @@ function runCounter(el){
   }, 28);
 }
 var counterEls = Array.prototype.slice.call(document.querySelectorAll('.counter'));
+/* Any counter carrying data-since is an ELAPSED YEAR COUNT, not a fixed figure,
+   and is derived at load. "16 Years of Heritage" was hardcoded: correct while it
+   was written and silently wrong from the next 1 January onward. Same failure as
+   a price baked into an image - a number frozen in markup that the world moves
+   past. The markup keeps its value as the no-JS fallback. */
+counterEls.forEach(function(el){
+  var since = parseInt(el.getAttribute('data-since'), 10);
+  if (since) el.setAttribute('data-target', String(new Date().getFullYear() - since));
+});
 window.__runCounters = function(){ counterEls.forEach(runCounter); };
 var cntIO = new IntersectionObserver(function(entries){
   entries.forEach(function(e){

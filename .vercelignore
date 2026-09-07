@@ -12,6 +12,8 @@ shamum-website.html
 # Project tooling, not web content.
 website/
 
+DESIGN.md
+
 # Session notes. Reachable at 200 on the live domain until now: it names the
 # deploy identity, the repo, and open questions about the products.
 HANDOFF.md

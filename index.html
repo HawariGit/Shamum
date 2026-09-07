@@ -1808,6 +1808,14 @@ body.menu-open { overflow: hidden; }
            ig-decanter would put the monogram wall behind the monogram logo, and
            ig-ritual has a person, who survives blurring. -->
       <div class="hp" id="hp-open"><img src="assets/ig-box-closed.webp" alt="" decoding="async" style="filter:brightness(0.58) saturate(0.6) blur(15px)"></div>
+      <!-- Chapter I. The house had no photograph of the tree, so this floor
+           opened on black for the whole build. It turns out it did have one: the
+           bottom third of Jawhar's product poster is a real photograph of
+           resinous agarwood heartwood, which is the tree's own material and the
+           most literally correct image the story could carry.
+           It is the brightest source in the set - cream ground, mean luminance
+           168 - so it takes by far the deepest grade. -->
+      <div class="hp" data-ch="1"><img src="assets/agarwood.webp" alt="" decoding="async" style="filter:brightness(0.17) saturate(0.34) blur(26px)"></div>
       <div class="hp" data-ch="2"><img src="assets/ig-bukhoor.webp"  alt="" style="filter:brightness(0.34) saturate(0.55) blur(9px)" decoding="async"></div>
       <div class="hp" data-ch="3"><img src="assets/oud-oil.webp"    alt="" style="filter:brightness(0.82) saturate(0.55) blur(18px)" decoding="async"></div>
       <div class="hp" data-ch="4"><img src="assets/ig-box-open.webp" alt="" style="filter:brightness(0.40) saturate(0.55) blur(9px)" decoding="async"></div>
@@ -4195,6 +4203,9 @@ function heroLoop(ts){
     var pl = photoPlates[pi];
     var po = clamp(1 - Math.abs(camY - pl.camY) / 900, 0, 1);
     po = sstep(po) * 0.55;
+    /* Floor 1 shares camY 0 with the opening plate, so without this the two
+       would stack on the landing frame. It arrives with the tree instead. */
+    if (pl.camY === 0) po *= sstep(seg(p, 0.10, 0.21));
     if (Math.abs(po - pl.last) > 0.004) {
       pl.last = po;
       pl.el.style.opacity = po.toFixed(3);

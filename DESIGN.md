@@ -186,8 +186,13 @@ Rules learned by getting them wrong:
   behind the drawn one without reading as a second censer.
 - **No legible human figures.** A person survives blurring and reads as a person however
   far back you push them.
-- **Chapter I has no plate.** There is no photograph of agarwood or the tree, and a majlis
-  interior behind a forest would be a lie. The forest opens on black.
+- **Chapter I is agarwood** (`assets/agarwood.webp`), cropped from the bottom third of
+  Jawhar's product poster, which is a real photograph of resinous heartwood. It is the
+  tree's own material, so it is the most literally correct ground the story could carry.
+  Being a product shot on **cream** it takes by far the deepest grade in the set
+  (brightness `0.17`, blur `26px`) — at moderate blur the pale ground reads as a bright
+  band behind a dark forest, which is tonally backwards. It also ramps in with the tree
+  (`seg(p, 0.10, 0.21)`) because floor 1 shares `camY 0` with the opening plate.
 - **Film grain** over the whole frame at `0.13` gives flat vector and photograph the same
   noise floor so they read as one surface. No `mix-blend-mode` — blending over near-black
   is invisible and forces a full-page recomposite every frame.
@@ -217,8 +222,9 @@ Rules learned by getting them wrong:
 
 These are asset and content gaps, not design decisions. None is fixable in CSS.
 
-1. **No photograph of agarwood, resin, or the tree.** Chapter I is the only chapter
-   without a photographic ground, and it is the one the story opens on.
+1. ~~No photograph of agarwood.~~ **Closed 2026-09-07.** One existed all along, inside
+   Jawhar's poster. A photograph of the standing *tree* or a forest would still be a
+   better opening image than a crop of chips on paper.
 2. **`assets/oud-oil.webp` is upscaled from a 204×289 screenshot,** not the original
    photograph. Invisible under 18px of blur; useless for anything sharp.
 3. **`Jawhar`'s card image is a poster,** with body copy and the price printed into the

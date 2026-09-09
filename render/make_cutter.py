@@ -45,36 +45,46 @@ ys, xs = np.nonzero(body)
 print("robe: %d components, kept %d px, bbox x %d-%d y %d-%d"
       % (n, body.sum(), xs.min(), xs.max(), ys.min(), ys.max()))
 
-# 2. head and masar: take the band above the shoulders, drop anything green or
-#    sky-blue, then keep only the piece that actually TOUCHES the robe. A plain
-#    rectangle here was being swallowed whole and shipped as a square head.
-notleaf = ~((g > r + 10) & (g > b + 10))
-notsky = ~((b > r + 12) & (b > g + 6))
-# The band has to sit over the SHOULDERS, not over the robe's left edge - the
-# head is offset right of the body's centroid and the first attempt searched a
-# column the head was never in.
-sh = ys.min()
-top_rows = (np.arange(H)[:, None] < sh + int(H * 0.06)) & body
-tcols = np.nonzero(top_rows.any(0))[0]
-band = np.zeros((H, W), bool)
-band[max(0, sh - int(H * 0.20)):sh + 10,
-     max(0, tcols.min() - 40):min(W, tcols.max() + 40)] = True
-print("shoulder columns x %d-%d -> head band x %d-%d"
-      % (tcols.min(), tcols.max(), max(0, tcols.min() - 40), min(W, tcols.max() + 40)))
-head = band & notleaf & notsky & (val > 0.26)
-head = ndimage.binary_opening(head, np.ones((9, 9)))
+# 2. head and masar: an EXPLICIT region, read off the image rather than
+#    inferred. The shoulder-band heuristic kept missing it and shipped a robe
+#    with no head, which can never read as a person. Inside this box the only
+#    thing that is not the man is green foliage.
+HX0, HY0, HX1, HY1 = 375, 200, 585, 458
+box = np.zeros((H, W), bool)
+box[HY0:HY1, HX0:HX1] = True
+green = (g > r + 6) & (g > b + 6)
+head = box & ~green
+head = ndimage.binary_closing(head, np.ones((9, 9)))
+head = ndimage.binary_opening(head, np.ones((7, 7)))
 hl, hn = ndimage.label(head)
-keep = np.zeros((H, W), bool)
-shoulders = ndimage.binary_dilation(body, np.ones((31, 31)))
-for i in range(1, hn + 1):
-    piece = hl == i
-    if (piece & shoulders).any() and piece.sum() > 150:
-        keep |= piece
-head = keep
-print("head: %d of %d pieces touch the robe (%d px)" % ((keep.sum() > 0), hn, keep.sum()))
+if hn:
+    head = hl == (1 + int(np.argmax(ndimage.sum(head, hl, range(1, hn + 1)))))
+print("head: %d px, %d components" % (head.sum(), hn))
 
-full = body | head
-full = ndimage.binary_closing(full, np.ones((13, 13)))
+# 3. forearms and hands: dark SKIN, which a brightness mask can never catch, so
+#    they were left as a black wedge through his middle. Measured: skin is
+#    r>g>b in 78% of pixels with r-b about +21; foliage is 24% and +6. Confined
+#    to the span between his sleeves and the haft.
+skin_box = np.zeros((H, W), bool)
+skin_box[620:840, 430:660] = True
+skin = skin_box & (r > g) & (g > b) & ((r - b) > 12)
+skin = ndimage.binary_closing(skin, np.ones((11, 11)))
+skin = ndimage.binary_opening(skin, np.ones((5, 5)))
+print("forearms: %d px" % skin.sum())
+
+full = body | head | skin
+# His forearms and hands are dark skin, so the brightness mask dropped them
+# and left a hole through his middle that the scene showed through. A wide
+# closing bridges sleeve to sleeve across them.
+full = ndimage.binary_closing(full, np.ones((41, 41)))
+# Sunlit ground and leaves cling to his right edge as thin bright spurs that
+# survive a plain opening. Eroding then dilating by a larger element severs
+# them; the few px it costs the figure are invisible at display size.
+full = ndimage.binary_erosion(full, np.ones((11, 11)))
+fl, fn = ndimage.label(full)
+if fn:
+    full = fl == (1 + int(np.argmax(ndimage.sum(full, fl, range(1, fn + 1)))))
+full = ndimage.binary_dilation(full, np.ones((9, 9)))
 full = ndimage.binary_fill_holes(full)
 lab2, n2 = ndimage.label(full)
 sizes2 = ndimage.sum(full, lab2, range(1, n2 + 1))
@@ -93,9 +103,3 @@ Image.fromarray((full * 255).astype(np.uint8)).resize(
     (560, int(560 * H / W)), Image.LANCZOS).save(os.path.join(OUT, "trace_flat.png"))
 np.save(os.path.join(OUT, "trace_mask.npy"), full)
 print("wrote trace_mask.png / trace_flat.png")
-
-# ── Stage 2 (see scratchpad cutout.py / install.py in the session that made
-# this): the mask is split into body and arm on a shared bounding box, exported
-# as alpha PNGs and embedded as <image> in index.html. The body keeps the WHOLE
-# mask - cutting the arm out of it left a hole that opened up the moment the arm
-# rotated. The rotating arm simply overlays it.

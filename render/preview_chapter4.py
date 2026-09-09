@@ -60,6 +60,7 @@ CLEAN = """<style>
   #veil { display: none !important; }
   #nav, #menu-overlay, #scroll-cue, #ch-dots { display: none !important; }
   .reduced-hero #hero-canvas,
+  .reduced-hero #hp-open,
   .reduced-hero #f1-chips,
   .reduced-hero #f1-dust,
   .reduced-hero #f1-birds { display: block !important; }

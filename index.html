@@ -2620,6 +2620,73 @@ body.menu-open { overflow: hidden; }
             <path id="f1-bird2" d="M-7 0 Q-3 -5 0 0 Q3 -5 7 0" stroke="#DFCFA6" stroke-width="2.1" fill="none" stroke-linecap="round"/>
           </g>
 
+          <!-- ─── THE CUTTER ───
+               The strike used to have no visible cause. The notch deepened, the
+               trunk rang, chips flew and the birds went, and it read as the tree
+               cutting itself. An unseen cause is a real device but it did not
+               land here, so there is a figure again.
+               ONE figure, not the mirrored pair. Both hands on the haft, which
+               is how a felling axe is actually swung and which fixes the old
+               "haft coming out of the chest". Leaning in, so the silhouette has
+               a diagonal rather than being a standing bell.
+               ⚠️ Its blade REACHES. The old pair stopped 11px short of the bark
+               they were supposedly biting. Shoulder (612,717) to notch (703,788)
+               is 115px; arm 54 + haft 75 = 129. It lands in the notch at the
+               bottom of every swing.
+               Sized 150 tall against the old 166: the trunk is the subject now
+               and a person beside a great tree should read smaller. At the
+               chapter I push-in this is still 390px, 43% of frame height, so it
+               is drawn to survive a close-up. -->
+          <g id="f1-cutter" opacity="0" transform="translate(606,816)">
+            <ellipse cx="4" cy="3" rx="19" ry="4" fill="#000000" opacity="0.5"/>
+            <!-- Dishdasha. Two tones: the sun is behind the tree and to +x, so
+                 the edge facing the trunk carries the warmer band. Narrower than
+                 the old 42-on-158, which read as a bell. -->
+            <path d="M2 -120 C-6 -120 -12 -115 -14 -107
+                     C-16 -84 -18 -46 -17 -4 L19 -4
+                     C20 -46 18 -84 16 -107 C14 -115 9 -120 2 -120 Z" fill="#120C06"/>
+            <path d="M7 -119 C12 -117 15 -113 16 -107
+                     C18 -84 20 -46 19 -4 L10 -4
+                     C10 -46 9 -86 8 -110 Z" fill="#241A0C"/>
+            <path d="M-17 -4 L19 -4" stroke="#6E5121" stroke-width="1.2" opacity="0.3"/>
+            <!-- Head and masar, tilted toward the cut -->
+            <path d="M-2 -124 L6 -124 L6 -130 L-2 -130 Z" fill="#120C06"/>
+            <ellipse cx="3" cy="-137" rx="8.5" ry="10" fill="#120C06"/>
+            <path d="M-6 -141 C-6 -150 13 -150 13 -141 C13 -136 -6 -136 -6 -141 Z" fill="#221709"/>
+            <path d="M-5 -141 C-9 -134 -10 -126 -8 -119 L-4 -121
+                     C-6 -127 -5 -134 -3 -139 Z" fill="#221709"/>
+            <!-- Rim light, broken into runs. An unbroken edge read as a pole. -->
+            <path d="M17 -103 C19 -86 20 -66 19 -50" stroke="#C9922E" stroke-width="1.3" fill="none" opacity="0.38"/>
+            <path d="M19 -30 L19 -6" stroke="#C9922E" stroke-width="1.2" fill="none" opacity="0.26"/>
+            <path d="M10 -146 C13 -143 13 -140 11 -137" stroke="#C9922E" stroke-width="1" fill="none" opacity="0.3"/>
+            <!-- Arms, haft and head. Rotates about the shoulder at (6,-99). -->
+            <g id="f1-cutter-arm">
+              <!-- Arms are STROKES, not filled wedges. Drawn as two tapering
+                   plates they merged with the haft into one thick plank and the
+                   whole reach read as a pole. Rounded strokes with a bend at the
+                   elbow read as arms, and the haft stays a separate object.
+                   Far arm sits behind and darker; near arm is a step lighter, or
+                   the haft appears to come out of the chest. -->
+              <path d="M5 -100 Q22 -92 34 -74" stroke="#241A0C" stroke-width="7.5"
+                    fill="none" stroke-linecap="round"/>
+              <path d="M7 -97 Q24 -88 38 -70" stroke="#2E2211" stroke-width="7"
+                    fill="none" stroke-linecap="round"/>
+              <path d="M9 -95 Q25 -87 37 -71" stroke="#C9922E" stroke-width="0.9"
+                    fill="none" opacity="0.3" stroke-linecap="round"/>
+              <!-- Hands, where both grips close on the haft -->
+              <ellipse cx="40" cy="-68" rx="5" ry="4" fill="#2E2211" transform="rotate(-33 40 -68)"/>
+              <ellipse cx="52" cy="-60" rx="4.4" ry="3.6" fill="#241A0C" transform="rotate(-33 52 -60)"/>
+              <!-- Haft: longer than the arm, which is how a felling axe is built -->
+              <path d="M30 -74 L97 -29" stroke="#3E2A12" stroke-width="4" stroke-linecap="round"/>
+              <path d="M34 -71 L95 -30" stroke="#8A6A3C" stroke-width="1" stroke-linecap="round" opacity="0.34"/>
+              <!-- Blade. Warm steel, not the blue-grey it was: a cold highlight
+                   reads as plastic against a scene lit entirely by low sun.
+                   17x10 on a 150 figure, per the eighth-of-a-person rule. -->
+              <path d="M92 -35 L105 -26 L100 -18 L88 -27 Z" fill="#332A22"/>
+              <path d="M105 -26 L100 -18 L107 -18 L109 -25 Z" fill="#D8C9A8" opacity="0.72"/>
+            </g>
+            </g>
+          </g>
           <!-- Roots reaching down into floor 2 -->
           <g id="f1-roots" opacity="0">
             <path d="M700 822 Q680 900 640 1000 Q620 1070 630 1140" stroke="#1E1206" stroke-width="12" fill="none" stroke-linecap="round"/>
@@ -4139,6 +4206,8 @@ var sc = {
 sc.worldNear = $s('world-near');
 if (isMobile) sc.worldNear.style.display = 'none';
 sc.dust    = $s('f1-dust');
+sc.cutter  = $s('f1-cutter');
+sc.cutterArm = $s('f1-cutter-arm');
 sc.notch   = $s('f1-notch');
 sc.notch2  = $s('f1-notch2');
 sc.canBack    = $s('can-back');
@@ -4492,6 +4561,18 @@ function heroLoop(ts){
        being struck. This is a knock and a decaying ring: peak displacement
        ~47ms after the beat, dead by half a beat, so the trunk is visibly still
        between blows and the next one reads as an event. */
+    /* The cutter. Arrives with the chapter, leaves as the chopping fades.
+       The arm angle is driven by the SAME beat as the ring and the chips, and
+       is zero at beat 0 - so the blade is in the notch at the exact instant the
+       trunk is knocked. Raised through the middle of the beat and dropped fast:
+       pow(sin, 0.7) leans the curve so the fall is quicker than the lift, which
+       is how an axe actually moves. */
+    var cutIn = eOut(seg(p, 0.135, 0.20)) * (1 - eIn(seg(p, 0.44, 0.54)));
+    op(sc.cutter, cutIn);
+    if (cutIn > 0.002) {
+      var swing = -58 * Math.pow(Math.sin(beat * Math.PI), 0.7);
+      sc.cutterArm.setAttribute('transform', 'rotate(' + swing.toFixed(2) + ' 6 -99)');
+    }
     var ring = Math.sin(beat * Math.PI * 2 * 2.4) * Math.exp(-beat * 7);
     var shudder = (ring * 7.0 * chopEnv).toFixed(2);
     sc.f1tree.setAttribute('transform', 'translate(' + shudder + ',' + (1-treeT)*60 + ')');

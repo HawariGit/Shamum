@@ -238,7 +238,7 @@ in frame, aspect 0.72. Ours is 132 × 183 — **70% of body width**, matching.
   says "Mandle" capitalised, which is correct: that's a product name, this is a
   photograph of a label. Arabic in `<tspan lang="ar">`, never `<span>`.
 
-### The feller is off-frame — and there is no way to bring him back
+### The cutter — removed, then brought back
 Two backlit silhouettes used to stand either side of the trunk. They were
 **removed**, not redrawn a fifth time. They were exact mirrors of each other,
 flat, and their axe heads stopped **11px short** of the bark — the figure's
@@ -254,8 +254,32 @@ haft is ~80 of them. Reaching the notch from the nearest frame edge needs
 scale. This was worked out with numbers before anything was drawn; redo the
 arithmetic before overriding it.
 
-So nothing swings. The blow lands off-frame and only its **consequences** are
-drawn. An unseen cause is a normal and much older device than a badly drawn one.
+The pair were removed and the strike was left with **no visible cause** — notch,
+ring, dust, chips, birds. That is a real device and it **did not land**: the
+user's words were *"the cutting process is weird asf it just cuts itself"*.
+So there is a figure again, `#f1-cutter`, and the lesson is that an unseen
+cause needs the consequence to be unmistakable, which a shuddering trunk is
+not.
+
+What is different this time:
+
+- **One figure.** The mirrored pair was the most artificial thing in the frame.
+- **The blade reaches.** Shoulder (612,717) to notch (703,788) is 115px; arm 54
+  + haft 75 = 129. It lands *in* the notch at the bottom of every swing. The old
+  pair stopped **11px short** of the bark they were supposedly biting.
+- **Arms are strokes, not filled wedges.** Drawn as tapering plates they merged
+  with the haft into one plank and the whole reach read as a pole.
+- **Both hands on the haft**, which is how a felling axe is swung and which is
+  what fixes the old "haft coming out of the chest".
+- **150 tall, not 166.** The trunk is the subject; a person beside a great tree
+  should read smaller.
+- The swing is driven by the **same `beat`** as the ring, the dust and the chips,
+  and is zero at beat 0 — blade in the notch at the exact instant the trunk is
+  knocked. `pow(sin(beat·π), 0.7)` leans the curve so the fall is faster than
+  the lift.
+
+⚠️ At the chapter I push-in it is **390px, 43% of frame height**. Anything drawn
+here has to hold a close-up; that is what killed the first pair.
 
 | beat | |
 |---|---|

@@ -98,7 +98,7 @@ def shot(dest, by_id):
     return os.path.exists(dest)
 
 
-SECTIONS = ["shelf-bukhoor", "brand-statement", "ritual", "essence",
+SECTIONS = ["shelf-bukhoor", "brand-statement", "ritual", "essence", "painted",
             "quote-section", "scent-life", "trust", "loyalty", "footer"]
 
 

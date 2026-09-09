@@ -227,12 +227,18 @@ These are asset and content gaps, not design decisions. None is fixable in CSS.
    better opening image than a crop of chips on paper.
 2. **`assets/oud-oil.webp` is upscaled from a 204×289 screenshot,** not the original
    photograph. Invisible under 18px of blur; useless for anything sharp.
-3. **`Jawhar`'s card image is a poster,** with body copy and the price printed into the
+3. **The product cards still pull remote store thumbnails.** For zahyah, Mandle and
+   Flower Gardens those thumbnails are tight crops of the *same shoot* as
+   `assets/prod-*.webp`, so swapping them in would gain resolution and lose nothing
+   else — the wider frames are used in **#painted** instead, where the bottle-against-
+   its-painting pairing is the point. The other twelve products have no house
+   photography at all.
+4. **`Jawhar`'s card image is a poster,** with body copy and the price printed into the
    pixels. If the price changes the card is silently wrong. The store has no alternative
    image. Left as-is by explicit instruction.
 4. **Product photography generally.** The lifestyle shots have no isolated product to key,
    so they cannot be cut out. The light plate is structural, not a workaround.
-5. **No analytics.** `/_vercel/insights/script.js` returns 404 — Web Analytics is not
+6. **No analytics.** `/_vercel/insights/script.js` returns 404 — Web Analytics is not
    enabled on the Vercel project.
 
 ---

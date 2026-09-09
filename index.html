@@ -591,6 +591,53 @@ body.menu-open { overflow: hidden; }
 }
 @media (prefers-reduced-motion: reduce) { #page-ambient { animation: none; } }
 
+/* ─── PAINTED SCENTS ───
+   Six photographs arrived showing each perfume in its box against a painted
+   canvas: irises behind zahyah, a forest path behind Mandle, mixed blossom
+   behind Flower Gardens. That pairing is the whole point of the shoot and a
+   square product-card crop throws it away, so it gets its own section rather
+   than being fed into the grid. The store's own card thumbnails come from this
+   same shoot and are tighter crops of it - swapping them in would have gained
+   resolution and lost the idea.
+   Deliberately NOT the .ess-grid treatment: that is two portrait panels with
+   the caption under a gold double frame. This is three landscape plates with
+   the caption inset over the image, so the two sections do not read as the
+   same layout twice. */
+#painted { padding: clamp(90px, 13vh, 150px) 24px clamp(70px, 10vh, 120px); }
+.pn-head { text-align: center; margin-bottom: clamp(44px, 6vh, 74px); }
+.pn-grid {
+  display: grid; gap: clamp(18px, 2.4vw, 34px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 1320px; margin: 0 auto;
+}
+.pn-item { position: relative; margin: 0; overflow: hidden;
+           border: 1px solid rgba(201,161,90,0.28); }
+.pn-item img {
+  display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
+  /* The canvases are bright and saturated against a near-black page. Pulled
+     down so they sit in the same light as everything else, and lifted back on
+     hover so the painting rewards a look. */
+  filter: brightness(0.72) saturate(0.86);
+  transition: transform 1.4s cubic-bezier(0.16,1,0.3,1),
+              filter 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+.pn-item:hover img, .pn-item:focus-within img {
+  transform: scale(1.04); filter: brightness(0.92) saturate(1);
+}
+.pn-cap {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  padding: clamp(18px, 2vw, 26px);
+  background: linear-gradient(to top, rgba(8,4,2,0.90) 12%, rgba(8,4,2,0.55) 52%, transparent 100%);
+  pointer-events: none;
+}
+.pn-ar { font-family: 'Cormorant Garamond', serif; direction: rtl; display: block;
+         font-size: clamp(22px, 2.1vw, 30px); color: var(--sand-50); line-height: 1.2; }
+.pn-en { font-family: 'Jost', sans-serif; font-size: 9.5px; letter-spacing: 0.3em;
+         text-transform: uppercase; color: var(--gold-400); display: block; margin-top: 7px; }
+.pn-note { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 12px;
+           line-height: 1.7; color: rgba(244,234,210,0.74); margin: 12px 0 0; }
+@media (max-width: 900px) { .pn-grid { grid-template-columns: 1fr; max-width: 480px; } }
+
 /* ─── KEYBOARD ACCESS ───
    The page had 58 interactive elements and not one focus style. Focus was
    never suppressed, it was simply never defined, so keyboard users got the
@@ -625,7 +672,7 @@ body.menu-open { overflow: hidden; }
 
 /* Stops the one-word last line on the display faces. Only where the type is
    large enough for a ragged edge to be visible. */
-.ch-head, .ch-sub, .pg-en, .ess-title, .sec-title, .product-name {
+.ch-head, .ch-sub, .pg-en, .ess-title, .product-name {
   text-wrap: balance;
 }
 
@@ -3081,11 +3128,11 @@ body.menu-open { overflow: hidden; }
             </div>
             <div class="product-card">
               <div class="product-image-wrap" data-cursor-image>
-                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/8bdb0cc5-740e-4d60-ab75-d296c761fe70-thumbnail-1000x1000-70.jpg" alt="Zahiya — زاهيـــة" loading="lazy">
+                <img src="https://media.zid.store/thumbs/12495741-3239-4f1c-9472-c6b513a5dbf4/8bdb0cc5-740e-4d60-ab75-d296c761fe70-thumbnail-1000x1000-70.jpg" alt="zahyah — زاهيـــة" loading="lazy">
               </div>
               <div class="product-info">
                 <div class="product-meta"><span class="product-size">Eau de Parfum</span></div>
-                <span class="product-name">Zahiya</span>
+                <span class="product-name">zahyah</span>
                 <span class="product-arabic"><span lang="ar">زاهيـــة</span></span>
                 <span class="product-price">68.000 <span lang="ar">ر.ع</span></span>
                 <a class="add-to-bag magnetic" href="https://shamum.com/products/زاهيـــة" target="_blank" rel="noopener">View Product · <span lang="ar">اكتشف</span></a>
@@ -3302,6 +3349,40 @@ body.menu-open { overflow: hidden; }
 
 <!-- ═══ PRODUCTS ═══ -->
 <!-- ═══ QUOTE ═══ -->
+<!-- ─── PAINTED SCENTS ─── -->
+<section id="painted">
+  <div class="pn-head">
+    <span class="section-eyebrow reveal" style="color: var(--gold-400);">The House Paints Its Scents · <span lang="ar">لوحـات العطـر</span></span>
+    <h2 class="ess-title reveal reveal-delay-1">Each one was photographed<br><em>against its own picture.</em></h2>
+  </div>
+  <div class="pn-grid">
+    <figure class="pn-item reveal">
+      <img src="assets/prod-zahyah-2.webp" alt="zahyah in its case, against a painting of irises" loading="lazy">
+      <figcaption class="pn-cap">
+        <span class="pn-ar" lang="ar">زاهيـــة</span>
+        <span class="pn-en">zahyah</span>
+        <p class="pn-note">Natural vanilla, bitter walnut and sandalwood, powdered soft, with fine florals running through.</p>
+      </figcaption>
+    </figure>
+    <figure class="pn-item reveal reveal-delay-1">
+      <img src="assets/prod-mandle.webp" alt="Mandle in its case, against a painting of a forest path" loading="lazy">
+      <figcaption class="pn-cap">
+        <span class="pn-ar" lang="ar">منــدل</span>
+        <span class="pn-en">mandle</span>
+        <p class="pn-note">Natural dehn al oud at its centre, saffron and amber around it, finished in bergamot.</p>
+      </figcaption>
+    </figure>
+    <figure class="pn-item reveal reveal-delay-2">
+      <img src="assets/prod-flower-gardens.webp" alt="Flower Gardens in its case, against a painting of mixed blossom" loading="lazy">
+      <figcaption class="pn-cap">
+        <span class="pn-ar" lang="ar">حدائــق الأزهــــار</span>
+        <span class="pn-en">Flower Gardens</span>
+        <p class="pn-note">Roses and blossoms gathered from across the world, led by iris.</p>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
 <section id="quote-section">
   <div class="quote-haze" aria-hidden="true"><i></i><i></i><i></i></div>
   <svg class="quote-grain" xmlns="http://www.w3.org/2000/svg">

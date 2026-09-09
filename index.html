@@ -2638,64 +2638,63 @@ body.menu-open { overflow: hidden; }
                chapter I push-in this is still 390px, 43% of frame height, so it
                is drawn to survive a close-up. -->
           <g id="f1-cutter" opacity="0" transform="translate(606,816)">
-            <ellipse cx="4" cy="3" rx="19" ry="4" fill="#000000" opacity="0.5"/>
-            <!-- The skirt of the dishdasha stays PLANTED. Only what is above the
-                 hips moves, which is what stops the figure sliding about as one
-                 rigid piece. It flares to 40 at the hem from 24 at the waist:
-                 the old one was a straight 42-wide tube and read as a bell. -->
-            <path d="M-11 -62 C-13 -44 -17 -22 -19 -4 L21 -4
-                     C20 -22 17 -44 15 -62 Z" fill="#120C06"/>
-            <path d="M8 -62 C10 -42 13 -22 15 -4 L21 -4
-                     C20 -22 17 -44 15 -62 Z" fill="#241A0C"/>
-            <path d="M-19 -4 L21 -4" stroke="#6E5121" stroke-width="1.2" opacity="0.3"/>
-            <path d="M-4 -58 C-6 -40 -8 -22 -9 -6" stroke="#0B0703" stroke-width="1.6"
-                  fill="none" opacity="0.6"/>
-            <path d="M5 -58 C6 -40 7 -22 7 -6" stroke="#0B0703" stroke-width="1.3"
-                  fill="none" opacity="0.45"/>
-            <!-- Everything above the hips. Leans into the blow and dips with the
-                 weight; see heroLoop. Pivot is the hip joint at (2,-58). -->
+            <ellipse cx="4" cy="3" rx="20" ry="4" fill="#000000" opacity="0.5"/>
+            <!-- STANCE. The skirt is planted and braced: back leg trailing left,
+                 front leg under the body. Two overlapping falls rather than one
+                 bell, so the hem has a leading and a trailing edge and the figure
+                 reads as standing IN something. -->
+            <path d="M-9 -60 C-12 -42 -16 -20 -18 -4 L-4 -4 C-3 -24 -4 -44 -3 -60 Z" fill="#0D0904"/>
+            <path d="M-6 -62 C-7 -42 -8 -22 -8 -4 L14 -4
+                     C15 -24 15 -44 14 -62 Z" fill="#150E07"/>
+            <path d="M8 -62 C10 -42 12 -22 13 -4 L14 -4
+                     C15 -24 15 -44 14 -62 Z" fill="#2A1E10"/>
+            <path d="M-18 -4 L14 -4" stroke="#6E5121" stroke-width="1.1" opacity="0.28"/>
             <g id="f1-cutter-body">
-              <!-- Torso: shoulders wider than waist, so it is a body and not a
-                   post. Back edge dark, the edge facing the tree a step up. -->
-              <path d="M2 -122 C-8 -121 -13 -114 -14 -104
-                       C-15 -92 -12 -74 -11 -60 L14 -60
-                       C15 -74 17 -92 16 -104 C15 -114 10 -122 2 -122 Z" fill="#120C06"/>
-              <path d="M7 -121 C12 -119 15 -112 16 -104
-                       C17 -92 15 -74 14 -60 L7 -60
-                       C8 -76 9 -94 9 -108 Z" fill="#241A0C"/>
-              <!-- a fold across the small of the back, so the torso has a waist -->
-              <path d="M-12 -78 C-4 -74 6 -74 15 -78" stroke="#0B0703" stroke-width="1.5"
-                    fill="none" opacity="0.55"/>
-              <!-- Neck, head, masar. Head is tipped toward the cut. -->
-              <path d="M-1 -126 L7 -126 L7 -132 L-1 -132 Z" fill="#120C06"/>
-              <ellipse cx="4" cy="-139" rx="8.5" ry="9.6" fill="#120C06"
-                       transform="rotate(9 4 -139)"/>
-              <path d="M-5 -143 C-4 -152 14 -151 13 -142 C13 -137 -5 -138 -5 -143 Z" fill="#221709"/>
-              <path d="M-4 -143 C-8 -136 -9 -128 -7 -121 L-3 -123
-                       C-5 -129 -4 -136 -2 -141 Z" fill="#221709"/>
-              <!-- Rim light, broken. An unbroken edge reads as a pole. -->
-              <path d="M16 -108 C17 -96 16 -80 15 -66" stroke="#C9922E" stroke-width="1.2"
-                    fill="none" opacity="0.36"/>
-              <path d="M11 -148 C14 -145 14 -142 12 -139" stroke="#C9922E" stroke-width="1"
-                    fill="none" opacity="0.3"/>
+              <!-- Torso: sloped shoulders, narrow waist. The old one was a tube
+                   with square shoulders and read as a bollard. -->
+              <path d="M0 -119 C-7 -118 -12 -112 -14 -103
+                       C-15 -92 -12 -74 -11 -61 L13 -61
+                       C14 -74 16 -92 15 -103 C13 -112 8 -119 0 -119 Z" fill="#150E07"/>
+              <path d="M6 -118 C11 -115 14 -110 15 -103
+                       C16 -92 14 -74 13 -61 L7 -61
+                       C8 -77 9 -95 9 -107 Z" fill="#2A1E10"/>
+              <path d="M-11 -79 C-3 -75 5 -75 13 -79" stroke="#080502" stroke-width="1.6"
+                    fill="none" opacity="0.7"/>
+              <!-- NECK is a narrow column with the head clear above it. A
+                   silhouette reads by its GAPS, not its detail: head, neck and
+                   shoulders merging into one lump was the main fault before. -->
+              <path d="M0 -119 L6 -119 L6 -127 L0 -127 Z" fill="#0D0904"/>
+              <ellipse cx="4" cy="-136" rx="8" ry="9" fill="#150E07" transform="rotate(12 4 -136)"/>
+              <path d="M-4 -140 C-4 -148 13 -148 13 -140 C13 -135 -4 -136 -4 -140 Z" fill="#2A1E10"/>
+              <path d="M11 -141 C14 -137 14 -133 12 -130" stroke="#2A1E10" stroke-width="4.2"
+                    fill="none" stroke-linecap="round"/>
+              <path d="M15 -106 C16 -94 15 -80 14 -66" stroke="#C9922E" stroke-width="1.2"
+                    fill="none" opacity="0.34"/>
+              <path d="M11 -145 C14 -142 14 -139 12 -136" stroke="#C9922E" stroke-width="1"
+                    fill="none" opacity="0.28"/>
+              <!-- TWO-BONE ARM. Rotating one rigid limb is what made every
+                   previous version read as a pole: at the top of the lift the
+                   arm and the haft formed a single straight line. The upper arm
+                   turns at the shoulder, the forearm turns AGAIN at the elbow,
+                   so the axe folds back over the shoulder on the lift and opens
+                   out into the strike. Drawn here in the impact pose. -->
               <g id="f1-cutter-arm">
-                <!-- Arms are STROKES with an elbow. Drawn as filled tapering
-                     plates they merged with the haft into one plank and the
-                     whole reach read as a pole. -->
-                <path d="M3 -104 Q21 -95 33 -76" stroke="#241A0C" stroke-width="7.5"
+                <path d="M5 -102 L22 -88" stroke="#150E07" stroke-width="8.5"
                       fill="none" stroke-linecap="round"/>
-                <path d="M5 -101 Q23 -91 37 -72" stroke="#2E2211" stroke-width="7"
+                <path d="M5 -102 L22 -88" stroke="#33240F" stroke-width="6"
                       fill="none" stroke-linecap="round"/>
-                <path d="M7 -99 Q24 -90 36 -73" stroke="#C9922E" stroke-width="0.9"
-                      fill="none" opacity="0.3" stroke-linecap="round"/>
-                <ellipse cx="39" cy="-70" rx="5" ry="4" fill="#2E2211" transform="rotate(-33 39 -70)"/>
-                <ellipse cx="51" cy="-62" rx="4.4" ry="3.6" fill="#241A0C" transform="rotate(-33 51 -62)"/>
-                <path d="M29 -76 L96 -31" stroke="#3E2A12" stroke-width="4" stroke-linecap="round"/>
-                <path d="M33 -73 L94 -32" stroke="#8A6A3C" stroke-width="1" stroke-linecap="round" opacity="0.34"/>
-                <!-- Warm steel: a cold highlight read as plastic in a scene lit
-                     entirely by low sun. 17x10 on a 150 figure. -->
-                <path d="M91 -37 L104 -28 L99 -20 L87 -29 Z" fill="#332A22"/>
-                <path d="M104 -28 L99 -20 L106 -20 L108 -27 Z" fill="#D8C9A8" opacity="0.72"/>
+                <g id="f1-cutter-fore">
+                  <path d="M22 -88 L40 -68" stroke="#2A1E10" stroke-width="7"
+                        fill="none" stroke-linecap="round"/>
+                  <path d="M23 -87 L39 -69" stroke="#C9922E" stroke-width="0.9"
+                        fill="none" opacity="0.26" stroke-linecap="round"/>
+                  <ellipse cx="41" cy="-67" rx="5" ry="4.2" fill="#33240F" transform="rotate(-35 41 -67)"/>
+                  <ellipse cx="53" cy="-59" rx="4.3" ry="3.6" fill="#241A0C" transform="rotate(-35 53 -59)"/>
+                  <path d="M31 -75 L97 -31" stroke="#3E2A12" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M35 -72 L95 -32" stroke="#8A6A3C" stroke-width="1" stroke-linecap="round" opacity="0.34"/>
+                  <path d="M92 -37 L105 -28 L100 -20 L88 -29 Z" fill="#332A22"/>
+                  <path d="M105 -28 L100 -20 L107 -20 L109 -27 Z" fill="#D8C9A8" opacity="0.72"/>
+                </g>
               </g>
             </g>
           </g>
@@ -4221,6 +4220,7 @@ sc.dust    = $s('f1-dust');
 sc.cutter  = $s('f1-cutter');
 sc.cutterArm = $s('f1-cutter-arm');
 sc.cutterBody = $s('f1-cutter-body');
+sc.cutterFore = $s('f1-cutter-fore');
 sc.notch   = $s('f1-notch');
 sc.notch2  = $s('f1-notch2');
 sc.canBack    = $s('can-back');
@@ -4583,19 +4583,17 @@ function heroLoop(ts){
     var cutIn = eOut(seg(p, 0.135, 0.20)) * (1 - eIn(seg(p, 0.44, 0.54)));
     op(sc.cutter, cutIn);
     if (cutIn > 0.002) {
-      /* Three things move, not one. Only the arm rotating is what made this
-         read as a machine: a person chopping drives from the hips, drops their
-         weight into the blow, and straightens on the recovery.
-         - arm swings about the shoulder
-         - the whole upper body LEANS into the strike about the hip joint
-         - and DIPS a few px as the weight goes down
-         Lean and dip peak at beat 0, with the blade, and are small enough
-         (4 deg, 3px) that the blade stays inside the 26x22 notch. */
-      var swing = -58 * Math.pow(Math.sin(beat * Math.PI), 0.7);
-      var drive = Math.pow(1 - Math.sin(beat * Math.PI), 1.6);   // 1 at impact, 0 at the top
-      sc.cutterArm.setAttribute('transform', 'rotate(' + swing.toFixed(2) + ' 5 -102)');
+      /* Two joints, not one. lift is 0 at the strike and 1 at the top.
+         The shoulder carries the arm up and back; the ELBOW folds on top of
+         that, which is what takes the axe behind the shoulder instead of
+         extending it straight out like a boom. Lean and dip are far bigger than
+         the first attempt - 4 degrees and 3px were simply invisible. */
+      var lift  = Math.pow(Math.sin(beat * Math.PI), 0.7);
+      var drive = Math.pow(1 - Math.sin(beat * Math.PI), 1.5);
+      sc.cutterArm.setAttribute('transform', 'rotate(' + (-64 * lift).toFixed(2) + ' 5 -102)');
+      sc.cutterFore.setAttribute('transform', 'rotate(' + (-52 * lift).toFixed(2) + ' 22 -88)');
       sc.cutterBody.setAttribute('transform',
-        'translate(0,' + (drive * 3).toFixed(2) + ') rotate(' + (drive * 4).toFixed(2) + ' 2 -58)');
+        'translate(0,' + (drive * 5).toFixed(2) + ') rotate(' + (drive * 13).toFixed(2) + ' 2 -60)');
     }
     var ring = Math.sin(beat * Math.PI * 2 * 2.4) * Math.exp(-beat * 7);
     var shudder = (ring * 7.0 * chopEnv).toFixed(2);

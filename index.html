@@ -2639,52 +2639,64 @@ body.menu-open { overflow: hidden; }
                is drawn to survive a close-up. -->
           <g id="f1-cutter" opacity="0" transform="translate(606,816)">
             <ellipse cx="4" cy="3" rx="19" ry="4" fill="#000000" opacity="0.5"/>
-            <!-- Dishdasha. Two tones: the sun is behind the tree and to +x, so
-                 the edge facing the trunk carries the warmer band. Narrower than
-                 the old 42-on-158, which read as a bell. -->
-            <path d="M2 -120 C-6 -120 -12 -115 -14 -107
-                     C-16 -84 -18 -46 -17 -4 L19 -4
-                     C20 -46 18 -84 16 -107 C14 -115 9 -120 2 -120 Z" fill="#120C06"/>
-            <path d="M7 -119 C12 -117 15 -113 16 -107
-                     C18 -84 20 -46 19 -4 L10 -4
-                     C10 -46 9 -86 8 -110 Z" fill="#241A0C"/>
-            <path d="M-17 -4 L19 -4" stroke="#6E5121" stroke-width="1.2" opacity="0.3"/>
-            <!-- Head and masar, tilted toward the cut -->
-            <path d="M-2 -124 L6 -124 L6 -130 L-2 -130 Z" fill="#120C06"/>
-            <ellipse cx="3" cy="-137" rx="8.5" ry="10" fill="#120C06"/>
-            <path d="M-6 -141 C-6 -150 13 -150 13 -141 C13 -136 -6 -136 -6 -141 Z" fill="#221709"/>
-            <path d="M-5 -141 C-9 -134 -10 -126 -8 -119 L-4 -121
-                     C-6 -127 -5 -134 -3 -139 Z" fill="#221709"/>
-            <!-- Rim light, broken into runs. An unbroken edge read as a pole. -->
-            <path d="M17 -103 C19 -86 20 -66 19 -50" stroke="#C9922E" stroke-width="1.3" fill="none" opacity="0.38"/>
-            <path d="M19 -30 L19 -6" stroke="#C9922E" stroke-width="1.2" fill="none" opacity="0.26"/>
-            <path d="M10 -146 C13 -143 13 -140 11 -137" stroke="#C9922E" stroke-width="1" fill="none" opacity="0.3"/>
-            <!-- Arms, haft and head. Rotates about the shoulder at (6,-99). -->
-            <g id="f1-cutter-arm">
-              <!-- Arms are STROKES, not filled wedges. Drawn as two tapering
-                   plates they merged with the haft into one thick plank and the
-                   whole reach read as a pole. Rounded strokes with a bend at the
-                   elbow read as arms, and the haft stays a separate object.
-                   Far arm sits behind and darker; near arm is a step lighter, or
-                   the haft appears to come out of the chest. -->
-              <path d="M5 -100 Q22 -92 34 -74" stroke="#241A0C" stroke-width="7.5"
-                    fill="none" stroke-linecap="round"/>
-              <path d="M7 -97 Q24 -88 38 -70" stroke="#2E2211" stroke-width="7"
-                    fill="none" stroke-linecap="round"/>
-              <path d="M9 -95 Q25 -87 37 -71" stroke="#C9922E" stroke-width="0.9"
-                    fill="none" opacity="0.3" stroke-linecap="round"/>
-              <!-- Hands, where both grips close on the haft -->
-              <ellipse cx="40" cy="-68" rx="5" ry="4" fill="#2E2211" transform="rotate(-33 40 -68)"/>
-              <ellipse cx="52" cy="-60" rx="4.4" ry="3.6" fill="#241A0C" transform="rotate(-33 52 -60)"/>
-              <!-- Haft: longer than the arm, which is how a felling axe is built -->
-              <path d="M30 -74 L97 -29" stroke="#3E2A12" stroke-width="4" stroke-linecap="round"/>
-              <path d="M34 -71 L95 -30" stroke="#8A6A3C" stroke-width="1" stroke-linecap="round" opacity="0.34"/>
-              <!-- Blade. Warm steel, not the blue-grey it was: a cold highlight
-                   reads as plastic against a scene lit entirely by low sun.
-                   17x10 on a 150 figure, per the eighth-of-a-person rule. -->
-              <path d="M92 -35 L105 -26 L100 -18 L88 -27 Z" fill="#332A22"/>
-              <path d="M105 -26 L100 -18 L107 -18 L109 -25 Z" fill="#D8C9A8" opacity="0.72"/>
-            </g>
+            <!-- The skirt of the dishdasha stays PLANTED. Only what is above the
+                 hips moves, which is what stops the figure sliding about as one
+                 rigid piece. It flares to 40 at the hem from 24 at the waist:
+                 the old one was a straight 42-wide tube and read as a bell. -->
+            <path d="M-11 -62 C-13 -44 -17 -22 -19 -4 L21 -4
+                     C20 -22 17 -44 15 -62 Z" fill="#120C06"/>
+            <path d="M8 -62 C10 -42 13 -22 15 -4 L21 -4
+                     C20 -22 17 -44 15 -62 Z" fill="#241A0C"/>
+            <path d="M-19 -4 L21 -4" stroke="#6E5121" stroke-width="1.2" opacity="0.3"/>
+            <path d="M-4 -58 C-6 -40 -8 -22 -9 -6" stroke="#0B0703" stroke-width="1.6"
+                  fill="none" opacity="0.6"/>
+            <path d="M5 -58 C6 -40 7 -22 7 -6" stroke="#0B0703" stroke-width="1.3"
+                  fill="none" opacity="0.45"/>
+            <!-- Everything above the hips. Leans into the blow and dips with the
+                 weight; see heroLoop. Pivot is the hip joint at (2,-58). -->
+            <g id="f1-cutter-body">
+              <!-- Torso: shoulders wider than waist, so it is a body and not a
+                   post. Back edge dark, the edge facing the tree a step up. -->
+              <path d="M2 -122 C-8 -121 -13 -114 -14 -104
+                       C-15 -92 -12 -74 -11 -60 L14 -60
+                       C15 -74 17 -92 16 -104 C15 -114 10 -122 2 -122 Z" fill="#120C06"/>
+              <path d="M7 -121 C12 -119 15 -112 16 -104
+                       C17 -92 15 -74 14 -60 L7 -60
+                       C8 -76 9 -94 9 -108 Z" fill="#241A0C"/>
+              <!-- a fold across the small of the back, so the torso has a waist -->
+              <path d="M-12 -78 C-4 -74 6 -74 15 -78" stroke="#0B0703" stroke-width="1.5"
+                    fill="none" opacity="0.55"/>
+              <!-- Neck, head, masar. Head is tipped toward the cut. -->
+              <path d="M-1 -126 L7 -126 L7 -132 L-1 -132 Z" fill="#120C06"/>
+              <ellipse cx="4" cy="-139" rx="8.5" ry="9.6" fill="#120C06"
+                       transform="rotate(9 4 -139)"/>
+              <path d="M-5 -143 C-4 -152 14 -151 13 -142 C13 -137 -5 -138 -5 -143 Z" fill="#221709"/>
+              <path d="M-4 -143 C-8 -136 -9 -128 -7 -121 L-3 -123
+                       C-5 -129 -4 -136 -2 -141 Z" fill="#221709"/>
+              <!-- Rim light, broken. An unbroken edge reads as a pole. -->
+              <path d="M16 -108 C17 -96 16 -80 15 -66" stroke="#C9922E" stroke-width="1.2"
+                    fill="none" opacity="0.36"/>
+              <path d="M11 -148 C14 -145 14 -142 12 -139" stroke="#C9922E" stroke-width="1"
+                    fill="none" opacity="0.3"/>
+              <g id="f1-cutter-arm">
+                <!-- Arms are STROKES with an elbow. Drawn as filled tapering
+                     plates they merged with the haft into one plank and the
+                     whole reach read as a pole. -->
+                <path d="M3 -104 Q21 -95 33 -76" stroke="#241A0C" stroke-width="7.5"
+                      fill="none" stroke-linecap="round"/>
+                <path d="M5 -101 Q23 -91 37 -72" stroke="#2E2211" stroke-width="7"
+                      fill="none" stroke-linecap="round"/>
+                <path d="M7 -99 Q24 -90 36 -73" stroke="#C9922E" stroke-width="0.9"
+                      fill="none" opacity="0.3" stroke-linecap="round"/>
+                <ellipse cx="39" cy="-70" rx="5" ry="4" fill="#2E2211" transform="rotate(-33 39 -70)"/>
+                <ellipse cx="51" cy="-62" rx="4.4" ry="3.6" fill="#241A0C" transform="rotate(-33 51 -62)"/>
+                <path d="M29 -76 L96 -31" stroke="#3E2A12" stroke-width="4" stroke-linecap="round"/>
+                <path d="M33 -73 L94 -32" stroke="#8A6A3C" stroke-width="1" stroke-linecap="round" opacity="0.34"/>
+                <!-- Warm steel: a cold highlight read as plastic in a scene lit
+                     entirely by low sun. 17x10 on a 150 figure. -->
+                <path d="M91 -37 L104 -28 L99 -20 L87 -29 Z" fill="#332A22"/>
+                <path d="M104 -28 L99 -20 L106 -20 L108 -27 Z" fill="#D8C9A8" opacity="0.72"/>
+              </g>
             </g>
           </g>
           <!-- Roots reaching down into floor 2 -->
@@ -4208,6 +4220,7 @@ if (isMobile) sc.worldNear.style.display = 'none';
 sc.dust    = $s('f1-dust');
 sc.cutter  = $s('f1-cutter');
 sc.cutterArm = $s('f1-cutter-arm');
+sc.cutterBody = $s('f1-cutter-body');
 sc.notch   = $s('f1-notch');
 sc.notch2  = $s('f1-notch2');
 sc.canBack    = $s('can-back');
@@ -4570,8 +4583,19 @@ function heroLoop(ts){
     var cutIn = eOut(seg(p, 0.135, 0.20)) * (1 - eIn(seg(p, 0.44, 0.54)));
     op(sc.cutter, cutIn);
     if (cutIn > 0.002) {
+      /* Three things move, not one. Only the arm rotating is what made this
+         read as a machine: a person chopping drives from the hips, drops their
+         weight into the blow, and straightens on the recovery.
+         - arm swings about the shoulder
+         - the whole upper body LEANS into the strike about the hip joint
+         - and DIPS a few px as the weight goes down
+         Lean and dip peak at beat 0, with the blade, and are small enough
+         (4 deg, 3px) that the blade stays inside the 26x22 notch. */
       var swing = -58 * Math.pow(Math.sin(beat * Math.PI), 0.7);
-      sc.cutterArm.setAttribute('transform', 'rotate(' + swing.toFixed(2) + ' 6 -99)');
+      var drive = Math.pow(1 - Math.sin(beat * Math.PI), 1.6);   // 1 at impact, 0 at the top
+      sc.cutterArm.setAttribute('transform', 'rotate(' + swing.toFixed(2) + ' 5 -102)');
+      sc.cutterBody.setAttribute('transform',
+        'translate(0,' + (drive * 3).toFixed(2) + ') rotate(' + (drive * 4).toFixed(2) + ' 2 -58)');
     }
     var ring = Math.sin(beat * Math.PI * 2 * 2.4) * Math.exp(-beat * 7);
     var shudder = (ring * 7.0 * chopEnv).toFixed(2);
@@ -4717,8 +4741,14 @@ function heroLoop(ts){
      Free in SVG: the world is vector, so 2.6x costs nothing and loses nothing.
      The near layer goes to 2.84 rather than 2.6 — pushing in should open the
      parallax up, not flatten it. */
+  /* The release used to run 0.258-0.292, finishing before the camera started
+     down at 0.24 had really got going, so it read as a separate beat: push in,
+     pull back out, then travel. It now unwinds across 0.262-0.345, entirely
+     inside the descent, so the widening and the downward move are one motion.
+     zoomY returning to 0 adds its own 310px of downward travel, which
+     compounds with the descent rather than fighting it. */
   var zoomT = heroStill ? 0
-            : sstep(seg(p, 0.182, 0.214)) * (1 - sstep(seg(p, 0.258, 0.292)));
+            : sstep(seg(p, 0.182, 0.214)) * (1 - sstep(seg(p, 0.262, 0.345)));
   var zoom  = 1 + zoomT * 1.6;
   // Lifts the wound from y 790 toward the middle of the frame as it closes in;
   // without it the push-in centres on the lower third and reads as a crop.

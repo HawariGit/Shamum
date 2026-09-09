@@ -32,3 +32,8 @@ _rmtest.html
 .agents/
 .claude/skills/
 skills-lock.json
+
+# Full-resolution camera originals (3000x3000). Kept in the repo so the
+# web-sized copies in assets/ can always be regenerated, but ~5 MB that no
+# browser should ever download.
+assets/originals/

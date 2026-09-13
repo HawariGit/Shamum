@@ -4,7 +4,7 @@
 > `index.html`, not chosen for this document. Where the code and this file disagree,
 > **the code is right and this file is stale** — fix it here.
 >
-> Scope: `index.html` is a single ~314KB vanilla file. No framework, no build step,
+> Scope: `index.html` is a single ~410KB vanilla file. No framework, no build step,
 > no CSS preprocessor. That is deliberate and is not a gap to be closed.
 
 ---
@@ -236,7 +236,7 @@ These are asset and content gaps, not design decisions. None is fixable in CSS.
 4. **`Jawhar`'s card image is a poster,** with body copy and the price printed into the
    pixels. If the price changes the card is silently wrong. The store has no alternative
    image. Left as-is by explicit instruction.
-4. **Product photography generally.** The lifestyle shots have no isolated product to key,
+5. **Product photography generally.** The lifestyle shots have no isolated product to key,
    so they cannot be cut out. The light plate is structural, not a workaround.
 6. **No analytics.** `/_vercel/insights/script.js` returns 404 — Web Analytics is not
    enabled on the Vercel project.

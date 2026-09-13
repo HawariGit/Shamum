@@ -698,8 +698,8 @@ body.menu-open { overflow: hidden; }
    not. The illustration is still the subject; these are the room it happens in.
    Held deliberately far back: heavily darkened, desaturated and blurred, so they
    read as depth and material rather than as a picture competing with the scene.
-   Floor 1 has no plate — there is no photograph of agarwood or the tree, and a
-   majlis interior behind a forest would be a lie. */
+   Floor 1's plate is agarwood heartwood, the tree's own material; a majlis
+   interior behind a forest would be a lie. */
 #hero-photo { position: absolute; inset: 0; z-index: 0; overflow: hidden;
               transform-origin: 50% 34%; will-change: transform, opacity; }
 .hp { position: absolute; inset: 0; opacity: 0; will-change: opacity, transform; }
@@ -2621,33 +2621,21 @@ body.menu-open { overflow: hidden; }
           </g>
 
           <!-- ─── THE CUTTER ───
-               The strike used to have no visible cause. The notch deepened, the
-               trunk rang, chips flew and the birds went, and it read as the tree
-               cutting itself. An unseen cause is a real device but it did not
-               land here, so there is a figure again.
-               ONE figure, not the mirrored pair. Both hands on the haft, which
-               is how a felling axe is actually swung and which fixes the old
-               "haft coming out of the chest". Leaning in, so the silhouette has
-               a diagonal rather than being a standing bell.
-               ⚠️ Its blade REACHES. The old pair stopped 11px short of the bark
-               they were supposedly biting. Shoulder (612,717) to notch (703,788)
-               is 115px; arm 54 + haft 75 = 129. It lands in the notch at the
-               bottom of every swing.
-               Sized 150 tall against the old 166: the trunk is the subject now
-               and a person beside a great tree should read smaller. At the
-               chapter I push-in this is still 390px, 43% of frame height, so it
-               is drawn to survive a close-up. -->
-          <!-- ─── THE CUTTER ───
-               Traced from a reference of a man in a dishdasha mid-strike, not
-               drawn. Eight hand-drawn passes failed on anatomy; a real outline
-               carries the proportion, the sleeve fall and the gesture that
-               hand-placed coordinates cannot fake.
-               Two layers cut from ONE mask on a shared bounding box, so they
-               stay in register: the body, and the arm which is rigged to swing.
-               Exported as alpha PNGs rather than paths - no tracing library is
-               available and SVG <image> transforms exactly like <path>, so
-               nothing is lost. Single shadow tone: the sun is behind the tree,
-               and a figure on the camera side is a silhouette. -->
+               The strike used to have no visible cause and read as the tree
+               cutting itself, so there is a person again.
+               He is the reference photograph's own pixels, not a drawing: every
+               drawn, articulated and silhouette version failed on reading as a
+               human. Built by render/make_cutter.py from
+               render/ref/cutter-reference.png, which is cut out, graded down to
+               this light and split into two alpha PNGs on ONE shared box so
+               they stay in register. The body keeps the whole mask; the arm
+               overlays it and rotates about the shoulder (611.2,707.5).
+               ⚠️ The stroke is 12° on purpose. The arm is rigid, so a
+               bigger rotation sweeps the blade past the trunk and exposes the
+               sleeve seam. A real swing needs a second pose image.
+               Sized 150 tall: the trunk is the subject and a person beside a
+               great tree should read smaller. At the chapter I push-in he is
+               390px, which is why the PNGs are 420 tall and no more. -->
           <g id="f1-cutter" opacity="0">
             <ellipse cx="600" cy="818" rx="22" ry="4.5" fill="#000000" opacity="0.5"/>
             <g id="f1-cutter-body">
@@ -4548,11 +4536,10 @@ function heroLoop(ts){
     var cutIn = eOut(seg(p, 0.135, 0.20)) * (1 - eIn(seg(p, 0.44, 0.54)));
     op(sc.cutter, cutIn);
     if (cutIn > 0.002) {
-      /* Two joints, not one. lift is 0 at the strike and 1 at the top.
-         The shoulder carries the arm up and back; the ELBOW folds on top of
-         that, which is what takes the axe behind the shoulder instead of
-         extending it straight out like a boom. Lean and dip are far bigger than
-         the first attempt - 4 degrees and 3px were simply invisible. */
+      /* lift is 0 at the strike and 1 at the top; drive is the opposite, so
+         the body leans in and drops as the blade lands. One rigid arm layer
+         about the shoulder, one body layer about the hips. Lean and dip are
+         large because 4 degrees and 3px were simply invisible. */
       var lift  = Math.pow(Math.sin(beat * Math.PI), 0.7);
       var drive = Math.pow(1 - Math.sin(beat * Math.PI), 1.5);
       sc.cutterArm.setAttribute('transform',
@@ -4678,8 +4665,8 @@ function heroLoop(ts){
   /* ── Photographic ground ──
      Each plate peaks as the camera arrives on its floor and is gone one floor
      either side, so the rooms cross-dissolve on exactly the beats the camera
-     already moves on. Floor 1 has no plate, so the forest opens on black and
-     the first photograph arrives with the descent to the mabkhara. The drift
+     already moves on. Floor 1's agarwood plate is held back until the tree
+     has grown (see the guard below). The drift
      is tiny — it only has to keep the ground from feeling pinned to the glass;
      anything larger competes with the camera that is already moving. */
   for (var pi = 0; pi < photoPlates.length; pi++) {

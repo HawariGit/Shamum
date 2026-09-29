@@ -145,19 +145,64 @@ silently deleted the press and mist once. **Check any retime with
 `seg(1.0, a, b) == 1` for every tail window.**
 
 ### The landing frame
-`p = 0` shows the wordmark over the **opening plate** (`#hp-open`,
-`ig-box-closed`). Two faults were fixed here and both looked like "nothing":
+`p = 0` shows the wordmark over the **opening plate** (`#hp-open`), which is
+now **the house's own film** — see **The film** below. Two earlier faults were
+fixed here and both looked like "nothing":
 
 - the logo's opacity was driven so it was **blank at `p = 0`** — the first thing
   anyone saw was black. It is now `1 − eIn(seg(p, 0.095, 0.15))`, full on
   arrival, with a 5% scale-down on the way out;
-- there was nothing behind it. `#hp-open` sits at `0.62·(1 − eIn(seg(p, 0.07,
+- there was nothing behind it. `#hp-open` sits at `0.9·(1 − eIn(seg(p, 0.07,
   0.13)))` and is forced to 0 past `p 0.22`. It is **gated on `p`, not on the
   camera** — see the `[data-ch]` trap in the next section.
 
-`ig-box-closed` was chosen because it is warm, dark and carries no competing
-mark: `ig-decanter` would put the monogram wall behind the monogram logo, and
-`ig-ritual` has a person in it, who survives blurring.
+Before the film it was `ig-box-closed`, blurred: warm, dark, no competing mark.
+The same rule still holds — nothing with the SHAMUM monogram goes behind the
+monogram logo, which is why the film's satin-bottle shot is not in the loop.
+
+### The film
+SHAMUM's own Instagram reel for Mandle — the only moving photography the house
+has, and the single biggest step away from "a drawing" the site has taken.
+Source: `VID_20260819_235210_113 (1).mp4` at the repo root, **untracked** (29
+MB, 1080×1920 HEVC, 41.7 s). Built by **`render/make_film.py`** into
+`assets/film/`.
+
+- **The crop.** The reel has `@SHAMUMOFFICIAL` and subtitles burned in. The
+  handle sits at 0.25–0.31 or 0.66–0.73 of the height depending on the shot,
+  the subtitles at 0.84–0.90. Rows **614–1258** are clean on every shot up to the
+  Instagram end card at **37.67 s**, and 1080×644 is a 1.68:1 frame — the
+  vertical reel becomes a widescreen one. Verified on a 1 fps contact sheet
+  with the band drawn in.
+- **`mandle-film.mp4`** (6.1 MB, 0–37.4 s, with sound) plays in **`#film`**,
+  the section straight after the hero: *"The making of Mandle."* Autoplays
+  muted when 55% on screen, pauses when it leaves, never loops, never autoplays
+  under reduced motion; `preload="none"` so it costs nothing until reached.
+  Play/pause and sound buttons, click-to-toggle, a gold progress hairline, and
+  the frame is capped to the viewport height so captions never fall off-screen.
+- **Captions are typeset, not burned in.** The crop removes the reel's
+  subtitles, so `FILM_CAPTIONS` in `index.html` carries its lines with timings
+  read off the source at 0.5 s steps, set in Cormorant italic and cross-faded
+  between two spans on `timeupdate`. ⚠️ The reel spells the name **"Mandel"**;
+  the captions say **Mandle**, like the bottle and every card. Ask the user
+  which is right if it matters.
+- **`mandle-loop.mp4`** (≈580 KB, 6.5 s, silent) is the landing plate: flame →
+  oil in the flask → gold drop → liquid gold, **slowed to 0.4×** with motion
+  interpolation (the reel cuts every ~0.8 s, which is frantic behind a
+  wordmark), crossfaded, through black at the loop point. It opens on the flame
+  because a dark frame with warm light in it is what the rest of the site looks
+  like. JS starts it (no `autoplay` attribute) and pauses it as soon as the
+  plate is invisible.
+- ⚠️ **The loop's grade is baked into the file, not done in CSS.** Dimmed with
+  CSS filters, its near-white highlights went neutral grey and its yellows went
+  olive — dark yellow *is* olive — so the flame read as a grey-green blade. The
+  encode multiplies toward amber `[1, .72, .44]`, then `^1.8 × 0.78`; chosen from
+  a simulated side-by-side of three strengths with the real wordmark
+  composited in. **Don't add a CSS filter back to that video.**
+- The wordmark keeps its ground with **`drop-shadow`s on `#hero-logo`** that
+  follow its glyphs. A dark radial pool behind it read as a smudge on every
+  bright shot.
+- The chapter I tint's green edge (`#tint-outer`) now fades in over `p
+  0.06–0.14`, with the forest. Over the amber film it was a cold cast.
 
 ### The photographic ground
 The house's own photography sits **under** the drawn scene, one plate per floor.
@@ -499,9 +544,10 @@ Cutter reference: `render/ref/cutter-reference.png` (vercelignored with `render/
 | `preview_chapter4.py` | Renders the scene through the **real** `heroLoop`. `--p 0.95`, `--strip a,b,c`, `--gif`, `--zoom` (push-in, off when `heroStill`), `--cover 0.53` (strip transition). ⚠️ Renders through the **reduced-motion branch**; its `CLEAN` block force-shows `#hero-canvas`, `#hp-open`, `#f1-chips`, `#f1-dust`, `#f1-birds` and hides `#veil`, `#nav`, `#menu-overlay`, `#scroll-cue`, `#ch-dots`. **Add any new moving part to that list.** `shot_guarded` re-shoots any frame jumping >10 luminance from the previous (about one capture in seventy fires before paint and returns near-black). `--p` injects `CLEAN`, so it is *not* a faithful still — use `preview_reduced.py` for that. |
 | `make_cutter.py` | Rebuilds the cutter from `render/ref/cutter-reference.png`. Prints `MATCHES` / `DIFFERS` against `index.html`; `--install` swaps the two PNGs in. Previews in `render/out/cutter_*.png`. |
 | `make_tree.py` | Generates chapter I's branches and foliage (fixed seed). |
+| `make_film.py` | Crops, grades and encodes the Mandle reel into `assets/film/` (film, landing loop, posters). `--only loop` / `--only film`. The loop's motion interpolation takes several minutes — run it in the background. |
 | `preview_reduced.py` | Writes `_rmtest.html` with the reduced-motion branch forced on. `--rm` deletes it. |
 | `preview_flacon.py` | Single flacon still, `--fill 0.5`. |
-| `page_shots.py` | Screenshots every section below the hero, one isolated section per shot (`painted` included). |
+| `page_shots.py` | Screenshots every section below the hero, one isolated section per shot. `--only film,painted` for just those (the full run is slow); `--size 1440x1180` for a taller frame. It forces one film caption on. |
 | `pacing.py` | **Run before changing any gap height.** Pixels-per-beat for desktop and mobile. |
 | `watch_video.py` | Video → frames. Streams; do not accumulate. `plugin="FFMPEG"`. |
 | `fetch_catalogue.py` / `fetch_categories.py` / `build_catalogue.py` | Pull the 15 products and rebuild the cards. **Use `fetch_categories`, don't infer.** |

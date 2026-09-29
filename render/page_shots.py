@@ -7,6 +7,7 @@ and --virtual-time-budget lets it settle before the capture.
 
     python render/page_shots.py --at 3000,6000,9000
     python render/page_shots.py --sections          # every named section
+    python render/page_shots.py --only film,painted # just these
 
 Uses the reduced-motion build so the 1175vh hero collapses to one screen and the
 rest of the page is reachable in a handful of shots. That is a fair view of
@@ -31,6 +32,8 @@ EDGE = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 FLAG = "var heroStill = window.matchMedia('(prefers-reduced-motion: reduce)').matches;"
 
 W, H = 1440, 900
+if "--size" in sys.argv:   # e.g. --size 1440x1400 to get a tall section in one frame
+    W, H = (int(v) for v in sys.argv[sys.argv.index("--size") + 1].split("x"))
 
 
 def browser():
@@ -82,7 +85,11 @@ def shot(dest, by_id):
               "  n.style.height='auto';"
               "  n=pa;"
               "}"
-              "})();</script>") % by_id
+              "})();"
+              # the film has no playback here; put one line of its captions up
+              # so the typography can be judged
+              "if(window.__film)window.__film.caption(7);"
+              "</script>") % by_id
     if "</body>" not in src:
         print("ABORT: no </body>")
         sys.exit(1)
@@ -98,7 +105,7 @@ def shot(dest, by_id):
     return os.path.exists(dest)
 
 
-SECTIONS = ["shelf-bukhoor", "brand-statement", "ritual", "essence", "painted",
+SECTIONS = ["shelf-bukhoor", "film", "brand-statement", "ritual", "essence", "painted",
             "quote-section", "scent-life", "trust", "loyalty", "footer"]
 
 
@@ -109,7 +116,9 @@ def main():
         os.remove(os.path.join(OUT, f))
 
     jobs = []
-    if "--sections" in sys.argv:
+    if "--only" in sys.argv:
+        jobs = [(None, s) for s in sys.argv[sys.argv.index("--only") + 1].split(",")]
+    elif "--sections" in sys.argv:
         jobs = [(None, s) for s in SECTIONS]
     elif "--at" in sys.argv:
         jobs = [(int(v), None) for v in sys.argv[sys.argv.index("--at") + 1].split(",")]

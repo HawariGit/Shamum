@@ -638,6 +638,75 @@ body.menu-open { overflow: hidden; }
            line-height: 1.7; color: rgba(244,234,210,0.74); margin: 12px 0 0; }
 @media (max-width: 900px) { .pn-grid { grid-template-columns: 1fr; max-width: 480px; } }
 
+/* ─── THE FILM ───
+   SHAMUM's own Mandle reel, the only moving photography the house has. The
+   reel is vertical with the Instagram handle and subtitles burned in; it is
+   cropped to the one widescreen band that carries neither (render/
+   make_film.py), which turns it into a 1.68:1 cinema frame. The subtitles went
+   with the crop, so the film's words are typeset here in the house serif and
+   synced to the picture - a caption that belongs to the page rather than to
+   Instagram. Plays muted when it scrolls into view, stops when it leaves;
+   sound is one tap. */
+#film { background: #0F0805; position: relative;
+        padding: clamp(90px, 13vh, 150px) 24px clamp(80px, 11vh, 130px); }
+.film-head { text-align: center; margin-bottom: clamp(40px, 6vh, 68px); }
+.film-frame {
+  position: relative; margin: 0 auto;
+  /* Never taller than the screen: a film cut off at the bottom loses its
+     captions and its progress line, which is where the words are. */
+  max-width: min(1320px, calc((100vh - 72px) * 1.677));
+  aspect-ratio: 1080 / 644; overflow: hidden; background: #070403;
+  border: 1px solid rgba(201,161,90,0.28); cursor: pointer;
+}
+.film-frame video { position: absolute; inset: 0; width: 100%; height: 100%;
+                    object-fit: cover; display: block; }
+/* A floor of shade under the words only - the picture above stays untouched. */
+.film-frame::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 42%;
+  background: linear-gradient(to top, rgba(8,4,2,0.78), rgba(8,4,2,0.32) 55%, transparent);
+  pointer-events: none;
+}
+.film-cap { position: absolute; left: 6%; right: 6%; bottom: 13%; z-index: 2;
+            margin: 0; text-align: center; pointer-events: none; }
+.film-cap span {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
+  font-size: clamp(19px, 2.5vw, 38px); line-height: 1.22; color: var(--sand-50);
+  text-shadow: 0 1px 18px rgba(8,4,2,0.65); text-wrap: balance;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+.film-cap span.on { opacity: 1; transform: none; }
+.film-ui { position: absolute; right: clamp(12px, 2vw, 26px); top: clamp(12px, 2vw, 24px);
+           z-index: 3; display: flex; gap: 8px; }
+.film-btn {
+  display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px;
+  font-family: 'Jost', sans-serif; font-size: 9.5px; letter-spacing: 0.26em;
+  text-transform: uppercase; color: var(--sand-50); cursor: pointer;
+  background: rgba(8,4,2,0.42); border: 1px solid rgba(212,188,134,0.34);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  transition: border-color 0.3s, background 0.3s;
+}
+.film-btn:hover { border-color: var(--gold-300); background: rgba(8,4,2,0.6); }
+.film-btn svg { width: 12px; height: 12px; flex: none; }
+.film-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; z-index: 3;
+            background: rgba(212,188,134,0.14); }
+.film-bar span { display: block; height: 100%; width: 0; background: var(--gold-400);
+                 transition: width 0.25s linear; }
+.film-foot { text-align: center; margin: clamp(26px, 4vh, 40px) 0 0; }
+.film-foot a {
+  font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--gold-400); text-decoration: none;
+  border-bottom: 1px solid rgba(194,163,104,0.4); padding-bottom: 5px;
+  transition: color 0.3s, border-color 0.3s;
+}
+.film-foot a:hover { color: var(--gold-300); border-color: var(--gold-300); }
+@media (max-width: 600px) {
+  .film-btn .film-lbl { display: none; }
+  .film-btn { padding: 0 10px; }
+  .film-cap { bottom: 16%; }
+}
+
 /* ─── KEYBOARD ACCESS ───
    The page had 58 interactive elements and not one focus style. Focus was
    never suppressed, it was simply never defined, so keyboard users got the
@@ -708,6 +777,17 @@ body.menu-open { overflow: hidden; }
    0.34 is right for the bukhoor's bright smoke plume and turns the oud bottle —
    dark oil in glass against a dark ground — into a black rectangle. Graded
    individually, the way a colourist would. */
+.hp video { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* The landing film carries its grade IN THE FILE (render/make_film.py). CSS
+   filters could only dim it, and dimmed gold goes grey and olive - the flame
+   read as a grey-green blade. So no filter here, only a darkening toward the
+   edges. The wordmark keeps its ground with a shadow that follows its own
+   glyphs (#hero-logo); a dark pool behind it read as a smudge on every bright
+   shot. */
+#hp-open::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 80% 78% at 50% 50%, rgba(10,6,3,0) 45%, rgba(10,6,3,0.78) 100%);
+}
 .hp img { width: 100%; height: 100%; object-fit: cover; display: block;
           filter: saturate(0.55) blur(9px); }
 
@@ -731,7 +811,8 @@ body.menu-open { overflow: hidden; }
   transform: translate(-50%, -50%) scale(0.92);
   width: clamp(250px, 30vw, 390px);
   opacity: 0; z-index: 10; pointer-events: none;
-  filter: invert(1) sepia(1) saturate(2.4) hue-rotate(-14deg) brightness(1.06);
+  filter: invert(1) sepia(1) saturate(2.4) hue-rotate(-14deg) brightness(1.06)
+          drop-shadow(0 0 14px rgba(6,3,1,0.8)) drop-shadow(0 0 3px rgba(6,3,1,0.6));
   will-change: transform, opacity;
 }
 .word {
@@ -1756,6 +1837,7 @@ body.menu-open { overflow: hidden; }
     <ul class="nav-links">
       <li><a href="#top" class="nav-link" onclick="shmScrollTo(0);return false;">Home</a></li>
       <li><a href="#shelf-bukhoor" class="nav-link">Collection</a></li>
+      <li><a href="#film" class="nav-link">The Film</a></li>
       <li><a href="#brand-statement" class="nav-link">Our Oud</a></li>
       <li><a href="#footer" class="nav-link">The House</a></li>
     </ul>
@@ -1811,6 +1893,7 @@ body.menu-open { overflow: hidden; }
     <ul class="menu-links">
       <li><a href="#top" data-menu-top="1"><span class="menu-en">Home</span><span class="menu-ar"><span lang="ar">الرئيسية</span></span></a></li>
       <li><a href="#shelf-bukhoor"><span class="menu-en">Collection</span><span class="menu-ar"><span lang="ar">المجموعة</span></span></a></li>
+      <li><a href="#film"><span class="menu-en">The Film</span><span class="menu-ar"><span lang="ar">الفيلم</span></span></a></li>
       <li><a href="#brand-statement"><span class="menu-en">Our Oud</span><span class="menu-ar"><span lang="ar">عودنا</span></span></a></li>
       <li><a href="#footer"><span class="menu-en">The House</span><span class="menu-ar"><span lang="ar">بيت شاموم</span></span></a></li>
     </ul>
@@ -1851,10 +1934,14 @@ body.menu-open { overflow: hidden; }
            lives only under the logo, fading out as the tree fades in. Chapter I
            still opens on black; this is the frame BEFORE chapter I, where there
            was previously nothing at all behind the wordmark.
-           ig-box-closed because it is warm, dark, and carries no competing mark:
-           ig-decanter would put the monogram wall behind the monogram logo, and
-           ig-ritual has a person, who survives blurring. -->
-      <div class="hp" id="hp-open"><img src="assets/ig-box-closed.webp" alt="" decoding="async" style="filter:brightness(0.58) saturate(0.6) blur(15px)"></div>
+           It is the house's own film now (render/make_film.py): oil, a gold
+           drop, liquid gold and a flame from the Mandle reel, slowed to 0.4x.
+           Real footage in the first three seconds does more for the brand than
+           anything drawn. The satin bottle shot is left out of the loop - its
+           label monogram would sit under the monogram logo, the same reason
+           ig-decanter was never used here. No autoplay attribute: JS starts it,
+           so reduced-motion visitors never download it. -->
+      <div class="hp" id="hp-open"><video id="hp-open-video" src="assets/film/mandle-loop.mp4" poster="assets/film/mandle-loop.webp" muted loop playsinline preload="none" tabindex="-1" ></video></div>
       <!-- Chapter I. The house had no photograph of the tree, so this floor
            opened on black for the whole build. It turns out it did have one: the
            bottom third of Jawhar's product poster is a real photograph of
@@ -3595,6 +3682,26 @@ body.menu-open { overflow: hidden; }
 
 </div>
 
+<!-- ═══ THE FILM ═══ -->
+<section id="film" aria-labelledby="film-title">
+  <div class="film-head">
+    <span class="section-eyebrow reveal" style="color: var(--gold-400);">The Film · <span lang="ar">الفيلم</span></span>
+    <h2 id="film-title" class="ess-title reveal reveal-delay-1">The making of <em>Mandle.</em></h2>
+  </div>
+  <figure class="film-frame" id="film-frame">
+    <video id="film-video" src="assets/film/mandle-film.mp4" poster="assets/film/mandle-film.webp"
+           muted playsinline preload="none"
+           aria-label="The making of Mandle: natural oud, saffron, rose and iris in the SHAMUM laboratory"></video>
+    <p class="film-cap" id="film-cap"><span></span><span></span></p>
+    <div class="film-ui">
+      <button type="button" class="film-btn" id="film-play" aria-label="Play the film"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.6 L10.4 6 L3 10.4 Z" fill="currentColor"/></svg><span class="film-lbl">Play</span></button>
+      <button type="button" class="film-btn" id="film-sound" aria-pressed="false" aria-label="Turn sound on"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 4.3 H3.6 L6.6 1.8 V10.2 L3.6 7.7 H1.5 Z" fill="currentColor"/><path class="film-wave" d="M8.3 4 Q9.6 6 8.3 8" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg><span class="film-lbl">Sound</span></button>
+    </div>
+    <div class="film-bar" aria-hidden="true"><span id="film-prog"></span></div>
+  </figure>
+  <p class="film-foot"><a href="https://shamum.com/products/منــدل" target="_blank" rel="noopener">Mandle · Eau de Parfum · <span lang="ar">منــدل</span> →</a></p>
+</section>
+
 <!-- ═══ BRAND STATEMENT ═══ -->
 <section id="brand-statement">
   <img class="brand-photo" alt="The SHAMUM boutique — مجلس شاموم"
@@ -3899,6 +4006,7 @@ body.menu-open { overflow: hidden; }
     <div>
       <span class="footer-col-title">Maison</span>
       <ul class="footer-links">
+        <li><a href="#film">The Film · <span lang="ar">الفيلم</span></a></li>
         <li><a href="#brand-statement">Our Story · <span lang="ar">قصتنا</span></a></li>
         <li><a href="#ritual">The Ritual · <span lang="ar">الطقس</span></a></li>
         <li><a href="#essence">The Two Gifts · <span lang="ar">عطايا العود</span></a></li>
@@ -4325,6 +4433,16 @@ var shelfEls = Array.prototype.slice.call(document.querySelectorAll('.chapter-pr
 var sceneEl  = document.getElementById('hero-svg-scene');
 var photoEl  = document.getElementById('hero-photo');
 var openPlate = document.getElementById('hp-open');
+var openVid = document.getElementById('hp-open-video');
+var openVidOn = false;
+/* The loop only runs while its plate can be seen. Decoding video under a
+   plate at opacity 0 costs the scroll animation frames for nothing. */
+function openVidRun(on){
+  if (!openVid || heroStill || on === openVidOn) return;
+  openVidOn = on;
+  if (on) { var pr = openVid.play(); if (pr && pr.catch) pr.catch(function(){}); }
+  else openVid.pause();
+}
 /* The photographic ground cross-fades with the CAMERA, not with the chapter
    text — it is the room the camera is in, so it has to change when the camera
    changes floor, not when the copy does. Each plate is keyed to the camY its
@@ -4335,6 +4453,7 @@ var photoPlates = Array.prototype.slice.call(document.querySelectorAll('#hero-ph
      its opacity overwritten to 0 one block after being set. */
   .map(function(el){ return { el: el, camY: (+el.getAttribute('data-ch') - 1) * 900, last: -1 }; });
 var lastDim = '1';
+var lastTintA = null;
 var lastLift = null;
 
 function fakeRand(seed){ return ((Math.sin(seed * 127.1 + 311.7) * 43758.5) % 1 + 1) % 1; }
@@ -4481,12 +4600,14 @@ function heroLoop(ts){
     // The opening ground leaves slightly ahead of the wordmark, so the frame is
     // already clearing as the forest arrives rather than two things dissolving
     // on the same beat.
-    if (openPlate) openPlate.style.opacity = (0.62 * (1 - eIn(seg(p, 0.07, 0.13)))).toFixed(3);
+    var openO = 0.9 * (1 - eIn(seg(p, 0.07, 0.13)));
+    if (openPlate) openPlate.style.opacity = openO.toFixed(3);
+    openVidRun(openO > 0.01);
     heroLogo.style.transform = 'translate(-50%,-50%) scale(' + (1 - 0.05*eIn(t0out)) + ')';
     scrollCueEl.style.opacity = 1 - seg(p, 0.02, 0.07);
   }
 
-  if (openPlate && p >= 0.22) openPlate.style.opacity = 0;
+  if (openPlate && p >= 0.22) { openPlate.style.opacity = 0; openVidRun(false); }
 
   /* ── Floor 1: only while on/near the tree floor ── */
   if (p < 0.56) {
@@ -4747,6 +4868,10 @@ function heroLoop(ts){
   }
   sc.tintOuter.setAttribute('stop-color',
     'rgb(' + (tc[0]|0) + ',' + (tc[1]|0) + ',' + (tc[2]|0) + ')');
+  /* The forest's air arrives with the forest. At p 0 the frame is the landing
+     film, and a green edge over amber firelight read as a cold cast. */
+  var tintA = (0.30 * sstep(seg(p, 0.06, 0.14))).toFixed(3);
+  if (tintA !== lastTintA) { lastTintA = tintA; sc.tintOuter.setAttribute('stop-opacity', tintA); }
 
   /* ── Floor 2: mabkhara + falling oud + smoke (gated) ── */
   if (p > 0.18 && p < 0.66) {
@@ -5338,6 +5463,98 @@ function runCounter(el){
     if (prog >= 1){ el.textContent = tgt; clearInterval(timer); }
   }, 28);
 }
+/* ─── The film ───
+   The reel's own subtitles were cropped away with the Instagram handle, so its
+   words are set here. Timings read off the source at 0.5s steps. The reel spells
+   the name "Mandel"; the bottle and every card on this site say Mandle, so the
+   caption follows the bottle. */
+var FILM_CAPTIONS = [
+  [0.4, 4.35, 'Owning a fragrance with natural oud'],
+  [4.35, 6.35, 'is a delicate chemistry\u2026 a true art.'],
+  [6.35, 9.95, 'Natural oud carries a royal,<br>commanding presence.'],
+  [9.95, 11.95, 'It refuses to share the stage with others'],
+  [11.95, 14.95, 'in the same composition.'],
+  [14.95, 16.95, 'After an immersive<br>journey of experiments'],
+  [16.95, 18.45, 'in Shamum laboratories'],
+  [18.45, 19.95, 'we discovered that saffron,'],
+  [19.95, 21.95, 'rose, and iris flowers'],
+  [21.95, 24.95, 'are the finest companions.'],
+  [25.95, 27.95, 'And let\u2019s not forget\u2026 time itself'],
+  [27.95, 30.95, 'is the key ingredient in this blend.'],
+  [30.95, 32.45, 'Choosing Mandle<br>is not just selecting a fragrance.'],
+  [32.45, 36.4, 'It\u2019s embracing a timeless era<br>of exquisite perfumery.']
+];
+(function(){
+  var v = document.getElementById('film-video');
+  if (!v) return;
+  var frame = document.getElementById('film-frame');
+  var spans = document.querySelectorAll('#film-cap span');
+  var prog = document.getElementById('film-prog');
+  var bPlay = document.getElementById('film-play');
+  var bSound = document.getElementById('film-sound');
+  var cur = -1, front = 0, userPaused = false, inView = false;
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ICON_PLAY = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.6 L10.4 6 L3 10.4 Z" fill="currentColor"/></svg>';
+  var ICON_PAUSE = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.6 1.8 H4.9 V10.2 H2.6 Z M7.1 1.8 H9.4 V10.2 H7.1 Z" fill="currentColor"/></svg>';
+
+  /* Two layers so a line can dissolve into the next rather than blinking. */
+  function caption(t){
+    var idx = -1;
+    for (var i = 0; i < FILM_CAPTIONS.length; i++) {
+      if (t >= FILM_CAPTIONS[i][0] && t < FILM_CAPTIONS[i][1]) { idx = i; break; }
+    }
+    if (idx === cur) return;
+    cur = idx;
+    spans[front].classList.remove('on');
+    if (idx < 0) return;
+    front = 1 - front;
+    spans[front].innerHTML = FILM_CAPTIONS[idx][2];
+    spans[front].classList.add('on');
+  }
+  function sync(){
+    caption(v.currentTime);
+    if (v.duration) prog.style.width = (100 * v.currentTime / v.duration).toFixed(2) + '%';
+  }
+  function ui(){
+    var playing = !v.paused && !v.ended;
+    bPlay.innerHTML = (playing ? ICON_PAUSE : ICON_PLAY) + '<span class="film-lbl">' + (playing ? 'Pause' : 'Play') + '</span>';
+    bPlay.setAttribute('aria-label', playing ? 'Pause the film' : 'Play the film');
+    bSound.setAttribute('aria-pressed', v.muted ? 'false' : 'true');
+    bSound.setAttribute('aria-label', v.muted ? 'Turn sound on' : 'Turn sound off');
+    bSound.querySelector('.film-wave').style.opacity = v.muted ? 0.25 : 1;
+  }
+  function play(){ var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); }
+  function toggle(){
+    if (v.paused || v.ended) { userPaused = false; if (v.ended) v.currentTime = 0; play(); }
+    else { userPaused = true; v.pause(); }
+  }
+  v.addEventListener('timeupdate', sync);
+  v.addEventListener('seeked', sync);
+  ['play', 'pause', 'ended', 'volumechange'].forEach(function(e){ v.addEventListener(e, ui); });
+  /* At the end it rests on its last frame with the last line gone, and the
+     button offers it again. It does not loop: a film ends. */
+  v.addEventListener('ended', function(){ caption(-1); });
+  frame.addEventListener('click', function(e){ if (!e.target.closest('.film-btn')) toggle(); });
+  bPlay.addEventListener('click', toggle);
+  bSound.addEventListener('click', function(){
+    v.muted = !v.muted;
+    if (!v.muted && v.paused) { userPaused = false; play(); }
+  });
+  /* Plays itself when it is mostly on screen and stops when it leaves, unless
+     the visitor has taken control. Never autoplays under reduced motion. */
+  if (!still && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        inView = e.isIntersecting;
+        if (inView && !userPaused && v.paused && !v.ended) play();
+        else if (!inView && !v.paused) v.pause();
+      });
+    }, { threshold: 0.55 }).observe(frame);
+  }
+  ui();
+  window.__film = { v: v, caption: caption };
+})();
+
 var counterEls = Array.prototype.slice.call(document.querySelectorAll('.counter'));
 /* Any counter carrying data-since is an ELAPSED YEAR COUNT, not a fixed figure,
    and is derived at load. "16 Years of Heritage" was hardcoded: correct while it
